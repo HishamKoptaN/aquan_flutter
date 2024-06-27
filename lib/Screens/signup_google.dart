@@ -1,6 +1,6 @@
-import 'package:aquan/Auth/bloc/auth_bloc.dart';
+import 'package:aquan/app/sign_up/bloc/auth_bloc.dart';
 import 'package:aquan/Helpers/colors.dart';
-import 'package:aquan/Screens/dashboard.dart';
+import 'package:aquan/app/home_page/view/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';

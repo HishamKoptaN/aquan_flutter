@@ -1,4 +1,4 @@
-import 'package:aquan/Models/user.dart';
+import '../app/Auth/model/user.dart';
 
 class Message {
   int? id;

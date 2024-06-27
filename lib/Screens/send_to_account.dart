@@ -1,7 +1,7 @@
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/styles.dart';
-import 'package:aquan/Layouts/app_layout.dart';
-import 'package:aquan/User/bloc/user_bloc.dart';
+import 'package:aquan/app/Layouts/app_layout.dart';
+import 'package:aquan/app/Auth/User/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

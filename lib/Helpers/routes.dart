@@ -7,7 +7,9 @@ const Map<String, dynamic> auth = {
   "password": {
     "reset": "$domain/api/auth/reset-password",
   },
-  "confirm-email": "$domain/api/auth/confirm-email",
+  "confirm-email": "$domain/api/v1/user/verify",
+  "send-confirm-email": "$domain/api/v1/user/verify",
+  "send-code-to-email": "$domain/api/resendcode",
   "settings": "$domain/api/settings",
   "tasks": "$domain/api/tasks",
   "task": "$domain/api/tasks/",
