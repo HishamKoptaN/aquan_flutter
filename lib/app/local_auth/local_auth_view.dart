@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
+import '../navigator_bottom_bar/navigator_bottom_bar_view.dart';
 import 'bloc/local_auth_bloc.dart';
 import '../home_page/view/dashboard.dart';
 import 'bloc/local_auth_event.dart';
@@ -21,8 +22,7 @@ class BiometricScreen extends StatelessWidget {
             if (state is BiometricAuthenticated) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => const DashboardScreen()),
+                MaterialPageRoute(builder: (context) => const DashboardView()),
               );
             } else if (state is BiometricError) {
               ScaffoldMessenger.of(context).showSnackBar(

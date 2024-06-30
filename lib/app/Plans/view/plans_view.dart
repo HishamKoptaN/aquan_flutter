@@ -67,13 +67,12 @@ class PlansScreen extends StatelessWidget {
                                   ? '\$${plan.amount}'
                                   : t.free,
                               features: [
-                                // '${t.priceOfSelling}: ${plan.sellingPrice.toString()}',
-                                // '${t.priceOfBuying}: ${plan.discount.toString()}',
                                 '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
                                 '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
                                 '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',
                               ],
-                              isSelected: (plan.id == state.user.planId),
+                              planId: plan.id!,
+                              // (plan.id == state.user.planId),
                               onTap: () {
                                 try {
                                   if (plan.amount! > 0 &&

@@ -1,20 +1,19 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:aquan/Helpers/storage.dart';
+import 'package:aquan/app/home_page/view/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:aquan/app/sign_up/bloc/auth_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:aquan/Helpers/colors.dart';
-import 'package:aquan/app/home_page/view/dashboard.dart';
-import 'package:aquan/app/notifications/notifications_view.dart';
+import 'package:aquan/Helpers/styles.dart';
 import '../../Screens/settings_view.dart';
+import '../Auth/verify_code/bloc/verify_email_bloc.dart';
 import '../convert/convert_view.dart';
-import '../qr_code/view/qr_code_view.dart';
+import '../referal/referal_view.dart';
+import '../sign_up/bloc/auth_bloc.dart';
 import '../support/view/support_view.dart';
 import '../tasks/view/tasks_view.dart';
-import '../verify_code/VerifyCode.dart';
 
 class AppLayout extends StatefulWidget {
   const AppLayout({
@@ -33,7 +32,15 @@ class AppLayout extends StatefulWidget {
 }
 
 class _AppLayoutState extends State<AppLayout> {
+  final iconList = <IconData>[
+    Icons.brightness_5,
+    Icons.brightness_4,
+    Icons.brightness_6,
+    Icons.brightness_7,
+  ];
+
   bool emailVerified = true;
+
   final List<Map<String, dynamic>> fields = [
     {'controller': TextEditingController(), 'node': FocusNode()},
     {'controller': TextEditingController(), 'node': FocusNode()},
@@ -50,7 +57,7 @@ class _AppLayoutState extends State<AppLayout> {
       {
         "name": t.home,
         "icon": Icons.home,
-        "route": const DashboardScreen(),
+        "route": const DashboardView(),
       },
       {
         "name": t.tasks,
@@ -63,84 +70,19 @@ class _AppLayoutState extends State<AppLayout> {
         "route": const ConvertScreen(),
       },
       {
-        "name": t.qr_code,
-        "icon": Icons.qr_code_2_rounded,
-        "route": const QrCodeView(),
+        "name": t.referals,
+        "icon": Icons.verified_user_outlined,
+        "route": const ReferalScreen(),
       },
       {
         "name": t.settings,
         "icon": Icons.settings,
         "route": const SettingsScreen(),
       },
-      // {
-      //   "name": t.qr_code,
-      //   "icon": Icons.qr_code_2_rounded,
-      //   "route": MyAppThree(),
-      // },
-      // {
-      //   "name": t.settings,
-      //   "icon": Icons.settings,
-      //   "route": const PlansScreen(),
-      // },
     ];
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 2,
-        leading: const SizedBox(),
-        centerTitle: true,
-        title: Expanded(
-          child: Text(
-            widget.route,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: black,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        actions: [
-          if (widget.route != t.notifications && emailVerified)
-            SizedBox(
-              width: 30,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationsScreen(),
-                    ),
-                  ).then((value) => setState(() => {}));
-                },
-                icon: const FaIcon(
-                  FontAwesomeIcons.bell,
-                  color: black,
-                  size: 16,
-                ),
-              ),
-            ),
-          (Navigator.of(context).canPop())
-              ? IconButton(
-                  icon: Icon(
-                    Storage.getString('language') == 'en'
-                        ? FontAwesomeIcons.angleRight
-                        : FontAwesomeIcons.angleLeft,
-                    color: black,
-                  ),
-                  onPressed: () {
-                    if (Navigator.of(context).canPop()) {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                )
-              : const SizedBox(
-                  width: 30,
-                ),
-        ],
-      ),
       floatingActionButton: emailVerified && widget.route != t.support
           ? FloatingActionButton(
               shape: RoundedRectangleBorder(
@@ -170,7 +112,7 @@ class _AppLayoutState extends State<AppLayout> {
               ),
             )
           : const SizedBox(),
-      bottomNavigationBar: widget.showBottomBar
+      bottomNavigationBar: emailVerified && widget.showBottomBar
           ? AnimatedBottomNavigationBar.builder(
               height: 60,
               activeIndex: 0,
@@ -181,6 +123,7 @@ class _AppLayoutState extends State<AppLayout> {
               blurEffect: true,
               leftCornerRadius: 30,
               rightCornerRadius: 30,
+
               tabBuilder: (int index, bool isActive) {
                 Map<String, dynamic> list = bottomBarList[index];
                 return Container(
@@ -218,13 +161,14 @@ class _AppLayoutState extends State<AppLayout> {
               onTap: (index) => {
                 if (bottomBarList[index]['name'] != widget.route)
                   {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => bottomBarList[index]['route'],
                       ),
                     )
                   }
               },
+              //other params
             )
           : const SizedBox(),
       body: BlocProvider<AuthBloc>(
@@ -238,24 +182,148 @@ class _AppLayoutState extends State<AppLayout> {
                 ),
               );
             }
-            if (state is SendECodeToEmail) {
-              WidgetsBinding.instance.addPostFrameCallback(
-                (_) => setState(() => emailVerified = false),
-              );
-              return VerifyCode(t: t, size: size, fields: fields);
-            }
+
             if (state is EmailVerified) {
-              WidgetsBinding.instance.addPostFrameCallback(
-                (_) => setState(() => emailVerified = false),
-              );
-              return widget.body;
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
-              );
+              if (state.verified) {
+                return widget.body;
+              } else {
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) => setState(() => emailVerified = false),
+                );
+
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          t.verifyEmail,
+                          style: cartHeading,
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          t.verifyEmailText,
+                          style: cartHeading,
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                    if (state.message != null)
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        width: size.width - 20,
+                        decoration: const BoxDecoration(
+                          color: danger,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                        child: Text(
+                          state.message!,
+                          style: const TextStyle(
+                            color: white,
+                          ),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: SizedBox(
+                          height: (size.width - 20 - 5 * 6) / 6,
+                          width: size.width,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return const Gap(5);
+                            },
+                            separatorBuilder: (context, index) {
+                              return Container(
+                                width: (size.width - 20 - 5 * 6) / 6,
+                                height: (size.width - 20 - 5 * 6) / 6,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: TextFormField(
+                                  controller: fields[index]['controller'],
+                                  decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    counterText: "",
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    if (index <= 5) {
+                                      FocusScope.of(context).nextFocus();
+                                    }
+                                  },
+                                  textAlign: TextAlign.center,
+                                  maxLength: 1,
+                                  showCursor: false,
+                                  style: const TextStyle(
+                                    color: white,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                              );
+                            },
+                            itemCount: 7,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                    SizedBox(
+                      width: size.width - 30,
+                      child: TextButton(
+                        onPressed: () {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            String code = "";
+                            fields.every((e) {
+                              code = code + e['controller'].text;
+                              return true;
+                            });
+
+                            context
+                                .read<AuthBloc>()
+                                .add(VerifyEmail(code: code));
+                          });
+                        },
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          padding: const EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          t.submit,
+                          style: const TextStyle(
+                            color: white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
             }
+
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            );
           },
         ),
       ),

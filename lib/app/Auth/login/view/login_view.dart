@@ -106,6 +106,11 @@ class _LoginViewState extends State<LoginView> {
               );
           }
           if (state is AuthLogedIn) {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const DashboardView(),
+                ),
+                (route) => false);
             if (state.createPassword) {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
@@ -115,7 +120,7 @@ class _LoginViewState extends State<LoginView> {
             } else {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => const DashboardScreen(),
+                    builder: (context) => const DashboardView(),
                   ),
                   (route) => false);
             }
@@ -142,202 +147,196 @@ class _LoginViewState extends State<LoginView> {
               padding: const EdgeInsets.all(20),
               alignment: Alignment.center,
               color: white,
-              child: (state is CheckLoginLoading)
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: white,
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    Text(
+                      t.pleaseLogin,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 30,
                       ),
-                    )
-                  : Form(
-                      key: _formKey,
-                      child: ListView(
-                        children: [
-                          Text(
-                            t.pleaseLogin,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 30,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const Gap(20),
-                          TextFormField(
-                            controller: _email,
-                            validator: validator,
-                            decoration: InputDecoration(
-                              labelText: t.email,
-                              border: const OutlineInputBorder(),
-                              suffixIcon: const Icon(
-                                Icons.email,
-                              ),
-                            ),
-                          ),
-                          const Gap(30),
-                          TextFormField(
-                            controller: _password,
-                            validator: validator,
-                            obscureText: showPassword,
-                            decoration: InputDecoration(
-                              labelText: t.password,
-                              border: const OutlineInputBorder(),
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
-                                },
-                                child: Icon(
-                                  showPassword
-                                      ? FontAwesomeIcons.eye
-                                      : FontAwesomeIcons.eyeSlash,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Gap(30),
-                          SizedBox(
-                            width: size.width,
-                            child: TextButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  context.read<AuthBloc>().add(
-                                        AuthLogin(
-                                          email: _email.text,
-                                          password: _password.text,
-                                        ),
-                                      );
-                                }
+                      textAlign: TextAlign.center,
+                    ),
+                    const Gap(20),
+                    TextFormField(
+                      controller: _email,
+                      validator: validator,
+                      decoration: InputDecoration(
+                        labelText: t.email,
+                        border: const OutlineInputBorder(),
+                        suffixIcon: const Icon(
+                          Icons.email,
+                        ),
+                      ),
+                    ),
+                    const Gap(30),
+                    TextFormField(
+                      controller: _password,
+                      validator: validator,
+                      obscureText: showPassword,
+                      decoration: InputDecoration(
+                        labelText: t.password,
+                        border: const OutlineInputBorder(),
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(
+                              () {
+                                showPassword = !showPassword;
                               },
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 20),
-                                backgroundColor: Theme.of(context).primaryColor,
-                                padding: const EdgeInsets.all(15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              child: (state is AuthLoading)
-                                  ? const CircularProgressIndicator(
-                                      color: white,
-                                    )
-                                  : Text(
-                                      t.login,
-                                      style: const TextStyle(
-                                        color: white,
-                                        fontFamily: "Arial",
-                                      ),
-                                    ),
-                            ),
+                            );
+                          },
+                          child: Icon(
+                            showPassword
+                                ? FontAwesomeIcons.eye
+                                : FontAwesomeIcons.eyeSlash,
                           ),
-                          const Gap(20),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ForgetPasswordScreen(),
+                        ),
+                      ),
+                    ),
+                    const Gap(30),
+                    SizedBox(
+                      width: size.width,
+                      child: TextButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(
+                                  AuthLogin(
+                                    email: _email.text,
+                                    password: _password.text,
                                   ),
                                 );
-                              },
-                              child: Text(
-                                t.forgetPassword,
-                                textAlign: TextAlign.center,
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          padding: const EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: (state is AuthLoading)
+                            ? const CircularProgressIndicator(
+                                color: white,
+                              )
+                            : Text(
+                                t.login,
                                 style: const TextStyle(
+                                  color: white,
                                   fontFamily: "Arial",
                                 ),
                               ),
+                      ),
+                    ),
+                    const Gap(20),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ForgetPasswordScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          t.forgetPassword,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: "Arial",
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                    GestureDetector(
+                      onTap: () {
+                        _handleSignIn(context.read<AuthBloc>());
+                      },
+                      child: InkWell(
+                        onTap: () {
+                          _handleSignIn(context.read<AuthBloc>());
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
-                          const Gap(20),
-                          GestureDetector(
+                          child: InkWell(
                             onTap: () {
                               _handleSignIn(context.read<AuthBloc>());
                             },
-                            child: InkWell(
-                              onTap: () {
-                                _handleSignIn(context.read<AuthBloc>());
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: white,
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                    color: Theme.of(context).primaryColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/google_logo.png",
+                                    width: 20,
                                   ),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    _handleSignIn(context.read<AuthBloc>());
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: Wrap(
-                                      alignment: WrapAlignment.center,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/google_logo.png",
-                                          width: 20,
-                                        ),
-                                        const Gap(
-                                          0,
-                                          crossAxisExtent: 20,
-                                        ),
-                                        Text(t.signInWithGoogle),
-                                      ],
-                                    ),
+                                  const Gap(
+                                    0,
+                                    crossAxisExtent: 20,
                                   ),
-                                ),
+                                  Text(t.signInWithGoogle),
+                                ],
                               ),
                             ),
                           ),
-                          const Gap(30),
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text(t.oo),
-                          ),
-                          const Gap(30),
-                          SizedBox(
-                            width: size.width,
-                            child: TextButton(
-                              onPressed: () {
-                                WidgetsBinding.instance.addPostFrameCallback(
-                                  (_) => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignUpScreen(),
-                                    ),
-                                  ),
-                                );
-                              },
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 20),
-                                backgroundColor: white,
-                                padding: const EdgeInsets.all(15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  side: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ),
-                              child: Text(
-                                t.signUp,
-                                style: const TextStyle(
-                                  color: black,
-                                  fontFamily: "Arial",
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
+                    const Gap(30),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(t.oo),
+                    ),
+                    const Gap(30),
+                    SizedBox(
+                      width: size.width,
+                      child: TextButton(
+                        onPressed: () {
+                          WidgetsBinding.instance.addPostFrameCallback(
+                            (_) => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignUpScreen(),
+                              ),
+                            ),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20),
+                          backgroundColor: white,
+                          padding: const EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          t.signUp,
+                          style: const TextStyle(
+                            color: black,
+                            fontFamily: "Arial",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
         },

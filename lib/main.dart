@@ -18,6 +18,7 @@ import 'app/Plans/view/plans_view.dart';
 import 'app/level_details/view/subscribtion_view.dart';
 import 'app/sign_up/bloc/auth_bloc.dart';
 import 'app/local_auth/local_auth_view.dart';
+import 'app/Auth/verify_code/verify_email_view.dart';
 import 'test_three.dart';
 import 'test_two.dart';
 
@@ -39,9 +40,8 @@ void main() async {
     DevicePreview(
       enabled: false,
       builder: (context) => const MaterialApp(
-        home:
-            //  MyApp(),
-            MyAppThree(),
+        home: MyApp(),
+        // MyAppThree(),
       ),
     ),
   );
@@ -123,8 +123,6 @@ class _MyAppState extends State<MyApp> {
                     );
                   },
                 );
-                bool enableFingerprints =
-                    Storage.getBool('fingerprints') ?? false;
                 return BlocProvider<AuthBloc>(
                   create: (context) => AuthBloc()..add(CheckLogedIn()),
                   child: BlocConsumer<AuthBloc, AuthState>(
@@ -149,15 +147,16 @@ class _MyAppState extends State<MyApp> {
                       }
                     },
                     builder: (context, state) {
-                      // if (state is LogedIn) {
-                      //   return const DashboardScreen();
-                      // } else if (state is AuthLogedOut) {
-                      //   return LoginView();
-                      // } else if (state is AuthBiometrically) {
-                      //   return const BiometricScreen();
-                      // }
-                      // return LoginView();
-                      return const DashboardScreen();
+                      if (state is LogedIn) {
+                        if (state.chekBiometric!) {
+                          return const BiometricScreen();
+                        } else {
+                          return const DashboardView();
+                        }
+                      } else if (state is AuthLogedOut) {
+                        return LoginView();
+                      }
+                      return LoginView();
                     },
                   ),
                 );

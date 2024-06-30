@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Details extends StatefulWidget {
+  const Details({super.key});
+
   @override
   _DetailsState createState() => _DetailsState();
 }
@@ -52,7 +54,8 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
             axis: Axis.horizontal,
             axisAlignment: -1,
             child: Center(
-                child: Icon(Icons.error, color: Colors.white, size: iconSize))),
+                child: Icon(Icons.error_outlined,
+                    color: Colors.white, size: iconSize))),
       ),
     );
   }

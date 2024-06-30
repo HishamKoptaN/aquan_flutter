@@ -1,5 +1,5 @@
-import 'package:aquan/temporary/local_auth/bloc/local_auth_event.dart';
-import 'package:aquan/temporary/local_auth/bloc/local_auth_state.dart';
+import 'package:aquan/app/Auth/local_auth/bloc/local_auth_event.dart';
+import 'package:aquan/app/Auth/local_auth/bloc/local_auth_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';

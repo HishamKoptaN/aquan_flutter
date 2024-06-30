@@ -1,10 +1,11 @@
-part of 'auth_bloc.dart';
+part of 'navigator_bar_bloc.dart';
 
-abstract class AuthEvent {}
+@immutable
+sealed class NavigatorBarEvent {}
 
-class CheckLogedIn extends AuthEvent {}
+class CheckLogedIn extends NavigatorBarEvent {}
 
-class AuthLogin extends AuthEvent {
+class AuthLogin extends NavigatorBarEvent {
   final String email;
   final String password;
 
@@ -14,7 +15,7 @@ class AuthLogin extends AuthEvent {
   });
 }
 
-class AuthSignUp extends AuthEvent {
+class AuthSignUp extends NavigatorBarEvent {
   final String name;
   final String address;
   final String phone;
@@ -34,23 +35,23 @@ class AuthSignUp extends AuthEvent {
   });
 }
 
-class CheckEmailVerification extends AuthEvent {}
+class CheckEmailVerification extends NavigatorBarEvent {}
 
-class EmailVerificaty extends AuthEvent {}
+class EmailVerificaty extends NavigatorBarEvent {}
 
-class ResetPassword extends AuthEvent {
+class ResetPassword extends NavigatorBarEvent {
   String email;
   ResetPassword({
     required this.email,
   });
 }
 
-class VerifyEmail extends AuthEvent {
+class VerifyEmail extends NavigatorBarEvent {
   final String code;
   VerifyEmail({required this.code});
 }
 
-class SignInWithGoogle extends AuthEvent {
+class SignInWithGoogle extends NavigatorBarEvent {
   final String email;
   final String name;
 
@@ -60,7 +61,7 @@ class SignInWithGoogle extends AuthEvent {
   });
 }
 
-class CompleteSignUp extends AuthEvent {
+class CompleteSignUp extends NavigatorBarEvent {
   final String password;
   final String passwordConfirmation;
   final String? code;

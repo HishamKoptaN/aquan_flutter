@@ -73,75 +73,47 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<CheckLogedIn>(
       (event, emit) async {
-        emit(CheckLoginLoading());
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('auth_token');
         if (token == null) {
-          emit(AuthLogedOut());
+          emit(
+            AuthLogedOut(),
+          );
         } else {
           final Map<String, dynamic> response =
               await _authController.isLogedIn(token);
-
           if (response['status'] == true) {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            final bool canAuthenticate = await auth.canCheckBiometrics &&
-                await auth.isDeviceSupported() &&
-                prefs.getBool("fingerprints")!;
-
-            if (canAuthenticate) {
-              final bool didAuth = await auth.authenticate(
-                  localizedReason:
-                      'First Please authenticate to show access account');
-              if (didAuth) {
-                emit(AuthLogedIn());
-              } else {
-                emit(AuthErrors(message: "Error try again"));
-              }
+            if (prefs.getBool("fingerprints")! &&
+                await auth.isDeviceSupported()) {
+              emit(
+                LogedIn(chekBiometric: true),
+              );
             } else {
-              emit(AuthLogedIn());
+              emit(
+                LogedIn(chekBiometric: false),
+              );
             }
           } else {
-            emit(AuthLogedOut());
+            emit(
+              AuthLogedOut(),
+            );
           }
         }
       },
     );
-    on<SendEmailVerification>(
-      (event, emit) async {
-        final Map<String, dynamic> response =
-            await _authController.sendCodeToEmail(event.email);
-        if (response['status'] == true) {
-          User user = response['user'];
-          emit(
-            EmailVerify(verified: user.emailVerifiedAt != null, user: User()),
-          );
-        } else {
-          emit(
-            AuthErrors(
-              message: response['error'],
-            ),
-          );
-        }
-      },
-    );
-
     on<CheckEmailVerification>(
       (event, emit) async {
-        emit(AuthLoading());
         final Map<String, dynamic> response =
             await _userController.getProfileUser();
         if (response['status'] == true) {
           User user = response['user'];
-          if (user.emailVerifiedAt == null) {
+          if (user.emailVerifiedAt != null) {
             emit(
-              SendECodeToEmail(
-                verified: user.emailVerifiedAt != null,
-                user: user,
-              ),
+              VerifiedEmail(),
             );
-          } else if (user.emailVerifiedAt != null) {
+          } else if (user.emailVerifiedAt == null) {
             emit(
-              EmailVerified(verified: false, message: response['error']),
+              NotVerifiedEmail(),
             );
           }
         } else {
@@ -181,18 +153,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final Map<String, dynamic> response =
             await _authController.verifyEmail(event.code);
         if (response['status'] == true) {
-          emit(
-            EmailVerified(
-              verified: true,
-            ),
-          );
+          // emit(
+          //   EmailVerified(),
+          // );
         } else {
-          emit(
-            EmailVerified(
-              verified: false,
-              message: response['error'],
-            ),
-          );
+          // emit(
+          //   EmailVerified(),
+          // );
         }
       },
     );
@@ -204,12 +171,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.email,
           event.name,
         );
-
         if (response['status'] == true) {
           Storage.setString('auth_token', response['token']);
           emit(AuthLogedIn(createPassword: response['create_password']));
         } else {
-          emit(EmailVerified(verified: true, message: response['error']));
+          // emit(
+          //   EmailVerified(),
+          // );
         }
       },
     );

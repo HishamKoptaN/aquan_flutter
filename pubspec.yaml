@@ -58,6 +58,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   qr_flutter: ^4.1.0
   rxdart: ^0.27.7
+  salomon_bottom_bar: ^3.3.2
   share_plus: ^7.2.2
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0

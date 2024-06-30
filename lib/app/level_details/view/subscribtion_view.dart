@@ -19,19 +19,14 @@ class SubscribtionView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocProvider(
-          create: (context) =>
-              SubscritionDetailsBloc()..add(GetSubscribtionDetailsEvent()),
+          create: (context) => SubscritionDetailsBloc()
+            ..add(GetSubscribtionDetailsEvent(userId: 1)),
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () {},
-                child: Text('Get'),
-              ),
               BlocBuilder<SubscritionDetailsBloc, SubscritionDetailsState>(
                 builder: (context, state) {
                   if (state is SubscritionDetailsLoaded) {
                     final subscription = state.subscribtionDetails;
-
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

@@ -314,7 +314,7 @@ class _ConvertSecondScreenState extends State<ConvertSecondScreen> {
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const DashboardScreen(),
+                                                      const DashboardView(),
                                                 ),
                                                 (route) => false);
                                       });
