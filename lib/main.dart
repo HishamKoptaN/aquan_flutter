@@ -1,3 +1,4 @@
+// ignore_for_file: unused_import
 import 'package:aquan/Helpers/Storage.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/settings.dart';
@@ -13,7 +14,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Helpers/simpleBloc.dart';
+import 'app/Plans/view/plans_view.dart';
+import 'app/level_details/view/subscribtion_view.dart';
 import 'app/sign_up/bloc/auth_bloc.dart';
+import 'app/local_auth/local_auth_view.dart';
+import 'test_three.dart';
+import 'test_two.dart';
 
 void main() async {
   Bloc.observer = SimpleBlocDelegate();
@@ -28,17 +34,21 @@ void main() async {
       Settings.setup(),
     ],
   );
+
   runApp(
     DevicePreview(
       enabled: false,
-      builder: (context) => const MyApp(),
+      builder: (context) => const MaterialApp(
+        home:
+            //  MyApp(),
+            MyAppThree(),
+      ),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -68,7 +78,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -140,12 +149,15 @@ class _MyAppState extends State<MyApp> {
                       }
                     },
                     builder: (context, state) {
-                      if (state is AuthLogedIn) {
-                        return const DashboardScreen();
-                      } else if (state is AuthLogedOut) {
-                        return LoginView();
-                      }
-                      return LoginView();
+                      // if (state is LogedIn) {
+                      //   return const DashboardScreen();
+                      // } else if (state is AuthLogedOut) {
+                      //   return LoginView();
+                      // } else if (state is AuthBiometrically) {
+                      //   return const BiometricScreen();
+                      // }
+                      // return LoginView();
+                      return const DashboardScreen();
                     },
                   ),
                 );
@@ -176,9 +188,11 @@ class _RestartWidgetState extends State<RestartWidget> {
 
   void restartApp() {
     StyleColors.init();
-    setState(() {
-      key = UniqueKey();
-    });
+    setState(
+      () {
+        key = UniqueKey();
+      },
+    );
   }
 
   @override
