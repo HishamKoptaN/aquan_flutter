@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:aquan/Helpers/Storage.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/settings.dart';
@@ -10,6 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/Auth/login/view/login_view.dart';
 import 'app/Widgets/language_set.dart';
+import 'test_four.dart';
+import 'test_three.dart';
+import 'test_two.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +30,10 @@ void main() async {
   if (prefs.getBool("notifications") == null) {
     prefs.setBool("notifications", false);
   }
-
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+    // MyAppFour(),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -42,12 +49,14 @@ class _MyAppState extends State<MyApp> {
   bool error = false;
   setupColors() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      String? c = prefs.getString('color');
-      if (c != null) {
-        color = Color(int.parse("0x${prefs.getString('color')!}"));
-      }
-    });
+    setState(
+      () {
+        String? c = prefs.getString('color');
+        if (c != null) {
+          color = Color(int.parse("0x${prefs.getString('color')!}"));
+        }
+      },
+    );
   }
 
   @override

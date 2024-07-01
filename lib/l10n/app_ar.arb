@@ -127,7 +127,7 @@
 	"search": "بحث",
 	"amountSent": "تم إرسال الأموال بنجاح",
 	"notifications": "الإشعارات",
-	"from": "من",
+	"from": "من","scan_qr":"افحص البار كود",
 	"to": "إلى",
 	"price": "السعر",
 	"receivedAmount": "المبلغ المستلم",
@@ -144,7 +144,8 @@
 	"operation": "العملية",
 	"signInWithGoogle": "التسجيل باستخدام قوقل",
 	"required": "مطلوب",
-	"comment": "التعليق",
+	"comment": "التعليق",	"select_account":"إختر حساب",
+
 	"pleaseCheckInfo": "المرجو التأكد من أن جميع المعلومات التي تم ارفاقها صحيحة من ثم:",
 	"transferAmount": "تحويل مبلغ:",
 	"toThisAccount": "الى الحساب التالي:",

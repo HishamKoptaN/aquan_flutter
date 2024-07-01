@@ -1,8 +1,7 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:gap/gap.dart';
 import 'check_widget.dart';
 
 class SubscriptionOption extends StatelessWidget {
@@ -34,7 +33,7 @@ class SubscriptionOption extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(6.0),
           child: Row(
             children: [
               SizedBox(
@@ -42,6 +41,13 @@ class SubscriptionOption extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    isSelected
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                                onTap: () {}, child: const Icon(Icons.error)),
+                          )
+                        : const SizedBox(),
                     Text(
                       "${t.level} $level",
                       style: TextStyle(
@@ -55,7 +61,7 @@ class SubscriptionOption extends StatelessWidget {
                           color:
                               isSelected ? Colors.yellow[700] : Colors.black),
                     ),
-                    isSelected ? AnimatedCheck() : SizedBox(),
+                    isSelected ? AnimatedCheck() : const SizedBox(),
                   ],
                 ),
               ),
@@ -64,6 +70,7 @@ class SubscriptionOption extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Gap(20.h),
                     ...features
                         .map(
                           (feature) => Padding(

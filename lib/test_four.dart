@@ -1,154 +1,305 @@
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:provider/provider.dart'; // Add this line
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         Provider<AuthBloc>(
-//           create: (_) => AuthBloc(),
-//         ),
-//       ],
-//       child: MaterialApp(
-//         title: 'Flutter Demo',
-//         theme: ThemeData(
-//           primarySwatch: Colors.blue,
-//         ),
-//         home: VerifyCodeScreenTwo(),
-//       ),
-//     );
-//   }
-// }
+class MyAppFour extends StatefulWidget {
+  @override
+  _MyAppFourState createState() => _MyAppFourState();
+}
 
-// class AuthBloc extends Bloc<AuthEvent, AuthState> {
-//   AuthBloc() : super(AuthInitial());
+class _MyAppFourState extends State<MyAppFour> {
+  Uint8List bytes = Uint8List(0);
+  late TextEditingController _inputController;
+  late TextEditingController _outputController;
 
-//   @override
-//   Stream<AuthState> mapEventToState(AuthEvent event) async* {
-//     if (event is SendEmailVerificationCode) {
-//       yield AuthLoading();
-//       try {
-//         final Map<String, dynamic> response =
-//             await YourAPIClient().sendVerifyEmail(event.email);
-//         if (response['status'] == true) {
-//           yield AuthSuccess(message: 'Verification code sent successfully.');
-//         } else {
-//           yield AuthFailure(error: response['error']);
-//         }
-//       } catch (e) {
-//         yield AuthFailure(error: e.toString());
-//       }
-//     }
-//   }
-// }
+  @override
+  initState() {
+    super.initState();
+    _inputController = TextEditingController();
+    _outputController = TextEditingController();
+  }
 
-// class VerifyCodeScreenTwo extends StatelessWidget {
-//   final String email = "heshamkoptan@gmail.com";
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.grey[300],
+        body: Builder(
+          builder: (BuildContext context) {
+            return ListView(
+              children: <Widget>[
+                _qrCodeWidget(bytes, context),
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        controller: _inputController,
+                        keyboardType: TextInputType.url,
+                        textInputAction: TextInputAction.go,
+                        onSubmitted: (value) => _generateBarCode(value),
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.text_fields),
+                          helperText:
+                              'Please input your code to generage qrcode image.',
+                          hintText: 'Please Input Your Code',
+                          hintStyle: TextStyle(fontSize: 15),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 7, vertical: 15),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextField(
+                        controller: _outputController,
+                        maxLines: 2,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.wrap_text),
+                          helperText:
+                              'The barcode or qrcode you scan will be displayed in this area.',
+                          hintText:
+                              'The barcode or qrcode you scan will be displayed in this area.',
+                          hintStyle: TextStyle(fontSize: 15),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 7, vertical: 15),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      _buttonGroup(),
+                      const SizedBox(height: 70),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _scanBytes(),
+          tooltip: 'Take a Photo',
+          child: const Icon(Icons.camera_alt),
+        ),
+      ),
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Resend Verification '),
-//       ),
-//       body: BlocListener<AuthBloc, AuthState>(
-//         listener: (context, state) {
-//           if (state is AuthLoading) {
-//             showDialog(
-//               context: context,
-//               barrierDismissible: false,
-//               builder: (context) => Center(child: CircularProgressIndicator()),
-//             );
-//           } else if (state is AuthSuccess) {
-//             Navigator.of(context).pop();
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               SnackBar(content: Text(state.message)),
-//             );
-//           } else if (state is AuthFailure) {
-//             Navigator.of(context).pop();
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               SnackBar(content: Text(state.error)),
-//             );
-//           }
-//         },
-//         child: Padding(
-//           padding: EdgeInsets.all(16.0),
-//           child: Column(
-//             children: [
-//               // لا نحتاج إلى حقل إدخال هنا
-//               SizedBox(height: 16.0),
-//               ElevatedButton(
-//                 onPressed: () {
-//                   // إرسال البريد الإلكتروني المحدد مباشرة عند الضغط على الزر
-//                   context
-//                       .read<AuthBloc>()
-//                       .add(SendEmailVerificationCode(email));
-//                 },
-//                 child: Text('Send Verification Code'),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  Widget _qrCodeWidget(Uint8List bytes, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Card(
+        elevation: 6,
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+              decoration: const BoxDecoration(
+                color: Colors.black12,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
+              ),
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Icon(Icons.verified_user, size: 18, color: Colors.green),
+                  Text('  Generate Qrcode', style: TextStyle(fontSize: 15)),
+                  Spacer(),
+                  Icon(Icons.more_vert, size: 18, color: Colors.black54),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 40, right: 40, top: 30, bottom: 10),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 190,
+                    child: bytes.isEmpty
+                        ? const Center(
+                            child: Text('Empty code ... ',
+                                style: TextStyle(color: Colors.black38)),
+                          )
+                        : Image.memory(bytes),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7, left: 25, right: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 5,
+                          child: GestureDetector(
+                            child: const Text(
+                              'remove',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.blue),
+                              textAlign: TextAlign.left,
+                            ),
+                            onTap: () =>
+                                setState(() => this.bytes = Uint8List(0)),
+                          ),
+                        ),
+                        const Text('|',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black26)),
+                        Expanded(
+                          flex: 5,
+                          child: GestureDetector(
+                            onTap: () async {
+                              final success =
+                                  await ImageGallerySaver.saveImage(this.bytes);
+                              SnackBar snackBar;
+                              if (success) {
+                                // snackBar = new SnackBar(
+                                //     content:
+                                //         new Text('Successful Preservation!'));
+                                // Scaffold.of(context).showSnackBar(snackBar);
+                              } else {
+                                snackBar = const SnackBar(
+                                    content: Text('Save failed!'));
+                              }
+                            },
+                            child: const Text(
+                              'save',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.blue),
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const Divider(height: 2, color: Colors.black26),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+              child: const Row(
+                children: <Widget>[
+                  Icon(Icons.history, size: 16, color: Colors.black38),
+                  Text('  Generate History',
+                      style: TextStyle(fontSize: 14, color: Colors.black38)),
+                  Spacer(),
+                  Icon(Icons.chevron_right, size: 16, color: Colors.black38),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
-// class YourAPIClient {
-//   Future<Map<String, dynamic>> sendVerifyEmail(String email) async {
-//     var url = Uri.parse('https://dash.aquan.website/api/resendcode');
-//     var headers = {
-//       'Accept': '*/*',
-//       'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
-//       'Authorization':
-//           'Bearer 12|TGgrM4JHy9R3oVQk5eqVGwoU7r11o55EusdwMNpP19b183c1',
-//       'Content-Type': 'application/json',
-//     };
-//     var body = {
-//       "email": email,
-//     };
+  Widget _buttonGroup() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            height: 120,
+            child: InkWell(
+              onTap: () => _generateBarCode(_inputController.text),
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Image.asset('images/generate_qrcode.png'),
+                    ),
+                    const Divider(height: 20),
+                    const Expanded(flex: 1, child: Text("Generate")),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            height: 120,
+            child: InkWell(
+              onTap: _scan,
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Image.asset('images/scanner.png'),
+                    ),
+                    const Divider(height: 20),
+                    const Expanded(flex: 1, child: Text("Scan")),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: SizedBox(
+            height: 120,
+            child: InkWell(
+              onTap: _scanPhoto,
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Image.asset('images/albums.png'),
+                    ),
+                    const Divider(height: 20),
+                    const Expanded(flex: 1, child: Text("Scan Photo")),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
-//     var response = await http.post(
-//       url,
-//       headers: headers,
-//       body: json.encode(body),
-//     );
+  Future _scan() async {
+    await Permission.camera.request();
+    String? barcode = await scanner.scan();
+    if (barcode == null) {
+      print('nothing return.');
+    } else {
+      _outputController.text = barcode;
+    }
+  }
 
-//     if (response.statusCode >= 200 && response.statusCode < 300) {
-//       Map<String, dynamic> data = jsonDecode(response.body);
-//       return data;
-//     } else {
-//       throw Exception('Failed to send verification email');
-//     }
-//   }
-// }
+  Future _scanPhoto() async {
+    await Permission.storage.request();
+    String barcode = await scanner.scanPhoto();
+    _outputController.text = barcode;
+  }
 
-// abstract class AuthEvent {}
+  Future _scanPath(String path) async {
+    await Permission.storage.request();
+    String barcode = await scanner.scanPath(path);
+    _outputController.text = barcode;
+  }
 
-// class SendEmailVerificationCode extends AuthEvent {
-//   final String email;
+  Future _scanBytes() async {
+    // File file =
+    //     await ImagePicker().getImage(source: ImageSource.camera).then((picked) {
+    //   if (picked == null) return null;
+    //   return File(picked.path);
+    // });
+    // if (file == null) return;
+    // Uint8List bytes = file.readAsBytesSync();
+    // String barcode = await scanner.scanBytes(bytes);
+    // this._outputController.text = barcode;
+  }
 
-//   SendEmailVerificationCode(this.email);
-// }
-
-// abstract class AuthState {}
-
-// class AuthInitial extends AuthState {}
-
-// class AuthLoading extends AuthState {}
-
-// class AuthSuccess extends AuthState {
-//   final String message;
-
-//   AuthSuccess({required this.message});
-// }
-
-// class AuthFailure extends AuthState {
-//   final String error;
-
-//   AuthFailure({required this.error});
-// }
+  Future _generateBarCode(String inputCode) async {
+    Uint8List result = await scanner.generateBarCode(inputCode);
+    setState(() => bytes = result);
+  }
+}

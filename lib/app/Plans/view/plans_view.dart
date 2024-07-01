@@ -13,7 +13,6 @@ class PlansScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    bool isChecked = false;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -67,8 +66,6 @@ class PlansScreen extends StatelessWidget {
                                   ? '\$${plan.amount}'
                                   : t.free,
                               features: [
-                                // '${t.priceOfSelling}: ${plan.sellingPrice.toString()}',
-                                // '${t.priceOfBuying}: ${plan.discount.toString()}',
                                 '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
                                 '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
                                 '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',

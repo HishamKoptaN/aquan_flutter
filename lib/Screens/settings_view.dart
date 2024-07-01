@@ -198,40 +198,6 @@ class SettingsScreen extends StatelessWidget {
                   builder: (context) => const NotificationsScreen(),
                 ),
               );
-              showModalBottomSheet(
-                useRootNavigator: true,
-                useSafeArea: true,
-                enableDrag: true,
-                context: context,
-                builder: (context) {
-                  return Container(
-                    height: size.height * .2,
-                    width: size.width,
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          t.enableNotificationsText,
-                          style: const TextStyle(
-                            color: black,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const Gap(20),
-                        CupertinoSwitch(
-                          value: Storage.getBool("notifications",
-                                  defaultValue: true) ??
-                              true,
-                          onChanged: (value) {
-                            Storage.setBool('notifications', value);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
             },
           ),
           SettingsTabWidget(
@@ -239,40 +205,6 @@ class SettingsScreen extends StatelessWidget {
             icon: FontAwesomeIcons.fingerprint,
             onTap: () {
               showBiometricBottomSheet(context);
-              // showModalBottomSheet(
-              //   useRootNavigator: true,
-              //   useSafeArea: true,
-              //   enableDrag: true,
-              //   context: context,
-              //   builder: (context) {
-              //     return Container(
-              //       height: size.height * .2,
-              //       width: size.width,
-              //       padding: const EdgeInsets.all(10),
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Text(
-              //             t.biometricsButtonText,
-              //             style: const TextStyle(
-              //               color: black,
-              //               fontSize: 20,
-              //             ),
-              //           ),
-              //           const Gap(20),
-              //           CupertinoSwitch(
-              //               value: Storage.getBool("fingerprints",
-              //                       defaultValue: false) ??
-              //                   false,
-              //               onChanged: (value) async {
-              //                 setFingerprints;
-              //                 Navigator.pop(context);
-              //               }),
-              //         ],
-              //       ),
-              //     );
-              //   },
-              // );
             },
           ),
           SettingsTabWidget(

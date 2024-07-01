@@ -14,6 +14,7 @@ final class CurrencyError extends CurrencyState {
 
 class CurrenciesDone extends CurrencyState {
   final List<Currency> currencies;
+
   final User user;
 
 //   final double? amount;

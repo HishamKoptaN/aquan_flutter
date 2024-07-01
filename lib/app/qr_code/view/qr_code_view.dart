@@ -79,54 +79,54 @@ class _QrCodeViewState extends State<QrCodeView> {
                         child: Center(
                           child: BarcodeWidget(
                             barcode:
-                                Barcode.aztec(), // Barcode type and settings
+                                Barcode.qrCode(), // Barcode type and settings
                             data: user.id.toString(),
-                            color: const Color(0xFF8194FE),
+
                             height: height / 3,
                             width: width / 2,
                           ),
                         ),
                       ),
                       const SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<QrCodeBloc>(context)
-                              .add(ShareQrCode());
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(12),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 32.0,
-                                    color:
-                                        const Color.fromARGB(255, 133, 142, 212)
-                                            .withOpacity(0.68),
-                                  ),
-                                ],
-                              ),
-                              child: const Icon(
-                                EvaIcons.shareOutline,
-                                color: Color(0xFF6565FF),
-                              ),
-                            ),
-                            const Gap(8),
-                            const Text(
-                              "Share",
-                              style: TextStyle(
-                                fontFamily: 'poppins_semi_bold',
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     BlocProvider.of<QrCodeBloc>(context)
+                      //         .add(ShareQrCode());
+                      //   },
+                      //   child: Column(
+                      //     children: [
+                      //       Container(
+                      //         padding: const EdgeInsets.all(12),
+                      //         decoration: BoxDecoration(
+                      //           color: Colors.white,
+                      //           borderRadius: const BorderRadius.all(
+                      //             Radius.circular(12),
+                      //           ),
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               blurRadius: 32.0,
+                      //               color:
+                      //                   const Color.fromARGB(255, 133, 142, 212)
+                      //                       .withOpacity(0.68),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         child: const Icon(
+                      //           EvaIcons.shareOutline,
+                      //           color: Color(0xFF6565FF),
+                      //         ),
+                      //       ),
+                      //       const Gap(8),
+                      //       const Text(
+                      //         "Share",
+                      //         style: TextStyle(
+                      //           fontFamily: 'poppins_semi_bold',
+                      //           fontSize: 14,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

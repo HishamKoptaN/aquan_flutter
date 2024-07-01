@@ -5,9 +5,12 @@ import 'package:aquan/app/Auth/User/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:motion_toast/resources/colors.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class SendToAccount extends StatefulWidget {
   const SendToAccount({super.key});
@@ -17,9 +20,22 @@ class SendToAccount extends StatefulWidget {
 }
 
 class _SendToAccountState extends State<SendToAccount> {
-  String accountId = "";
+  TextEditingController accountIdController = TextEditingController();
   String amount = "";
   bool loading = false;
+  late TextEditingController _outputController;
+
+  Future _scan() async {
+    await Permission.camera.request();
+    String? barcode = await scanner.scan();
+    if (barcode != null) {
+      setState(
+        () {
+          accountIdController.text = barcode;
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +52,11 @@ class _SendToAccountState extends State<SendToAccount> {
                 state is AmountSent) {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) {
-                  setState(() {
-                    loading = false;
-                  });
+                  setState(
+                    () {
+                      loading = false;
+                    },
+                  );
                 },
               );
             }
@@ -84,6 +102,7 @@ class _SendToAccountState extends State<SendToAccount> {
                       ),
                     ),
                   TextField(
+                    controller: accountIdController,
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: t.accountId,
@@ -94,7 +113,7 @@ class _SendToAccountState extends State<SendToAccount> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        accountId = value;
+                        accountIdController.text = value;
                       });
                     },
                   ),
@@ -106,10 +125,10 @@ class _SendToAccountState extends State<SendToAccount> {
                         setState(() {
                           loading = true;
                         });
-                        if (accountId.isNotEmpty) {
+                        if (accountIdController.text.isNotEmpty) {
                           context.read<UserBloc>().add(
                                 GetNameOfUserByAccount(
-                                  accountId: accountId,
+                                  accountId: accountIdController.text,
                                 ),
                               );
                         }
@@ -169,13 +188,17 @@ class _SendToAccountState extends State<SendToAccount> {
                       width: double.maxFinite,
                       child: TextButton(
                         onPressed: () {
-                          setState(() {
-                            loading = true;
-                          });
-                          if (accountId.isNotEmpty && state.name.isNotEmpty) {
+                          setState(
+                            () {
+                              loading = true;
+                            },
+                          );
+                          if (accountIdController.text.isNotEmpty &&
+                              state.name.isNotEmpty) {
                             context.read<UserBloc>().add(
                                   SendPaymentToOtherAccount(
-                                      accountId: accountId, amount: amount),
+                                      accountId: accountIdController.text,
+                                      amount: amount),
                                 );
                           }
                         },
@@ -196,6 +219,31 @@ class _SendToAccountState extends State<SendToAccount> {
                         ),
                       ),
                     ),
+                  SizedBox(
+                    height: 75.h,
+                    width: 200.w,
+                    child: GestureDetector(
+                      onTap: () {
+                        _scan();
+                      },
+                      child: Center(
+                        child: Card(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.qrcode,
+                              ),
+                              Text(
+                                t.scan_qr,
+                                style: TextStyle(fontSize: 25.sp),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );

@@ -6,6 +6,7 @@ import 'package:aquan/app/currency/model/currency.dart';
 import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/app/Widgets/convert_currency_price.dart';
 import 'package:aquan/app/Widgets/select_currency.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'convert_2_view.dart';
+import 'widgets/select_account.dart';
 
 class ConvertScreen extends StatefulWidget {
   const ConvertScreen({super.key});
@@ -232,6 +234,19 @@ class _ConvertScreenState extends State<ConvertScreen> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              SelectAccuWidget(
+                                name: t.select_account,
+                                accountInfo: state.user.accountInfo,
+                                onChanged: (value) {
+                                  if (value != null && value.isNotEmpty) {
+                                    setState(() {
+                                      _accountId.text = value;
+                                    });
+                                  }
+                                },
+                                width: 250.w,
+                              ),
+                              const Gap(10),
                               Text(
                                 t.accountId,
                                 style: const TextStyle(
@@ -248,7 +263,6 @@ class _ConvertScreenState extends State<ConvertScreen> {
                                     if (value == null || value.isEmpty) {
                                       return t.required;
                                     }
-
                                     return null;
                                   },
                                   decoration: InputDecoration(
