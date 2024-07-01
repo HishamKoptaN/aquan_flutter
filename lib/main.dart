@@ -1,88 +1,90 @@
-// ignore_for_file: unused_import
 import 'package:aquan/Helpers/Storage.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/settings.dart';
 import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/Language/bloc/language_bloc.dart';
-import 'package:aquan/app/Auth/login/view/login_view.dart';
-import 'package:aquan/app/Widgets/language_set.dart';
-import 'package:aquan/app/home_page/view/dashboard.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Helpers/simpleBloc.dart';
-import 'app/Plans/view/plans_view.dart';
-import 'app/level_details/view/subscribtion_view.dart';
-import 'app/sign_up/bloc/auth_bloc.dart';
-import 'app/local_auth/local_auth_view.dart';
-import 'app/Auth/verify_code/verify_email_view.dart';
-import 'test_three.dart';
-import 'test_two.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'app/Auth/login/view/login_view.dart';
+import 'app/Widgets/language_set.dart';
 
 void main() async {
-  Bloc.observer = SimpleBlocDelegate();
   WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
   };
-  await Future.wait(
-    [
-      SharedPreferences.getInstance(),
-      Storage.init(),
-      Settings.setup(),
-    ],
-  );
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await Storage.init();
+  await Settings.setup();
+  if (prefs.getBool("fingerprints") == null) {
+    prefs.setBool("fingerprints", false);
+  }
+  if (prefs.getBool("notifications") == null) {
+    prefs.setBool("notifications", false);
+  }
 
-  runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => const MaterialApp(
-        home: MyApp(),
-        // MyAppThree(),
-      ),
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   String locale = Storage.getString('language') ?? 'en';
   Color color = primary;
+  bool error = false;
+  setupColors() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      String? c = prefs.getString('color');
+      if (c != null) {
+        color = Color(int.parse("0x${prefs.getString('color')!}"));
+      }
+    });
+  }
 
   @override
   void initState() {
-    super.initState();
     setupColors();
-  }
 
-  Future<void> setupColors() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(
-      () {
-        String? colorString = prefs.getString('color');
-        if (colorString != null) {
-          color = Color(int.parse("0x$colorString"));
-        }
-      },
-    );
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        builder: (context, widget) {
+          FlutterError.onError = (details) async {
+            FlutterError.presentError(details);
+            WidgetsBinding.instance.addPostFrameCallback(
+              (_) {
+                setState(() => error = true);
+              },
+            );
+          };
+
+          ErrorWidget.builder = (errorDetails) {
+            return Scaffold(
+              body: Center(
+                child: Text(errorDetails.toString()),
+              ),
+            );
+          };
+
+          if (widget != null) return widget;
+          throw StateError('widget is null');
+        },
         title: 'AQUAN',
         debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -91,77 +93,45 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primaryColor: color,
           colorScheme: ColorScheme.fromSeed(
-            seedColor: color,
+            seedColor: Theme.of(context).primaryColor,
           ),
           fontFamily: "Arial",
           useMaterial3: true,
         ),
         home: BlocProvider<LanguageBloc>(
-          create: (BuildContext context) =>
-              LanguageBloc()..add(CheckLanguage()),
+          create: (BuildContext context) => LanguageBloc()
+            ..add(
+              CheckLanguage(),
+            ),
           child: BlocBuilder<LanguageBloc, LanguageState>(
             builder: (context, state) {
               if (state is SetLanguage) {
                 return LanguageSetWidget(
                   onPress: () {
-                    context.read<LanguageBloc>().add(SetLocale(locale: locale));
+                    context.read<LanguageBloc>().add(
+                          SetLocale(locale: locale),
+                        );
                   },
-                  onChanged: (value) => setState(
-                    () {
-                      locale = value!;
-                    },
-                  ),
+                  onChanged: (value) => {
+                    setState(
+                      () {
+                        locale = value!;
+                      },
+                    )
+                  },
                 );
               }
               if (state is LanguageSeted) {
                 WidgetsBinding.instance.addPostFrameCallback(
-                  (_) {
-                    setState(
-                      () {
-                        locale = Storage.getString('language') ?? 'en';
-                      },
-                    );
-                  },
-                );
-                return BlocProvider<AuthBloc>(
-                  create: (context) => AuthBloc()..add(CheckLogedIn()),
-                  child: BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is AuthErrors) {
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(
-                            SnackBar(
-                              backgroundColor: danger,
-                              duration: const Duration(seconds: 3),
-                              content: Text(
-                                state.message!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          );
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is LogedIn) {
-                        if (state.chekBiometric!) {
-                          return const BiometricScreen();
-                        } else {
-                          return const DashboardView();
-                        }
-                      } else if (state is AuthLogedOut) {
-                        return LoginView();
-                      }
-                      return LoginView();
+                  (_) => setState(
+                    () {
+                      locale = Storage.getString('language') ?? 'en';
                     },
                   ),
                 );
+                return LoginView();
               }
-              return const Center(child: CircularProgressIndicator());
+              return const CircularProgressIndicator();
             },
           ),
         ),
@@ -172,6 +142,7 @@ class _MyAppState extends State<MyApp> {
 
 class RestartWidget extends StatefulWidget {
   const RestartWidget({super.key, required this.child});
+
   final Widget child;
 
   static void restartApp(BuildContext context) {
@@ -179,6 +150,7 @@ class RestartWidget extends StatefulWidget {
   }
 
   @override
+  // ignore: library_private_types_in_public_api
   _RestartWidgetState createState() => _RestartWidgetState();
 }
 
@@ -187,11 +159,9 @@ class _RestartWidgetState extends State<RestartWidget> {
 
   void restartApp() {
     StyleColors.init();
-    setState(
-      () {
-        key = UniqueKey();
-      },
-    );
+    setState(() {
+      key = UniqueKey();
+    });
   }
 
   @override

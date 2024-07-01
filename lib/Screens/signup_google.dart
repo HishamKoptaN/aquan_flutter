@@ -63,7 +63,7 @@ class _SignUpGoogleState extends State<SignUpGoogle> {
           if (state is SignUpCompleted) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const DashboardView(),
+                  builder: (context) => const DashboardScreen(),
                 ),
                 (route) => false);
           }

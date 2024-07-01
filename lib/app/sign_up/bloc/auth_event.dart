@@ -36,7 +36,10 @@ class AuthSignUp extends AuthEvent {
 
 class CheckEmailVerification extends AuthEvent {}
 
-class EmailVerificaty extends AuthEvent {}
+class SendEmailVerification extends AuthEvent {
+  final String email;
+  SendEmailVerification({required this.email});
+}
 
 class ResetPassword extends AuthEvent {
   String email;
@@ -47,6 +50,7 @@ class ResetPassword extends AuthEvent {
 
 class VerifyEmail extends AuthEvent {
   final String code;
+
   VerifyEmail({required this.code});
 }
 

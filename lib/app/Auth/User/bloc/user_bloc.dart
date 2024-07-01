@@ -1,10 +1,12 @@
 import 'dart:io';
+
 import 'package:aquan/app/Auth/controller/user_controller.dart';
 import 'package:aquan/app/currency/model/currency.dart';
 import 'package:aquan/app/notifications/model/notification.dart';
 import 'package:aquan/app/transaction/model/transaction.dart';
 import 'package:aquan/app/Auth/model/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 part 'user_event.dart';
 part 'user_state.dart';
 
@@ -47,23 +49,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       },
     );
 
-    on<ChangeProfile>(
-      (event, emit) async {
-        emit(UserLoading());
+    on<ChangeProfile>((event, emit) async {
+      emit(UserLoading());
 
-        Map<String, dynamic> data = await _controller.changeProfileUser(
-          event.name,
-          event.address,
-          event.phone,
-        );
+      Map<String, dynamic> data = await _controller.changeProfileUser(
+        event.name,
+        event.address,
+        event.phone,
+      );
 
-        if (data['status']) {
-          emit(ProfileDone(user: data['user'], updated: true));
-        } else {
-          emit(UserError(message: data['error']));
-        }
-      },
-    );
+      if (data['status']) {
+        emit(ProfileDone(user: data['user'], updated: true));
+      } else {
+        emit(UserError(message: data['error']));
+      }
+    });
 
     on<ChangeAccountInfo>((event, emit) async {
       emit(UserLoading());

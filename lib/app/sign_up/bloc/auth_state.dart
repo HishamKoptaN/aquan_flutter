@@ -16,9 +16,20 @@ class AuthLogedIn extends AuthState {
 
 class AuthLogedOut extends AuthState {}
 
-class NotVerifiedEmail extends AuthState {}
+class LogedIn extends AuthState {}
 
-class VerifiedEmail extends AuthState {}
+class AuthErrors extends AuthState {
+  final String? message;
+
+  AuthErrors({required this.message});
+}
+
+class EmailVerify extends AuthState {
+  final bool verified;
+  final String? message;
+  final User user;
+  EmailVerify({required this.user, required this.verified, this.message});
+}
 
 class EmailVerified extends AuthState {
   final bool verified;
@@ -27,16 +38,14 @@ class EmailVerified extends AuthState {
   EmailVerified({required this.verified, this.message});
 }
 
-class LogedIn extends AuthState {
-  bool? chekBiometric;
-  bool? verivied;
-  LogedIn({this.chekBiometric, this.verivied});
-}
+class SendECodeToEmail extends AuthState {
+  final bool verified;
+  final User user;
 
-class AuthErrors extends AuthState {
-  final String? message;
-
-  AuthErrors({required this.message});
+  SendECodeToEmail({
+    required this.user,
+    required this.verified,
+  });
 }
 
 class ResetPassowrdEmailSent extends AuthState {

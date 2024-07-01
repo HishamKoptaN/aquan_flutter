@@ -57,21 +57,22 @@ class UserController {
   ) async {
     http.Response response = await http.post(
       Uri.parse(auth['user']!),
-      body: jsonEncode(
-        {
-          'name': name,
-          'address': address,
-          'phone': phone,
-        },
-      ),
+      body: jsonEncode({
+        'name': name,
+        'address': address,
+        'phone': phone,
+      }),
       headers: await AuthController.getAuthHeaders(),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
+
       data['user'] = User.fromJson(data['user']);
+
       return data;
     }
+
     throw Exception(response.reasonPhrase);
   }
 
@@ -82,6 +83,7 @@ class UserController {
       body: jsonEncode({'accountInfo': accountInfo}),
       headers: await AuthController.getAuthHeaders(),
     );
+
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
 

@@ -15,14 +15,14 @@ import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../profile/profile_view.dart';
 
-class DashboardView extends StatefulWidget {
-  const DashboardView({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  State<DashboardView> createState() => _DashboardViewState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardViewState extends State<DashboardView> {
+class _DashboardScreenState extends State<DashboardScreen> {
   bool copy = false;
 
   @override
