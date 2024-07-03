@@ -576,7 +576,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
               );
             }
-
             return Center(
               child: CircularProgressIndicator(
                 color: Theme.of(context).primaryColor,

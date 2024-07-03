@@ -1,13 +1,16 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
-import 'package:flutter/material.dart';
-import 'package:aquan/app/sign_up/bloc/auth_bloc.dart';
+
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/app/sign_up/bloc/auth_bloc.dart';
 
-class VerifyCode extends StatelessWidget {
-  const VerifyCode({
+class VerifyCodeView extends StatefulWidget {
+  const VerifyCodeView({
     super.key,
     required this.t,
     required this.size,
@@ -19,9 +22,43 @@ class VerifyCode extends StatelessWidget {
   final List<Map<String, dynamic>> fields;
 
   @override
+  State<VerifyCodeView> createState() => _VerifyCodeViewState();
+}
+
+class _VerifyCodeViewState extends State<VerifyCodeView> {
+  int _timerSeconds = 0;
+  Timer? _timer;
+
+  void _startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (Timer timer) {
+      setState(() {
+        if (_timerSeconds < 1) {
+          timer.cancel();
+        } else {
+          _timerSeconds--;
+        }
+      });
+    });
+  }
+
+  void _startEmailVerification() {
+    setState(() {
+      _timerSeconds = 60;
+    });
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
-      builder: (BuildContext context, AuthState state) {
+      builder: (BuildContext context, state) {
         if (state is SendECodeToEmail) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -30,7 +67,7 @@ class VerifyCode extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    t.verifyEmail,
+                    widget.t.verifyEmail,
                     style: cartHeading,
                   ),
                 ),
@@ -40,7 +77,7 @@ class VerifyCode extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    t.verifyEmailText,
+                    widget.t.verifyEmailText,
                     style: cartHeading,
                   ),
                 ),
@@ -51,8 +88,8 @@ class VerifyCode extends StatelessWidget {
                 child: Directionality(
                   textDirection: TextDirection.ltr,
                   child: SizedBox(
-                    height: (size.width - 20 - 5 * 6) / 5,
-                    width: size.width,
+                    height: (widget.size.width - 20 - 5 * 6) / 5,
+                    width: widget.size.width,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -60,14 +97,14 @@ class VerifyCode extends StatelessWidget {
                       },
                       separatorBuilder: (context, index) {
                         return Container(
-                          width: (size.width - 20 - 5 * 6) / 6,
-                          height: (size.width - 20 - 5 * 6) / 6,
+                          width: (widget.size.width - 20 - 5 * 6) / 6,
+                          height: (widget.size.width - 20 - 5 * 6) / 6,
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: TextFormField(
-                            controller: fields[index]['controller'],
+                            controller: widget.fields[index]['controller'],
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               counterText: "",
@@ -95,13 +132,13 @@ class VerifyCode extends StatelessWidget {
               ),
               const Gap(20),
               SizedBox(
-                width: size.width - 30,
+                width: widget.size.width - 30,
                 child: TextButton(
                   onPressed: () {
                     WidgetsBinding.instance.addPostFrameCallback(
                       (_) {
                         String code = "";
-                        fields.every(
+                        widget.fields.every(
                           (e) {
                             code = code + e['controller'].text;
                             return true;
@@ -123,7 +160,7 @@ class VerifyCode extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    t.submit,
+                    widget.t.submit,
                     style: const TextStyle(
                       color: white,
                     ),
@@ -132,28 +169,37 @@ class VerifyCode extends StatelessWidget {
               ),
               const Gap(20),
               SizedBox(
-                width: size.width - 30,
+                width: widget.size.width - 30,
                 child: TextButton(
-                  onPressed: () async {
-                    context.read<AuthBloc>().add(
-                          SendEmailVerification(
-                            email: state.user.email!,
-                          ),
-                        );
-                  },
+                  onPressed: _timerSeconds == 0
+                      ? () {
+                          context.read<AuthBloc>().add(
+                                SendEmailVerification(
+                                  email: state.user.email!,
+                                ),
+                              );
+                          _startEmailVerification();
+                        }
+                      : null,
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: _timerSeconds == 0
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
                     padding: const EdgeInsets.all(15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                       side: BorderSide(
-                        color: Theme.of(context).primaryColor,
+                        color: _timerSeconds == 0
+                            ? Theme.of(context).primaryColor
+                            : Colors.grey,
                       ),
                     ),
                   ),
                   child: Text(
-                    t.sendMessage,
+                    _timerSeconds == 0
+                        ? widget.t.send_verification_code
+                        : '$_timerSeconds seconds',
                     style: const TextStyle(
                       color: white,
                     ),

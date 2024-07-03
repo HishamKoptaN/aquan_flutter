@@ -1,6 +1,6 @@
 import "dart:convert";
 import "dart:io";
-import "package:aquan/app/sign_up/auth_controller.dart";
+import "package:aquan/app/sign_up/controller/auth_controller.dart";
 import "package:aquan/Helpers/routes.dart";
 import "package:aquan/app/Plans/model/plan.dart";
 import "package:aquan/app/Auth/model/user.dart";

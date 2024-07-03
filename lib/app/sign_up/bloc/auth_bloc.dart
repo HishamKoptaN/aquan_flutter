@@ -1,4 +1,4 @@
-import 'package:aquan/app/sign_up/auth_controller.dart';
+import 'package:aquan/app/sign_up/controller/auth_controller.dart';
 import 'package:aquan/app/Auth/controller/user_controller.dart';
 import 'package:aquan/Helpers/storage.dart';
 import 'package:aquan/app/Auth/model/user.dart';

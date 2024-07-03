@@ -4,11 +4,27 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aquan/app/Plans/bloc/plan_bloc.dart';
 import 'package:aquan/app/Plans/view/change_plan_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../controller/plan_controller.dart';
 import 'widgets/plan_row.dart';
-import 'widgets/check_box_widget.dart';
 
-class PlansScreen extends StatelessWidget {
+class PlansScreen extends StatefulWidget {
   const PlansScreen({super.key});
+
+  @override
+  State<PlansScreen> createState() => _PlansScreenState();
+}
+
+class _PlansScreenState extends State<PlansScreen> {
+  bool _isChecked = false;
+  PlanController planController = PlanController();
+
+  void _toggleCheckbox(bool? value) {
+    setState(
+      () {
+        _isChecked = value ?? false;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +147,10 @@ class PlansScreen extends StatelessWidget {
                       decoration: TextDecoration.underline, // إضافة خط تحت النص
                     ),
                   ),
-                  const CheckboxExample(),
+                  Checkbox(
+                    value: _isChecked,
+                    onChanged: _toggleCheckbox,
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -144,7 +163,9 @@ class PlansScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    _isChecked ? print("true") : print("false");
+                  },
                   child: Text(
                     'تفعيل الاشتراك',
                     style: TextStyle(fontSize: 20.sp, color: Colors.black),

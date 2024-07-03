@@ -9,6 +9,8 @@ import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../home_page/view/dashboard.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -330,7 +332,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (state is AuthLogedIn) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const PlansScreen(),
+                  builder: (context) => const DashboardScreen(),
                 ),
                 (route) => false);
           }
@@ -550,13 +552,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       width: size.width,
                       child: TextButton(
                         onPressed: () {
-                          // WidgetsBinding.instance.addPostFrameCallback(
-                          //   (_) => Navigator.of(context).push(
-                          //     MaterialPageRoute(
-                          //       builder: (context) => LoginView(),
-                          //     ),
-                          //   ),
-                          // );
+                          WidgetsBinding.instance.addPostFrameCallback(
+                            (_) => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => LoginView(),
+                              ),
+                            ),
+                          );
                         },
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(fontSize: 20),

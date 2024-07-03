@@ -5,7 +5,7 @@ import 'package:aquan/Helpers/storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../sign_up/auth_controller.dart';
+import '../../../sign_up/controller/auth_controller.dart';
 
 class LoginController {
   Future<Map<String, dynamic>> login(String? email, String? password) async {

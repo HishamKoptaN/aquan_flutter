@@ -21,8 +21,22 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
     final t = AppLocalizations.of(context)!;
     Size size = MediaQuery.of(context).size;
 
-    return AppLayout(
-      route: t.myAccounts,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          t.myAccounts,
+          style: const TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+      ),
       body: Container(
         padding: const EdgeInsets.all(10),
         child: BlocProvider<UserBloc>(
@@ -77,50 +91,52 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                 List<TextEditingController> controllers = [];
                 final List<String> currencies = [];
 
-                state.user.accountInfo?.every((a) {
-                  TextEditingController controller =
-                      TextEditingController(text: a.value);
-                  currencies.add(a.currency!);
+                state.user.accountInfo?.every(
+                  (a) {
+                    TextEditingController controller =
+                        TextEditingController(text: a.value);
+                    currencies.add(a.currency!);
 
-                  controllers.add(controller);
-                  childs.add(
-                    Text(
-                      a.currency!,
-                      style: const TextStyle(
-                        color: black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    controllers.add(controller);
+                    childs.add(
+                      Text(
+                        a.currency!,
+                        style: const TextStyle(
+                          color: black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  );
+                    );
 
-                  childs.add(const Gap(10));
-                  childs.add(
-                    SizedBox(
-                      width: size.width,
-                      child: TextFormField(
-                        controller: controller,
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return t.required;
-                        //   }
+                    childs.add(const Gap(10));
+                    childs.add(
+                      SizedBox(
+                        width: size.width,
+                        child: TextFormField(
+                          controller: controller,
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     return t.required;
+                          //   }
 
-                        //   return null;
-                        // },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: black,
+                          //   return null;
+                          // },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: black,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                  childs.add(const Gap(20));
-                  return true;
-                });
+                    );
+                    childs.add(const Gap(20));
+                    return true;
+                  },
+                );
 
                 childs.add(
                   Container(

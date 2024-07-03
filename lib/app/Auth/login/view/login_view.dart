@@ -3,7 +3,7 @@ import 'package:aquan/Helpers/colors.dart';
 
 import 'package:aquan/app/home_page/view/dashboard.dart';
 import 'package:aquan/app/Auth/view/forget_password.dart';
-import 'package:aquan/app/sign_up/sign_up_view.dart';
+import 'package:aquan/app/sign_up/view/sign_up_view.dart';
 import 'package:aquan/Screens/signup_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +13,8 @@ import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:local_auth/local_auth.dart';
+
+import '../../../navigator_bottom_bar/navigator_bottom_bar_view.dart';
 
 // ignore: must_be_immutable
 class LoginView extends StatefulWidget {
@@ -115,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
             } else {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => const DashboardScreen(),
+                    builder: (context) => const NavigateBarScreen(),
                   ),
                   (route) => false);
             }
@@ -183,9 +185,11 @@ class _LoginViewState extends State<LoginView> {
                               border: const OutlineInputBorder(),
                               suffixIcon: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    showPassword = !showPassword;
-                                  });
+                                  setState(
+                                    () {
+                                      showPassword = !showPassword;
+                                    },
+                                  );
                                 },
                                 child: Icon(
                                   showPassword

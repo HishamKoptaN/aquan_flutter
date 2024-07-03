@@ -32,8 +32,22 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
 
-    return AppLayout(
-      route: t.changePassword,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          t.changePassword,
+          style: const TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+      ),
       body: Container(
         padding: const EdgeInsets.all(10),
         child: BlocProvider<UserBloc>(

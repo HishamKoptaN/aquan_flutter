@@ -64,7 +64,7 @@ class SelectAccuWidget extends StatelessWidget {
       ),
     );
 
-    return Row(
+    return Column(
       children: [
         Text(
           name,
@@ -76,12 +76,6 @@ class SelectAccuWidget extends StatelessWidget {
           child: DropdownButtonFormField<String>(
             isExpanded: true,
             // menuMaxHeight: 300,
-            validator: (value) {
-              if (value == null || value.isEmpty || value == 'Select') {
-                return t.required;
-              }
-              return null;
-            },
             value: 'Select',
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(

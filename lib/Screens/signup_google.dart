@@ -1,3 +1,4 @@
+import 'package:aquan/app/Auth/login/view/login_view.dart';
 import 'package:aquan/app/sign_up/bloc/auth_bloc.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/app/home_page/view/dashboard.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../app/verify_code/VerifyCode.dart';
 
 class SignUpGoogle extends StatefulWidget {
   const SignUpGoogle({super.key});
@@ -63,7 +66,7 @@ class _SignUpGoogleState extends State<SignUpGoogle> {
           if (state is SignUpCompleted) {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const DashboardScreen(),
+                  builder: (context) => LoginView(),
                 ),
                 (route) => false);
           }

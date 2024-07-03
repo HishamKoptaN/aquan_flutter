@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:aquan/app/sign_up/auth_controller.dart';
+import 'package:aquan/app/sign_up/controller/auth_controller.dart';
 import 'package:http/http.dart' as http;
 
 class SubscribtionController {

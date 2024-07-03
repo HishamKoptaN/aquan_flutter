@@ -125,6 +125,8 @@
 	"sendToAnOtherAccount": "التحويل لحساب آخر",
 	"accountId": "رقم حساب المستلم",
 	"search": "بحث",
+		"send_code_verification": "إرسل كود التفعيل",
+
 	"amountSent": "تم إرسال الأموال بنجاح",
 	"notifications": "الإشعارات",
 	"from": "من","scan_qr":"افحص البار كود",

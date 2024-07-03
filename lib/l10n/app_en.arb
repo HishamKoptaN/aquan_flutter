@@ -14,6 +14,7 @@
 	"qr_code": "َQR Code",
 	 "close":"Close",
 	"start_date": "َStart Date",
+	"send_code_verification": "Send Code Verification",
 	"end_date": "َEnd Date",
 	"send_verification_code":"Send Verification Code",
 	"subscription_details": "Subscribtion Detils",

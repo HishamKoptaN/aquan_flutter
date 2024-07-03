@@ -294,8 +294,22 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
     Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
 
-    return AppLayout(
-      route: t.changeProfile,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text(
+          t.changeProfile,
+          style: const TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+      ),
       body: Container(
         padding: const EdgeInsets.all(10),
         width: size.width,

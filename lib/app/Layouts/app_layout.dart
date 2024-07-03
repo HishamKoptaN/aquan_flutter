@@ -1,21 +1,16 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:aquan/Helpers/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aquan/app/sign_up/bloc/auth_bloc.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/app/home_page/view/dashboard.dart';
-import 'package:aquan/app/notifications/notifications_view.dart';
 import '../../Screens/settings_view.dart';
 import '../convert/convert_view.dart';
 import '../qr_code/view/qr_code_view.dart';
 import '../support/view/support_view.dart';
 import '../tasks/view/tasks_view.dart';
 import '../verify_code/VerifyCode.dart';
-
 class AppLayout extends StatefulWidget {
   const AppLayout({
     super.key,
@@ -115,68 +110,75 @@ class _AppLayoutState extends State<AppLayout> {
               ),
             )
           : const SizedBox(),
-      bottomNavigationBar: emailVerified
-          ? AnimatedBottomNavigationBar.builder(
-              height: 60,
-              activeIndex: 0,
-              itemCount: bottomBarList.length,
-              gapWidth: 30,
-              gapLocation: GapLocation.none,
-              splashRadius: 20,
-              blurEffect: true,
-              leftCornerRadius: 30,
-              rightCornerRadius: 30,
-              tabBuilder: (int index, bool isActive) {
-                Map<String, dynamic> list = bottomBarList[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: (list['name'] == widget.route)
-                        ? Theme.of(context).primaryColor
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: InkWell(
-                    splashColor: secondary,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Icon(
-                            list['icon'],
-                            size: 24,
-                            color: black,
-                          ),
-                          Text(
-                            list['name'],
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: black,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-              backgroundColor: Colors.grey.shade300,
-              onTap: (index) => {
-                if (bottomBarList[index]['name'] != widget.route)
-                  {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => bottomBarList[index]['route'],
-                      ),
-                    )
-                  }
-              },
-            )
-          : const SizedBox(),
+      // bottomNavigationBar: emailVerified
+      //     ? AnimatedBottomNavigationBar.builder(
+      //         height: 60,
+      //         activeIndex: 0,
+      //         itemCount: bottomBarList.length,
+      //         gapWidth: 30,
+      //         gapLocation: GapLocation.none,
+      //         splashRadius: 20,
+      //         blurEffect: true,
+      //         leftCornerRadius: 30,
+      //         rightCornerRadius: 30,
+      //         tabBuilder: (int index, bool isActive) {
+      //           Map<String, dynamic> list = bottomBarList[index];
+      //           return Container(
+      //             decoration: BoxDecoration(
+      //               color: (list['name'] == widget.route)
+      //                   ? Theme.of(context).primaryColor
+      //                   : Colors.transparent,
+      //               borderRadius: BorderRadius.circular(100),
+      //             ),
+      //             child: InkWell(
+      //               splashColor: secondary,
+      //               child: Padding(
+      //                 padding: const EdgeInsets.all(8.0),
+      //                 child: Column(
+      //                   children: [
+      //                     Icon(
+      //                       list['icon'],
+      //                       size: 24,
+      //                       color: black,
+      //                     ),
+      //                     Text(
+      //                       list['name'],
+      //                       style: const TextStyle(
+      //                         fontSize: 12,
+      //                         color: black,
+      //                       ),
+      //                     )
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           );
+      //         },
+      //         backgroundColor: Colors.grey.shade300,
+      //         onTap: (index) => {
+      //           if (bottomBarList[index]['name'] != widget.route)
+      //             {
+      //               Navigator.of(context).pushReplacement(
+      //                 MaterialPageRoute(
+      //                   builder: (context) => bottomBarList[index]['route'],
+      //                 ),
+      //               )
+      //             }
+      //         },
+      //       )
+      //     : const SizedBox(),
       body: BlocProvider<AuthBloc>(
         create: (context) => AuthBloc()..add(CheckEmailVerification()),
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is AuthLoading) {
+              // Storage.setString("auth_token", '');
+              // Navigator.of(context).pushAndRemoveUntil(
+              //   MaterialPageRoute(
+              //     builder: (context) => LoginView(logout: true),
+              //   ),
+              //   (route) => false,
+              // );
               return Center(
                 child: CircularProgressIndicator(
                   color: Theme.of(context).primaryColor,
@@ -187,17 +189,20 @@ class _AppLayoutState extends State<AppLayout> {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) => setState(() => emailVerified = false),
               );
-              return VerifyCode(t: t, size: size, fields: fields);
+              return VerifyCodeView(t: t, size: size, fields: fields);
             }
             if (state is EmailVerified) {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) => setState(() => emailVerified = true),
               );
-              return widget.body;
+              return Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: widget.body,
+              );
             } else {
-              return const Center(
+              return Center(
                 child: CircularProgressIndicator(
-                  color: Colors.blue,
+                  color: Theme.of(context).primaryColor,
                 ),
               );
             }

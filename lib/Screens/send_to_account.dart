@@ -14,7 +14,6 @@ import 'package:qrscan/qrscan.dart' as scanner;
 
 class SendToAccount extends StatefulWidget {
   const SendToAccount({super.key});
-
   @override
   State<SendToAccount> createState() => _SendToAccountState();
 }
@@ -231,7 +230,7 @@ class _SendToAccountState extends State<SendToAccount> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 FontAwesomeIcons.qrcode,
                               ),
                               Text(
