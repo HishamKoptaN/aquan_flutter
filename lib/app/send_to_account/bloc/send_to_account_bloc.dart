@@ -21,9 +21,13 @@ class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
       (event, emit) async {
         String barcodeValue = await sendToAccountController.scan();
         if (barcodeValue.isNotEmpty) {
-          emit(BarCodeScannedSuccessfully(barcodeValue: barcodeValue));
+          emit(
+            BarCodeScannedSuccessfully(barcodeValue: barcodeValue),
+          );
         } else {
-          emit(SendToAccountError(message: 'No barcode found'));
+          emit(
+            SendToAccountError(message: 'No barcode found'),
+          );
         }
       },
     );
