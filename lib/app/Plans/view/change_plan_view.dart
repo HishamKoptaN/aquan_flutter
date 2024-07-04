@@ -28,6 +28,7 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
     final t = AppLocalizations.of(context)!;
     return AppLayout(
       route: t.subscriptions,
+      showAppBar: false,
       body: Container(
         padding: const EdgeInsets.all(10),
         child: BlocProvider<PlanBloc>(

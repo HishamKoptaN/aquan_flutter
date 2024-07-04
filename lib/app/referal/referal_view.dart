@@ -9,8 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ReferalScreen extends StatelessWidget {
-  const ReferalScreen({super.key});
+class ReferalView extends StatelessWidget {
+  const ReferalView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class ReferalScreen extends StatelessWidget {
 
     return AppLayout(
       route: t.referals,
+      showAppBar: true,
       body: BlocProvider<UserBloc>(
         create: (context) => UserBloc()..add(GetReferals()),
         child: BlocBuilder<UserBloc, UserState>(

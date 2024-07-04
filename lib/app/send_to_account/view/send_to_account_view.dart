@@ -9,62 +9,51 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:motion_toast/resources/colors.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+import '../bloc/send_to_account_bloc.dart';
+import '../controller/send_to_account_controller.dart';
 
-class SendToAccount extends StatefulWidget {
-  const SendToAccount({super.key});
+class SendToAccountView extends StatefulWidget {
+  const SendToAccountView({
+    super.key,
+  });
+
   @override
-  State<SendToAccount> createState() => _SendToAccountState();
+  State<SendToAccountView> createState() => _SendToAccountViewState();
 }
 
-class _SendToAccountState extends State<SendToAccount> {
-  TextEditingController accountIdController = TextEditingController();
-  String amount = "";
-  bool loading = false;
-  late TextEditingController _outputController;
-
-  Future _scan() async {
-    await Permission.camera.request();
-    String? barcode = await scanner.scan();
-    if (barcode != null) {
-      setState(
-        () {
-          accountIdController.text = barcode;
-        },
-      );
-    }
-  }
+class _SendToAccountViewState extends State<SendToAccountView> {
+  SendToAccountController sendToAccountController = SendToAccountController();
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-
     return AppLayout(
       route: t.sendToAnOtherAccount,
-      body: BlocProvider<UserBloc>(
-        create: (context) => UserBloc(),
-        child: BlocBuilder<UserBloc, UserState>(
-          builder: (context, state) {
-            if (state is UserError ||
-                state is UserAccountLoaded ||
-                state is AmountSent) {
-              WidgetsBinding.instance.addPostFrameCallback(
-                (_) {
-                  setState(
-                    () {
-                      loading = false;
-                    },
-                  );
-                },
-              );
+      showAppBar: true,
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SendToAccountBloc()..add(GetUSerDataEvent()),
+          ),
+        ],
+        child: BlocConsumer<SendToAccountBloc, SendToAccountState>(
+          listener: (context, state) {
+            if (state is BarCodeScannedSuccessfully) {
+              sendToAccountController.accountNumbertextEditingController.text =
+                  state.barcodeValue;
+              context.read<SendToAccountBloc>().add(
+                  GetNameOfUserByAccountEvent(accountId: state.barcodeValue));
             }
-
+            if (state is ScanQrCodeState) {
+              context.read<SendToAccountBloc>().add(ScanQrCodeEvent());
+            }
+          },
+          builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  if (state is UserError)
+                  if (state is SendToAccountError)
                     Container(
                       width: double.maxFinite,
                       padding: const EdgeInsets.all(15),
@@ -101,7 +90,8 @@ class _SendToAccountState extends State<SendToAccount> {
                       ),
                     ),
                   TextField(
-                    controller: accountIdController,
+                    controller: sendToAccountController
+                        .accountNumbertextEditingController,
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: t.accountId,
@@ -111,9 +101,12 @@ class _SendToAccountState extends State<SendToAccount> {
                       ),
                     ),
                     onChanged: (value) {
-                      setState(() {
-                        accountIdController.text = value;
-                      });
+                      setState(
+                        () {
+                          sendToAccountController
+                              .accountNumbertextEditingController.text = value;
+                        },
+                      );
                     },
                   ),
                   const Gap(10),
@@ -121,14 +114,15 @@ class _SendToAccountState extends State<SendToAccount> {
                     width: double.maxFinite,
                     child: TextButton(
                       onPressed: () {
-                        setState(() {
-                          loading = true;
-                        });
-                        if (accountIdController.text.isNotEmpty) {
-                          context.read<UserBloc>().add(
-                                GetNameOfUserByAccount(
-                                  accountId: accountIdController.text,
-                                ),
+                        if (sendToAccountController
+                            .accountNumbertextEditingController
+                            .text
+                            .isNotEmpty) {
+                          context.read<SendToAccountBloc>().add(
+                                GetNameOfUserByAccountEvent(
+                                    accountId: sendToAccountController
+                                        .accountNumbertextEditingController
+                                        .text),
                               );
                         }
                       },
@@ -140,7 +134,7 @@ class _SendToAccountState extends State<SendToAccount> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      child: loading
+                      child: state is SendToAccountLoading
                           ? const Center(
                               child: CircularProgressIndicator(
                                 color: black,
@@ -155,7 +149,7 @@ class _SendToAccountState extends State<SendToAccount> {
                             ),
                     ),
                   ),
-                  if (state is UserAccountLoaded)
+                  if (state is UserNameLoaded)
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
@@ -164,7 +158,7 @@ class _SendToAccountState extends State<SendToAccount> {
                       ),
                     ),
                   const Gap(10),
-                  if (state is UserAccountLoaded)
+                  if (state is UserNameLoaded)
                     TextField(
                       autofocus: true,
                       keyboardType: TextInputType.number,
@@ -176,28 +170,30 @@ class _SendToAccountState extends State<SendToAccount> {
                         ),
                       ),
                       onChanged: (value) {
-                        setState(() {
-                          amount = value;
-                        });
+                        setState(
+                          () {
+                            sendToAccountController.amount = value;
+                          },
+                        );
                       },
                     ),
                   const Gap(10),
-                  if (state is UserAccountLoaded)
+                  if (state is UserNameLoaded)
                     SizedBox(
                       width: double.maxFinite,
                       child: TextButton(
                         onPressed: () {
-                          setState(
-                            () {
-                              loading = true;
-                            },
-                          );
-                          if (accountIdController.text.isNotEmpty &&
+                          if (sendToAccountController
+                                  .accountNumbertextEditingController
+                                  .text
+                                  .isNotEmpty &&
                               state.name.isNotEmpty) {
-                            context.read<UserBloc>().add(
+                            context.read<SendToAccountBloc>().add(
                                   SendPaymentToOtherAccount(
-                                      accountId: accountIdController.text,
-                                      amount: amount),
+                                      accountId: sendToAccountController
+                                          .accountNumbertextEditingController
+                                          .text,
+                                      amount: sendToAccountController.amount),
                                 );
                           }
                         },
@@ -223,7 +219,9 @@ class _SendToAccountState extends State<SendToAccount> {
                     width: 200.w,
                     child: GestureDetector(
                       onTap: () {
-                        _scan();
+                        context
+                            .read<SendToAccountBloc>()
+                            .add(ScanQrCodeEvent());
                       },
                       child: Center(
                         child: Card(

@@ -16,6 +16,7 @@ class NotificationsScreen extends StatelessWidget {
 
     return AppLayout(
       route: t.notifications,
+      showAppBar: false,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocProvider(

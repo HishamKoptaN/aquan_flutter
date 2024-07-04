@@ -1,15 +1,30 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
+import '../controller/scan_qr_controller.dart';
 part 'qr_code_event.dart';
 part 'qr_code_state.dart';
 
 class QrCodeBloc extends Bloc<QrCodeEvent, QrCodeState> {
+  final ScanQrController scanQrController = ScanQrController();
+
   QrCodeBloc() : super(QrCodeInitial()) {
-    on<QrCodeEvent>((event, emit) {
-      if (event is ShareQrCode) {
-        print("Share Qr");
+    on<ScanQrCode>((event, emit) async {
+      String? barcode = await scanQrController.scan();
+      if (barcode == null) {
+        emit(
+          QrCodeScannedSuccessfullyState(qrCodeResult: "1"),
+        );
+        print("Scanned QR code: $barcode");
+      } else {
+        // التعامل مع الحالة التي لم يتم فيها مسح الباركود
+        print("Failed to scan QR code");
       }
     });
+
+    on<ShareQrCode>(
+      (event, emit) {
+        // إضافة منطق المشاركة هنا
+      },
+    );
   }
 }

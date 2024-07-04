@@ -20,6 +20,7 @@ class TasksScreen extends StatelessWidget {
 
     return AppLayout(
       route: t.tasks,
+      showAppBar: false,
       body: BlocProvider<TaskBloc>(
         create: (context) => TaskBloc()
           ..add(

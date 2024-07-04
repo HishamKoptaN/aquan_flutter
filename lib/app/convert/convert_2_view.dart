@@ -50,6 +50,7 @@ class _ConvertSecondScreenState extends State<ConvertSecondScreen> {
 
     return AppLayout(
       route: t.buyandsell,
+      showAppBar: false,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocProvider<CurrencyBloc>(

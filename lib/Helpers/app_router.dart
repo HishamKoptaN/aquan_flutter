@@ -10,6 +10,7 @@ class AppRouter {
           builder: (context) => AppLayout(
             body: Container(),
             route: '',
+            showAppBar: true,
           ),
         );
       case 'settings':

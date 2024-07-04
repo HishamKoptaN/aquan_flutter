@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:aquan/app/Auth/controller/user_controller.dart';
 import 'package:aquan/app/currency/model/currency.dart';
 import 'package:aquan/app/notifications/model/notification.dart';
 import 'package:aquan/app/transaction/model/transaction.dart';
 import 'package:aquan/app/Auth/model/user.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 part 'user_event.dart';
 part 'user_state.dart';
 
@@ -122,31 +121,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
         emit(DashboardLoaded(
             transactions: transactions, user: user, currencies: currencies));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<GetNameOfUserByAccount>((event, emit) async {
-      emit(UserLoading());
-      Map<String, dynamic> data =
-          await _controller.getUserByAccount(event.accountId);
-
-      if (data['status']) {
-        emit(UserAccountLoaded(name: data['name']));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<SendPaymentToOtherAccount>((event, emit) async {
-      emit(UserLoading());
-
-      Map<String, dynamic> data =
-          await _controller.sendMoneyToAccount(event.accountId, event.amount);
-
-      if (data['status']) {
-        emit(AmountSent());
       } else {
         emit(UserError(message: data['error']));
       }

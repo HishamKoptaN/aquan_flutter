@@ -15,6 +15,7 @@ class DepositsScreen extends StatelessWidget {
 
     return AppLayout(
       route: t.deposits,
+      showAppBar: false,
       body: BlocProvider<DepositBloc>(
         create: (context) => DepositBloc()
           ..add(

@@ -16,6 +16,7 @@ class SubscribtionView extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     return AppLayout(
       route: t.notifications,
+      showAppBar: false,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocProvider(

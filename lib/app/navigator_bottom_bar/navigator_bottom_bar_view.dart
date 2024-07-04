@@ -1,140 +1,84 @@
-// ignore_for_file: unused_import
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:motion_tab_bar/MotionBadgeWidget.dart';
-import 'package:motion_tab_bar/MotionTabBar.dart';
-import 'package:motion_tab_bar/MotionTabBarController.dart';
-import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'bloc/bottom_navigation_bar_bloc.dart';
+import 'bloc/bottom_navigation_bar_event.dart';
+import 'bloc/bottom_navigation_bar_state.dart';
 import 'navigator_bottom_bar_controller.dart';
 
 class NavigateBarScreen extends StatefulWidget {
   const NavigateBarScreen({super.key});
+
   @override
   State<NavigateBarScreen> createState() => _NavigateBarScreenState();
 }
 
-class _NavigateBarScreenState extends State<NavigateBarScreen>
-    with TickerProviderStateMixin {
-  MotionTabBarController? _motionTabBarController;
+class _NavigateBarScreenState extends State<NavigateBarScreen> {
+  late NavigatorBottomBarCnr cnr;
+  int _currentIndex = 0; // Variable to track current tab index
 
   @override
   void initState() {
     super.initState();
-    _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
-      length: 5,
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _motionTabBarController!.dispose();
+    cnr = NavigatorBottomBarCnr();
   }
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
 
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: GetBuilder<NavigatorBottomBarCnr>(
-        init: NavigatorBottomBarCnr(),
-        builder: (cnr) {
-          return Scaffold(
-            resizeToAvoidBottomInset: true,
-            body: SizedBox(child: cnr.pages[cnr.currentIndex]),
-            bottomNavigationBar: MotionTabBar(
-              controller: _motionTabBarController,
-              initialSelectedTab: t.home,
-              useSafeArea: true,
-              labels: [
-                t.settings,
-                t.qr_code,
-                t.buyandsell,
-                t.tasks,
-                t.home,
-              ],
-              icons: const [
-                Icons.settings,
-                Icons.qr_code_2_rounded,
-                FontAwesomeIcons.moneyBillTransfer,
-                Icons.task,
-                Icons.home,
-              ],
-              tabSize: 50,
-              tabBarHeight: 55,
-              textStyle: TextStyle(
-                fontSize: 10.sp,
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => NavigationBloc()..add(ChangePageEvent(0)),
+        child: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
+            if (state is NavigationPageChanged) {
+              _currentIndex = state.pageIndex; // Update current index
+            }
+            return Scaffold(
+              resizeToAvoidBottomInset: true,
+              body: SizedBox(child: cnr.pages[_currentIndex]),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
+                child: BottomNavigationBar(
+                  currentIndex: _currentIndex,
+                  onTap: (int index) {
+                    setState(() {
+                      _currentIndex = index; // Update current index on tap
+                    });
+                    context.read<NavigationBloc>().add(ChangePageEvent(index));
+                  },
+                  selectedItemColor: Colors.amber,
+                  unselectedItemColor: Colors.grey,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: const Icon(Icons.home),
+                      label: t.home,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(Icons.task),
+                      label: t.tasks,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(FontAwesomeIcons.moneyBillTransfer),
+                      label: t.buyandsell,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(Icons.qr_code_2_rounded),
+                      label: t.qr_code,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: const Icon(Icons.settings),
+                      label: t.settings,
+                    ),
+                  ],
+                ),
               ),
-              tabIconColor: Colors.amber,
-              tabIconSize: 28.0,
-              tabIconSelectedSize: 26.0,
-              tabSelectedColor: Colors.white,
-              tabIconSelectedColor: Colors.amber,
-              tabBarColor: Colors.white,
-              onTabItemSelected: (int index) async {
-                cnr.setCurrentIndex(index);
-                setState(() {
-                  _motionTabBarController!.index = index;
-                });
-              },
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class MainPageContentComponent extends StatelessWidget {
-  const MainPageContentComponent({
-    required this.title,
-    required this.controller,
-    Key? key,
-  }) : super(key: key);
-
-  final String title;
-  final MotionTabBarController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(title,
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 50),
-          const Text('Go to "X" page programmatically'),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () => controller.index = 0,
-            child: const Text('Dashboard Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 1,
-            child: const Text('Home Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 2,
-            child: const Text('Profile Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 3,
-            child: const Text('Settings Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 4,
-            child: const Text('More Page'),
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -22,6 +22,7 @@ class _WithdrawsAndDepositsScreenState
 
     return AppLayout(
       route: t.withdrawsAndDeposits,
+      showAppBar: false,
       body: Container(
         padding: const EdgeInsets.all(0),
         child: BlocProvider<WithdrawBloc>(

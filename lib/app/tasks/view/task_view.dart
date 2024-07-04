@@ -38,6 +38,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
     return AppLayout(
       route: t.task,
+      showAppBar: true,
       body: Container(
         padding: const EdgeInsets.all(8.00),
         child: BlocProvider<TaskBloc>(

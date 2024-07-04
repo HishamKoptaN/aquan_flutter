@@ -14,7 +14,6 @@ class PlanController {
       Uri.parse(auth['plans']!),
       headers: await AuthController.getAuthHeaders(),
     );
-
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       List plans = data['plans'];

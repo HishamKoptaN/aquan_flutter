@@ -39,13 +39,11 @@ class DashboardLoaded extends UserState {
   });
 }
 
-class UserAccountLoaded extends UserState {
+class SearchAboutUserAccountById extends UserState {
   final String name;
 
-  UserAccountLoaded({required this.name});
+  SearchAboutUserAccountById({required this.name});
 }
-
-class AmountSent extends UserState {}
 
 class NotificationsLoaded extends UserState {
   List<NotificationModel> notifications;

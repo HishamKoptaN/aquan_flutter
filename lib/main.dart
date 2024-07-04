@@ -31,7 +31,6 @@ void main() async {
   }
   runApp(
     const MyApp(),
-    // MyAppThree(),
   );
 }
 
@@ -80,7 +79,6 @@ class _MyAppState extends State<MyApp> {
               },
             );
           };
-
           ErrorWidget.builder = (errorDetails) {
             return Scaffold(
               body: Center(
@@ -149,9 +147,7 @@ class _MyAppState extends State<MyApp> {
 
 class RestartWidget extends StatefulWidget {
   const RestartWidget({super.key, required this.child});
-
   final Widget child;
-
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
   }

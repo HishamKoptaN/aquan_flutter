@@ -42,6 +42,7 @@ class _DepositScreenState extends State<DepositScreen> {
 
     return AppLayout(
       route: t.depositMoney,
+      showAppBar: false,
       body: Container(
         padding: const EdgeInsets.all(10),
         child: BlocProvider<DepositBloc>(

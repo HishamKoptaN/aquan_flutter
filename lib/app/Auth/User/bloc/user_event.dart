@@ -38,19 +38,6 @@ class ChangePassword extends UserEvent {
 
 class Dashboard extends UserEvent {}
 
-class GetNameOfUserByAccount extends UserEvent {
-  final String accountId;
-
-  GetNameOfUserByAccount({required this.accountId});
-}
-
-class SendPaymentToOtherAccount extends UserEvent {
-  final String accountId;
-  final String amount;
-
-  SendPaymentToOtherAccount({required this.accountId, required this.amount});
-}
-
 class GetNotifications extends UserEvent {}
 
 class ChangeAccountInfo extends UserEvent {

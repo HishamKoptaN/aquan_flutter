@@ -51,6 +51,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
 
     return AppLayout(
       route: t.buyandsell,
+      showAppBar: false,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocProvider<CurrencyBloc>(
@@ -239,9 +240,11 @@ class _ConvertScreenState extends State<ConvertScreen> {
                                 accountInfo: state.user.accountInfo,
                                 onChanged: (value) {
                                   if (value != null && value.isNotEmpty) {
-                                    setState(() {
-                                      _accountId.text = value;
-                                    });
+                                    setState(
+                                      () {
+                                        _accountId.text = value;
+                                      },
+                                    );
                                   }
                                 },
                                 width: 250.w,

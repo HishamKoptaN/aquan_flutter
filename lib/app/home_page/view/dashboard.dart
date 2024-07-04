@@ -31,6 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Size size = MediaQuery.of(context).size;
     return AppLayout(
       route: t.home,
+      showAppBar: false,
       body: BlocProvider<UserBloc>(
         create: (context) => UserBloc()..add(Dashboard()),
         child: BlocBuilder<UserBloc, UserState>(
@@ -200,7 +201,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     width: size.width,
                     height: size.height / 2.25,
                     decoration: BoxDecoration(
-                      color: third,
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.amber,
+                          Color.fromARGB(255, 255, 202, 44),
+                          Colors.amber,
+                        ],
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
@@ -216,8 +223,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 50.h,
                                 width: 50.w,
                                 decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        120, 255, 255, 255),
+                                    color:
+                                        const Color.fromARGB(55, 255, 255, 255),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
@@ -257,7 +264,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: [
                                   WidgetSpan(
                                     child: Transform.translate(
-                                      offset: Offset(0.0, 3.0),
+                                      offset: const Offset(0.0, 3.0),
                                       child: Text(
                                         t.welcome,
                                         style: TextStyle(
@@ -281,14 +288,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 50.h,
                                 width: 50.w,
                                 decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        120, 255, 255, 255),
+                                    color:
+                                        const Color.fromARGB(55, 255, 255, 255),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Container(
                                     decoration: const BoxDecoration(
-                                      color: Colors.black26,
+                                      color: Colors.black,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
@@ -297,11 +304,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
-                                              text: user.planId == 1
-                                                  ? t.levelOne
-                                                  : (user.planId == 2
-                                                      ? t.levelTwo
-                                                      : t.levelThree), // النص الثاني
+                                              text:
+                                                  "LV${user.planId.toString()}",
+                                              // النص الثاني
                                               style: TextStyle(
                                                 fontSize:
                                                     10.sp, // حجم النص الثاني
@@ -348,16 +353,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                t.accountNumber,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: black,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const Gap(5),
-                              Text(
                                 user.id.toString(),
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
@@ -368,9 +363,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                               IconButton(
                                 onPressed: () async {
-                                  setState(() {
-                                    copy = true;
-                                  });
+                                  setState(
+                                    () {
+                                      copy = true;
+                                    },
+                                  );
                                   Clipboard.setData(
                                     ClipboardData(text: user.id.toString()),
                                   );
@@ -378,9 +375,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Future.delayed(
                                     const Duration(milliseconds: 500),
                                     () {
-                                      setState(() {
-                                        copy = false;
-                                      });
+                                      setState(
+                                        () {
+                                          copy = false;
+                                        },
+                                      );
                                     },
                                   );
                                 },

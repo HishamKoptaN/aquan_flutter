@@ -7,7 +7,7 @@ import 'package:aquan/app/deposit/view/deposits_withdraws_view.dart';
 import 'package:aquan/app/Auth/login/view/login_view.dart';
 import 'package:aquan/app/notifications/notifications_view.dart';
 import 'package:aquan/app/profile/profile_view.dart';
-import 'package:aquan/Screens/send_to_account.dart';
+import 'package:aquan/app/send_to_account/view/send_to_account_view.dart';
 import 'package:aquan/app/transaction/view/transactions_view.dart';
 import 'package:aquan/app/Widgets/primary_button.dart';
 import 'package:aquan/app/Widgets/settings_tab.dart';
@@ -21,6 +21,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app/Plans/view/plans_view.dart';
+import '../app/referal/referal_view.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -36,16 +37,9 @@ class SettingsScreen extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     return AppLayout(
       route: t.settings,
+      showAppBar: false,
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              t.appSettings,
-              style: cartHeading,
-            ),
-          ),
-          const Gap(10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: SizedBox(
@@ -213,7 +207,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const SendToAccount(),
+                  builder: (context) => SendToAccountView(),
                 ),
               )
             },
@@ -224,7 +218,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const SendToAccount(),
+                  builder: (context) => const ReferalView(),
                 ),
               )
             },

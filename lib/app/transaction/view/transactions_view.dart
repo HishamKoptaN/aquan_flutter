@@ -15,6 +15,7 @@ class TransactionsScreen extends StatelessWidget {
 
     return AppLayout(
       route: t.transactions,
+      showAppBar: true,
       body: Container(
         width: size.width,
         padding: const EdgeInsets.all(0),

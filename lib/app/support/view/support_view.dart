@@ -52,7 +52,7 @@ class _SupportScreenState extends State<SupportScreen> {
 
     return AppLayout(
       route: t.support,
-      showBottomBar: false,
+      showAppBar: false,
       body: BlocProvider(
         create: (context) => SupportBloc()..add(GetChatMessages()),
         child: BlocBuilder<SupportBloc, SupportState>(

@@ -38,6 +38,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
 
     return AppLayout(
       route: t.withdrawMoney,
+      showAppBar: false,
       body: Container(
         padding: const EdgeInsets.all(10),
         child: BlocProvider<WithdrawBloc>(
