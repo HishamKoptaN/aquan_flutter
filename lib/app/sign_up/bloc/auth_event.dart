@@ -4,6 +4,8 @@ abstract class AuthEvent {}
 
 class CheckLogedIn extends AuthEvent {}
 
+class CheckEmailVerification extends AuthEvent {}
+
 class AuthLogin extends AuthEvent {
   final String email;
   final String password;
@@ -34,24 +36,11 @@ class AuthSignUp extends AuthEvent {
   });
 }
 
-class CheckEmailVerification extends AuthEvent {}
-
-class SendEmailVerification extends AuthEvent {
-  final String email;
-  SendEmailVerification({required this.email});
-}
-
 class ResetPassword extends AuthEvent {
   String email;
   ResetPassword({
     required this.email,
   });
-}
-
-class VerifyEmail extends AuthEvent {
-  final String code;
-
-  VerifyEmail({required this.code});
 }
 
 class SignInWithGoogle extends AuthEvent {

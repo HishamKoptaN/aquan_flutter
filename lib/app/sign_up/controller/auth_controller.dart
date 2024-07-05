@@ -119,19 +119,6 @@ class AuthController {
     throw Exception(response.reasonPhrase);
   }
 
-  Future<Map<String, dynamic>> verifyEmail(String code) async {
-    http.Response response = await http.post(
-      Uri.parse(auth["confirm-email"]!),
-      headers: await AuthController.getAuthHeaders(),
-      body: jsonEncode({"code": code}),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      return data;
-    }
-    throw Exception(response.reasonPhrase);
-  }
-
   Future<Map<String, dynamic>> getProfileUser() async {
     http.Response response = await http.get(
       Uri.parse(auth['user']!),

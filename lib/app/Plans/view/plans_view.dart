@@ -19,11 +19,9 @@ class _PlansScreenState extends State<PlansScreen> {
   PlanController planController = PlanController();
 
   void _toggleCheckbox(bool? value) {
-    setState(
-      () {
-        _isChecked = value ?? false;
-      },
-    );
+    setState(() {
+      _isChecked = value ?? false;
+    });
   }
 
   @override
@@ -64,50 +62,71 @@ class _PlansScreenState extends State<PlansScreen> {
               const SizedBox(height: 16),
               BlocProvider<PlanBloc>(
                 create: (context) => PlanBloc()..add(GetPlans()),
-                child: BlocBuilder<PlanBloc, PlanState>(
-                  builder: (context, state) {
-                    if (state is PlanLoading) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      );
-                    } else if (state is PlansDone) {
-                      return Column(
-                        children: state.plans.map(
-                          (plan) {
-                            return SubscriptionOption(
-                              level: '${plan.name}',
-                              price: (plan.amount! > 0)
-                                  ? '\$${plan.amount}'
-                                  : t.free,
-                              features: [
-                                '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
-                                '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
-                                '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',
+                child: BlocConsumer<PlanBloc, PlanState>(
+                  listener: (context, state) {
+                    if (state is UserPlanDetailsLoaded) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(t.subscription_details),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    '${t.start_date}:${state.planDetails['startDate']}'),
+                                Text(
+                                    '${t.end_date}: ${state.planDetails['endDate']}'),
                               ],
-                              isSelected: (plan.id == state.user.planId),
-                              onTap: () {
-                                try {
-                                  if (plan.amount! > 0 &&
-                                      plan.id != state.user.planId) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback(
-                                      (_) => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ChangePlanScreen(plan: plan),
-                                        ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(t.close),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is PlansDone) {
+                      return Column(
+                        children: state.plans.map((plan) {
+                          return SubscriptionOption(
+                            level: '${plan.name}',
+                            price: (plan.amount! > 0)
+                                ? '\$${plan.amount}'
+                                : t.free,
+                            features: [
+                              '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
+                              '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
+                              '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',
+                            ],
+                            isSelected: (plan.id == state.user.planId),
+                            onTap: () {
+                              try {
+                                if (plan.amount! > 0 &&
+                                    plan.id != state.user.planId) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ChangePlanScreen(plan: plan),
                                       ),
                                     );
-                                  }
-                                } catch (e) {
-                                  print(e);
+                                  });
                                 }
-                              },
-                            );
-                          },
-                        ).toList(),
+                              } catch (e) {
+                                print(e);
+                              }
+                            },
+                          );
+                        }).toList(),
                       );
                     } else if (state is PlanError) {
                       return Center(
@@ -120,10 +139,9 @@ class _PlansScreenState extends State<PlansScreen> {
                         ),
                       );
                     }
-
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.red,
                       ),
                     );
                   },
@@ -144,7 +162,7 @@ class _PlansScreenState extends State<PlansScreen> {
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: Colors.grey,
-                      decoration: TextDecoration.underline, // إضافة خط تحت النص
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                   Checkbox(

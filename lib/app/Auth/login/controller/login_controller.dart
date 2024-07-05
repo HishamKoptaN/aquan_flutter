@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:aquan/Helpers/routes.dart';
 import 'package:aquan/Helpers/storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../sign_up/controller/auth_controller.dart';
 
 class LoginController {

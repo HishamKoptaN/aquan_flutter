@@ -13,6 +13,7 @@ const Map<String, dynamic> auth = {
   "settings": "$domain/api/settings",
   "tasks": "$domain/api/tasks",
   "task": "$domain/api/tasks/",
+  "get_user_pan": "$domain/api/user/plan/",
   "referals": "$domain/api/referals",
   "user": "$domain/api/user",
   "change-password": "$domain/api/user/change-password",

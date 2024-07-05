@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:local_auth/local_auth.dart';
 import '../../Auth/controller/user_controller.dart';
 import '../../Auth/model/user.dart';
 import '../../currency/model/currency.dart';
+import '../../sign_up/controller/auth_controller.dart';
 import '../../transaction/model/transaction.dart';
 import '../controller/send_to_account_controller.dart';
 
@@ -12,7 +14,9 @@ part 'send_to_account_state.dart';
 class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
   SendToAccountController sendToAccountController = SendToAccountController();
   final UserController _controller = UserController();
-
+  final AuthController _authController = AuthController();
+  final UserController _userController = UserController();
+  final LocalAuthentication auth = LocalAuthentication();
   SendToAccountBloc() : super(SendToAccountInitial()) {
     on<SendToAccountEvent>(
       (event, emit) {},

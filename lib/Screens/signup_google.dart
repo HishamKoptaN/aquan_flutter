@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../app/verify_code/VerifyCode.dart';
+import '../app/verify_code/verify_vode_view.dart';
 
 class SignUpGoogle extends StatefulWidget {
   const SignUpGoogle({super.key});

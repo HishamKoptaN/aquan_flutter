@@ -8,6 +8,20 @@ final class AuthLoading extends AuthState {}
 
 final class CheckLoginLoading extends AuthState {}
 
+class EmailNotVerify extends AuthState {
+  final User user;
+  EmailNotVerify({
+    required this.user,
+  });
+}
+
+class EmailVerified extends AuthState {
+  final bool verified;
+  final String? message;
+
+  EmailVerified({required this.verified, this.message});
+}
+
 class AuthLogedIn extends AuthState {
   final bool createPassword;
 
@@ -22,30 +36,6 @@ class AuthErrors extends AuthState {
   final String? message;
 
   AuthErrors({required this.message});
-}
-
-class EmailVerify extends AuthState {
-  final bool verified;
-  final String? message;
-  final User user;
-  EmailVerify({required this.user, required this.verified, this.message});
-}
-
-class EmailVerified extends AuthState {
-  final bool verified;
-  final String? message;
-
-  EmailVerified({required this.verified, this.message});
-}
-
-class SendECodeToEmail extends AuthState {
-  final bool verified;
-  final User user;
-
-  SendECodeToEmail({
-    required this.user,
-    required this.verified,
-  });
 }
 
 class ResetPassowrdEmailSent extends AuthState {

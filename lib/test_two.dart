@@ -1,184 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:motion_tab_bar/MotionBadgeWidget.dart';
-import 'package:motion_tab_bar/MotionTabBar.dart';
-import 'package:motion_tab_bar/MotionTabBarController.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
-import 'app/convert/convert_view.dart';
-
-class MyAppTwo extends StatelessWidget {
-  const MyAppTwo({Key? key}) : super(key: key);
-
+class EmailVerificationScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Motion Tab Bar Sample',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Motion Tab Bar Sample'),
-    );
-  }
+  _EmailVerificationScreenState createState() =>
+      _EmailVerificationScreenState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title}) : super(key: key);
-
-  final String? title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  MotionTabBarController? _motionTabBarController;
-
-  @override
-  void initState() {
-    super.initState();
-    _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
-      length: 5, // تعديل الطول إلى 5
-      vsync: this,
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _motionTabBarController!.dispose();
-  }
+class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MotionTabBar(
-        controller: _motionTabBarController,
-        initialSelectedTab: "Home",
-        useSafeArea: true,
-        labels: const [
-          "Settings",
-          "Dashboard",
-          "Home",
-          "More",
-          "Profile",
-        ], // إضافة تسمية جديدة
-        icons: const [
-          Icons.dashboard,
-          Icons.home,
-          Icons.people_alt,
-          Icons.settings,
-          Icons.more_horiz, // إضافة أيقونة جديدة
-        ],
-        badges: [
-          const MotionBadgeWidget(
-            text: '10+',
-            textColor: Colors.white,
-            color: Colors.red,
-            size: 18,
-          ),
-          Container(
-            color: Colors.black,
-            padding: const EdgeInsets.all(2),
-            child: const Text(
-              '48',
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.verified,
+              size: 100,
+              color: Colors.black,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Verify Your Email',
               style: TextStyle(
-                fontSize: 14,
-                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          null,
-          const MotionBadgeWidget(
-            isIndicator: true,
-            color: Colors.red,
-            size: 5,
-            show: true,
-          ),
-          null, // يمكن ترك الشارة فارغة للعنصر الجديد
-        ],
-        tabSize: 50,
-        tabBarHeight: 55,
-        textStyle: const TextStyle(
-          fontSize: 12,
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.yellow,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    'Email Verification',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Please enter the 6 digit code sent to Your Email',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 20),
+                  PinCodeTextField(
+                    appContext: context,
+                    length: 6,
+                    onChanged: (value) {},
+                    controller: textEditingController,
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      activeFillColor: Colors.white,
+                      inactiveFillColor: Colors.white,
+                      selectedFillColor: Colors.white,
+                      activeColor: Colors.black,
+                      inactiveColor: Colors.black,
+                      selectedColor: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Resend Code',
+                      style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your verification code functionality here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 30,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      'Verify',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        tabIconColor: Colors.blue[600],
-        tabIconSize: 28.0,
-        tabIconSelectedSize: 26.0,
-        tabSelectedColor: Colors.blue[900],
-        tabIconSelectedColor: Colors.white,
-        tabBarColor: Colors.white,
-        onTabItemSelected: (int value) {
-          setState(() {
-            _motionTabBarController!.index = value;
-          });
-        },
-      ),
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _motionTabBarController,
-        children: <Widget>[
-          const ConvertScreen(),
-          MainPageContentComponent(
-              title: "Home Page", controller: _motionTabBarController!),
-          MainPageContentComponent(
-              title: "Profile Page", controller: _motionTabBarController!),
-          MainPageContentComponent(
-              title: "Settings Page", controller: _motionTabBarController!),
-          MainPageContentComponent(
-              title: "More Page",
-              controller: _motionTabBarController!), // إضافة شاشة جديدة
-        ],
-      ),
-    );
-  }
-}
-
-class MainPageContentComponent extends StatelessWidget {
-  const MainPageContentComponent({
-    required this.title,
-    required this.controller,
-    Key? key,
-  }) : super(key: key);
-
-  final String title;
-  final MotionTabBarController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(title,
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 50),
-          const Text('Go to "X" page programmatically'),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () => controller.index = 0,
-            child: const Text('Dashboard Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 1,
-            child: const Text('Home Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 2,
-            child: const Text('Profile Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 3,
-            child: const Text('Settings Page'),
-          ),
-          ElevatedButton(
-            onPressed: () => controller.index = 4,
-            child:
-                const Text('More Page'), // إضافة زر جديد للتنقل للشاشة الجديدة
-          ),
-        ],
       ),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:aquan/app/sign_up/controller/auth_controller.dart';
 import 'package:aquan/app/Auth/controller/user_controller.dart';
 import 'package:aquan/Helpers/storage.dart';
-import 'package:aquan/app/Auth/model/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth/local_auth.dart';
+
+import '../../Auth/model/user.dart';
+import '../../navigator_bottom_bar/bloc/bottom_navigation_bar_state.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -22,16 +24,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.password,
         );
         if (response['status'] == true) {
-          Storage.setString('auth_token', response['token']);
+          Storage.setString(
+            'auth_token',
+            response['token'],
+          );
           emit(AuthLogedIn());
         } else {
           emit(
-            AuthErrors(message: response['error']),
+            AuthErrors(
+              message: response['error'],
+            ),
           );
         }
       },
     );
 
+    on<CheckEmailVerification>(
+      (event, emit) async {
+        emit(AuthLoading());
+        final Map<String, dynamic> response =
+            await _userController.getProfileUser();
+        if (response['status'] == true) {
+          User user = response['user'];
+          if (user.emailVerifiedAt == null) {
+            emit(EmailNotVerify(user: user));
+          } else if (user.emailVerifiedAt != null) {
+            emit(
+              EmailVerified(verified: false, message: response['error']),
+            );
+          }
+        } else {
+          emit(
+            AuthErrors(
+              message: response['error'],
+            ),
+          );
+        }
+      },
+    );
     on<AuthSignUp>(
       (event, emit) async {
         emit(AuthLoading());
@@ -77,25 +107,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('auth_token');
         if (token == null) {
-          emit(AuthLogedOut());
+          emit(
+            AuthLogedOut(),
+          );
         } else {
           final Map<String, dynamic> response =
               await _authController.isLogedIn(token);
-
           if (response['status'] == true) {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             final bool canAuthenticate = await auth.canCheckBiometrics &&
                 await auth.isDeviceSupported() &&
                 prefs.getBool("fingerprints")!;
-
             if (canAuthenticate) {
               final bool didAuth = await auth.authenticate(
                   localizedReason:
                       'First Please authenticate to show access account');
               if (didAuth) {
-                emit(AuthLogedIn());
+                emit(
+                  AuthLogedIn(),
+                );
               } else {
-                emit(AuthErrors(message: "Error try again"));
+                emit(
+                  AuthErrors(message: "Error try again"),
+                );
               }
             } else {
               emit(AuthLogedIn());
@@ -103,53 +137,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           } else {
             emit(AuthLogedOut());
           }
-        }
-      },
-    );
-    on<SendEmailVerification>(
-      (event, emit) async {
-        final Map<String, dynamic> response =
-            await _authController.sendCodeToEmail(event.email);
-        if (response['status'] == true) {
-          User user = response['user'];
-          emit(
-            EmailVerify(verified: user.emailVerifiedAt != null, user: User()),
-          );
-        } else {
-          emit(
-            AuthErrors(
-              message: response['error'],
-            ),
-          );
-        }
-      },
-    );
-
-    on<CheckEmailVerification>(
-      (event, emit) async {
-        emit(AuthLoading());
-        final Map<String, dynamic> response =
-            await _userController.getProfileUser();
-        if (response['status'] == true) {
-          User user = response['user'];
-          if (user.emailVerifiedAt == null) {
-            emit(
-              SendECodeToEmail(
-                verified: user.emailVerifiedAt != null,
-                user: user,
-              ),
-            );
-          } else if (user.emailVerifiedAt != null) {
-            emit(
-              EmailVerified(verified: false, message: response['error']),
-            );
-          }
-        } else {
-          emit(
-            AuthErrors(
-              message: response['error'],
-            ),
-          );
         }
       },
     );
@@ -175,28 +162,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
     );
 
-    on<VerifyEmail>(
-      (event, emit) async {
-        emit(AuthLoading());
-        final Map<String, dynamic> response =
-            await _authController.verifyEmail(event.code);
-        if (response['status'] == true) {
-          emit(
-            EmailVerified(
-              verified: true,
-            ),
-          );
-        } else {
-          emit(
-            EmailVerified(
-              verified: false,
-              message: response['error'],
-            ),
-          );
-        }
-      },
-    );
-
     on<SignInWithGoogle>(
       (event, emit) async {
         emit(AuthLoading());
@@ -210,7 +175,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           Storage.setString('auth_token', response['token']);
           emit(AuthLogedIn(createPassword: response['create_password']));
         } else {
-          emit(EmailVerified(verified: true, message: response['error']));
+          // emit(EmailVerified(verified: true, message: response['error']));
         }
       },
     );

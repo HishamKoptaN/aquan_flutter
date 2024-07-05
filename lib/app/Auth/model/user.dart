@@ -1,5 +1,5 @@
 class User {
-  int? id;
+  String? id;
   String? status;
   String? token;
   String? refcode;
@@ -23,62 +23,62 @@ class User {
   String? balanceFormated;
 
   User({
-    id,
-    status,
-    token,
-    refcode,
-    name,
-    username,
-    email,
-    emailVerifiedAt,
-    image,
-    address,
-    phone,
-    phoneVerifiedAt,
-    balance,
-    phoneVerificationCode,
-    inactivateEndAt,
-    message,
-    accountInfo,
-    referedBy,
-    planId,
-    createdAt,
-    updatedAt,
-    balanceFormated,
+    this.id,
+    this.status,
+    this.token,
+    this.refcode,
+    this.name,
+    this.username,
+    this.email,
+    this.emailVerifiedAt,
+    this.image,
+    this.address,
+    this.phone,
+    this.phoneVerifiedAt,
+    this.balance,
+    this.phoneVerificationCode,
+    this.inactivateEndAt,
+    this.message,
+    this.accountInfo,
+    this.referedBy,
+    this.planId,
+    this.createdAt,
+    this.updatedAt,
+    this.balanceFormated,
   });
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    status = json['status'];
-    token = json['token'];
-    refcode = json['refcode'];
-    name = json['name'];
-    username = json['username'];
-    email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    image = json['image'];
-    address = json['address'];
-    phone = json['phone'];
-    phoneVerifiedAt = json['phone_verified_at'];
-    balance = json['balance'];
-    phoneVerificationCode = json['phone_verification_code'];
-    inactivateEndAt = json['inactivate_end_at'];
-    message = json['message'];
-
-    if (json['account_info'].runtimeType != String &&
-        json['account_info'] != null) {
+    id = json['id']?.toString(); // تحويل id إلى String
+    status = json['status'] as String?;
+    token = json['token'] as String?;
+    refcode = json['refcode'] as String?;
+    name = json['name'] as String?;
+    username = json['username'] as String?;
+    email = json['email'] as String?;
+    emailVerifiedAt = json['email_verified_at'] as String?;
+    image = json['image'] as String?;
+    address = json['address'] as String?;
+    phone = json['phone'] as String?;
+    phoneVerifiedAt = json['phone_verified_at'] as String?;
+    balance = json['balance'] is int
+        ? json['balance']
+        : int.tryParse(json['balance'].toString());
+    phoneVerificationCode = json['phone_verification_code'] as String?;
+    inactivateEndAt = json['inactivate_end_at'] as String?;
+    message = json['message'] as String?;
+    if (json['account_info'] != null && json['account_info'] is List) {
       accountInfo = <AccountInfo>[];
-      json['account_info'].forEach(
-        (v) {
-          accountInfo!.add(AccountInfo.fromJson(v));
-        },
-      );
+      json['account_info'].forEach((v) {
+        accountInfo!.add(AccountInfo.fromJson(v));
+      });
     }
-    referedBy = json['refered_by'];
-    planId = json['plan_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    balanceFormated = json['balance_formated'];
+    referedBy = json['refered_by'] as String?;
+    planId = json['plan_id'] is int
+        ? json['plan_id']
+        : int.tryParse(json['plan_id'].toString());
+    createdAt = json['created_at'] as String?;
+    updatedAt = json['updated_at'] as String?;
+    balanceFormated = json['balance_formated'] as String?;
   }
 
   Map<String, dynamic> toJson() {
@@ -114,11 +114,17 @@ class User {
 class AccountInfo {
   String? currency;
   String? value;
-  AccountInfo({currency, value});
+
+  AccountInfo({
+    this.currency,
+    this.value,
+  });
+
   AccountInfo.fromJson(Map<String, dynamic> json) {
-    currency = json['currency'];
-    value = json['value'];
+    currency = json['currency'] as String?;
+    value = json['value'] as String?;
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['currency'] = currency;

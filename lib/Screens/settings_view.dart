@@ -289,8 +289,7 @@ class SettingsScreen extends StatelessWidget {
                                     Storage.setString("auth_token", '');
                                     Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            LoginView(logout: true),
+                                        builder: (context) => const LoginView(),
                                       ),
                                       (route) => false,
                                     );

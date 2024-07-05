@@ -28,6 +28,14 @@ class PlanError extends PlanState {
   PlanError({required this.message});
 }
 
+class UserPlanDetailsLoaded extends PlanState {
+  Map<String, String> planDetails;
+
+  UserPlanDetailsLoaded({
+    required this.planDetails,
+  });
+}
+
 class PlansDone extends PlanState {
   final List<Plan> plans;
   final User user;

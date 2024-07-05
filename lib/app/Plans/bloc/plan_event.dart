@@ -17,3 +17,5 @@ class ToggleCheckbox extends PlanEvent {
 }
 
 class GetPaymentMethods extends PlanEvent {}
+
+class GetUSerPlanDetails extends PlanEvent {}
