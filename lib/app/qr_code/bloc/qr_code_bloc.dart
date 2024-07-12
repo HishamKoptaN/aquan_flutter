@@ -8,23 +8,22 @@ class QrCodeBloc extends Bloc<QrCodeEvent, QrCodeState> {
   final ScanQrController scanQrController = ScanQrController();
 
   QrCodeBloc() : super(QrCodeInitial()) {
-    on<ScanQrCode>((event, emit) async {
-      String? barcode = await scanQrController.scan();
-      if (barcode == null) {
-        emit(
-          QrCodeScannedSuccessfullyState(qrCodeResult: "1"),
-        );
-        print("Scanned QR code: $barcode");
-      } else {
-        // التعامل مع الحالة التي لم يتم فيها مسح الباركود
-        print("Failed to scan QR code");
-      }
-    });
+    on<ScanQrCode>(
+      (event, emit) async {
+        String? barcode = await scanQrController.scan();
+        if (barcode == null) {
+          emit(
+            QrCodeScannedSuccessfullyState(qrCodeResult: "1"),
+          );
+          print("Scanned QR code: $barcode");
+        } else {
+          print("Failed to scan QR code");
+        }
+      },
+    );
 
     on<ShareQrCode>(
-      (event, emit) {
-        // إضافة منطق المشاركة هنا
-      },
+      (event, emit) {},
     );
   }
 }

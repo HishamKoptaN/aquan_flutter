@@ -2,25 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aquan/app/Plans/bloc/plan_bloc.dart';
-import 'package:aquan/app/Plans/view/change_plan_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import '../controller/plan_controller.dart';
-import 'widgets/plan_row.dart';
 
-class PlansScreen extends StatefulWidget {
-  const PlansScreen({super.key});
+class PlansView extends StatefulWidget {
+  const PlansView({super.key});
 
   @override
-  State<PlansScreen> createState() => _PlansScreenState();
+  State<PlansView> createState() => _PlansViewState();
 }
 
-class _PlansScreenState extends State<PlansScreen> {
+class _PlansViewState extends State<PlansView> {
   bool _isChecked = false;
   PlanController planController = PlanController();
+  int? _selectedPlanId;
 
   void _toggleCheckbox(bool? value) {
     setState(() {
       _isChecked = value ?? false;
+    });
+  }
+
+  void _selectPlan(int planId) {
+    setState(() {
+      _selectedPlanId = planId;
     });
   }
 
@@ -39,7 +45,7 @@ class _PlansScreenState extends State<PlansScreen> {
           },
         ),
         title: Text(
-          t.plans,
+          t.subscriptions,
           style: const TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -51,82 +57,194 @@ class _PlansScreenState extends State<PlansScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'اختر خطة الاشتراك',
+                t.choose_subscription,
                 style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
-              Text(
-                'اشترك الآن للحصول على أفضل الأسعار وأسرع خدمة لتحويل الأموال بكل سهولة وأمان!',
-                style: TextStyle(fontSize: 16.sp, color: Colors.blueGrey),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  t.subscription_now,
+                  maxLines: 2,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.blueGrey,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
               BlocProvider<PlanBloc>(
                 create: (context) => PlanBloc()..add(GetPlans()),
-                child: BlocConsumer<PlanBloc, PlanState>(
-                  listener: (context, state) {
-                    if (state is UserPlanDetailsLoaded) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(t.subscription_details),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                    '${t.start_date}:${state.planDetails['startDate']}'),
-                                Text(
-                                    '${t.end_date}: ${state.planDetails['endDate']}'),
-                              ],
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(t.close),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
+                child: BlocBuilder<PlanBloc, PlanState>(
                   builder: (context, state) {
                     if (state is PlansDone) {
-                      return Column(
-                        children: state.plans.map((plan) {
-                          return SubscriptionOption(
-                            level: '${plan.name}',
-                            price: (plan.amount! > 0)
-                                ? '\$${plan.amount}'
-                                : t.free,
-                            features: [
-                              '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
-                              '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
-                              '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',
-                            ],
-                            isSelected: (plan.id == state.user.planId),
+                      if (_selectedPlanId == null && state.user != null) {
+                        _selectedPlanId = state.user!.planId;
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: state.plans!.length,
+                        itemBuilder: (context, index) {
+                          final plan = state.plans![index];
+                          List<String> features = [
+                            '${t.transfer_commission} ${plan.discount.toString()}\%',
+                            '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
+                            '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
+                            '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',
+                          ];
+                          bool isSelected = (plan.id == _selectedPlanId);
+
+                          return GestureDetector(
                             onTap: () {
-                              try {
-                                if (plan.amount! > 0 &&
-                                    plan.id != state.user.planId) {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ChangePlanScreen(plan: plan),
-                                      ),
-                                    );
-                                  });
-                                }
-                              } catch (e) {
-                                print(e);
-                              }
+                              _selectPlan(plan.id!);
                             },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 16),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: isSelected
+                                        ? Colors.yellow[700]!
+                                        : Colors.grey,
+                                    width: 3),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: GestureDetector(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 120.w,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            (plan.id == state.user!.planId)
+                                                ? Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: GestureDetector(
+                                                      onTap: () async {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              title: Text(t
+                                                                  .subscription_details),
+                                                              content: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Text(
+                                                                      '${t.start_date}:${state.planDetails!['startDate']}'),
+                                                                  Text(
+                                                                      '${t.end_date}: ${state.planDetails!['endDate']}'),
+                                                                ],
+                                                              ),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                  child: Text(
+                                                                      t.close),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      child: const Icon(
+                                                          Icons.error),
+                                                    ),
+                                                  )
+                                                : const SizedBox(),
+                                            Text(
+                                              "${t.level} ${plan.name}",
+                                              style: TextStyle(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              plan.amount! > 0
+                                                  ? '\$${plan.amount}'
+                                                  : t.free,
+                                              style: TextStyle(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: isSelected
+                                                      ? Colors.yellow[700]
+                                                      : Colors.black),
+                                            ),
+                                            (plan.id == state.user!.planId)
+                                                ? Container(
+                                                    //  height: 40.s,
+                                                    // width: circleSize,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      color: Colors.green,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Center(
+                                                      child: Icon(Icons.check,
+                                                          color: Colors.white,
+                                                          size: 22.sp),
+                                                    ),
+                                                  )
+                                                : const SizedBox(),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 170.w,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Gap(20.h),
+                                            ...features
+                                                .map(
+                                                  (feature) => Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            bottom: 4.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(Icons.check,
+                                                            color: Colors
+                                                                .yellow[700],
+                                                            size: 25.sp),
+                                                        Expanded(
+                                                          child: Text(
+                                                            feature,
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    12.sp),
+                                                            maxLines: 1,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                                .toList(),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           );
-                        }).toList(),
+                        },
                       );
                     } else if (state is PlanError) {
                       return Center(
@@ -157,12 +275,15 @@ class _PlansScreenState extends State<PlansScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'الموافقة على الشروط و سياسة الخصوصية',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.grey,
-                      decoration: TextDecoration.underline,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'الموافقة على الشروط و سياسة الخصوصية',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
                   Checkbox(

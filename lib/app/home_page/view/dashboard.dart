@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import '../../profile/profile_view.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     fit: BoxFit.cover,
                                   ),
                                   borderRadius: const BorderRadius.all(
-                                    Radius.circular(100.0),
+                                    Radius.circular(100),
                                   ),
                                 ),
                               ),
@@ -199,61 +200,78 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Container(
                     width: size.width,
-                    height: size.height / 2.25,
+                    height: size.height / 2.5,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [
                           Colors.amber,
-                          Color.fromARGB(255, 255, 202, 44),
+                          Colors.amber,
                           Colors.amber,
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(40),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Gap(10.h),
+                        Gap(5.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50.h,
-                                width: 50.w,
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(55, 255, 255, 255),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Container(
-                                    height: 50.h,
-                                    width: 50.w,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.black,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ProfileScreen(),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 50.h,
+                                        width: 50.w,
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                55, 255, 255, 255),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Container(
+                                            height: 50.h,
+                                            width: 50.w,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ProfileScreen(),
+                                                  ),
+                                                ).then((value) =>
+                                                    setState(() => {}));
+                                              },
+                                              icon: FaIcon(
+                                                FontAwesomeIcons.user,
+                                                color: white,
+                                                size: 16.sp,
+                                              ),
+                                            ),
                                           ),
-                                        ).then((value) => setState(() => {}));
-                                      },
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.user,
-                                        color: white,
-                                        size: 16.sp,
+                                        ),
                                       ),
-                                    ),
+                                      Text(
+                                        user.name!.split(' ')[0],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10.sp,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                             RichText(
                               text: TextSpan(
@@ -331,14 +349,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: black,
-                            fontSize: 30.sp,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(.0),
                           child: Text(
-                            user.balanceFormated!,
+                            NumberFormat.simpleCurrency(
+                                    locale: "en", decimalDigits: 3)
+                                .format(user.balance),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: black,
@@ -581,6 +601,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class BalanceText extends StatelessWidget {
+  final double balance;
+
+  BalanceText({required this.balance});
+
+  @override
+  Widget build(BuildContext context) {
+    String formattedBalance =
+        NumberFormat.currency(locale: 'ar', symbol: 'ر.س').format(balance);
+
+    return Padding(
+      padding: const EdgeInsets.all(0),
+      child: Text(
+        formattedBalance,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 40.sp,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

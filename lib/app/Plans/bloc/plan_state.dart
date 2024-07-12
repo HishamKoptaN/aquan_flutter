@@ -28,21 +28,17 @@ class PlanError extends PlanState {
   PlanError({required this.message});
 }
 
-class UserPlanDetailsLoaded extends PlanState {
-  Map<String, String> planDetails;
-
-  UserPlanDetailsLoaded({
-    required this.planDetails,
-  });
-}
-
 class PlansDone extends PlanState {
-  final List<Plan> plans;
-  final User user;
+  final List<Plan>? plans;
+  final User? user;
+  Map<String, String>? planDetails;
 
+  bool? showPLanDetails;
   PlansDone({
-    required this.plans,
-    required this.user,
+    this.plans,
+    this.user,
+    this.showPLanDetails = false,
+    this.planDetails,
   });
 }
 

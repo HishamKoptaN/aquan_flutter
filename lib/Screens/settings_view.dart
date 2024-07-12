@@ -1,6 +1,5 @@
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/storage.dart';
-import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/app/Layouts/app_layout.dart';
 import 'package:aquan/Language/view/change_language_view.dart';
 import 'package:aquan/app/deposit/view/deposits_withdraws_view.dart';
@@ -9,7 +8,6 @@ import 'package:aquan/app/notifications/notifications_view.dart';
 import 'package:aquan/app/profile/profile_view.dart';
 import 'package:aquan/app/send_to_account/view/send_to_account_view.dart';
 import 'package:aquan/app/transaction/view/transactions_view.dart';
-import 'package:aquan/app/Widgets/primary_button.dart';
 import 'package:aquan/app/Widgets/settings_tab.dart';
 import 'package:aquan/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app/Plans/view/plans_view.dart';
 import '../app/referal/referal_view.dart';
+import '../app/tasks/view/tasks_view.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -37,9 +36,11 @@ class SettingsScreen extends StatelessWidget {
     final t = AppLocalizations.of(context)!;
     return AppLayout(
       route: t.settings,
-      showAppBar: false,
+      showAppBar: true,
+      backArow: false,
       body: ListView(
         children: [
+          const Gap(15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: SizedBox(
@@ -47,9 +48,11 @@ class SettingsScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PlansScreen(),
-                    )),
+                    (_) => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const PlansView(),
+                      ),
+                    ),
                   );
                 },
                 style: TextButton.styleFrom(
@@ -135,7 +138,6 @@ class SettingsScreen extends StatelessWidget {
             icon: FontAwesomeIcons.brush,
             onTap: () {
               List<Widget> childs = [];
-
               colors.every(
                 (color) {
                   childs.add(
@@ -202,12 +204,12 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           SettingsTabWidget(
-            title: t.sendToAnOtherAccount,
-            icon: FontAwesomeIcons.connectdevelop,
+            title: t.tasks,
+            icon: Icons.task,
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => SendToAccountView(),
+                  builder: (context) => const TasksScreen(),
                 ),
               )
             },
@@ -259,58 +261,71 @@ class SettingsScreen extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return Center(
-                    child: Container(
-                      height: 130,
-                      width: size.width * .75,
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(10),
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    title: Center(
+                      child: Text(
+                        t.logout,
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            t.areYouSure,
-                            style: cartHeading.copyWith(
-                              decoration: TextDecoration.none,
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          t.areYouSure,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 20),
+                        const Divider(thickness: 1),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () async {
+                                  Storage.setString("auth_token", '');
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginView(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  t.logout,
+                                  style: const TextStyle(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                          const Gap(30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: PrimaryButton(
-                                  text: t.submit,
-                                  padding: 10,
-                                  onPressed: () {
-                                    Storage.setString("auth_token", '');
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                        builder: (context) => const LoginView(),
-                                      ),
-                                      (route) => false,
-                                    );
-                                  },
+                            Container(
+                              height: 40,
+                              width: 1,
+                              color: Colors.grey,
+                            ),
+                            Expanded(
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  t.close,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
-                              const Gap(20),
-                              Expanded(
-                                child: PrimaryButton(
-                                  text: t.annuler,
-                                  bgColor: Colors.red.shade400,
-                                  padding: 10,
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   );
                 },

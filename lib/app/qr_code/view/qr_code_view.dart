@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:aquan/app/Auth/User/bloc/user_bloc.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../send_to_account/bloc/send_to_account_bloc.dart';
 import '../../send_to_account/view/send_to_account_view.dart';
@@ -12,6 +14,9 @@ import '../../Layouts/app_layout.dart';
 import '../../Auth/model/user.dart';
 import '../bloc/qr_code_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
+import 'dart:typed_data';
 
 class QrCodeView extends StatefulWidget {
   const QrCodeView({Key? key}) : super(key: key);
@@ -23,6 +28,16 @@ class QrCodeView extends StatefulWidget {
 class _QrCodeViewState extends State<QrCodeView> {
   @override
   Widget build(BuildContext context) {
+    final ScreenshotController screenshotController = ScreenshotController();
+
+    void shareQrCode(Uint8List screenshot) async {
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = await File('${directory.path}/screenshot.png').create();
+      await imagePath.writeAsBytes(screenshot);
+
+      Share.shareFiles([imagePath.path], text: 'Here is my QR code');
+    }
+
     final t = AppLocalizations.of(context)!;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -30,7 +45,8 @@ class _QrCodeViewState extends State<QrCodeView> {
 
     return AppLayout(
       route: t.qr_code,
-      showAppBar: false,
+      showAppBar: true,
+      backArow: false,
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -50,61 +66,124 @@ class _QrCodeViewState extends State<QrCodeView> {
                   if (state is DashboardLoaded) {
                     User user = state.user;
                     return Center(
-                      child: Container(
-                        height: height / 2,
-                        width: width / 1.2,
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment(0.8, 1),
-                            colors: <Color>[
-                              Color(0xFFFEEDFC),
-                              Colors.white,
-                              Color(0xFFE4E6F7),
-                              Color(0xFFE2E5F5),
-                            ],
-                            tileMode: TileMode.mirror,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: height / 3,
-                              width: width / 1.5,
-                              padding: const EdgeInsets.all(16),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(60),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Gap(20.h),
+                          SizedBox(
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Screenshot(
+                                  controller: screenshotController,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(40.0),
+                                            child: BarcodeWidget(
+                                              barcode: Barcode.qrCode(),
+                                              data: user.id.toString(),
+                                              height: height / 3,
+                                              width: width / 1.75,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment(0.8, 1),
-                                  colors: <Color>[
-                                    Colors.white,
-                                    Color(0xFFE4E6F7),
-                                    Colors.white,
-                                  ],
-                                  tileMode: TileMode.mirror,
+                                Positioned(
+                                  top: -30,
+                                  left: 0,
+                                  right: 0,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Image.asset(
+                                      'assets/icon/aquan_icon.png', // ضع مسار الصورة هنا
+                                      height: 75.sp,
+                                      width: 75.sp,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: BarcodeWidget(
-                                  barcode: Barcode.qrCode(),
-                                  data: user.id.toString(),
-                                  height: height / 3,
-                                  width: width / 2,
-                                ),
-                              ),
+                              ],
                             ),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 20.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.share),
+                                      onPressed: () async {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) async {
+                                            final screenshot =
+                                                await screenshotController
+                                                    .capture();
+                                            if (screenshot != null) {
+                                              shareQrCode(screenshot);
+                                            }
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Text(t.share),
+                                ],
+                              ),
+                              Gap(75.w),
+                              Column(
+                                children: [
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.qr_code_scanner),
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SendToAccountView(),
+                                          ),
+                                        );
+                                        context
+                                            .read<SendToAccountBloc>()
+                                            .add(ScanQrCodeEvent());
+                                      },
+                                    ),
+                                  ),
+                                  Text(t.delete),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                   } else {
@@ -141,56 +220,6 @@ class _QrCodeViewState extends State<QrCodeView> {
                       ),
                     );
                   }
-                },
-              ),
-              BlocConsumer<QrCodeBloc, QrCodeState>(
-                listener: (context, state) {
-                  // if (state is QrCodeScannedSuccessfully) {
-                  //   Navigator.of(context).pushAndRemoveUntil(
-                  //       MaterialPageRoute(
-                  //         builder: (context) => const SendToAccountView(),
-                  //       ),
-                  //       (route) => false);
-                  //   context.read<UserBloc>().add(
-                  //         GetNameOfUserByAccount(
-                  //           accountId: state.qrCodeResult,
-                  //         ),
-                  //       );
-                  // }
-                },
-                builder: (context, state) {
-                  return SizedBox(
-                    height: 75.h,
-                    width: 200.w,
-                    child: GestureDetector(
-                      onTap: () async {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const SendToAccountView(),
-                          ),
-                        );
-                        context
-                            .read<SendToAccountBloc>()
-                            .add(ScanQrCodeEvent());
-                      },
-                      child: Center(
-                        child: Card(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                FontAwesomeIcons.qrcode,
-                              ),
-                              Text(
-                                t.scan_qr,
-                                style: TextStyle(fontSize: 25.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
                 },
               ),
             ],

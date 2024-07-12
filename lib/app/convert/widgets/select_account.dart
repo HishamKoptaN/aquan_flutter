@@ -9,14 +9,12 @@ import '../../Auth/model/user.dart';
 class SelectAccuWidget extends StatelessWidget {
   const SelectAccuWidget({
     super.key,
-    required this.name,
     required this.accountInfo,
     required this.onChanged,
     required this.width,
     this.id,
   });
 
-  final String name;
   final List<AccountInfo>? accountInfo;
   final void Function(String?) onChanged;
   final int? id;
@@ -66,11 +64,6 @@ class SelectAccuWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Text(
-          name,
-          style: cartHeading.copyWith(fontSize: 16),
-        ),
-        const Gap(10),
         SizedBox(
           width: width,
           child: DropdownButtonFormField<String>(

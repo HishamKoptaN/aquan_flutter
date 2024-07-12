@@ -133,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           WidgetsBinding.instance.addPostFrameCallback(
                             (_) => Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const PlansScreen(),
+                                builder: (context) => const PlansView(),
                               ),
                             ),
                           );

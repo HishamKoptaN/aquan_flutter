@@ -175,7 +175,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           Storage.setString('auth_token', response['token']);
           emit(AuthLogedIn(createPassword: response['create_password']));
         } else {
-          // emit(EmailVerified(verified: true, message: response['error']));
+          emit(EmailVerified(verified: true, message: response['error']));
         }
       },
     );

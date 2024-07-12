@@ -49,11 +49,13 @@ class _AnimatedCheckState extends State<AnimatedCheck>
           shape: BoxShape.circle,
         ),
         child: SizeTransition(
-            sizeFactor: checkAnimation,
-            axis: Axis.horizontal,
-            axisAlignment: -1,
-            child: Center(
-                child: Icon(Icons.check, color: Colors.white, size: iconSize))),
+          sizeFactor: checkAnimation,
+          axis: Axis.horizontal,
+          axisAlignment: -1,
+          child: Center(
+            child: Icon(Icons.check, color: Colors.white, size: iconSize),
+          ),
+        ),
       ),
     );
   }

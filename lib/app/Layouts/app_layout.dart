@@ -7,10 +7,12 @@ class AppLayout extends StatefulWidget {
     required this.route,
     required this.body,
     required this.showAppBar,
+    this.backArow = true,
   });
   final String route;
   final Widget body;
   final bool showAppBar;
+  final bool backArow;
 
   @override
   State<AppLayout> createState() => _AppLayoutState();
@@ -22,18 +24,22 @@ class _AppLayoutState extends State<AppLayout> {
     final t = AppLocalizations.of(context)!;
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: widget.showAppBar
               ? AppBar(
                   backgroundColor: Colors.white,
                   elevation: 0,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
+                  leading: widget.backArow
+                      ? IconButton(
+                          icon:
+                              const Icon(Icons.arrow_back, color: Colors.black),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      : null,
                   title: Text(
-                    t.sendToAnOtherAccount,
+                    widget.route,
                     style: const TextStyle(color: Colors.black),
                   ),
                   centerTitle: true,

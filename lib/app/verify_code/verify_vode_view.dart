@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:aquan/app/Layouts/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Auth/model/user.dart';
-import '../navigator_bottom_bar/navigator_bottom_bar_view.dart';
+import '../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import 'bloc/verify_email_bloc.dart';
 
 class VerifyCode extends StatefulWidget {
@@ -23,12 +24,9 @@ class VerifyCode extends StatefulWidget {
 
 class _VerifyCodeState extends State<VerifyCode> {
   TextEditingController textEditingController = TextEditingController();
-  // ..text = "123456";
-  // ignore: close_sinks
   StreamController<ErrorAnimationType>? errorController;
   int _timerSeconds = 0;
   Timer? _timer;
-
   bool hasError = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
@@ -91,8 +89,29 @@ class _VerifyCodeState extends State<VerifyCode> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Gap(40.h),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Image.asset(
+                      'assets/icon/aquan_black_logo.png',
+                      width: 55,
+                      height: 55,
+                    ),
+                    Text(
+                      t.aquan,
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Gap(20.h),
             Icon(
               Icons.verified,
               color: Colors.black,
@@ -102,7 +121,7 @@ class _VerifyCodeState extends State<VerifyCode> {
               t.verify_email,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            Gap(75.h),
+            Gap(50.h),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -113,30 +132,31 @@ class _VerifyCodeState extends State<VerifyCode> {
                       topLeft: Radius.circular(40)),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Text(
-                            t.verify_email,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Gap(15.h),
+                        Text(
+                          t.verify_email,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                          Gap(30.h),
-                          Text(
-                            t.enter_6_digits,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                        ),
+                        Gap(15.h),
+                        Text(
+                          t.enter_6_digits,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                    Gap(15.h),
                     Directionality(
                       textDirection: TextDirection.ltr,
                       child: Form(
@@ -228,17 +248,12 @@ class _VerifyCodeState extends State<VerifyCode> {
                       ],
                     ),
                     Gap(10.h),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Text(
-                        hasError
-                            ? "*Please fill up all the cells properly"
-                            : "",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
+                    Text(
+                      hasError ? "*Please fill up all the cells properly" : "",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     Gap(10.h),
@@ -247,6 +262,12 @@ class _VerifyCodeState extends State<VerifyCode> {
                       child: BlocConsumer<VerifyEmailBloc, VerifyEmailState>(
                         listener: (context, state) {
                           if (state is EmailVerified) {
+                            Flushbar(
+                              title: t.success,
+                              message: t.account_verified_done,
+                              duration: const Duration(seconds: 3),
+                              flushbarPosition: FlushbarPosition.TOP,
+                            ).show(context);
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

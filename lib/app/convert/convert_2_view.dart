@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:aquan/app/currency/bloc/currency_bloc.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/styles.dart';
@@ -15,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-
 import '../transaction/view/transactions_view.dart';
 
 class ConvertSecondScreen extends StatefulWidget {

@@ -26,13 +26,13 @@ class SelectCurrencyWidget extends StatelessWidget {
     final List<DropdownMenuItem<int>> items = [];
 
     items.add(
-      const DropdownMenuItem(
+      DropdownMenuItem(
         value: 0,
         alignment: AlignmentDirectional.center,
         child: Text(
-          "Select",
+          t.select,
           overflow: TextOverflow.visible,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 15,
           ),
         ),
@@ -68,27 +68,35 @@ class SelectCurrencyWidget extends StatelessWidget {
         const Gap(10),
         SizedBox(
           width: size.width * 0.40 - 10,
-          child: DropdownButtonFormField<int>(
-            isExpanded: true,
-            menuMaxHeight: 300,
-            validator: (value) {
-              if (value == null) {
-                return t.required;
-              }
-
-              return null;
-            },
-            value: 0,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 10,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
             ),
-            items: items,
-            onChanged: onChanged,
+            child: DropdownButtonFormField<int>(
+              isExpanded: true,
+              menuMaxHeight: 300,
+              validator: (value) {
+                if (value == null) {
+                  return t.required;
+                }
+                return null;
+              },
+              value: 0,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+              items: items,
+              onChanged: onChanged,
+            ),
           ),
         ),
       ],

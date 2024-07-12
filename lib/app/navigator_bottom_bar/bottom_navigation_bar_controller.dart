@@ -4,12 +4,12 @@ import '../../Screens/settings_view.dart';
 import '../convert/convert_view.dart';
 import '../home_page/view/dashboard.dart';
 import '../qr_code/view/qr_code_view.dart';
-import '../tasks/view/tasks_view.dart';
+import '../send_to_account/view/send_to_account_view.dart';
 
 class NavigatorBottomBarCnr {
   final List<Widget> pages = [
     const DashboardScreen(),
-    const TasksScreen(),
+    const SendToAccountView(),
     const ConvertScreen(),
     const QrCodeView(),
     const SettingsScreen(),

@@ -3,6 +3,7 @@ import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/app/currency/model/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,15 +20,13 @@ class ConvertCurrencyPrice extends StatelessWidget {
   final Size size;
   final void Function(String?) onChanged;
   final TextEditingController controller;
-
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
             child: Text(
@@ -41,15 +40,20 @@ class ConvertCurrencyPrice extends StatelessWidget {
             ),
           ),
           const Gap(20),
-          SizedBox(
-            width: size.width * 0.5,
+          Container(
+            width: 220.w,
+            height: 50.h,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(),
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: TextFormField(
               controller: controller,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return t.required;
                 }
-
                 return null;
               },
               keyboardType: TextInputType.number,
@@ -61,11 +65,7 @@ class ConvertCurrencyPrice extends StatelessWidget {
               onChanged: onChanged,
               decoration: const InputDecoration(
                 counterStyle: cartHeading,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: black,
-                  ),
-                ),
+                border: InputBorder.none,
               ),
             ),
           ),

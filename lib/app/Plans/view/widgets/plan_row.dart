@@ -1,5 +1,4 @@
 import 'package:aquan/app/Plans/bloc/plan_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +12,7 @@ class SubscriptionOption extends StatelessWidget {
   final List<String> features;
   final bool isSelected;
   void Function()? onTap;
+  PlansDone planState;
   SubscriptionOption({
     super.key,
     required this.level,
@@ -20,6 +20,7 @@ class SubscriptionOption extends StatelessWidget {
     required this.features,
     required this.isSelected,
     required this.onTap,
+    required this.planState,
   });
 
   @override
@@ -49,9 +50,31 @@ class SubscriptionOption extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
                                 onTap: () async {
-                                  context
-                                      .read<PlanBloc>()
-                                      .add(GetUSerPlanDetails());
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text(t.subscription_details),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                                '${t.start_date}:${planState.planDetails!['startDate']}'),
+                                            Text(
+                                                '${t.end_date}: ${planState.planDetails!['endDate']}'),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(t.close),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
                                 },
                                 child: const Icon(Icons.error)),
                           )

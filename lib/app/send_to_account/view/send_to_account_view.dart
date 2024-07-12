@@ -30,6 +30,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
     return AppLayout(
       route: t.sendToAnOtherAccount,
       showAppBar: true,
+      backArow: false,
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -96,8 +97,17 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                     decoration: InputDecoration(
                       labelText: t.accountId,
                       border: const OutlineInputBorder(),
-                      suffixIcon: const Icon(
-                        FontAwesomeIcons.userLock,
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.qr_code_scanner_sharp),
+                        onPressed: () async {
+                          WidgetsBinding.instance.addPostFrameCallback(
+                            (_) async {
+                              context
+                                  .read<SendToAccountBloc>()
+                                  .add(ScanQrCodeEvent());
+                            },
+                          );
+                        },
                       ),
                     ),
                     onChanged: (value) {
@@ -109,46 +119,96 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                       );
                     },
                   ),
-                  const Gap(10),
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: TextButton(
-                      onPressed: () {
-                        if (sendToAccountController
-                            .accountNumbertextEditingController
-                            .text
-                            .isNotEmpty) {
-                          context.read<SendToAccountBloc>().add(
-                                GetNameOfUserByAccountEvent(
-                                    accountId: sendToAccountController
-                                        .accountNumbertextEditingController
-                                        .text),
-                              );
-                        }
-                      },
-                      style: TextButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 20),
-                        backgroundColor: Theme.of(context).primaryColor,
-                        padding: const EdgeInsets.all(15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (sendToAccountController
+                          .accountNumbertextEditingController.text.isNotEmpty) {
+                        context.read<SendToAccountBloc>().add(
+                              GetNameOfUserByAccountEvent(
+                                  accountId: sendToAccountController
+                                      .accountNumbertextEditingController.text),
+                            );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 32, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: state is SendToAccountLoading
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                color: black,
-                              ),
-                            )
-                          : Text(
-                              t.search,
-                              style: const TextStyle(
-                                color: black,
-                                fontFamily: "Arial",
-                              ),
-                            ),
+                    ),
+                    child: Text(
+                      t.search,
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
+                  // TextField(
+                  //   controller: sendToAccountController
+                  //       .accountNumbertextEditingController,
+                  //   autofocus: true,
+                  //   decoration: InputDecoration(
+                  //     labelText: t.accountId,
+                  //     border: const OutlineInputBorder(),
+                  //     suffixIcon: const Icon(
+                  //       FontAwesomeIcons.userLock,
+                  //     ),
+                  //   ),
+                  //   onChanged: (value) {
+                  //     setState(
+                  //       () {
+                  //         sendToAccountController
+                  //             .accountNumbertextEditingController.text = value;
+                  //       },
+                  //     );
+                  //   },
+                  // ),
+                  const Gap(10),
+                  // SizedBox(
+                  //   width: double.maxFinite,
+                  //   child: TextButton(
+                  //     onPressed: () {
+                  //       if (sendToAccountController
+                  //           .accountNumbertextEditingController
+                  //           .text
+                  //           .isNotEmpty) {
+                  //         context.read<SendToAccountBloc>().add(
+                  //               GetNameOfUserByAccountEvent(
+                  //                   accountId: sendToAccountController
+                  //                       .accountNumbertextEditingController
+                  //                       .text),
+                  //             );
+                  //       }
+                  //     },
+                  //     style: TextButton.styleFrom(
+                  //       textStyle: const TextStyle(fontSize: 20),
+                  //       backgroundColor: Theme.of(context).primaryColor,
+                  //       padding: const EdgeInsets.all(15),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(15),
+                  //       ),
+                  //     ),
+                  //     child: state is SendToAccountLoading
+                  //         ? const Center(
+                  //             child: CircularProgressIndicator(
+                  //               color: black,
+                  //             ),
+                  //           )
+                  //         : Text(
+                  //             t.search,
+                  //             style: const TextStyle(
+                  //               color: black,
+                  //               fontFamily: "Arial",
+                  //             ),
+                  //           ),
+                  //   ),
+                  // ),
+                  const Gap(10),
                   if (state is UserNameLoaded)
                     Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -214,33 +274,32 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                         ),
                       ),
                     ),
-                  SizedBox(
-                    height: 75.h,
-                    width: 200.w,
-                    child: GestureDetector(
-                      onTap: () {
-                        context
-                            .read<SendToAccountBloc>()
-                            .add(ScanQrCodeEvent());
-                      },
-                      child: Center(
-                        child: Card(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                FontAwesomeIcons.qrcode,
-                              ),
-                              Text(
-                                t.scan_qr,
-                                style: TextStyle(fontSize: 25.sp),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const Gap(30),
+                  // Column(
+                  //   children: [
+                  //     Container(
+                  //       decoration: const BoxDecoration(
+                  //         color: Colors.amber,
+                  //         borderRadius: BorderRadius.all(
+                  //           Radius.circular(100),
+                  //         ),
+                  //       ),
+                  //       child: IconButton(
+                  //         icon: const Icon(Icons.qr_code_scanner),
+                  //         onPressed: () async {
+                  //           WidgetsBinding.instance.addPostFrameCallback(
+                  //             (_) async {
+                  //               context
+                  //                   .read<SendToAccountBloc>()
+                  //                   .add(ScanQrCodeEvent());
+                  //             },
+                  //           );
+                  //         },
+                  //       ),
+                  //     ),
+                  //     Text(t.share),
+                  //   ],
+                  // ),
                 ],
               ),
             );

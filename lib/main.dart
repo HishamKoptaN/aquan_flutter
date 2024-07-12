@@ -1,8 +1,10 @@
+// ignore_for_file: unused_import
 import 'package:aquan/Helpers/Storage.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/settings.dart';
 import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/Language/bloc/language_bloc.dart';
+import 'package:aquan/app/Plans/view/plans_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,7 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Helpers/app_observer.dart';
 import 'app/Auth/login/view/login_view.dart';
 import 'app/Widgets/language_set.dart';
-import 'app/navigator_bottom_bar/navigator_bottom_bar_view.dart';
+import 'app/navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import 'app/verify_code/verify_vode_view.dart';
 import 'app/sign_up/bloc/auth_bloc.dart';
 
@@ -43,7 +45,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String locale = Storage.getString('language') ?? 'en';
+  String locale = Storage.getString('language') ?? 'ar';
   Color color = primary;
   bool error = false;
 
@@ -53,7 +55,9 @@ class _MyAppState extends State<MyApp> {
       () {
         String? c = prefs.getString('color');
         if (c != null) {
-          color = Color(int.parse("0x${prefs.getString('color')!}"));
+          color = Color(
+            int.parse("0x${prefs.getString('color')!}"),
+          );
         }
       },
     );
@@ -73,10 +77,6 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<LanguageBloc>(
-            create: (BuildContext context) =>
-                LanguageBloc()..add(CheckLanguage()),
-          ),
           BlocProvider<AuthBloc>(
             create: (BuildContext context) => AuthBloc()..add(CheckLogedIn()),
           ),
@@ -96,7 +96,9 @@ class _MyAppState extends State<MyApp> {
               return Scaffold(
                 backgroundColor: Colors.white,
                 body: Center(
-                  child: Text(errorDetails.toString()),
+                  child: Text(
+                    errorDetails.toString(),
+                  ),
                 ),
               );
             };
@@ -119,97 +121,61 @@ class _MyAppState extends State<MyApp> {
           ),
           home: Scaffold(
             backgroundColor: Colors.white,
-            body: BlocBuilder<LanguageBloc, LanguageState>(
-              builder: (context, state) {
-                if (state is SetLanguage) {
-                  return LanguageSetWidget(
-                    onPress: () {
-                      context.read<LanguageBloc>().add(
-                            SetLocale(locale: locale),
-                          );
-                    },
-                    onChanged: (value) => {
-                      setState(
-                        () {
-                          locale = value!;
-                        },
-                      )
-                    },
-                  );
-                }
-                if (state is LanguageSeted) {
-                  WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => setState(
-                      () {
-                        locale = Storage.getString('language') ?? 'en';
-                      },
-                    ),
-                  );
-                  return BlocProvider<AuthBloc>(
-                    create: (context) => AuthBloc()..add(CheckLogedIn()),
-                    child: BlocConsumer<AuthBloc, AuthState>(
-                      listener: (context, state) {
-                        if (state is AuthErrors) {
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(
-                              SnackBar(
-                                backgroundColor: danger,
-                                duration: const Duration(seconds: 3),
-                                content: Text(
-                                  state.message!,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            );
-                        }
-                        if (state is AuthLogedIn) {
-                          context.read<AuthBloc>().add(
-                                CheckEmailVerification(),
-                              );
-                        }
-                        if (state is EmailNotVerify) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VerifyCode(
-                                user: state.user,
-                              ),
-                            ),
-                          );
-                        }
-                        if (state is EmailVerified) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NavigateBarView(),
-                            ),
-                          );
-                        }
-                        if (state is AuthLogedOut) {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) => const LoginView(),
-                            ),
-                            (route) => false,
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: Colors.white,
-                            color: Colors.amber,
+            body: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthErrors) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(
+                        backgroundColor: danger,
+                        duration: const Duration(seconds: 3),
+                        content: Text(
+                          state.message!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: white,
+                            fontSize: 16,
                           ),
-                        );
-                      },
+                        ),
+                      ),
+                    );
+                }
+                if (state is AuthLogedIn) {
+                  context.read<AuthBloc>().add(
+                        CheckEmailVerification(),
+                      );
+                }
+                if (state is EmailNotVerify) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerifyCode(
+                        user: state.user,
+                      ),
                     ),
                   );
                 }
+                if (state is EmailVerified) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          // const PlansView(),
+                          const NavigateBarView(),
+                    ),
+                  );
+                }
+                if (state is AuthLogedOut) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginView(),
+                    ),
+                    (route) => false,
+                  );
+                }
+              },
+              builder: (context, state) {
                 return const Center(
                   child: CircularProgressIndicator(
                     backgroundColor: Colors.white,
