@@ -1,14 +1,12 @@
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/app/Layouts/app_layout.dart';
-import 'package:aquan/app/Auth/User/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:motion_toast/resources/colors.dart';
 import '../bloc/send_to_account_bloc.dart';
 import '../controller/send_to_account_controller.dart';
 
@@ -33,9 +31,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
       backArow: false,
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => SendToAccountBloc()..add(GetUSerDataEvent()),
-          ),
+          BlocProvider(create: (context) => SendToAccountBloc()),
         ],
         child: BlocConsumer<SendToAccountBloc, SendToAccountState>(
           listener: (context, state) {
@@ -43,10 +39,15 @@ class _SendToAccountViewState extends State<SendToAccountView> {
               sendToAccountController.accountNumbertextEditingController.text =
                   state.barcodeValue;
               context.read<SendToAccountBloc>().add(
-                  GetNameOfUserByAccountEvent(accountId: state.barcodeValue));
+                    GetNameOfUserByAccountEvent(
+                      accountId: state.barcodeValue,
+                    ),
+                  );
             }
             if (state is ScanQrCodeState) {
-              context.read<SendToAccountBloc>().add(ScanQrCodeEvent());
+              context.read<SendToAccountBloc>().add(
+                    ScanQrCodeEvent(),
+                  );
             }
           },
           builder: (context, state) {
@@ -78,7 +79,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                       padding: const EdgeInsets.all(15),
                       margin: const EdgeInsets.only(bottom: 20),
                       decoration: const BoxDecoration(
-                        color: successColor,
+                        color: Colors.green,
                         borderRadius: BorderRadius.all(
                           Radius.circular(5),
                         ),
@@ -93,7 +94,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                   TextField(
                     controller: sendToAccountController
                         .accountNumbertextEditingController,
-                    autofocus: true,
+                    autofocus: false,
                     decoration: InputDecoration(
                       labelText: t.accountId,
                       border: const OutlineInputBorder(),
@@ -110,14 +111,6 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                         },
                       ),
                     ),
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          sendToAccountController
-                              .accountNumbertextEditingController.text = value;
-                        },
-                      );
-                    },
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
@@ -133,81 +126,28 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: amber,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: Text(
-                      t.search,
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: state is SendToAccountLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: black,
+                            ),
+                          )
+                        : Text(
+                            t.search,
+                            style: TextStyle(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
-                  // TextField(
-                  //   controller: sendToAccountController
-                  //       .accountNumbertextEditingController,
-                  //   autofocus: true,
-                  //   decoration: InputDecoration(
-                  //     labelText: t.accountId,
-                  //     border: const OutlineInputBorder(),
-                  //     suffixIcon: const Icon(
-                  //       FontAwesomeIcons.userLock,
-                  //     ),
-                  //   ),
-                  //   onChanged: (value) {
-                  //     setState(
-                  //       () {
-                  //         sendToAccountController
-                  //             .accountNumbertextEditingController.text = value;
-                  //       },
-                  //     );
-                  //   },
-                  // ),
                   const Gap(10),
-                  // SizedBox(
-                  //   width: double.maxFinite,
-                  //   child: TextButton(
-                  //     onPressed: () {
-                  //       if (sendToAccountController
-                  //           .accountNumbertextEditingController
-                  //           .text
-                  //           .isNotEmpty) {
-                  //         context.read<SendToAccountBloc>().add(
-                  //               GetNameOfUserByAccountEvent(
-                  //                   accountId: sendToAccountController
-                  //                       .accountNumbertextEditingController
-                  //                       .text),
-                  //             );
-                  //       }
-                  //     },
-                  //     style: TextButton.styleFrom(
-                  //       textStyle: const TextStyle(fontSize: 20),
-                  //       backgroundColor: Theme.of(context).primaryColor,
-                  //       padding: const EdgeInsets.all(15),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(15),
-                  //       ),
-                  //     ),
-                  //     child: state is SendToAccountLoading
-                  //         ? const Center(
-                  //             child: CircularProgressIndicator(
-                  //               color: black,
-                  //             ),
-                  //           )
-                  //         : Text(
-                  //             t.search,
-                  //             style: const TextStyle(
-                  //               color: black,
-                  //               fontFamily: "Arial",
-                  //             ),
-                  //           ),
-                  //   ),
-                  // ),
                   const Gap(10),
                   if (state is UserNameLoaded)
                     Padding(
@@ -220,7 +160,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                   const Gap(10),
                   if (state is UserNameLoaded)
                     TextField(
-                      autofocus: true,
+                      autofocus: false,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: t.amount,
@@ -250,16 +190,17 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                               state.name.isNotEmpty) {
                             context.read<SendToAccountBloc>().add(
                                   SendPaymentToOtherAccount(
-                                      accountId: sendToAccountController
-                                          .accountNumbertextEditingController
-                                          .text,
-                                      amount: sendToAccountController.amount),
+                                    accountId: sendToAccountController
+                                        .accountNumbertextEditingController
+                                        .text,
+                                    amount: sendToAccountController.amount,
+                                  ),
                                 );
                           }
                         },
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(fontSize: 20),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundColor: amber,
                           padding: const EdgeInsets.all(15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -275,31 +216,6 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                       ),
                     ),
                   const Gap(30),
-                  // Column(
-                  //   children: [
-                  //     Container(
-                  //       decoration: const BoxDecoration(
-                  //         color: Colors.amber,
-                  //         borderRadius: BorderRadius.all(
-                  //           Radius.circular(100),
-                  //         ),
-                  //       ),
-                  //       child: IconButton(
-                  //         icon: const Icon(Icons.qr_code_scanner),
-                  //         onPressed: () async {
-                  //           WidgetsBinding.instance.addPostFrameCallback(
-                  //             (_) async {
-                  //               context
-                  //                   .read<SendToAccountBloc>()
-                  //                   .add(ScanQrCodeEvent());
-                  //             },
-                  //           );
-                  //         },
-                  //       ),
-                  //     ),
-                  //     Text(t.share),
-                  //   ],
-                  // ),
                 ],
               ),
             );

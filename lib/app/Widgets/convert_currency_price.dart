@@ -1,6 +1,6 @@
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/styles.dart';
-import 'package:aquan/app/currency/model/currency.dart';
+import 'package:aquan/app/buy_sell/model/buy_sell_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,26 +46,28 @@ class ConvertCurrencyPrice extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(),
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(15),
             ),
-            child: TextFormField(
-              controller: controller,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return t.required;
-                }
-                return null;
-              },
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(
-                  RegExp("[0-9.]"),
+            child: Center(
+              child: TextFormField(
+                controller: controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return t.required;
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(
+                    RegExp("[0-9.]"),
+                  ),
+                ],
+                onChanged: onChanged,
+                decoration: const InputDecoration(
+                  counterStyle: cartHeading,
+                  border: InputBorder.none,
                 ),
-              ],
-              onChanged: onChanged,
-              decoration: const InputDecoration(
-                counterStyle: cartHeading,
-                border: InputBorder.none,
               ),
             ),
           ),

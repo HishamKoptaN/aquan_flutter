@@ -1,134 +1,148 @@
-class User {
-  String? id;
-  String? status;
-  String? token;
-  String? refcode;
-  String? name;
-  String? username;
-  String? email;
-  String? emailVerifiedAt;
-  String? image;
-  String? address;
-  String? phone;
-  String? phoneVerifiedAt;
-  int? balance;
-  String? phoneVerificationCode;
-  String? inactivateEndAt;
-  String? message;
-  List<AccountInfo>? accountInfo;
-  String? referedBy;
-  int? planId;
-  String? createdAt;
-  String? updatedAt;
-  String? balanceFormated;
+// class User {
+//   int id;
+//   String status;
+//   String token;
+//   String name;
+//   String username;
+//   String email;
+//   String image;
+//   String address;
+//   String phone;
+//   int balance;
+//   dynamic message;
+//   List<AccountInfo> accountInfo;
+//   int planId;
+//   int role;
+//   dynamic referedBy;
+//   dynamic confirmationCode;
+//   String phoneVerifiedAt;
+//   String refcode;
+//   String phoneVerificationCode;
+//   String upgradedAt;
+//   dynamic emailVerifiedAt;
+//   dynamic inactivateEndAt;
+//   String createdAt;
+//   String updatedAt;
+//   String balanceFormatted;
+//   DateTime createdDate;
+//   String upgradedDate;
 
-  User({
-    this.id,
-    this.status,
-    this.token,
-    this.refcode,
-    this.name,
-    this.username,
-    this.email,
-    this.emailVerifiedAt,
-    this.image,
-    this.address,
-    this.phone,
-    this.phoneVerifiedAt,
-    this.balance,
-    this.phoneVerificationCode,
-    this.inactivateEndAt,
-    this.message,
-    this.accountInfo,
-    this.referedBy,
-    this.planId,
-    this.createdAt,
-    this.updatedAt,
-    this.balanceFormated,
-  });
+//   User({
+//     required this.id,
+//     required this.status,
+//     required this.token,
+//     required this.name,
+//     required this.username,
+//     required this.email,
+//     required this.image,
+//     required this.address,
+//     required this.phone,
+//     required this.balance,
+//     required this.message,
+//     required this.accountInfo,
+//     required this.planId,
+//     required this.role,
+//     required this.referedBy,
+//     required this.confirmationCode,
+//     required this.phoneVerifiedAt,
+//     required this.refcode,
+//     required this.phoneVerificationCode,
+//     required this.upgradedAt,
+//     required this.emailVerifiedAt,
+//     required this.inactivateEndAt,
+//     required this.createdAt,
+//     required this.updatedAt,
+//     required this.balanceFormatted,
+//     required this.createdDate,
+//     required this.upgradedDate,
+//   });
 
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id']?.toString(); // تحويل id إلى String
-    status = json['status'] as String?;
-    token = json['token'] as String?;
-    refcode = json['refcode'] as String?;
-    name = json['name'] as String?;
-    username = json['username'] as String?;
-    email = json['email'] as String?;
-    emailVerifiedAt = json['email_verified_at'] as String?;
-    image = json['image'] as String?;
-    address = json['address'] as String?;
-    phone = json['phone'] as String?;
-    phoneVerifiedAt = json['phone_verified_at'] as String?;
-    balance = json['balance'] is int
-        ? json['balance']
-        : int.tryParse(json['balance'].toString());
-    phoneVerificationCode = json['phone_verification_code'] as String?;
-    inactivateEndAt = json['inactivate_end_at'] as String?;
-    message = json['message'] as String?;
-    if (json['account_info'] != null && json['account_info'] is List) {
-      accountInfo = <AccountInfo>[];
-      json['account_info'].forEach((v) {
-        accountInfo!.add(AccountInfo.fromJson(v));
-      });
-    }
-    referedBy = json['refered_by'] as String?;
-    planId = json['plan_id'] is int
-        ? json['plan_id']
-        : int.tryParse(json['plan_id'].toString());
-    createdAt = json['created_at'] as String?;
-    updatedAt = json['updated_at'] as String?;
-    balanceFormated = json['balance_formated'] as String?;
-  }
+//   factory User.fromJson(Map<String, dynamic> json) => User(
+//         id: json["id"] ?? 0,
+//         status: json["status"] ?? '',
+//         token: json["token"] ?? '',
+//         name: json["name"] ?? '',
+//         username: json["username"] ?? '',
+//         email: json["email"] ?? '',
+//         image: json["image"] ?? '',
+//         address: json["address"] ?? '',
+//         phone: json["phone"] ?? '',
+//         balance: json["balance"] ?? 0,
+//         message: json["message"],
+//         accountInfo: json["account_info"] != null
+//             ? List<AccountInfo>.from(
+//                 json["account_info"].map((x) => AccountInfo.fromJson(x)))
+//             : [],
+//         planId: json["plan_id"] ?? 0,
+//         role: json["role"] ?? 0,
+//         referedBy: json["refered_by"],
+//         confirmationCode: json["confirmation_code"],
+//         phoneVerifiedAt: json["phone_verified_at"] ?? '',
+//         refcode: json["refcode"] ?? '',
+//         phoneVerificationCode: json["phone_verification_code"] ?? '',
+//         upgradedAt: json["upgraded_at"] ?? '',
+//         emailVerifiedAt: json["email_verified_at"],
+//         inactivateEndAt: json["inactivate_end_at"],
+//         createdAt: json["created_at"] ?? '',
+//         updatedAt: json["updated_at"] ?? '',
+//         balanceFormatted: json["balance_formatted"] ?? '',
+//         createdDate: json["created_date"] != null
+//             ? DateTime.parse(json["created_date"])
+//             : DateTime.now(),
+//         upgradedDate: json["upgraded_date"] ?? '',
+//       );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['status'] = status;
-    data['token'] = token;
-    data['refcode'] = refcode;
-    data['name'] = name;
-    data['username'] = username;
-    data['email'] = email;
-    data['email_verified_at'] = emailVerifiedAt;
-    data['image'] = image;
-    data['address'] = address;
-    data['phone'] = phone;
-    data['phone_verified_at'] = phoneVerifiedAt;
-    data['balance'] = balance;
-    data['phone_verification_code'] = phoneVerificationCode;
-    data['inactivate_end_at'] = inactivateEndAt;
-    data['message'] = message;
-    if (accountInfo != null) {
-      data['account_info'] = accountInfo!.map((v) => v.toJson()).toList();
-    }
-    data['refered_by'] = referedBy;
-    data['plan_id'] = planId;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['balance_formated'] = balanceFormated;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "status": status,
+//         "token": token,
+//         "name": name,
+//         "username": username,
+//         "email": email,
+//         "image": image,
+//         "address": address,
+//         "phone": phone,
+//         "balance": balance,
+//         "message": message,
+//         "account_info": List<dynamic>.from(accountInfo.map((x) => x.toJson())),
+//         "plan_id": planId,
+//         "role": role,
+//         "refered_by": referedBy,
+//         "confirmation_code": confirmationCode,
+//         "phone_verified_at": phoneVerifiedAt,
+//         "refcode": refcode,
+//         "phone_verification_code": phoneVerificationCode,
+//         "upgraded_at": upgradedAt,
+//         "email_verified_at": emailVerifiedAt,
+//         "inactivate_end_at": inactivateEndAt,
+//         "created_at": createdAt,
+//         "updated_at": updatedAt,
+//         "balance_formatted": balanceFormatted,
+//         "created_date": createdDate.toIso8601String(),
+//         "upgraded_date": upgradedDate,
+//       };
+// }
 
-class AccountInfo {
-  String? currency;
-  String? value;
+// class AccountInfo {
+//   String? currency;
+//   String? value;
 
-  AccountInfo({
-    this.currency,
-    this.value,
-  });
+//   AccountInfo({
+//     this.currency,
+//     this.value,
+//   });
 
-  AccountInfo.fromJson(Map<String, dynamic> json) {
-    currency = json['currency'] as String?;
-    value = json['value'] as String?;
-  }
+//   factory AccountInfo.fromJson(Map<String, dynamic> json) {
+//     return AccountInfo(
+//       currency: json['currency'] as String?,
+//       value: json['value'] as String?,
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['currency'] = currency;
-    data['value'] = value;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'currency': currency,
+//       'value': value,
+//     };
+//   }
+// }

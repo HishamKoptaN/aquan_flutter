@@ -15,10 +15,7 @@ class QrCodeBloc extends Bloc<QrCodeEvent, QrCodeState> {
           emit(
             QrCodeScannedSuccessfullyState(qrCodeResult: "1"),
           );
-          print("Scanned QR code: $barcode");
-        } else {
-          print("Failed to scan QR code");
-        }
+        } else {}
       },
     );
 

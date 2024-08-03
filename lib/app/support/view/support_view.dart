@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/app/Layouts/app_layout.dart';
 import 'package:aquan/app/support/bloc/support_bloc.dart';
@@ -52,7 +51,7 @@ class _SupportScreenState extends State<SupportScreen> {
 
     return AppLayout(
       route: t.support,
-      showAppBar: false,
+      showAppBar: true,
       body: BlocProvider(
         create: (context) => SupportBloc()..add(GetChatMessages()),
         child: BlocBuilder<SupportBloc, SupportState>(
@@ -61,7 +60,6 @@ class _SupportScreenState extends State<SupportScreen> {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) => _sc.jumpTo(_sc.position.maxScrollExtent),
               );
-
               List<Widget> childs = [];
 
               state.messages.every((message) {
@@ -71,13 +69,13 @@ class _SupportScreenState extends State<SupportScreen> {
                     images.contains(message.fileType!.toLowerCase())) {
                   childs.add(
                     Bubble(
-                      style: (state.user.id == message.user!.id)
+                      style: (state.user.id == message.userId)
                           ? styleMe
                           : styleSomebody,
                       margin: const BubbleEdges.only(bottom: 10),
                       padding: const BubbleEdges.all(10),
                       child: Image.network(
-                        message.fileUrl!,
+                        message.fileName!,
                       ),
                     ),
                   );
@@ -87,7 +85,7 @@ class _SupportScreenState extends State<SupportScreen> {
                 if (message.isFile == 'yes') {
                   childs.add(
                     Bubble(
-                      style: (state.user.id == message.user!.id)
+                      style: (state.user.id == message.userId)
                           ? styleMe
                           : styleSomebody,
                       margin: const BubbleEdges.only(bottom: 10),
@@ -104,15 +102,14 @@ class _SupportScreenState extends State<SupportScreen> {
 
                 childs.add(
                   Bubble(
-                    style: (state.user.id == message.user!.id)
-                        ? styleMe
-                        : styleSomebody,
+                    style:
+                        (state.user.id == message.id) ? styleMe : styleSomebody,
                     margin: const BubbleEdges.only(bottom: 10),
                     padding: const BubbleEdges.all(10),
                     child: message.isFile == 'yes'
                         ? const Text('Is File')
                         : Text(
-                            message.message!,
+                            message.message,
                             style: const TextStyle(
                               color: black,
                               fontSize: 20,
@@ -122,7 +119,6 @@ class _SupportScreenState extends State<SupportScreen> {
                 );
                 return true;
               });
-
               return SafeArea(
                 child: Column(
                   children: [

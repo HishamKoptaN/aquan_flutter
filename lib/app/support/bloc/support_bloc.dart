@@ -1,7 +1,9 @@
 import 'package:aquan/app/support/controller/support_controller.dart';
-import 'package:aquan/Models/message.dart';
 import 'package:aquan/app/Auth/model/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../profile/model/profile_model.dart';
+import '../model/support_model.dart';
 
 part 'support_event.dart';
 part 'support_state.dart';

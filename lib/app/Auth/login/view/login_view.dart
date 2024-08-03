@@ -92,7 +92,7 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     Gap(40.h),
                     Image.asset(
-                      'assets/icon/aquan_icon.png',
+                      'assets/icon/aquan-yellow-logo.png',
                       height: 100.h,
                       width: 100.w,
                     ),

@@ -1,5 +1,5 @@
 import 'package:aquan/app/transaction/controller/transaction_controller.dart';
-import 'package:aquan/app/transaction/model/transaction.dart';
+import 'package:aquan/app/transaction/model/transaction_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'transaction_event.dart';
@@ -7,7 +7,6 @@ part 'transaction_state.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final TransactionController _controller = TransactionController();
-
   TransactionBloc() : super(TransactionInitial()) {
     on<TransactionEvent>((event, emit) async {
       emit(TransactionLoading());

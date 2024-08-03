@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class TransactionController {
   Future<Map<String, dynamic>> getTransactions() async {
     http.Response response = await http.get(
-      Uri.parse(auth['transactions']!),
+      Uri.parse(api['transactions']!),
       headers: await AuthController.getAuthHeaders(),
     );
 

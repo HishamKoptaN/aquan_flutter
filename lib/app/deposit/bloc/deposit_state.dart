@@ -13,15 +13,15 @@ final class DepositError extends DepositState {
 }
 
 class DepositsDone extends DepositState {
-  final List<Deposit> deposits;
+  // final List<DepositWithdraw> deposits;
 
-  DepositsDone({required this.deposits});
+  // DepositsDone({required this.deposits});
 }
 
 class MethodsDone extends DepositState {
-  final List<Currency> currencies;
+  // final List<Currency> currencies;
 
-  MethodsDone({required this.currencies});
+  // MethodsDone({required this.currencies});
 }
 
 class DepositDone extends DepositState {}

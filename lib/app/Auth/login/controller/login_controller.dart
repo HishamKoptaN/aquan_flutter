@@ -8,7 +8,7 @@ import '../../../sign_up/controller/auth_controller.dart';
 class LoginController {
   Future<Map<String, dynamic>> login(String? email, String? password) async {
     http.Response response = await http.post(
-      Uri.parse(auth['login']!),
+      Uri.parse(api['login']!),
       body: {
         'email': email.toString(),
         'password': password.toString(),
@@ -34,7 +34,7 @@ class LoginController {
     String? code,
   ) async {
     http.Response response = await http.post(
-      Uri.parse(auth['register']!),
+      Uri.parse(api['register']!),
       body: {
         'email': email.toString(),
         'password': password.toString(),
@@ -57,7 +57,7 @@ class LoginController {
 
   Future<Map<String, dynamic>> isLogedIn(String? token) async {
     http.Response response = await http.post(
-      Uri.parse(auth['check']!),
+      Uri.parse(api['check']!),
       headers: await AuthController.getAuthHeaders(),
     );
     if (response.statusCode == 200) {
@@ -80,7 +80,7 @@ class LoginController {
 
   Future<Map<String, dynamic>> resetPassword(String email) async {
     http.Response response = await http.post(
-      Uri.parse(auth["password"]["reset"]!),
+      Uri.parse(api["password"]["reset"]!),
       body: {"email": email},
     );
 
@@ -95,7 +95,7 @@ class LoginController {
 
   Future<Map<String, dynamic>> verifyEmail(String code) async {
     http.Response response = await http.post(
-      Uri.parse(auth["confirm-email"]!),
+      Uri.parse(api["confirm-email"]!),
       headers: await AuthController.getAuthHeaders(),
       body: jsonEncode({"code": code}),
     );
@@ -112,7 +112,7 @@ class LoginController {
   Future<Map<String, dynamic>> signInWithGoogle(
       String email, String name) async {
     http.Response response = await http.post(
-      Uri.parse(auth["auth-google"]!),
+      Uri.parse(api["auth-google"]!),
       headers: await AuthController.getAuthHeaders(),
       body: jsonEncode(
         {

@@ -8,16 +8,13 @@ import 'package:http/http.dart' as http;
 class DepositController {
   Future<Map<String, dynamic>> getDeposits() async {
     http.Response response = await http.get(
-      Uri.parse(auth['deposits']!),
+      Uri.parse(api['deposits']!),
       headers: await AuthController.getAuthHeaders(),
     );
-
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-
       return data;
     }
-
     throw Exception(response.reasonPhrase);
   }
 
@@ -28,15 +25,15 @@ class DepositController {
   ) async {
     var request = http.MultipartRequest(
       "POST",
-      Uri.parse(auth['deposit']!),
+      Uri.parse(api['deposit']!),
     );
-
     request.headers.addAll(await AuthController.getAuthHeaders());
-    request.fields.addAll({
-      "amount": amount.toString(),
-      "method": method,
-    });
-
+    request.fields.addAll(
+      {
+        "amount": amount.toString(),
+        "method": method,
+      },
+    );
     var pic = await http.MultipartFile.fromPath("image", file.path);
     request.files.add(pic);
     var response = await request.send();
@@ -46,10 +43,8 @@ class DepositController {
       Map<String, dynamic> data = jsonDecode(
         String.fromCharCodes(responseData),
       );
-
       return data;
     }
-
     throw Exception(response.reasonPhrase);
   }
 }

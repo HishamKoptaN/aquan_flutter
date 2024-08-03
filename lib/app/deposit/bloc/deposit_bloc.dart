@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:aquan/app/currency/controller/currency_controller.dart';
+import 'package:aquan/app/buy_sell/controller/buy_sell_controller.dart';
 import 'package:aquan/app/deposit/controller/deposit_controller.dart';
-import 'package:aquan/app/currency/model/currency.dart';
-import 'package:aquan/app/deposit/model/deposit.dart';
+import 'package:aquan/app/buy_sell/model/buy_sell_model.dart';
+import 'package:aquan/app/deposit/model/mak_deposit_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'deposit_event.dart';
@@ -11,7 +11,7 @@ part 'deposit_state.dart';
 
 class DepositBloc extends Bloc<DepositEvent, DepositState> {
   final DepositController _controller = DepositController();
-  final CurrencyController _currencyController = CurrencyController();
+  final BuySellController _currencyController = BuySellController();
 
   DepositBloc() : super(DepositInitial()) {
     on<GetDeposits>(
@@ -22,10 +22,10 @@ class DepositBloc extends Bloc<DepositEvent, DepositState> {
         if (data['status']) {
           List deps = data['deposits'];
 
-          List<Deposit> deposits =
-              deps.map((d) => Deposit.fromJson(d)).toList();
+          // List<DepositWithdraw> deposits =
+          //     deps.map((d) => DepositWithdraw.fromJson(d)).toList();
 
-          emit(DepositsDone(deposits: deposits));
+          // emit(DepositsDone(deposits: deposits));
         } else {
           emit(DepositError(message: data['error']));
         }
@@ -34,29 +34,28 @@ class DepositBloc extends Bloc<DepositEvent, DepositState> {
 
     on<GetPayments>(
       (event, emit) async {
-        emit(DepositLoading());
-        Map<String, dynamic> data = await _currencyController.getCurrencies();
+        // emit(DepositLoading());
+        // Map<String, dynamic> data = await _currencyController.getCurrencies();
 
-        if (data['status']) {
-          List currs = data['currencies'];
+        // if (data['status']) {
+        //   List currs = data['currencies'];
 
-          List<Currency> currencies = currs
-              .map(
-                (curr) => Currency.fromJson(curr),
-              )
-              .toList();
+        //   List<Currency> currencies = currs
+        //       .map(
+        //         (curr) => Currency.fromJson(curr),
+        //       )
+        //       .toList();
 
-          emit(MethodsDone(currencies: currencies));
-        } else {
-          emit(DepositError(message: data['error']));
-        }
+        //   emit(MethodsDone(currencies: currencies));
+        // } else {
+        //   emit(DepositError(message: data['error']));
+        // }
       },
     );
 
     on<CreateDeposit>(
       (event, emit) async {
         emit(DepositLoading());
-
         Map<String, dynamic> data = await _controller.depositMoney(
           event.file,
           event.amount,
@@ -64,8 +63,10 @@ class DepositBloc extends Bloc<DepositEvent, DepositState> {
         );
 
         if (data['status']) {
-          emit(DepositDone());
-        } else {
+          emit(
+            DepositDone(),
+          );
+        } else if (!data['status']) {
           emit(DepositError(message: data['error']));
         }
       },

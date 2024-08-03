@@ -21,7 +21,7 @@ class WithdrawsDone extends WithdrawState {
 class WithdrawDone extends WithdrawState {}
 
 class CurrenciesDone extends WithdrawState {
-  final List<Currency> currencies;
+  // final List<Currency> currencies;
 
-  CurrenciesDone({required this.currencies});
+  // CurrenciesDone({required this.currencies});
 }

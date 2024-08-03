@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:aquan/app/sign_up/controller/auth_controller.dart';
 import 'package:aquan/Helpers/routes.dart';
 import 'package:http/http.dart' as http;
+import '../../profile/model/profile_model.dart';
 import '../model/user.dart';
 
 class UserController {
   Future<Map<String, dynamic>> getReferals() async {
     http.Response response = await http.get(
-      Uri.parse(auth['referals']!),
+      Uri.parse(api['referals']!),
       headers: await AuthController.getAuthHeaders(),
     );
     if (response.statusCode == 200) {
@@ -22,83 +23,10 @@ class UserController {
     throw Exception(response.reasonPhrase);
   }
 
-  Future<Map<String, dynamic>> getProfileUser() async {
-    http.Response response = await http.get(
-      Uri.parse(auth['user']!),
-      headers: await AuthController.getAuthHeaders(),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      data['user'] = User.fromJson(data['user']);
-      return data;
-    }
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> getDashboard() async {
-    http.Response response = await http.get(
-      Uri.parse(auth['dashboard']!),
-      headers: await AuthController.getAuthHeaders(),
-    );
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-
-      return data;
-    }
-
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> changeProfileUser(
-    String name,
-    String address,
-    String phone,
-  ) async {
-    http.Response response = await http.post(
-      Uri.parse(auth['user']!),
-      body: jsonEncode({
-        'name': name,
-        'address': address,
-        'phone': phone,
-      }),
-      headers: await AuthController.getAuthHeaders(),
-    );
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-
-      data['user'] = User.fromJson(data['user']);
-
-      return data;
-    }
-
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> changeAccountInfo(
-      List<AccountInfo> accountInfo) async {
-    http.Response response = await http.post(
-      Uri.parse(auth['user']!),
-      body: jsonEncode({'accountInfo': accountInfo}),
-      headers: await AuthController.getAuthHeaders(),
-    );
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-
-      data['user'] = User.fromJson(data['user']);
-
-      return data;
-    }
-
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> changeProfilePicture(File file) async {
+  Future<Map<String, dynamic>> updateProfilePicture(File file) async {
     var request = http.MultipartRequest(
       "POST",
-      Uri.parse(auth['user']!),
+      Uri.parse(api['user_update_image']!),
     );
 
     request.headers.addAll(await AuthController.getAuthHeaders());
@@ -113,7 +41,9 @@ class UserController {
         String.fromCharCodes(responseData),
       );
 
-      data['user'] = User.fromJson(data['user']);
+      data['user'] = User.fromJson(
+        data['user'],
+      );
 
       return data;
     }
@@ -127,7 +57,7 @@ class UserController {
     String newPasswordConfirmation,
   ) async {
     http.Response response = await http.post(
-      Uri.parse(auth['change-password']!),
+      Uri.parse(api['change-password']!),
       body: jsonEncode(
         {
           'currentPassword': currentPassword,
@@ -153,43 +83,7 @@ class UserController {
 
   Future<Map<String, dynamic>> getUserByAccount(String accountId) async {
     http.Response response = await http.get(
-      Uri.parse(auth['account']! + accountId),
-      headers: await AuthController.getAuthHeaders(),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-
-      return data;
-    }
-
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> sendMoneyToAccount(
-    String accountId,
-    String amount,
-  ) async {
-    http.Response response = await http.post(
-      Uri.parse(auth['account']! + accountId),
-      headers: await AuthController.getAuthHeaders(),
-      body: jsonEncode(
-        {
-          'amount': amount,
-        },
-      ),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-
-      return data;
-    }
-
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> getNotifications() async {
-    http.Response response = await http.get(
-      Uri.parse(auth['notifications']!),
+      Uri.parse(api['account']! + accountId),
       headers: await AuthController.getAuthHeaders(),
     );
     if (response.statusCode == 200) {

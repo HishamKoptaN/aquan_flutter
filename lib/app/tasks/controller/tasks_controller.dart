@@ -10,7 +10,7 @@ import '../model/task.dart';
 class TasksController {
   Future<List<Task>> getTasks() async {
     http.Response response = await http.get(
-      Uri.parse(auth['tasks']!),
+      Uri.parse(api['tasks']!),
       headers: await AuthController.getAuthHeaders(),
     );
 
@@ -27,7 +27,7 @@ class TasksController {
 
   Future<Map<String, dynamic>> getTaskDetails(int id) async {
     http.Response response = await http.get(
-      Uri.parse(auth['task']! + id.toString()),
+      Uri.parse(api['task']! + id.toString()),
       headers: await AuthController.getAuthHeaders(),
     );
 
@@ -49,7 +49,7 @@ class TasksController {
   Future<Map<String, dynamic>> sendProof(int id, File file) async {
     var request = http.MultipartRequest(
       "POST",
-      Uri.parse("${auth['task']!}${id.toString()}/proof"),
+      Uri.parse("${api['task']!}${id.toString()}/proof"),
     );
 
     request.headers.addAll(

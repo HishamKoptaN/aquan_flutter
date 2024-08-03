@@ -1,4 +1,5 @@
 import '../../Auth/model/user.dart';
+import '../../profile/model/profile_model.dart';
 
 abstract class NavigationState {}
 

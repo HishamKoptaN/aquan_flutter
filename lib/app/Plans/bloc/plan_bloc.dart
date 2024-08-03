@@ -1,38 +1,41 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:aquan/app/home_page/controller/home_controller.dart';
 import 'package:aquan/app/Plans/controller/plan_controller.dart';
-import 'package:aquan/app/currency/model/currency.dart';
-import 'package:aquan/app/Plans/model/plan.dart';
-import 'package:aquan/app/Auth/model/user.dart';
+import 'package:aquan/app/Plans/model/plan_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../model/payment_plan.dart';
 part 'plan_event.dart';
 part 'plan_state.dart';
 
 class PlanBloc extends Bloc<PlanEvent, PlanState> {
-  final PlanController _controller = PlanController();
-  final HomeController _homeController = HomeController();
+  final PlanController _planController = PlanController();
   bool isAccept = false;
-
   PlanBloc() : super(PlanInitial()) {
     on<GetPlans>(
       (event, emit) async {
         emit(PlanLoading());
         try {
-          Map<String, dynamic> data = await _controller.getPlans();
-          Map<String, String> planDetails =
-              await _controller.getUserPLanDetails();
-          if (data['status']) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          final String? userJson = prefs.getString('user_data');
+
+          Map<String, dynamic>? userData = json.decode(userJson!);
+          Map<String, dynamic> data = await _planController.getPlans();
+          GetPlansApiResModel getPlansApiResModel =
+              GetPlansApiResModel.fromJson(data);
+          if (data["status"]) {
             emit(
               PlansDone(
-                  plans: data['plans'],
-                  user: data['user'],
-                  showPLanDetails: false,
-                  planDetails: planDetails),
+                plans: getPlansApiResModel.plans,
+                userPlanId: userData!['plan_id'],
+                startDate: userData['created_at'],
+                endDate: userData['created_at'],
+              ),
             );
-          } else {
+          } else if (data["status"]) {
             emit(
               PlanError(
-                message: data['message'],
+                message: "data['message']",
               ),
             );
           }
@@ -45,31 +48,19 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
         }
       },
     );
-    on<GetUSerPlanDetails>(
-      (event, emit) async {
-        try {
-          emit(PlansDone());
-        } catch (error) {
-          emit(
-            PlanError(
-              message: error.toString(),
-            ),
-          );
-        }
-      },
-    );
+
     on<GetPaymentMethods>(
       (event, emit) async {
         emit(PlanLoading());
         try {
-          Map<String, dynamic> data =
-              await _homeController.planPaymentMethods();
+          Map<String, dynamic> data = await _planController.getPaymentMethods();
           if (data['status']) {
-            List<dynamic> currs = data['content'];
-            List<Currency> methods =
-                currs.map((c) => Currency.fromJson(c)).toList();
+            GetPaymentPlanMethodApiResModel getPaymentPlanMethodApiResModel =
+                GetPaymentPlanMethodApiResModel.fromJson(data);
             emit(
-              PaymentMethodsDone(methods: methods),
+              PaymentMethodsDone(
+                methods: getPaymentPlanMethodApiResModel.accountInfo,
+              ),
             );
           } else {
             emit(
@@ -92,14 +83,22 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
       (event, emit) async {
         emit(PlanLoading());
         try {
-          Map<String, dynamic> data = await _controller.payPlan(
+          Map<String, dynamic> data = await _planController.payPlan(
             event.plan.id!,
             event.image,
           );
           if (data['status']) {
-            emit(PaymentDone(message: data['message']));
+            emit(
+              PaymentDone(
+                message: data['message'],
+              ),
+            );
           } else {
-            emit(PlanError(message: data['message']));
+            emit(
+              PlanError(
+                message: data['message'],
+              ),
+            );
           }
         } catch (error) {
           emit(PlanError(message: error.toString()));

@@ -24,28 +24,28 @@ class _AppLayoutState extends State<AppLayout> {
     final t = AppLocalizations.of(context)!;
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: widget.showAppBar
-              ? AppBar(
-                  backgroundColor: Colors.white,
-                  elevation: 0,
-                  leading: widget.backArow
-                      ? IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.black),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      : null,
-                  title: Text(
-                    widget.route,
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  centerTitle: true,
-                )
-              : null,
-          body: widget.body),
+        backgroundColor: Colors.white,
+        appBar: widget.showAppBar
+            ? AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                leading: widget.backArow
+                    ? IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.black),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    : null,
+                title: Text(
+                  widget.route,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                centerTitle: true,
+              )
+            : null,
+        body: widget.body,
+      ),
     );
   }
 }

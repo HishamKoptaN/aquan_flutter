@@ -59,9 +59,9 @@ class SubscriptionOption extends StatelessWidget {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
-                                                '${t.start_date}:${planState.planDetails!['startDate']}'),
+                                                '${t.start_date}:${planState.startDate}'),
                                             Text(
-                                                '${t.end_date}: ${planState.planDetails!['endDate']}'),
+                                                '${t.end_date}: ${planState.endDate}'),
                                           ],
                                         ),
                                         actions: [

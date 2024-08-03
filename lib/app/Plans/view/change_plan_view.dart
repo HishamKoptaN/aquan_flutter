@@ -10,18 +10,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:motion_toast/resources/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../model/plan.dart';
+import '../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../model/plan_model.dart';
 
-class ChangePlanScreen extends StatefulWidget {
-  const ChangePlanScreen({super.key, required this.plan});
+class ChangePlanView extends StatefulWidget {
+  const ChangePlanView({super.key, required this.plan});
   final Plan plan;
   @override
-  State<ChangePlanScreen> createState() => _ChangePlanScreenState();
+  State<ChangePlanView> createState() => _ChangePlanViewState();
 }
 
-class _ChangePlanScreenState extends State<ChangePlanScreen> {
+class _ChangePlanViewState extends State<ChangePlanView> {
   File? file;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -33,28 +33,31 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
         padding: const EdgeInsets.all(10),
         child: BlocProvider<PlanBloc>(
           create: (context) => PlanBloc()..add(GetPaymentMethods()),
-          child: BlocBuilder<PlanBloc, PlanState>(
-            builder: (context, state) {
-              String? error;
+          child: BlocConsumer<PlanBloc, PlanState>(
+            listener: (context, state) {
               if (state is PaymentDone) {
-                return Container(
-                  width: size.width,
-                  margin: const EdgeInsets.symmetric(vertical: 20),
-                  padding: const EdgeInsets.all(15),
-                  decoration: const BoxDecoration(
-                    color: successColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    state.message!,
-                    style: const TextStyle(
-                      color: white,
-                    ),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Pay Done successfully'),
+                    duration: Duration(seconds: 4),
                   ),
                 );
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavigateBarView(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                );
               }
+            },
+            builder: (context, state) {
+              String? error;
+
               if (state is PlanError) {
                 error = state.message;
               }
@@ -81,183 +84,214 @@ class _ChangePlanScreenState extends State<ChangePlanScreen> {
                     ),
                   );
                 }
-                state.methods.every((method) {
-                  childs.add(
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            method.name!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: black,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const Gap(5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await Clipboard.setData(
-                                    ClipboardData(
-                                      text: method.paymentInfo!.name!,
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  FontAwesomeIcons.copy,
-                                  size: 20,
-                                ),
-                              ),
-                              Text(
-                                method.paymentInfo!.name!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: black,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () async {
-                                  await Clipboard.setData(
-                                    ClipboardData(
-                                      text: method.paymentInfo!.accountId!,
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  FontAwesomeIcons.copy,
-                                  size: 20,
-                                ),
-                              ),
-                              Text(
-                                method.paymentInfo!.accountId!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: black,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Gap(5),
-                          Text(
-                            widget.plan.amountFormated!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: black,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                  return true;
-                });
-
-                childs.add(Column(
-                  children: [
-                    const Gap(10),
-                    Text(
-                      t.uploadPaymentProof,
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const Gap(20),
-                    InkWell(
-                      onTap: () async {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles();
-
-                        if (result != null) {
-                          File file = File(result.files.single.path!);
-
-                          setState(() {
-                            this.file = file;
-                          });
-                        }
-                      },
-                      child: Container(
-                        width: size.width,
-                        height: 80,
-                        alignment: Alignment.center,
+                state.methods!.every(
+                  (method) {
+                    childs.add(
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: black,
-                            width: 1,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const FaIcon(FontAwesomeIcons.cloudArrowUp),
+                            Text(
+                              method.currency!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: black,
+                                fontSize: 16,
+                              ),
+                            ),
                             const Gap(5),
-                            Text(t.chooseImage),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(
+                                        text: method.currency!,
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    FontAwesomeIcons.copy,
+                                    size: 20,
+                                  ),
+                                ),
+                                Text(
+                                  method.value.toString(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(
+                                        text: method.currency!,
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    FontAwesomeIcons.copy,
+                                    size: 20,
+                                  ),
+                                ),
+                                Text(
+                                  method.currency!,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(5),
+                            Text(
+                              widget.plan.amountFormated!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: black,
+                                fontSize: 16,
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    const Gap(10),
-                    SizedBox(
-                      width: size.width,
-                      child: TextButton(
-                        onPressed: () {
-                          if (file != null) {
-                            WidgetsBinding.instance.addPostFrameCallback(
-                              (_) => context.read<PlanBloc>().add(
-                                    PayPlan(
-                                      plan: widget.plan,
-                                      image: file!,
-                                    ),
-                                  ),
-                            );
+                    );
+                    return true;
+                  },
+                );
+                childs.add(
+                  Column(
+                    children: [
+                      const Gap(10),
+                      Text(
+                        t.uploadPaymentProof,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      const Gap(20),
+                      InkWell(
+                        onTap: () async {
+                          FilePickerResult? result =
+                              await FilePicker.platform.pickFiles();
+
+                          if (result != null) {
+                            File file = File(result.files.single.path!);
+
+                            setState(() {
+                              this.file = file;
+                            });
                           }
                         },
-                        style: TextButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 20),
-                          backgroundColor: Theme.of(context).primaryColor,
-                          padding: const EdgeInsets.all(15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          width: size.width,
+                          height: 80,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: black,
+                              width: 1,
+                            ),
                           ),
+                          child: file != null
+                              ? Image.file(
+                                  file!,
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const FaIcon(FontAwesomeIcons.cloudArrowUp),
+                                    Text(t.uploadPaymentProof),
+                                    const Gap(20),
+                                  ],
+                                ),
+
+                          //         Column(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+
+                          //     const FaIcon(FontAwesomeIcons.cloudArrowUp),
+                          //     const Gap(5),
+                          //     Text(t.chooseImage),
+                          //   ],
+                          // ),
                         ),
-                        child: Text(
-                          t.submit,
-                          style: const TextStyle(
-                            color: black,
-                            fontFamily: "Arial",
+                      ),
+                      const Gap(10),
+                      SizedBox(
+                        width: size.width,
+                        child: TextButton(
+                          onPressed: () {
+                            if (file != null) {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => context.read<PlanBloc>().add(
+                                      PayPlan(
+                                        plan: widget.plan,
+                                        image: file!,
+                                      ),
+                                    ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: danger,
+                                  duration: const Duration(seconds: 3),
+                                  content: Text(
+                                    t.uploadPaymentProof,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            padding: const EdgeInsets.all(15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          child: Text(
+                            t.submit,
+                            style: const TextStyle(
+                              color: black,
+                              fontFamily: "Arial",
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const Gap(50),
-                  ],
-                ));
+                      const Gap(50),
+                    ],
+                  ),
+                );
                 return ListView(
                   children: childs,
                 );
               }
-
               return Center(
                 child: CircularProgressIndicator(
                   color: Theme.of(context).primaryColor,

@@ -6,12 +6,9 @@ class SubscribtionController {
   Future<Map<String, dynamic>> getUserLevelDetails() async {
     try {
       final response = await http.get(
-        Uri.parse('https://dash.aquan.website/api/user/plan/1'),
+        Uri.parse('https://api.aquan.website/api/user/plan/1'),
         headers: await AuthController.getAuthHeaders(),
       );
-
-      print('Response status: ${response.statusCode}'); // طباعة حالة الاستجابة
-      print('Response body: ${response.body}'); // طباعة محتوى الاستجابة
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);

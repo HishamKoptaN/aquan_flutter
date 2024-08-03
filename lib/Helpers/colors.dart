@@ -18,8 +18,8 @@ const third = Color(0xFFf39c12);
 const black = Colors.black;
 const white = Colors.white;
 
-const danger = Color.fromRGBO(255, 115, 115, 1);
-
+const danger = Color(0xFFFFBF00);
+const amber = Color(0xFFFFBF00);
 const List colors = [
   Color(0xFFFFBF00),
   Color(0xFF1abc9c),

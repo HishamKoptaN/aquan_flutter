@@ -20,35 +20,8 @@ class ReferalsDone extends UserState {
   ReferalsDone({required this.users, required this.user});
 }
 
-class ProfileDone extends UserState {
-  final bool updated;
-  final User user;
-
-  ProfileDone({required this.user, this.updated = false});
-}
-
-class DashboardLoaded extends UserState {
-  final List<Transaction> transactions;
-  final List<Currency> currencies;
-  final User user;
-
-  DashboardLoaded({
-    required this.transactions,
-    required this.user,
-    required this.currencies,
-  });
-}
-
 class SearchAboutUserAccountById extends UserState {
   final String name;
 
   SearchAboutUserAccountById({required this.name});
-}
-
-class NotificationsLoaded extends UserState {
-  List<NotificationModel> notifications;
-
-  NotificationsLoaded({
-    required this.notifications,
-  });
 }

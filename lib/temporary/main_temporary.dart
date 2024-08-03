@@ -2,7 +2,6 @@ import 'package:aquan/Helpers/Storage.dart';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/settings.dart';
 import 'package:aquan/Helpers/styles.dart';
-import 'package:aquan/Language/bloc/language_bloc.dart';
 import 'package:aquan/app/Auth/login/view/login_view.dart';
 import 'package:aquan/app/Widgets/language_set.dart';
 import 'package:device_preview/device_preview.dart';
@@ -11,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../app/Language/bloc/language_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

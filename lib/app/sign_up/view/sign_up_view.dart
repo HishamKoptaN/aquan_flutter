@@ -8,7 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../Helpers/countrys_list.dart';
-import '../../home_page/view/dashboard.dart';
+import '../../dashboard/view/dashboard_view.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

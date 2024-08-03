@@ -9,6 +9,8 @@ import 'package:motion_toast/resources/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aquan/Helpers/styles.dart';
 
+import '../profile/bloc/profile_bloc.dart';
+
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
 
@@ -32,39 +34,24 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text(
-          t.changePassword,
-          style: const TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        child: BlocProvider<UserBloc>(
-          create: (context) => UserBloc(),
-          child: BlocBuilder<UserBloc, UserState>(
+    return AppLayout(
+      route: t.changePassword,
+      showAppBar: true,
+      body: BlocProvider<ProfileBloc>(
+        create: (context) => ProfileBloc(), // توفير ProfileBloc هنا
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
               String? error;
-              if (state is UserError) {
+              if (state is ProfileError) {
                 error = state.message;
               }
-
               if (state is ProfileDone && state.updated) {
                 _password.text = '';
                 _passwordConfirmation.text = '';
                 _currentPassword.text = '';
               }
-
               return ListView(
                 children: [
                   const Gap(20),
@@ -181,7 +168,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     child: TextButton(
                       onPressed: () {
                         setState(() => loading = true);
-                        context.read<UserBloc>().add(
+                        context.read<ProfileBloc>().add(
                               ChangePassword(
                                 currentPassword: _currentPassword.text,
                                 newPassword: _password.text,

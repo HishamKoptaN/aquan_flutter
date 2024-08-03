@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class WithdrawController {
   Future<Map<String, dynamic>> getWithdraws() async {
     http.Response response = await http.get(
-      Uri.parse(auth['deposits-and-withdraws']!),
+      Uri.parse(api['withdraws']!),
       headers: await AuthController.getAuthHeaders(),
     );
 
@@ -22,7 +22,7 @@ class WithdrawController {
 
   Future<Map<String, dynamic>> getCurrencies() async {
     http.Response response = await http.get(
-      Uri.parse(auth['currencies']!),
+      Uri.parse(api['currencies']!),
       headers: await AuthController.getAuthHeaders(),
     );
 
@@ -41,7 +41,7 @@ class WithdrawController {
     String wallet,
   ) async {
     http.Response response = await http.post(
-      Uri.parse(auth['withdraw']!),
+      Uri.parse(api['withdraw']!),
       headers: await AuthController.getAuthHeaders(),
       body: jsonEncode(
         {

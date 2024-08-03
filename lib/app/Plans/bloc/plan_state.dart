@@ -29,16 +29,15 @@ class PlanError extends PlanState {
 }
 
 class PlansDone extends PlanState {
-  final List<Plan>? plans;
-  final User? user;
-  Map<String, String>? planDetails;
-
-  bool? showPLanDetails;
+  List<Plan>? plans;
+  int userPlanId;
+  String startDate;
+  String endDate;
   PlansDone({
     this.plans,
-    this.user,
-    this.showPLanDetails = false,
-    this.planDetails,
+    required this.userPlanId,
+    required this.startDate,
+    required this.endDate,
   });
 }
 
@@ -49,7 +48,7 @@ class PaymentDone extends PlanState {
 }
 
 class PaymentMethodsDone extends PlanState {
-  List<Currency> methods;
+  List<AccountInfo>? methods;
 
   PaymentMethodsDone({
     required this.methods,

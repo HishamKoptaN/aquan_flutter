@@ -142,134 +142,129 @@ class TransactionsScreen extends StatelessWidget {
                 );
               }
 
-              //   if (state is TransactionsDone) {
-              //     List<Widget> childs = [];
-              //     double wi = (size.width / 5) - 5;
-              //     TextStyle style = const TextStyle(
-              //       fontWeight: FontWeight.bold,
-              //       fontSize: 8,
-              //     );
+              if (state is TransactionsDone) {
+                List<Widget> childs = [];
+                double wi = (size.width / 5) - 5;
+                TextStyle style = const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 8,
+                );
 
-              //     childs.add(
-              //       Container(
-              //         padding: const EdgeInsets.all(10),
-              //         decoration: BoxDecoration(
-              //           color: Colors.deepOrange.shade700,
-              //         ),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //           children: [
-              //             SizedBox(
-              //               width: wi,
-              //               child: Text(
-              //                 t.id,
-              //                 style: style,
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: wi,
-              //               child: Text(
-              //                 t.status,
-              //                 style: style,
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: wi,
-              //               child: Text(
-              //                 t.thePrice,
-              //                 style: style,
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: wi,
-              //               child: Text(
-              //                 t.fromCurrency,
-              //                 style: style,
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: wi,
-              //               child: Text(
-              //                 t.toCurrency,
-              //                 style: style,
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: wi,
-              //               child: Text(
-              //                 t.date,
-              //                 style: style,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     );
-
-              //     state.transactions.every(
-              //       (transaction) {
-              //         String status = t.pending;
-              //         Color color = Colors.orange;
-
-              //         if (transaction.status! == "completed") {
-              //           status = t.completed;
-              //           color = Colors.green;
-              //         }
-              //         if (transaction.status! == "rejected") {
-              //           status = t.rejected;
-              //           color = Colors.red;
-              //         }
-
-              //         childs.add(
-              //           Container(
-              //             padding: const EdgeInsets.all(10),
-              //             decoration: BoxDecoration(
-              //               color: Colors.grey.shade300,
-              //             ),
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //               children: [
-              //                 SizedBox(
-              //                   width: wi,
-              //                   child: Text(
-              //                     status,
-              //                     style: style,
-              //                   ),
-              //                 ),
-              //                 SizedBox(
-              //                   width: wi,
-              //                   child: Text(
-              //                     transaction.amountFormated.toString(),
-              //                     style: style,
-              //                   ),
-              //                 ),
-              //                 SizedBox(
-              //                   width: wi,
-              //                   child: Text(
-              //                     transaction.senderCurrency!.name!,
-              //                     style: style,
-              //                   ),
-              //                 ),
-              //                 SizedBox(
-              //                   width: wi,
-              //                   child: Text(
-              //                     transaction.receiverCurrency!.name!,
-              //                     style: style,
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         );
-              //         return true;
-              //       },
-              //     );
-
-              //     return ListView(
-              //       children: childs,
-              //     );
-              //   }
-
+                childs.add(
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.deepOrange.shade700,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: wi,
+                          child: Text(
+                            t.id,
+                            style: style,
+                          ),
+                        ),
+                        SizedBox(
+                          width: wi,
+                          child: Text(
+                            t.status,
+                            style: style,
+                          ),
+                        ),
+                        SizedBox(
+                          width: wi,
+                          child: Text(
+                            t.thePrice,
+                            style: style,
+                          ),
+                        ),
+                        SizedBox(
+                          width: wi,
+                          child: Text(
+                            t.fromCurrency,
+                            style: style,
+                          ),
+                        ),
+                        SizedBox(
+                          width: wi,
+                          child: Text(
+                            t.toCurrency,
+                            style: style,
+                          ),
+                        ),
+                        SizedBox(
+                          width: wi,
+                          child: Text(
+                            t.date,
+                            style: style,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+                state.transactions.every(
+                  (transaction) {
+                    String status = t.pending;
+                    Color color = Colors.orange;
+                    if (transaction.status! == "completed") {
+                      status = t.completed;
+                      color = Colors.green;
+                    }
+                    if (transaction.status! == "rejected") {
+                      status = t.rejected;
+                      color = Colors.red;
+                    }
+                    childs.add(
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(
+                              width: wi,
+                              child: Text(
+                                status,
+                                style: style,
+                              ),
+                            ),
+                            SizedBox(
+                              width: wi,
+                              child: Text(
+                                transaction.amountFormated.toString(),
+                                style: style,
+                              ),
+                            ),
+                            SizedBox(
+                              width: wi,
+                              child: Text(
+                                transaction.senderCurrency!.name!,
+                                style: style,
+                              ),
+                            ),
+                            SizedBox(
+                              width: wi,
+                              child: Text(
+                                transaction.receiverCurrency!.name!,
+                                style: style,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                    return true;
+                  },
+                );
+                return ListView(
+                  children: childs,
+                );
+              }
               return Center(
                 child: CircularProgressIndicator(
                   color: Theme.of(context).primaryColor,

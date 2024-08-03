@@ -1,42 +1,31 @@
-import 'package:aquan/Helpers/colors.dart';
-import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/app/Layouts/app_layout.dart';
-import 'package:aquan/app/notifications/model/notification.dart';
-import 'package:aquan/app/Auth/User/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:gap/gap.dart';
+import '../bloc/notifications_bloc.dart';
+import '../bloc/notifications_state.dart';
 
-class NotificationsScreen extends StatelessWidget {
-  const NotificationsScreen({super.key});
+class NotificationsView extends StatelessWidget {
+  const NotificationsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-
     return AppLayout(
       route: t.notifications,
-      showAppBar: false,
+      showAppBar: true,
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: BlocProvider(
-          create: (context) => UserBloc()..add(GetNotifications()),
-          child: BlocBuilder<UserBloc, UserState>(
+          create: (context) => NotificationsBloc()..add(GetNotifications()),
+          child: BlocBuilder<NotificationsBloc, NotificationsState>(
             builder: (context, state) {
-              if (state is NotificationsLoaded) {
-                if (state.notifications.isEmpty) {
-                  return Center(
-                    child: Text(
-                      t.noNotifications,
-                      style: cartHeading,
-                    ),
-                  );
-                }
-                List<NotificationModel> notifications = state.notifications;
+              if (state is NotificationsLoadedSuccess) {
                 return ListView.separated(
+                  itemCount: state.notifications.length,
                   itemBuilder: (context, index) {
-                    NotificationModel notification = notifications[index];
-
+                    var notification = state.notifications[index];
                     return Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -44,9 +33,9 @@ class NotificationsScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        notification.data!.message!,
+                        notification.data!,
                         style: const TextStyle(
-                          color: black,
+                          color: Colors.black,
                           fontFamily: "Arial",
                           fontSize: 20,
                         ),
@@ -56,7 +45,6 @@ class NotificationsScreen extends StatelessWidget {
                   separatorBuilder: (context, index) {
                     return const Gap(15);
                   },
-                  itemCount: notifications.length,
                 );
               }
 

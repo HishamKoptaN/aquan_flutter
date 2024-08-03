@@ -6,7 +6,7 @@ import '../../sign_up/controller/auth_controller.dart';
 class VerifyEmailController {
   Future<Map<String, dynamic>> verifyEmail(String code) async {
     http.Response response = await http.post(
-      Uri.parse(auth["confirm-email"]!),
+      Uri.parse(api["confirm-email"]!),
       headers: await AuthController.getAuthHeaders(),
       body: jsonEncode({"code": code}),
     );

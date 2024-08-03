@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'package:aquan/app/Auth/controller/user_controller.dart';
-import 'package:aquan/app/currency/model/currency.dart';
-import 'package:aquan/app/notifications/model/notification.dart';
-import 'package:aquan/app/transaction/model/transaction.dart';
 import 'package:aquan/app/Auth/model/user.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../profile/bloc/profile_bloc.dart';
+import '../../../profile/model/profile_model.dart';
 part 'user_event.dart';
 part 'user_state.dart';
 
@@ -28,122 +26,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         }
       },
     );
-
-    on<GetProfileUser>(
-      (event, emit) async {
-        Map<String, dynamic> data = await _controller.getProfileUser();
-        if (data['status']) {
-          emit(
-            ProfileDone(
-              user: data['user'],
-            ),
-          );
-        } else {
-          emit(
-            UserError(
-              message: data['error'],
-            ),
-          );
-        }
-      },
-    );
-
-    on<ChangeProfile>((event, emit) async {
-      emit(UserLoading());
-
-      Map<String, dynamic> data = await _controller.changeProfileUser(
-        event.name,
-        event.address,
-        event.phone,
-      );
-
-      if (data['status']) {
-        emit(ProfileDone(user: data['user'], updated: true));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<ChangeAccountInfo>((event, emit) async {
-      emit(UserLoading());
-
-      Map<String, dynamic> data =
-          await _controller.changeAccountInfo(event.accountInfo);
-
-      if (data['status']) {
-        emit(ProfileDone(user: data['user'], updated: true));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<ChangeProfileImage>((event, emit) async {
-      emit(UserLoading());
-
-      Map<String, dynamic> data =
-          await _controller.changeProfilePicture(event.file);
-
-      if (data['status']) {
-        emit(ProfileDone(user: data['user'], updated: true));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<ChangePassword>((event, emit) async {
-      emit(UserLoading());
-
-      Map<String, dynamic> data = await _controller.changePasswordUser(
-        event.currentPassword,
-        event.newPassword,
-        event.newPasswordConfirmation,
-      );
-
-      if (data['status']) {
-        emit(ProfileDone(user: data['user'], updated: true));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<Dashboard>((event, emit) async {
-      Map<String, dynamic> data = await _controller.getDashboard();
-
-      if (data['status']) {
-        List trs = data['transactions'];
-        List currs = data['currencies'];
-
-        User user = User.fromJson(data['user']);
-        List<Transaction> transactions =
-            trs.map((tr) => Transaction.fromJson(tr)).toList();
-        List<Currency> currencies =
-            currs.map((curr) => Currency.fromJson(curr)).toList();
-
-        emit(DashboardLoaded(
-            transactions: transactions, user: user, currencies: currencies));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
-
-    on<GetNotifications>((event, emit) async {
-      emit(UserLoading());
-
-      Map<String, dynamic> data = await _controller.getNotifications();
-
-      if (data['status']) {
-        List n = data['notifications'];
-
-        List<NotificationModel> notifications = n
-            .map(
-              (notification) => NotificationModel.fromJson(notification),
-            )
-            .toList();
-
-        emit(NotificationsLoaded(notifications: notifications));
-      } else {
-        emit(UserError(message: data['error']));
-      }
-    });
   }
 }

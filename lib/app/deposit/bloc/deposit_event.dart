@@ -17,3 +17,5 @@ class CreateDeposit extends DepositEvent {
 }
 
 class GetPayments extends DepositEvent {}
+
+class TestEvent extends DepositEvent {}

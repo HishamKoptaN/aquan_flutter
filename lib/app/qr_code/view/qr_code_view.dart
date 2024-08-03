@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:aquan/app/Auth/User/bloc/user_bloc.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +9,6 @@ import 'package:shimmer/shimmer.dart';
 import '../../send_to_account/bloc/send_to_account_bloc.dart';
 import '../../send_to_account/view/send_to_account_view.dart';
 import '../../Layouts/app_layout.dart';
-import '../../Auth/model/user.dart';
 import '../bloc/qr_code_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:screenshot/screenshot.dart';
@@ -19,7 +16,7 @@ import 'package:share_plus/share_plus.dart';
 import 'dart:typed_data';
 
 class QrCodeView extends StatefulWidget {
-  const QrCodeView({Key? key}) : super(key: key);
+  const QrCodeView({super.key});
 
   @override
   State<QrCodeView> createState() => _QrCodeViewState();
@@ -47,24 +44,16 @@ class _QrCodeViewState extends State<QrCodeView> {
       route: t.qr_code,
       showAppBar: true,
       backArow: false,
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => UserBloc()..add(Dashboard()),
-          ),
-          BlocProvider(
-            create: (context) => QrCodeBloc(),
-          ),
-        ],
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BlocBuilder<UserBloc, UserState>(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BlocProvider(
+              create: (context) => QrCodeBloc(),
+              child: BlocBuilder<QrCodeBloc, QrCodeState>(
                 builder: (context, state) {
-                  if (state is DashboardLoaded) {
-                    User user = state.user;
+                  if (state is QrCodeInitial) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +83,7 @@ class _QrCodeViewState extends State<QrCodeView> {
                                             padding: const EdgeInsets.all(40.0),
                                             child: BarcodeWidget(
                                               barcode: Barcode.qrCode(),
-                                              data: user.id.toString(),
+                                              data: " user.id.toString()",
                                               height: height / 3,
                                               width: width / 1.75,
                                             ),
@@ -111,7 +100,7 @@ class _QrCodeViewState extends State<QrCodeView> {
                                   child: Align(
                                     alignment: Alignment.topCenter,
                                     child: Image.asset(
-                                      'assets/icon/aquan_icon.png', // ضع مسار الصورة هنا
+                                      'assets/icon/aquan-yellow-logo.png', // ضع مسار الصورة هنا
                                       height: 75.sp,
                                       width: 75.sp,
                                     ),
@@ -121,68 +110,97 @@ class _QrCodeViewState extends State<QrCodeView> {
                             ),
                           ),
                           SizedBox(height: 20.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          Column(
                             children: [
-                              Column(
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(100),
-                                      ),
-                                    ),
-                                    child: IconButton(
-                                      icon: const Icon(Icons.share),
-                                      onPressed: () async {
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback(
-                                          (_) async {
-                                            final screenshot =
-                                                await screenshotController
-                                                    .capture();
-                                            if (screenshot != null) {
-                                              shareQrCode(screenshot);
-                                            }
-                                          },
-                                        );
-                                      },
-                                    ),
+                              Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(100),
                                   ),
-                                  Text(t.share),
-                                ],
-                              ),
-                              Gap(75.w),
-                              Column(
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(100),
-                                      ),
-                                    ),
-                                    child: IconButton(
-                                      icon: const Icon(Icons.qr_code_scanner),
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SendToAccountView(),
-                                          ),
-                                        );
-                                        context
-                                            .read<SendToAccountBloc>()
-                                            .add(ScanQrCodeEvent());
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.share),
+                                  onPressed: () async {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback(
+                                      (_) async {
+                                        final screenshot =
+                                            await screenshotController
+                                                .capture();
+                                        if (screenshot != null) {
+                                          shareQrCode(screenshot);
+                                        }
                                       },
-                                    ),
-                                  ),
-                                  Text(t.delete),
-                                ],
+                                    );
+                                  },
+                                ),
                               ),
+                              Text(t.share),
                             ],
                           ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Column(
+                          //       children: [
+                          //         Container(
+                          //           decoration: const BoxDecoration(
+                          //             color: Colors.amber,
+                          //             borderRadius: BorderRadius.all(
+                          //               Radius.circular(100),
+                          //             ),
+                          //           ),
+                          //           child: IconButton(
+                          //             icon: const Icon(Icons.share),
+                          //             onPressed: () async {
+                          //               WidgetsBinding.instance
+                          //                   .addPostFrameCallback(
+                          //                 (_) async {
+                          //                   final screenshot =
+                          //                       await screenshotController
+                          //                           .capture();
+                          //                   if (screenshot != null) {
+                          //                     shareQrCode(screenshot);
+                          //                   }
+                          //                 },
+                          //               );
+                          //             },
+                          //           ),
+                          //         ),
+                          //         Text(t.share),
+                          //       ],
+                          //     ),
+                          //     Gap(75.w),
+                          // Column(
+                          //   children: [
+                          //     Container(
+                          //       decoration: const BoxDecoration(
+                          //         color: Colors.amber,
+                          //         borderRadius: BorderRadius.all(
+                          //           Radius.circular(100),
+                          //         ),
+                          //       ),
+                          //       child: IconButton(
+                          //         icon: const Icon(Icons.qr_code_scanner),
+                          //         onPressed: () {
+                          //           Navigator.of(context).push(
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   const SendToAccountView(),
+                          //             ),
+                          //           );
+                          //           context
+                          //               .read<SendToAccountBloc>()
+                          //               .add(ScanQrCodeEvent());
+                          //         },
+                          //       ),
+                          //     ),
+                          //     Text(t.delete),
+                          //   ],
+                          // ),
+                          //         ],
+                          //       ),
                         ],
                       ),
                     );
@@ -222,8 +240,8 @@ class _QrCodeViewState extends State<QrCodeView> {
                   }
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

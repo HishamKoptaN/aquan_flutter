@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:aquan/app/sign_up/controller/auth_controller.dart';
 import 'package:aquan/Helpers/routes.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +7,7 @@ import 'package:http/http.dart' as http;
 class SupportController {
   Future<Map<String, dynamic>> getQuestions() async {
     http.Response response = await http.post(
-      Uri.parse(auth['settings']!),
+      Uri.parse(api['settings']!),
       headers: await AuthController.getAuthHeaders(),
       body: jsonEncode(
         {
@@ -28,7 +27,7 @@ class SupportController {
 
   Future<Map<String, dynamic>> getChatMessages() async {
     http.Response response = await http.get(
-      Uri.parse(auth['support']!),
+      Uri.parse(api['support']!),
       headers: await AuthController.getAuthHeaders(),
     );
 
@@ -45,7 +44,7 @@ class SupportController {
     if (message is File) {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(auth['support']!),
+        Uri.parse(api['support']!),
       );
 
       request.headers.addAll(await AuthController.getAuthHeaders());
@@ -68,7 +67,7 @@ class SupportController {
 
     if (message is String) {
       http.Response response = await http.post(
-        Uri.parse(auth['support']!),
+        Uri.parse(api['support']!),
         headers: await AuthController.getAuthHeaders(),
         body: jsonEncode(
           {

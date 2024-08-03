@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings {
   static Future setup() async {
-    http.Response response = await http.post(Uri.parse(auth['settings']));
+    http.Response response = await http.post(Uri.parse(api['settings']));
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 

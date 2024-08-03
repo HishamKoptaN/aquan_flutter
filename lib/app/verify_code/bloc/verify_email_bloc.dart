@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:local_auth/local_auth.dart';
 import '../../Auth/controller/user_controller.dart';
-import '../../Auth/model/user.dart';
+import '../../profile/model/profile_model.dart';
 import '../../sign_up/controller/auth_controller.dart';
 import '../controller/verify_email_controller.dart';
 part 'verify_email_event.dart';
