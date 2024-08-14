@@ -4,7 +4,6 @@ import 'package:aquan/app/sign_up/controller/auth_controller.dart';
 import 'package:aquan/Helpers/routes.dart';
 import 'package:http/http.dart' as http;
 import '../../profile/model/profile_model.dart';
-import '../model/user.dart';
 
 class UserController {
   Future<Map<String, dynamic>> getReferals() async {

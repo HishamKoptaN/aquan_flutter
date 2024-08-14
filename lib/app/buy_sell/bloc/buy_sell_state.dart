@@ -16,7 +16,7 @@ class CurrenciesDone extends BuySellState {
   List<Currency> senderWallet;
   List<Currency> receiverWallet;
   final List<Currency> currencies;
-  List<BuySellAccountInfo> accountInfo;
+  List<AccountInfo> accountInfo;
 
   final int userPlanId;
   final bool buySellStatus;

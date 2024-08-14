@@ -21,9 +21,10 @@ class DashboardError extends DashboardState {
 class DashboardLoaded extends DashboardState {
   final List<TransactionDashboard> transactions;
   final List<CurrencyDashboard> currencies;
-
+  final Map<String, dynamic> localData;
   DashboardLoaded({
     required this.transactions,
     required this.currencies,
+    required this.localData,
   });
 }

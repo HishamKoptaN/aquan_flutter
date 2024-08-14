@@ -100,7 +100,7 @@ class _SignUpGoogleState extends State<SignUpGoogle> {
                     t!.createAccountGoogle,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                      color: amber,
                       fontSize: 30,
                     ),
                     textAlign: TextAlign.center,
@@ -154,7 +154,7 @@ class _SignUpGoogleState extends State<SignUpGoogle> {
                       },
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 20),
-                        backgroundColor: Theme.of(context).primaryColor,
+                        backgroundColor: amber,
                         padding: const EdgeInsets.all(15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),

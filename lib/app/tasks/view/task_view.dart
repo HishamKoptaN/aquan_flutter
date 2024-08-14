@@ -69,7 +69,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.fromBorderSide(BorderSide(
-                            color: Theme.of(context).primaryColor,
+                            color: amber,
                           ))),
                       child: Image.network(widget.task.imageUrl!),
                     ),
@@ -81,7 +81,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         padding: const EdgeInsets.all(10),
                         width: (size.width * 0.45),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: amber,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: InkWell(
@@ -106,7 +106,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         padding: const EdgeInsets.all(10),
                         width: (size.width * 0.45),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: amber,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: InkWell(

@@ -27,12 +27,12 @@ class PrimaryButton extends StatelessWidget {
           textStyle: const TextStyle(
             fontSize: 20,
           ),
-          backgroundColor: bgColor ?? Theme.of(context).primaryColor,
+          backgroundColor: bgColor ?? amber,
           padding: EdgeInsets.all(padding ?? 15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
             side: BorderSide(
-              color: Theme.of(context).primaryColor,
+              color: amber,
             ),
           ),
         ),

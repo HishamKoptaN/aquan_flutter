@@ -17,7 +17,7 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
         emit(PlanLoading());
         try {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          final String? userJson = prefs.getString('user_data');
+          final String? userJson = prefs.getString('user');
 
           Map<String, dynamic>? userData = json.decode(userJson!);
           Map<String, dynamic> data = await _planController.getPlans();

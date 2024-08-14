@@ -104,11 +104,11 @@ class _BuySellviewState extends State<BuySellview> {
                                                                 .fromWallet !=
                                                             null &&
                                                         buySellController
-                                                            .fromWallet!.rates
+                                                            .fromWallet!.rates!
                                                             .containsKey("1") &&
                                                         buySellController
                                                             .fromWallet!
-                                                            .rates["1"]!
+                                                            .rates!["1"]!
                                                             .containsKey(
                                                                 "1")) {}
                                                   },
@@ -118,7 +118,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                         Currency>(
                                                       value: currency,
                                                       child:
-                                                          Text(currency.name),
+                                                          Text(currency.name!),
                                                     );
                                                   }).toList(),
                                                 ),
@@ -164,7 +164,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                         Currency>(
                                                       value: currency,
                                                       child: Text(
-                                                        currency.name,
+                                                        currency.name!,
                                                       ),
                                                     );
                                                   }).toList(),
@@ -223,7 +223,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                               null)
                                                       ? buySellController
                                                           .fromWallet!
-                                                          .rates[state
+                                                          .rates![state
                                                                   .userPlanId
                                                                   .toString()]![
                                                               buySellController
@@ -240,7 +240,7 @@ class _BuySellviewState extends State<BuySellview> {
                                               ),
                                             ),
                                             IconButton(
-                                              icon: Icon(Icons.error),
+                                              icon: const Icon(Icons.error),
                                               onPressed: () {
                                                 showDialog(
                                                   context: context,
@@ -285,7 +285,7 @@ class _BuySellviewState extends State<BuySellview> {
                                               buySellController.rate =
                                                   double.parse(buySellController
                                                       .fromWallet!
-                                                      .rates[state.userPlanId
+                                                      .rates![state.userPlanId
                                                               .toString()]![
                                                           buySellController
                                                               .toWallet!.id
@@ -324,7 +324,7 @@ class _BuySellviewState extends State<BuySellview> {
                                               double rate = double.parse(
                                                 buySellController
                                                     .fromWallet!
-                                                    .rates[state.userPlanId
+                                                    .rates![state.userPlanId
                                                             .toString()]![
                                                         buySellController
                                                             .toWallet!.id
@@ -387,13 +387,12 @@ class _BuySellviewState extends State<BuySellview> {
                                                       color: Colors.black),
                                                 ),
                                                 suffixIcon: PopupMenuButton<
-                                                    BuySellAccountInfo>(
+                                                    AccountInfo>(
                                                   icon: const Icon(
                                                     Icons.arrow_drop_down,
                                                   ),
                                                   onSelected:
-                                                      (BuySellAccountInfo
-                                                          value) {
+                                                      (AccountInfo value) {
                                                     buySellController
                                                             .accountNumberController
                                                             .text =
@@ -401,16 +400,18 @@ class _BuySellviewState extends State<BuySellview> {
                                                   },
                                                   itemBuilder:
                                                       (BuildContext context) {
-                                                    return state.accountInfo.map<
-                                                        PopupMenuEntry<
-                                                            BuySellAccountInfo>>(
-                                                      (BuySellAccountInfo
+                                                    return state.accountInfo
+                                                        .map<
+                                                            PopupMenuEntry<
+                                                                AccountInfo>>(
+                                                      (AccountInfo
                                                           accountInfo) {
                                                         return PopupMenuItem<
-                                                            BuySellAccountInfo>(
+                                                            AccountInfo>(
                                                           value: accountInfo,
                                                           child: Text(
-                                                              '${accountInfo.currency} - ${accountInfo.value}'),
+                                                            '${accountInfo.currency} - ${accountInfo.value}',
+                                                          ),
                                                         );
                                                       },
                                                     ).toList();
@@ -449,9 +450,6 @@ class _BuySellviewState extends State<BuySellview> {
                                               MaterialPageRoute(
                                                 builder: (context) {
                                                   return BuySellConfirmView(
-                                                    accountNumber: buySellController
-                                                        .accountNumberController
-                                                        .text,
                                                     sWallet: buySellController
                                                         .fromWallet!,
                                                     dWallet: buySellController
@@ -461,6 +459,9 @@ class _BuySellviewState extends State<BuySellview> {
                                                         .text,
                                                     rate:
                                                         buySellController.rate!,
+                                                    accountNumber: buySellController
+                                                        .accountNumberController
+                                                        .text,
                                                   );
                                                 },
                                               ),

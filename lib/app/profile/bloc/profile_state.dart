@@ -11,9 +11,9 @@ final class ProfileInitial extends ProfileState {}
 
 class ProfileDone extends ProfileState {
   final bool updated;
-  final User user;
+  final Map<String, dynamic> data;
 
-  const ProfileDone({required this.user, this.updated = false});
+  ProfileDone({required this.data, this.updated = false});
 }
 
 class ProfileError extends ProfileState {

@@ -101,7 +101,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primaryColor: color,
           colorScheme: ColorScheme.fromSeed(
-            seedColor: Theme.of(context).primaryColor,
+            seedColor: amber,
           ),
           fontFamily: "Arial",
           useMaterial3: true,

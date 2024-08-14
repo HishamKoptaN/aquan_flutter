@@ -59,7 +59,7 @@ class SendToAccountController {
     String amount,
   ) async {
     http.Response response = await http.post(
-      Uri.parse(api['transfer']! + accountId),
+      Uri.parse(api['transfer ']! + accountId),
       headers: await AuthController.getAuthHeaders(),
       body: jsonEncode(
         {

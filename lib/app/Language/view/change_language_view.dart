@@ -92,7 +92,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                       },
                       style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 20),
-                        backgroundColor: Theme.of(context).primaryColor,
+                        backgroundColor: amber,
                         padding: const EdgeInsets.all(15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),

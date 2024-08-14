@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
+import '../../../Helpers/colors.dart';
 import '../bloc/notifications_bloc.dart';
 import '../bloc/notifications_state.dart';
 
@@ -50,7 +51,7 @@ class NotificationsView extends StatelessWidget {
 
               return Center(
                 child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  color: amber,
                 ),
               );
             },

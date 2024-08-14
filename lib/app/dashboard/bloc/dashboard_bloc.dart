@@ -11,14 +11,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<GetDashboardDetails>(
       (event, emit) async {
         Map<String, dynamic> data = await _dashboardController.getDashboard();
+        Map<String, dynamic> localData =
+            await _dashboardController.loadUserData();
         if (data['status']) {
           GetDashboardApiResModel getDashboardApiResModel =
               GetDashboardApiResModel.fromJson(data);
-
           emit(
             DashboardLoaded(
               transactions: getDashboardApiResModel.transactions!,
               currencies: getDashboardApiResModel.currencies!,
+              localData: localData,
             ),
           );
         } else if (!data['status']) {

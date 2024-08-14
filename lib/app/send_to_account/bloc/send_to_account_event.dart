@@ -12,8 +12,9 @@ class GetNameOfUserByAccountEvent extends SendToAccountEvent {
 class GetUSerDataEvent extends SendToAccountEvent {}
 
 class SendPaymentToOtherAccount extends SendToAccountEvent {
-  final String accountId;
+  final String accountNumber;
   final String amount;
 
-  SendPaymentToOtherAccount({required this.accountId, required this.amount});
+  SendPaymentToOtherAccount(
+      {required this.accountNumber, required this.amount});
 }

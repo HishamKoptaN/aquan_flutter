@@ -23,17 +23,16 @@ class TransferMoney extends CurrencyEvent {
   final int destinationWalletId;
   final int amount;
   final double rate;
-  final String address;
   final String accountId;
+  final String receiverAccount;
   // final File file;
-
   TransferMoney({
     required this.sourceWalletId,
     required this.destinationWalletId,
     required this.amount,
     required this.rate,
-    required this.address,
     required this.accountId,
+    required this.receiverAccount,
     // required this.file,
   });
 }

@@ -14,20 +14,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
     on<GetProfileUser>(
       (event, emit) async {
-        Map<String, dynamic> data = await profileController.getProfileUser();
-        if (data["status"]) {
-          GetProfileUserApiResModel getProfileUserModel =
-              GetProfileUserApiResModel.fromJson(data);
-          emit(
-            ProfileDone(user: getProfileUserModel.user!, updated: false),
-          );
-        } else {
-          emit(
-            ProfileError(
-              message: data["error"],
-            ),
-          );
-        }
+        Map<String, dynamic> data =
+            await profileController.loadUserProfileLocalData();
+
+        emit(
+          ProfileDone(
+            data: data,
+            updated: false,
+          ),
+        );
       },
     );
     on<ChangeProfile>(
@@ -38,15 +33,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           event.address,
           event.phone,
         );
-        GetProfileUserApiResModel getProfileUserModel =
-            GetProfileUserApiResModel.fromJson(data);
+
         emit(
-          ProfileDone(user: getProfileUserModel.user!, updated: false),
+          ProfileDone(data: data, updated: false),
         );
         if (data['status']) {
           emit(
             ProfileDone(
-              user: getProfileUserModel.user!,
+              data: data,
               updated: true,
             ),
           );
@@ -66,7 +60,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               GetProfileUserApiResModel.fromJson(data);
           emit(
             ProfileDone(
-              user: getProfileUserModel.user!,
+              data: data,
               updated: true,
             ),
           );
@@ -90,7 +84,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         );
         if (data['status']) {
           emit(
-            ProfileDone(user: data['user'], updated: true),
+            ProfileDone(data: data['user'], updated: true),
           );
         } else {
           emit(

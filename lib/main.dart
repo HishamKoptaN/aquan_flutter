@@ -48,25 +48,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String locale = Storage.getString('language') ?? 'ar';
   Color color = primary;
-  bool error = false;
-
-  setupColors() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(
-      () {
-        String? c = prefs.getString('color');
-        if (c != null) {
-          color = Color(
-            int.parse("0x${prefs.getString('color')!}"),
-          );
-        }
-      },
-    );
-  }
 
   @override
   void initState() {
-    setupColors();
     super.initState();
   }
 
@@ -77,120 +61,83 @@ class _MyAppState extends State<MyApp> {
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<AuthBloc>(
-              create: (BuildContext context) => AuthBloc()..add(CheckLogedIn()),
-            ),
-            BlocProvider<ThemeCubit>(
-              create: (BuildContext context) => ThemeCubit(),
-            ),
-          ],
-          child: BlocBuilder<ThemeCubit, ThemeState>(
-            builder: (context, themeState) {
-              return MaterialApp(
-                color: Colors.white,
-                builder: (context, widget) {
-                  FlutterError.onError = (details) async {
-                    FlutterError.presentError(details);
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) {
-                        setState(() => error = true);
-                      },
+        child: BlocProvider(
+          create: (context) => AuthBloc()..add(CheckLogedIn()),
+          child: MaterialApp(
+            color: Colors.white,
+            title: 'AQUAN',
+            debugShowCheckedModeBanner: false,                                                              
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale(locale),
+            home: Scaffold(
+              backgroundColor: Colors.white,
+              body: BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) async {
+                  await Future.delayed(
+                    const Duration(seconds: 3),
+                  );
+                  if (state is AuthErrors) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        SnackBar(
+                          backgroundColor: danger,
+                          duration: const Duration(seconds: 3),
+                          content: Text(
+                            state.message!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      );
+                  }
+                  if (state is AuthLogedIn) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavigateBarView(),
+                      ),
+                      (route) => false,
                     );
-                  };
-                  ErrorWidget.builder = (errorDetails) {
-                    return Scaffold(
-                      backgroundColor: Colors.white,
-                      body: Center(
-                        child: Text(
-                          errorDetails.toString(),
+                  }
+                  if (state is EmailNotVerify) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VerifyCode(
+                          user: state.user,
                         ),
                       ),
+                      (route) => false,
                     );
-                  };
-                  if (widget != null) return widget;
-                  throw StateError('widget is null');
+                  }
+                  if (state is EmailVerified) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavigateBarView(),
+                      ),
+                      (route) => false,
+                    );
+                  }
+                  if (state is AuthLogedOut) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginView(),
+                      ),
+                      (route) => false,
+                    );
+                  }
                 },
-                title: 'AQUAN',
-                debugShowCheckedModeBanner: false,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                locale: Locale(locale),
-                theme: themeState.themeData.copyWith(
-                  primaryColor: color,
-                  colorScheme: ColorScheme.fromSeed(
-                    seedColor: color,
-                  ),
-                ),
-                home: Scaffold(
-                  backgroundColor: Colors.white,
-                  body: BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) async {
-                      await Future.delayed(const Duration(seconds: 5));
-                      if (state is AuthErrors) {
-                        ScaffoldMessenger.of(context)
-                          ..hideCurrentSnackBar()
-                          ..showSnackBar(
-                            SnackBar(
-                              backgroundColor: danger,
-                              duration: const Duration(seconds: 3),
-                              content: Text(
-                                state.message!,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          );
-                      }
-                      if (state is AuthLogedIn) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavigateBarView(),
-                          ),
-                          (route) => false,
-                        );
-                      }
-                      if (state is EmailNotVerify) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VerifyCode(
-                              user: state.user,
-                            ),
-                          ),
-                          (route) => false,
-                        );
-                      }
-                      if (state is EmailVerified) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavigateBarView(),
-                          ),
-                          (route) => false,
-                        );
-                      }
-                      if (state is AuthLogedOut) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginView(),
-                          ),
-                          (route) => false,
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      return Image.asset("assets/icon/aquan-logo-gif.gif");
-                    },
-                  ),
-                ),
-              );
-            },
+                builder: (context, state) {
+                  return Image.asset("assets/icon/aquan-logo-gif.gif");
+                },
+              ),
+            ),
           ),
         ),
       ),
@@ -212,7 +159,6 @@ class RestartWidget extends StatefulWidget {
 
 class _RestartWidgetState extends State<RestartWidget> {
   Key key = UniqueKey();
-
   void restartApp() {
     StyleColors.init();
     setState(() {
@@ -226,32 +172,5 @@ class _RestartWidgetState extends State<RestartWidget> {
       key: key,
       child: widget.child,
     );
-  }
-}
-
-class ThemeState extends Equatable {
-  final ThemeData themeData;
-
-  const ThemeState({required this.themeData});
-
-  @override
-  List<Object> get props => [themeData];
-}
-
-class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(ThemeState(themeData: ThemeData.light()));
-
-  void toggleTheme() {
-    emit(state.themeData.brightness == Brightness.dark
-        ? ThemeState(themeData: ThemeData.light())
-        : ThemeState(themeData: ThemeData.dark()));
-  }
-
-  void setLightTheme() {
-    emit(ThemeState(themeData: ThemeData.light()));
-  }
-
-  void setDarkTheme() {
-    emit(ThemeState(themeData: ThemeData.dark()));
   }
 }

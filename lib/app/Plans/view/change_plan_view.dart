@@ -93,7 +93,7 @@ class _ChangePlanViewState extends State<ChangePlanView> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: Theme.of(context).primaryColor,
+                            color: amber,
                           ),
                         ),
                         child: Column(
@@ -269,7 +269,7 @@ class _ChangePlanViewState extends State<ChangePlanView> {
                           },
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 20),
-                            backgroundColor: Theme.of(context).primaryColor,
+                            backgroundColor: amber,
                             padding: const EdgeInsets.all(15),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -294,7 +294,7 @@ class _ChangePlanViewState extends State<ChangePlanView> {
               }
               return Center(
                 child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  color: amber,
                 ),
               );
             },

@@ -112,9 +112,9 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                     ),
                   );
                 }
-                String? defaultValue = countries
-                        .any((country) => country['code'] == state.user.address)
-                    ? state.user.address
+                String? defaultValue = countries.any(
+                        (country) => country['code'] == state.data['address'])
+                    ? state.data['address']
                     : null;
 
                 return ListView(
@@ -171,16 +171,16 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                             width: 150.0,
                             height: 150.0,
                             decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
+                              color: amber,
                               image: DecorationImage(
-                                image: NetworkImage(state.user.image!),
+                                image: NetworkImage(state.data['image'] ?? ""),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(100.0),
                               ),
                               border: Border.all(
-                                color: Theme.of(context).primaryColor,
+                                color: amber,
                                 width: 6.0,
                               ),
                             ),
@@ -244,8 +244,8 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       autoValidateMode: AutovalidateMode.disabled,
                       selectorTextStyle: const TextStyle(color: Colors.black),
                       initialValue: PhoneNumber(
-                        isoCode: _isoCode ?? state.user.address,
-                        phoneNumber: state.user.phone,
+                        isoCode: _isoCode ?? state.data['address'] ?? "",
+                        phoneNumber: state.data['phone'] ?? "",
                       ),
                       hintText: t.phoneNumber,
                       formatInput: true,
@@ -272,7 +272,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                         },
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(fontSize: 20),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundColor: amber,
                           padding: const EdgeInsets.all(15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -298,7 +298,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
 
               return Center(
                 child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor),
+                    color: amber),
               );
             },
           ),

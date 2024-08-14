@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:aquan/app/buy_sell/controller/buy_sell_controller.dart';
 import 'package:aquan/app/Auth/controller/user_controller.dart';
 import 'package:aquan/app/buy_sell/model/buy_sell_model.dart';
@@ -14,28 +13,23 @@ class CurrencyBloc extends Bloc<CurrencyEvent, BuySellState> {
     on<GetCurrencies>(
       (event, emit) async {
         emit(CurrencyLoading());
-        BuySellAPiRes data = await currencyController.getCurrencies();
-        if (data.status) {
+        Map<String, dynamic> data = await currencyController.getCurrencies();
+
+        if (data["status"]) {
+          BuySellAPiRes buySellAPiRes = BuySellAPiRes.fromJson(data);
           emit(
             CurrenciesDone(
-              currencies: data.currencies,
-              userPlanId: data.userPlanId,
-              buySellStatus: data.buySellStatus,
-              senderWallet: data.currencies,
-              receiverWallet: data.currencies,
-              accountInfo: data.accountInfo,
+              currencies: buySellAPiRes.currencies!,
+              userPlanId: buySellAPiRes.userPlanId!,
+              buySellStatus: buySellAPiRes.buySellStatus!,
+              senderWallet: buySellAPiRes.currencies!,
+              receiverWallet: buySellAPiRes.currencies!,
+              accountInfo: buySellAPiRes.accountInfo!,
             ),
           );
-        } else if (!data.status) {
+        } else if (!data["status"]) {
           emit(
-            CurrenciesDone(
-              currencies: data.currencies,
-              userPlanId: data.userPlanId,
-              buySellStatus: data.buySellStatus,
-              senderWallet: data.currencies,
-              receiverWallet: data.currencies,
-              accountInfo: data.accountInfo,
-            ),
+            CurrencyError(message: ''),
           );
         }
       },
@@ -50,6 +44,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, BuySellState> {
           event.amount,
           event.rate,
           event.accountId,
+          event.receiverAccount,
         );
 
         if (data['status']) {

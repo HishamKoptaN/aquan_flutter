@@ -12,15 +12,15 @@ class BuySellController {
   Currency? fromWallet;
   Currency? toWallet;
   double? rate;
-  Future<BuySellAPiRes> getCurrencies() async {
+  Future<Map<String, dynamic>> getCurrencies() async {
     const String apiUrl = 'https://api.aquan.website/api/buy-sell';
     http.Response response = await http.get(
       Uri.parse(apiUrl),
       headers: await AuthController.getAuthHeaders(),
     );
     if (response.statusCode == 200) {
-      Map<String, dynamic> jsonData = json.decode(response.body);
-      return BuySellAPiRes.fromJson(jsonData);
+      Map<String, dynamic> data = json.decode(response.body);
+      return data;
     } else {
       throw Exception('Failed to load data');
     }
@@ -32,10 +32,10 @@ class BuySellController {
     int amount,
     double rate,
     String accountId,
+    String receiverAccount,
   ) async {
     Map<String, dynamic> employeeData = await getEmolyeeId();
     int employeeId = employeeData["employee_id"];
-
     var request = http.MultipartRequest(
       "POST",
       Uri.parse(api['buy_sell']!),
@@ -43,12 +43,13 @@ class BuySellController {
     request.headers.addAll(await AuthController.getAuthHeaders());
     request.fields.addAll(
       {
-        "source_wallet_id": sourceWalletId.toString(),
-        "destination_wallet_id": destinationWalletId.toString(),
         "amount": amount.toString(),
-        "address": "123 Main St",
+        "net_amount": amount.toString(),
         "rate": rate.toString(),
         "employee_id": employeeId.toString(),
+        "source_wallet_id": sourceWalletId.toString(),
+        "destination_wallet_id": destinationWalletId.toString(),
+        "receiver_account": receiverAccount.toString(),
       },
     );
 

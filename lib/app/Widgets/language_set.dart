@@ -26,7 +26,7 @@ class LanguageSetWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: amber,
         elevation: 2,
         title: Text(
           t.welcome,
@@ -78,7 +78,7 @@ class LanguageSetWidget extends StatelessWidget {
                 onPressed: onPress,
                 style: TextButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 20),
-                  backgroundColor: Theme.of(context).primaryColor,
+                  backgroundColor: amber,
                   padding: const EdgeInsets.all(15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),

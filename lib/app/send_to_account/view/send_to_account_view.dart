@@ -190,7 +190,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
                               state.name.isNotEmpty) {
                             context.read<SendToAccountBloc>().add(
                                   SendPaymentToOtherAccount(
-                                    accountId: sendToAccountController
+                                    accountNumber: sendToAccountController
                                         .accountNumbertextEditingController
                                         .text,
                                     amount: sendToAccountController.amount,

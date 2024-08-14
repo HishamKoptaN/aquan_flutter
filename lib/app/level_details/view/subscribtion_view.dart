@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../Helpers/colors.dart';
 import '../bloc/subscrition_bloc.dart';
 import '../bloc/subscrition_event.dart';
 import '../bloc/subscrition_state.dart';
@@ -51,7 +52,7 @@ class SubscribtionView extends StatelessWidget {
                   }
                   return Center(
                     child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
+                      color: amber,
                     ),
                   );
                 },

@@ -61,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                     side: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                      color: amber,
                     ),
                   ),
                 ),

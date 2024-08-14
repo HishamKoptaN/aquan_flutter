@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../Helpers/colors.dart';
+
 class TransactionsScreen extends StatelessWidget {
   const TransactionsScreen({super.key});
 
@@ -67,7 +69,7 @@ class TransactionsScreen extends StatelessWidget {
                           ),
                           DataCell(
                             Text(
-                              transaction.amountFormated!,
+                              transaction.amount.toString(),
                               style: style,
                             ),
                           ),
@@ -267,7 +269,7 @@ class TransactionsScreen extends StatelessWidget {
               }
               return Center(
                 child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+                  color: amber,
                 ),
               );
             },

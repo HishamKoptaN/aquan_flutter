@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:aquan/Helpers/colors.dart';
 import 'package:aquan/Helpers/styles.dart';
 import 'package:aquan/app/Layouts/app_layout.dart';
@@ -11,7 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../Plans/view/plans_view.dart';
 import '../../deposit/view/make_deposit_view.dart';
 import '../../profile/profile_view.dart';
@@ -32,23 +30,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
-  }
-
-  Map<String, dynamic>? userData;
-
-  Future<void> _loadUserData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userJson = prefs.getString('user_data');
-    if (userJson != null) {
-      setState(() {
-        userData = json.decode(userJson);
-      });
-    } else {
-      setState(() {
-        userData = {};
-      });
-    }
   }
 
   @override
@@ -80,20 +61,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           Row(
                             children: [
-                              // Container(
-                              //   height: 35.0.h,
-                              //   width: 35.0.w,
-                              //   decoration: BoxDecoration(
-                              //     color: Theme.of(context).primaryColor,
-                              //     image: DecorationImage(
-                              //       image: NetworkImage(state.user.image),
-                              //       fit: BoxFit.cover,
-                              //     ),
-                              //     borderRadius: const BorderRadius.all(
-                              //       Radius.circular(100),
-                              //     ),
-                              //   ),
-                              // ),
                               const Gap(5),
                               Column(
                                 children: [
@@ -118,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ],
                           ),
                           Text(
-                            tr.amountFormated!,
+                            tr.amountFormated ?? "",
                             style: cartHeading,
                           )
                         ],
@@ -134,8 +101,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       curr.name?.toLowerCase() == "بنكك") {
                     return true;
                   }
-                  // Map<String, dynamic> rate =
-                  //     curr.rates?[state.user.planId.toString()];
                   currenciesList.add(
                     Container(
                       padding: const EdgeInsets.all(15),
@@ -152,7 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Column(
                                 children: [
                                   Text(
-                                    curr.name!,
+                                    curr.name ?? "",
                                     textAlign: TextAlign.start,
                                     style: const TextStyle(
                                       fontSize: 16,
@@ -161,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ),
                                   const Gap(10),
                                   Text(
-                                    "${t.lastUpdate} ${curr.updatedAt}",
+                                    "${t.lastUpdate} ${curr.updatedAt ?? ""}",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -287,7 +252,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ),
                                       ),
                                       Text(
-                                        userData!['name'].split(' ')[0],
+                                        state.localData['name'] ?? "",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 10.sp,
@@ -359,7 +324,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             children: [
                                               TextSpan(
                                                 text:
-                                                    "LV${userData!['plan_id']}",
+                                                    "LV${state.localData['plan_id'] ?? ""}",
                                                 style: TextStyle(
                                                   fontSize: 10.sp,
                                                   color: Colors.white,
@@ -391,7 +356,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: Text(
                             NumberFormat.simpleCurrency(
                                     locale: "en", decimalDigits: 3)
-                                .format(userData!['balance']),
+                                .format(state.localData['balance'] ?? ""),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: black,
@@ -406,7 +371,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                userData!['account_number'],
+                                state.localData['account_number'] ?? "",
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   color: black,
@@ -423,7 +388,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   );
                                   Clipboard.setData(
                                     ClipboardData(
-                                        text: userData!['id'].toString()),
+                                        text: state.localData['id'] ??
+                                            "".toString()),
                                   );
                                   Future.delayed(
                                     const Duration(milliseconds: 500),

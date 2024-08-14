@@ -141,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       t!.createAccount,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
+                        color: amber,
                         fontSize: 30,
                       ),
                       textAlign: TextAlign.center,
@@ -276,7 +276,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         style: TextButton.styleFrom(
                           textStyle: const TextStyle(fontSize: 20),
-                          backgroundColor: Theme.of(context).primaryColor,
+                          backgroundColor: amber,
                           padding: const EdgeInsets.all(15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -320,7 +320,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                             side: BorderSide(
-                              color: Theme.of(context).primaryColor,
+                              color: amber,
                             ),
                           ),
                         ),

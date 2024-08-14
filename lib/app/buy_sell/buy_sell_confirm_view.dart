@@ -20,18 +20,19 @@ import '../dashboard/view/dashboard_view.dart';
 class BuySellConfirmView extends StatefulWidget {
   const BuySellConfirmView({
     super.key,
-    required this.accountNumber,
     required this.sWallet,
     required this.dWallet,
     required this.amount,
     required this.rate,
+    required this.accountNumber,
   });
 
-  final String accountNumber;
   final Currency sWallet;
   final Currency dWallet;
   final String amount;
   final double rate;
+
+  final String accountNumber;
 
   @override
   State<BuySellConfirmView> createState() => _BuySellConfirmViewState();
@@ -136,7 +137,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                       Row(
                         children: [
                           Text(
-                            widget.sWallet.id.toString(),
+                            widget.sWallet.paymentInfo!.accountId!,
                             style: const TextStyle(
                               color: black,
                               fontSize: 22,
@@ -147,7 +148,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                             onPressed: () async {
                               await Clipboard.setData(
                                 ClipboardData(
-                                  text: widget.sWallet.paymentInfo.accountId,
+                                  text: widget.sWallet.paymentInfo!.accountId!,
                                 ),
                               );
                             },
@@ -175,7 +176,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                       Row(
                         children: [
                           Text(
-                            widget.sWallet.paymentInfo.name,
+                            widget.sWallet.name!,
                             style: const TextStyle(
                               color: black,
                               fontSize: 22,
@@ -186,7 +187,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                             onPressed: () async {
                               await Clipboard.setData(
                                 ClipboardData(
-                                  text: widget.sWallet.paymentInfo.name,
+                                  text: widget.sWallet.name!,
                                 ),
                               );
                             },
@@ -214,7 +215,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                       const Gap(20),
                       Expanded(
                         child: Text(
-                          widget.sWallet.comment,
+                          widget.sWallet.comment!,
                           textAlign: TextAlign.center,
                           style: cartHeading.copyWith(
                             fontWeight: FontWeight.normal,
@@ -225,7 +226,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                         onPressed: () async {
                           await Clipboard.setData(
                             ClipboardData(
-                              text: widget.sWallet.comment,
+                              text: widget.sWallet.comment!,
                             ),
                           );
                         },
@@ -353,19 +354,19 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                           horizontal: 20,
                         ),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
+                          color: amber,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: InkWell(
                           onTap: () async {
                             context.read<CurrencyBloc>().add(
                                   TransferMoney(
-                                    sourceWalletId: widget.sWallet.id,
-                                    destinationWalletId: widget.dWallet.id,
+                                    sourceWalletId: widget.sWallet.id!,
+                                    destinationWalletId: widget.dWallet.id!,
                                     amount: int.parse(widget.amount),
                                     accountId: widget.accountNumber,
                                     rate: widget.rate,
-                                    address: '',
+                                    receiverAccount: widget.accountNumber,
                                     // file: file!,
                                   ),
                                 );

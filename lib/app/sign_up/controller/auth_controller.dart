@@ -65,11 +65,13 @@ class AuthController {
   ) async {
     http.Response response = await http.post(
       Uri.parse(api['auth-google-complete']!),
-      body: jsonEncode({
-        'password': password.toString(),
-        "password_confirmation": passwordConfirmation.toString(),
-        "code": code.toString(),
-      }),
+      body: jsonEncode(
+        {
+          'password': password.toString(),
+          "password_confirmation": passwordConfirmation.toString(),
+          "code": code.toString(),
+        },
+      ),
       headers: await AuthController.getAuthHeaders(),
     );
 
@@ -82,10 +84,14 @@ class AuthController {
   }
 
   Future<Map<String, dynamic>> isLogedIn(String? token) async {
-    http.Response response = await http.post(
-      Uri.parse(api['check']!),
-      headers: await AuthController.getAuthHeaders(),
-    );
+    http.Response response = await http
+        .post(
+          Uri.parse(api['check']!),
+          headers: await AuthController.getAuthHeaders(),
+        )
+        .timeout(
+          const Duration(seconds: 10),
+        );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);

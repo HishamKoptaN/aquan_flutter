@@ -3,6 +3,8 @@ import 'package:aquan/Helpers/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../../Helpers/colors.dart';
+
 class CartHome extends StatelessWidget {
   const CartHome(
       {super.key,
@@ -31,7 +33,7 @@ class CartHome extends StatelessWidget {
               Image.network(
                 domain + image,
                 width: 60,
-                color: Theme.of(context).primaryColor,
+                color: amber,
               )
             ],
           ),

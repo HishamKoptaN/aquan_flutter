@@ -5,7 +5,7 @@ const primary = Color(0xFFFFBF00);
 const secondary = Color.fromARGB(255, 255, 199, 33);
 const third = Color(0xFFf39c12);
 
-// Color Theme.of(context).primaryColor =
+// Color amber =
 //     Color(int.parse(Storage.getString('color') ?? "FFBF00", radix: 16));
 
 // Color secondary =

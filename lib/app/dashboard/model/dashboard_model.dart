@@ -75,21 +75,21 @@ class CurrencyDashboard {
 }
 
 class TransactionDashboard {
-  int? id;
-  String? status;
-  int? amount;
-  double? rate;
-  dynamic message;
-  String? image;
-  String? address;
-  int? employeeId;
-  int? userId;
-  int? senderCurrencyId;
-  int? receiverCurrencyId;
-  String? createdAt;
-  String? updatedAt;
-  String? amountFormated;
-  DateTime? createdDate;
+  late int? id;
+  late String? status;
+  late int? amount;
+  late double? rate;
+  late String? message;
+  late String? image;
+  late String? address;
+  late int? employeeId;
+  late int? userId;
+  late int? senderCurrencyId;
+  late int? receiverCurrencyId;
+  late String? createdAt;
+  late String? updatedAt;
+  late String? amountFormated;
+  late DateTime? createdDate;
 
   TransactionDashboard({
     this.id,

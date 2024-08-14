@@ -140,7 +140,7 @@ class _SupportScreenState extends State<SupportScreen> {
                           const Gap(5),
                           IconButton(
                             padding: const EdgeInsets.all(8.0),
-                            splashColor: Theme.of(context).primaryColor,
+                            splashColor: amber,
                             splashRadius: 30,
                             icon: const Icon(
                               FontAwesomeIcons.paperPlane,
@@ -182,7 +182,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                   ),
                                   IconButton(
                                     padding: const EdgeInsets.all(8.0),
-                                    splashColor: Theme.of(context).primaryColor,
+                                    splashColor: amber,
                                     splashRadius: 30,
                                     icon: const Icon(
                                       FontAwesomeIcons.paperclip,
@@ -226,7 +226,7 @@ class _SupportScreenState extends State<SupportScreen> {
 
             return Center(
               child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
+                color: amber,
               ),
             );
           },

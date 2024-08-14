@@ -230,15 +230,6 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                 style: cartHeading,
                               ),
                               const Gap(10),
-                              // Text(
-                              //   currency!.paymentInfo!.name!,
-                              //   style: cartHeading,
-                              // ),
-                              // const Gap(5),
-                              // Text(
-                              //   currency!.paymentInfo!.accountId!,
-                              //   style: cartHeading,
-                              // ),
                             ],
                           ),
                         const Gap(20),
@@ -315,12 +306,12 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                             },
                             style: TextButton.styleFrom(
                               textStyle: const TextStyle(fontSize: 20),
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: amber,
                               padding: const EdgeInsets.all(15),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
-                                side: BorderSide(
-                                  color: Theme.of(context).primaryColor,
+                                side: const BorderSide(
+                                  color: amber,
                                 ),
                               ),
                             ),

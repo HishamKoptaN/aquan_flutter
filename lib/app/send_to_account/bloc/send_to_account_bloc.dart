@@ -30,8 +30,11 @@ class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
 
     on<SendPaymentToOtherAccount>(
       (event, emit) async {
-        Map<String, dynamic> data = await sendToAccountController
-            .sendMoneyToAccount(event.accountId, event.amount);
+        Map<String, dynamic> data =
+            await sendToAccountController.sendMoneyToAccount(
+          event.accountNumber,
+          event.amount,
+        );
 
         if (data['status']) {
           emit(AmountSent());
