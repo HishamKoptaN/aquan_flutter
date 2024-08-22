@@ -31,3 +31,16 @@ class TaskDone extends TaskState {
     this.message,
   });
 }
+// class TaskDone extends TaskState {
+//   final Task task;
+//   bool completed = false;
+//   final String? error;
+//   final String? message;
+
+//   TaskDone({
+//     required this.task,
+//     required this.completed,
+//     this.error,
+//     this.message,
+//   });
+// }

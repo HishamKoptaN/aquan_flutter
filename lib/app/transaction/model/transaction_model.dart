@@ -1,5 +1,3 @@
-import 'package:aquan/app/Auth/model/user.dart';
-
 import '../../dashboard/model/dashboard_model.dart';
 import '../../profile/model/profile_model.dart';
 

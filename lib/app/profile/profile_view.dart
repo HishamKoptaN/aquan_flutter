@@ -72,7 +72,8 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                         child: CachedNetworkImage(
                           fit: BoxFit.contain,
-                          imageUrl: state.data['image'] ?? "",
+                          imageUrl:
+                              "https://api.aquan.website/api/images/users/${state.data['image']}",
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>

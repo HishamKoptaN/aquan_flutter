@@ -9,6 +9,11 @@ class GetTaskDetails extends TaskEvent {
 
   GetTaskDetails({required this.id});
 }
+//class GetTaskDetails extends TaskEvent {
+//   final int id;
+
+//   GetTaskDetails({required this.id});
+// }
 
 class SendProof extends TaskEvent {
   final File image;

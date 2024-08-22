@@ -15,14 +15,15 @@ final class CurrencyError extends BuySellState {
 class CurrenciesDone extends BuySellState {
   List<Currency> senderWallet;
   List<Currency> receiverWallet;
+  final List<Rate> rate;
   final List<Currency> currencies;
   List<AccountInfo> accountInfo;
-
   final int userPlanId;
   final bool buySellStatus;
   CurrenciesDone({
     required this.buySellStatus,
     required this.currencies,
+    required this.rate,
     required this.accountInfo,
     required this.userPlanId,
     required this.senderWallet,

@@ -7,12 +7,14 @@ class GetCurrencies extends CurrencyEvent {}
 class CalculateRate extends CurrencyEvent {
   final List<Currency> sWallet;
   final List<Currency> dWallet;
+  final List<Rate> rate;
   final double amount;
   final List<Currency> currencies;
 
   CalculateRate({
     required this.sWallet,
     required this.dWallet,
+    required this.rate,
     required this.amount,
     required this.currencies,
   });

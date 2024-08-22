@@ -21,12 +21,10 @@ class BuySellview extends StatefulWidget {
 
 class _BuySellviewState extends State<BuySellview> {
   BuySellController buySellController = BuySellController();
-
   final formkey = GlobalKey<FormState>();
   bool canMakeTransfer = true;
   int? toCurrency;
   final TextEditingController colorController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -89,28 +87,30 @@ class _BuySellviewState extends State<BuySellview> {
                                                       .fromWallet,
                                                   onChanged:
                                                       (Currency? newValue) {
-                                                    setState(() {
-                                                      buySellController
-                                                              .fromWallet =
-                                                          newValue;
-                                                      if (buySellController
-                                                              .toWallet ==
-                                                          newValue) {
+                                                    setState(
+                                                      () {
                                                         buySellController
-                                                            .toWallet = null;
-                                                      }
-                                                    });
-                                                    if (buySellController
-                                                                .fromWallet !=
-                                                            null &&
-                                                        buySellController
-                                                            .fromWallet!.rates!
-                                                            .containsKey("1") &&
-                                                        buySellController
-                                                            .fromWallet!
-                                                            .rates!["1"]!
-                                                            .containsKey(
-                                                                "1")) {}
+                                                                .fromWallet =
+                                                            newValue;
+                                                        if (buySellController
+                                                                .toWallet ==
+                                                            newValue) {
+                                                          buySellController
+                                                              .toWallet = null;
+                                                        }
+                                                      },
+                                                    );
+                                                    // if (buySellController
+                                                    //             .fromWallet !=
+                                                    //         null &&
+                                                    //     buySellController
+                                                    //         .fromWallet!.id!
+                                                    //         .containsKey("1") &&
+                                                    //     buySellController
+                                                    //         .fromWallet!
+                                                    //         .rates!["1"]!
+                                                    //         .containsKey(
+                                                    //             "1")) {}
                                                   },
                                                   items: state.currencies
                                                       .map((Currency currency) {
@@ -149,17 +149,21 @@ class _BuySellviewState extends State<BuySellview> {
                                                       .toWallet,
                                                   onChanged:
                                                       (Currency? newValue) {
-                                                    setState(() {
-                                                      buySellController
-                                                          .toWallet = newValue;
-                                                    });
+                                                    setState(
+                                                      () {
+                                                        buySellController
+                                                                .toWallet =
+                                                            newValue;
+                                                      },
+                                                    );
                                                   },
                                                   items: state.currencies.where(
-                                                      (Currency currency) {
-                                                    return currency !=
-                                                        buySellController
-                                                            .fromWallet;
-                                                  }).map((Currency currency) {
+                                                    (Currency currency) {
+                                                      return currency !=
+                                                          buySellController
+                                                              .fromWallet;
+                                                    },
+                                                  ).map((Currency currency) {
                                                     return DropdownMenuItem<
                                                         Currency>(
                                                       value: currency,
@@ -185,7 +189,6 @@ class _BuySellviewState extends State<BuySellview> {
                                       //       ),
                                       //     ),
                                       //   ),
-
                                       Gap(25.h),
                                       if (buySellController.fromWallet !=
                                               null &&
@@ -215,23 +218,16 @@ class _BuySellviewState extends State<BuySellview> {
                                                       BorderRadius.circular(15),
                                                 ),
                                                 child: Text(
-                                                  (buySellController
-                                                                  .fromWallet !=
-                                                              null &&
-                                                          buySellController
-                                                                  .toWallet !=
-                                                              null)
-                                                      ? buySellController
-                                                          .fromWallet!
-                                                          .rates![state
-                                                                  .userPlanId
-                                                                  .toString()]![
-                                                              buySellController
-                                                                  .toWallet!.id
-                                                                  .toString()]!
-                                                          .selling
-                                                          .toString()
-                                                      : "",
+                                                  state.rate
+                                                      .firstWhere(
+                                                        (rate) =>
+                                                            rate.currencyId ==
+                                                            buySellController
+                                                                .fromWallet!
+                                                                .id!,
+                                                      )
+                                                      .selling
+                                                      .toString(),
                                                   style: const TextStyle(
                                                     color: black,
                                                   ),
@@ -253,7 +249,8 @@ class _BuySellviewState extends State<BuySellview> {
                                                       actions: <Widget>[
                                                         TextButton(
                                                           child: const Text(
-                                                              'موافق'),
+                                                            'موافق',
+                                                          ),
                                                           onPressed: () {
                                                             Navigator.of(
                                                                     context)
@@ -283,28 +280,35 @@ class _BuySellviewState extends State<BuySellview> {
                                               double amount =
                                                   double.parse(value);
                                               buySellController.rate =
-                                                  double.parse(buySellController
-                                                      .fromWallet!
-                                                      .rates![state.userPlanId
-                                                              .toString()]![
+                                                  double.parse(
+                                                state.rate
+                                                    .firstWhere(
+                                                      (rate) =>
+                                                          rate.currencyId ==
                                                           buySellController
-                                                              .toWallet!.id
-                                                              .toString()]!
-                                                      .selling
-                                                      .toString());
-                                              setState(() {
-                                                buySellController
-                                                    .toAmountController
-                                                    .text = (amount /
-                                                        buySellController.rate!)
-                                                    .toStringAsFixed(2);
-                                              });
+                                                              .fromWallet!.id!,
+                                                    )
+                                                    .selling
+                                                    .toString(),
+                                              );
+                                              setState(
+                                                () {
+                                                  buySellController
+                                                      .toAmountController
+                                                      .text = (amount /
+                                                          buySellController
+                                                              .rate!)
+                                                      .toStringAsFixed(2);
+                                                },
+                                              );
                                             } else {
-                                              setState(() {
-                                                buySellController
-                                                    .toAmountController
-                                                    .text = "0";
-                                              });
+                                              setState(
+                                                () {
+                                                  buySellController
+                                                      .toAmountController
+                                                      .text = "0";
+                                                },
+                                              );
                                             }
                                           },
                                         ),
@@ -322,13 +326,13 @@ class _BuySellviewState extends State<BuySellview> {
                                               double amount =
                                                   double.parse(value);
                                               double rate = double.parse(
-                                                buySellController
-                                                    .fromWallet!
-                                                    .rates![state.userPlanId
-                                                            .toString()]![
-                                                        buySellController
-                                                            .toWallet!.id
-                                                            .toString()]!
+                                                state.rate
+                                                    .firstWhere(
+                                                      (rate) =>
+                                                          rate.currencyId ==
+                                                          buySellController
+                                                              .toWallet!.id!,
+                                                    )
                                                     .selling
                                                     .toString(),
                                               );
@@ -342,11 +346,13 @@ class _BuySellviewState extends State<BuySellview> {
                                                 },
                                               );
                                             } else {
-                                              setState(() {
-                                                buySellController
-                                                    .fromAmountController
-                                                    .text = "0";
-                                              });
+                                              setState(
+                                                () {
+                                                  buySellController
+                                                      .fromAmountController
+                                                      .text = "0";
+                                                },
+                                              );
                                             }
                                           },
                                         ),
@@ -404,8 +410,9 @@ class _BuySellviewState extends State<BuySellview> {
                                                         .map<
                                                             PopupMenuEntry<
                                                                 AccountInfo>>(
-                                                      (AccountInfo
-                                                          accountInfo) {
+                                                      (
+                                                        AccountInfo accountInfo,
+                                                      ) {
                                                         return PopupMenuItem<
                                                             AccountInfo>(
                                                           value: accountInfo,

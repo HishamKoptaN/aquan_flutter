@@ -1,36 +1,41 @@
 // To parse this JSON data, do
 //
-//     final buySellAPiRes = buySellAPiResFromJson(jsonString);
+//     final buySellApiRes = buySellApiResFromJson(jsonString);
 
 import 'dart:convert';
 
-BuySellAPiRes buySellAPiResFromJson(String str) =>
-    BuySellAPiRes.fromJson(json.decode(str));
+BuySellApiRes buySellApiResFromJson(String str) =>
+    BuySellApiRes.fromJson(json.decode(str));
 
-String buySellAPiResToJson(BuySellAPiRes data) => json.encode(data.toJson());
+String buySellApiResToJson(BuySellApiRes data) => json.encode(data.toJson());
 
-class BuySellAPiRes {
+class BuySellApiRes {
   bool? status;
   bool? buySellStatus;
   List<Currency>? currencies;
+  List<Rate>? rates;
   List<AccountInfo>? accountInfo;
   int? userPlanId;
 
-  BuySellAPiRes({
+  BuySellApiRes({
     this.status,
     this.buySellStatus,
     this.currencies,
+    this.rates,
     this.accountInfo,
     this.userPlanId,
   });
 
-  factory BuySellAPiRes.fromJson(Map<String, dynamic> json) => BuySellAPiRes(
+  factory BuySellApiRes.fromJson(Map<String, dynamic> json) => BuySellApiRes(
         status: json["status"],
         buySellStatus: json["buy_sell_status"],
         currencies: json["currencies"] == null
             ? []
             : List<Currency>.from(
                 json["currencies"]!.map((x) => Currency.fromJson(x))),
+        rates: json["rates"] == null
+            ? []
+            : List<Rate>.from(json["rates"]!.map((x) => Rate.fromJson(x))),
         accountInfo: json["account_info"] == null
             ? []
             : List<AccountInfo>.from(
@@ -44,6 +49,9 @@ class BuySellAPiRes {
         "currencies": currencies == null
             ? []
             : List<dynamic>.from(currencies!.map((x) => x.toJson())),
+        "rates": rates == null
+            ? []
+            : List<dynamic>.from(rates!.map((x) => x.toJson())),
         "account_info": accountInfo == null
             ? []
             : List<dynamic>.from(accountInfo!.map((x) => x.toJson())),
@@ -55,30 +63,33 @@ class AccountInfo {
   String? currency;
   int? value;
   String? comment;
+  String? accountHolder;
 
   AccountInfo({
     this.currency,
     this.value,
     this.comment,
+    this.accountHolder,
   });
 
   factory AccountInfo.fromJson(Map<String, dynamic> json) => AccountInfo(
         currency: json["currency"],
         value: json["value"],
         comment: json["comment"],
+        accountHolder: json["account_holder"],
       );
 
   Map<String, dynamic> toJson() => {
         "currency": currency,
         "value": value,
         "comment": comment,
+        "account_holder": accountHolder,
       };
 }
 
 class Currency {
   int? id;
   String? name;
-  Map<String, Map<String, Rate>>? rates;
   String? nameCode;
   String? comment;
   PaymentInfo? paymentInfo;
@@ -87,7 +98,6 @@ class Currency {
   Currency({
     this.id,
     this.name,
-    this.rates,
     this.nameCode,
     this.comment,
     this.paymentInfo,
@@ -97,11 +107,6 @@ class Currency {
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
         id: json["id"],
         name: json["name"],
-        rates: Map.from(json["rates"]!).map((k, v) =>
-            MapEntry<String, Map<String, Rate>>(
-                k,
-                Map.from(v).map(
-                    (k, v) => MapEntry<String, Rate>(k, Rate.fromJson(v))))),
         nameCode: json["name_code"],
         comment: json["comment"],
         paymentInfo: json["payment_info"] == null
@@ -113,10 +118,6 @@ class Currency {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "rates": Map.from(rates!).map((k, v) => MapEntry<String, dynamic>(
-            k,
-            Map.from(v)
-                .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())))),
         "name_code": nameCode,
         "comment": comment,
         "payment_info": paymentInfo?.toJson(),
@@ -145,29 +146,108 @@ class PaymentInfo {
 }
 
 class Rate {
+  int? id;
+  bool? status;
+  int? planId;
+  int? currencyId;
   String? currencyName;
-  String? status;
-  double? selling;
-  double? buying;
+  String? selling;
+  String? buying;
+  String? createdAt;
+  String? updatedAt;
+  RateCurrency? currency;
 
   Rate({
-    this.currencyName,
+    this.id,
     this.status,
+    this.planId,
+    this.currencyId,
+    this.currencyName,
     this.selling,
     this.buying,
+    this.createdAt,
+    this.updatedAt,
+    this.currency,
   });
 
   factory Rate.fromJson(Map<String, dynamic> json) => Rate(
-        currencyName: json["currency_name"],
+        id: json["id"],
         status: json["status"],
-        selling: json["selling"]?.toDouble(),
-        buying: json["buying"]?.toDouble(),
+        planId: json["plan_id"],
+        currencyId: json["currency_id"],
+        currencyName: json["currency_name"],
+        selling: json["selling"],
+        buying: json["buying"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        currency: json["currency"] == null
+            ? null
+            : RateCurrency.fromJson(json["currency"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "currency_name": currencyName,
+        "id": id,
         "status": status,
+        "plan_id": planId,
+        "currency_id": currencyId,
+        "currency_name": currencyName,
         "selling": selling,
         "buying": buying,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "currency": currency?.toJson(),
+      };
+}
+
+class RateCurrency {
+  int? id;
+  String? status;
+  String? name;
+  String? nameCode;
+  PaymentInfo? paymentInfo;
+  String? comment;
+  String? createdAt;
+  String? updatedAt;
+  DateTime? updatedDate;
+
+  RateCurrency({
+    this.id,
+    this.status,
+    this.name,
+    this.nameCode,
+    this.paymentInfo,
+    this.comment,
+    this.createdAt,
+    this.updatedAt,
+    this.updatedDate,
+  });
+
+  factory RateCurrency.fromJson(Map<String, dynamic> json) => RateCurrency(
+        id: json["id"],
+        status: json["status"],
+        name: json["name"],
+        nameCode: json["name_code"],
+        paymentInfo: json["payment_info"] == null
+            ? null
+            : PaymentInfo.fromJson(json["payment_info"]),
+        comment: json["comment"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        updatedDate: json["updated_date"] == null
+            ? null
+            : DateTime.parse(json["updated_date"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "status": status,
+        "name": name,
+        "name_code": nameCode,
+        "payment_info": paymentInfo?.toJson(),
+        "comment": comment,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "updated_date":
+            "${updatedDate!.year.toString().padLeft(4, '0')}-${updatedDate!.month.toString().padLeft(2, '0')}-${updatedDate!.day.toString().padLeft(2, '0')}",
       };
 }

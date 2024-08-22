@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../bloc/language_bloc.dart';
 
 class ChangeLanguage extends StatefulWidget {

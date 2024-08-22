@@ -116,7 +116,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const TransactionsScreen(),
+                  builder: (context) => const TransactionsView(),
                 ),
               )
             },

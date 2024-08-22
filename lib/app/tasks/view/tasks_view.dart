@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../model/task.dart';
-import 'task_view.dart';
+import '../model/get_tasks_model.dart';
+import 'task_details.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -47,7 +47,7 @@ class TasksScreen extends StatelessWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => TaskScreen(
-                              task: task,
+                              taskId: task.id!,
                             ),
                           ),
                         ),
@@ -64,12 +64,12 @@ class TasksScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              task.name,
+                              task.name ?? "",
                               style: cartHeading,
                             ),
                             const Gap(10),
                             Text(
-                              task.description,
+                              task.description ?? "",
                             ),
                             const Gap(10),
                             Container(

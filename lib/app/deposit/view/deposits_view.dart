@@ -107,7 +107,7 @@ class DepositsView extends StatelessWidget {
                 children: childs,
               );
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 color: amber,
               ),

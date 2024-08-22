@@ -14,9 +14,8 @@ class CurrencyBloc extends Bloc<CurrencyEvent, BuySellState> {
       (event, emit) async {
         emit(CurrencyLoading());
         Map<String, dynamic> data = await currencyController.getCurrencies();
-
         if (data["status"]) {
-          BuySellAPiRes buySellAPiRes = BuySellAPiRes.fromJson(data);
+          BuySellApiRes buySellAPiRes = BuySellApiRes.fromJson(data);
           emit(
             CurrenciesDone(
               currencies: buySellAPiRes.currencies!,
@@ -25,6 +24,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, BuySellState> {
               senderWallet: buySellAPiRes.currencies!,
               receiverWallet: buySellAPiRes.currencies!,
               accountInfo: buySellAPiRes.accountInfo!,
+              rate: buySellAPiRes.rates!,
             ),
           );
         } else if (!data["status"]) {
@@ -34,7 +34,6 @@ class CurrencyBloc extends Bloc<CurrencyEvent, BuySellState> {
         }
       },
     );
-
     on<TransferMoney>(
       (event, emit) async {
         emit(CurrencyLoading());
@@ -46,11 +45,14 @@ class CurrencyBloc extends Bloc<CurrencyEvent, BuySellState> {
           event.accountId,
           event.receiverAccount,
         );
-
         if (data['status']) {
           emit(TransferDone());
         } else if (!data['status']) {
-          emit(CurrencyError(message: data['message']));
+          emit(
+            CurrencyError(
+              message: data['message'],
+            ),
+          );
         }
       },
     );

@@ -30,9 +30,11 @@ void main() async {
   await Storage.init();
   await Settings.setup();
   if (prefs.getBool("fingerprints") == null) {
-    prefs.setBool("fingerprints", false);
+    prefs.setBool(
+      "fingerprints",
+      false,
+    );
   }
-
   runApp(
     const MyApp(),
   );
@@ -66,7 +68,7 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
             color: Colors.white,
             title: 'AQUAN',
-            debugShowCheckedModeBanner: false,                                                              
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale(locale),

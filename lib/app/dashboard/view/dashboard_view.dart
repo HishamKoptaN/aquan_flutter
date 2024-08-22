@@ -522,7 +522,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               (_) => Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const TransactionsScreen(),
+                                      const TransactionsView(),
                                 ),
                               ),
                             );
