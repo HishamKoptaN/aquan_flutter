@@ -1,8 +1,8 @@
-const String domain = "https://api.aquan.website/api";
+const String domain = "https://aquan.aquan.website/api";
 
 const Map<String, dynamic> api = {
   "login": "$domain/login",
-  "register": "$domain/auth/register",
+  "register": "$domain/register",
   "check": "$domain/check",
   "buy_sell_status": "$domain/api/buy_sell_status",
   "password": {
@@ -14,16 +14,17 @@ const Map<String, dynamic> api = {
   "send-confirm-email": "$domain/v1/user/verify",
   "send-code-to-email": "$domain/resendcode",
   "dashboard": "$domain/dashboard",
-  "profile_update": "$domain/user/update",
+  "profile": "$domain/profile",
   "currencies": "$domain/currencies",
-  "settings": "$domain/settings",
+  "public": "$domain/public",
+  "plan_rates": "$domain/plan/rates",
+  "deposit_rates": "$domain/deposit/rates",
   "tasks": "$domain/tasks",
+  "withdraws_deposits": "$domain/withdraws-deposits",
   "notifications": "$domain/notifications",
-  "deposits_withdraws": "$domain/deposits-withdraws",
   "user_account_info": "$domain/user/account-info",
   "buy_sell": "$domain/buy-sell",
-  "update_accounts_user": "$domain/user/update-accounts-info",
-  "user_accounts": "$domain/user/accounts",
+  "accounts": "$domain/accounts",
   "user_update_image": "$domain/user/update-image",
   //-------------------------------//
   "task": "$domain/tasks/",
@@ -37,14 +38,12 @@ const Map<String, dynamic> api = {
   "transactions": "$domain/transactions",
   "deposit": "$domain/deposit",
   "withdraw": "$domain/withdraw",
-
-  "transfer": "$domain/transfer/",
-  "create_withdraw": "$domain/create/withdraw",
+  "withdraw_rates": "$domain/withdraw/rates",
+  "transfer": "$domain/transfer",
 //-------------------------------//
-
+  "settings": "$domain/settings",
   "support": "$domain/support",
   "account": "$domain/account/",
-  "deposits-and-withdraws": "$domain/get-withdraws-deposits",
   "auth-google": "$domain/auth/login/google",
   "auth-google-complete": "$domain/auth/login/google/complete",
   "debug": "$domain/debug",

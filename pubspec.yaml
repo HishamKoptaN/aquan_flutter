@@ -1,33 +1,11 @@
 name: aquan
 description: "A new Flutter project."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
+publish_to: "none"
 version: 1.0.0+1
-
 environment:
-  sdk: ">=3.4.3 <4.0.0"
-
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+  sdk: ">=3.5.0 <4.0.0"
 dependencies:
+  ai_barcode_scanner: ^5.1.1
   animated_bottom_navigation_bar: ^1.3.3
   animated_splash_screen: ^1.3.0
   another_flushbar: ^1.12.30
@@ -35,16 +13,17 @@ dependencies:
   bubble: ^1.2.1
   cached_network_image: ^3.3.1
   cupertino_icons: ^1.0.6
+  currency_text_input_formatter: ^2.2.4
   data_table_2: ^2.5.12
   device_preview: ^1.2.0
   drop_down_list: ^0.0.7
   dropdown_model_list: ^2.1.2
+  easy_sidemenu: ^0.6.0
   equatable: ^2.0.5
   eva_icons_flutter: ^3.1.0
   file_picker: ^6.1.1
   flutter:
     sdk: flutter
-  flutter_barcode_scanner: ^2.0.0
   flutter_bloc: ^8.1.4
   flutter_local_notifications: ^17.2.2
   flutter_localizations:
@@ -54,9 +33,9 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   gap: ^3.0.1
   get: ^4.6.6
+  get_it: ^8.0.0
   google_sign_in: ^6.2.1
   http: ^1.2.0
-  image_gallery_saver: ^2.0.3
   image_picker: ^1.1.2
   intl: ^0.19.0
   intl_phone_number_input: ^0.7.4
@@ -65,36 +44,27 @@ dependencies:
   path_provider: ^2.0.11
   permission_handler: ^11.3.1
   pin_code_fields: ^8.0.1
-  qrscan: ^0.3.3
   rxdart: ^0.27.7
   salomon_bottom_bar: ^3.3.2
   screenshot: ^3.0.0
   share_plus: ^7.2.2
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0
+  stream_chat_flutter_core: ^7.2.2
   url_launcher: ^6.2.5
   video_player: ^2.9.1
-
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^3.0.0
   flutter_native_splash: ^2.4.1
   flutter_test:
     sdk: flutter
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21
   web:
     generate: true
     image_path: "assets/icon/icon.png"
@@ -107,47 +77,29 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "assets/icon/icon.png"
-
 flutter_native_splash:
   color: "#FFFFFF"
   android_gravity: fill
   android_12:
-    image: assets/icon/white.png
+    image: assets/icon/AppColors.white.png
   android: true
   ios: true
   web: true
-# The following section is specific to Flutter packages.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
   generate: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
     - assets/icon/
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
   # fonts:
-  fonts:
-    - family: Cairo
-      fonts:
-        - asset: assets/fonts/Cairo-Black.ttf
-        - asset: assets/fonts/Cairo-Bold.ttf
-        - asset: assets/fonts/Cairo-ExtraBold.ttf
-        - asset: assets/fonts/Cairo-ExtraLight.ttf
-        - asset: assets/fonts/Cairo-Light.ttf
-        - asset: assets/fonts/Cairo-Medium.ttf
-        - asset: assets/fonts/Cairo-Regular.ttf
-        - asset: assets/fonts/Cairo-SemiBold.ttf
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  #   - family: Cairo
+  #     fonts:
+  #       - asset: assets/fonts/Cairo-AppColors.black.ttf
+  #       - asset: assets/fonts/Cairo-Bold.ttf
+  #       - asset: assets/fonts/Cairo-ExtraBold.ttf
+  #       - asset: assets/fonts/Cairo-ExtraLight.ttf
+  #       - asset: assets/fonts/Cairo-Light.ttf
+  #       - asset: assets/fonts/Cairo-Medium.ttf
+  #       - asset: assets/fonts/Cairo-Regular.ttf
+  #       - asset: assets/fonts/Cairo-SemiBold.ttf

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../app/Layouts/app_layout.dart';
+import '../features/Layouts/app_layout.dart';
 
 class AppRouter {
   Route? generateRoutes(RouteSettings settings) {

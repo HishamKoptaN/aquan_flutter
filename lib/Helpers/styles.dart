@@ -1,9 +1,9 @@
-import 'package:aquan/Helpers/colors.dart';
+import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/Helpers/storage.dart';
 import 'package:flutter/material.dart';
 
 const cartHeading = TextStyle(
-  color: black,
+  color: Colors.black,
   fontSize: 22,
   fontWeight: FontWeight.bold,
 );

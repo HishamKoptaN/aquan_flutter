@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.aquan"
-    compileSdkVersion 34
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -41,18 +41,14 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.aquan"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 33
-        versionCode flutterVersionCode.toInteger()
-        // versionName flutterVersionName
-        versionName "1.1.0"
+
+        applicationId =  "com.example.aquan"
+        minSdk =  21/*flutter.minSdkVersion*/
+        targetSdk = 31
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
         multiDexEnabled true
     }
-
     signingConfigs {
         debug {
             storeFile file("../../debug.keystore")
@@ -61,7 +57,6 @@ android {
             keyPassword "android"
         }
     }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

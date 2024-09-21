@@ -1,24 +1,20 @@
 // ignore_for_file: unused_import
 import 'package:aquan/Helpers/Storage.dart';
-import 'package:aquan/Helpers/colors.dart';
+import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/Helpers/settings.dart';
 import 'package:aquan/Helpers/styles.dart';
-import 'package:aquan/app/Plans/view/plans_view.dart';
-import 'package:equatable/equatable.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Helpers/app_observer.dart';
-import 'app/Auth/login/view/login_view.dart';
-import 'app/Widgets/language_set.dart';
-import 'app/navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import 'app/verify_code/verify_vode_view.dart';
-import 'app/sign_up/bloc/auth_bloc.dart';
-import 'test_three.dart';
-import 'test_two.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'Helpers/snack_bar.dart';
+import 'features/Auth/login/view/login_view.dart';
+import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import 'features/verify_code/verify_vode_view.dart';
+import 'features/Auth/sign_up/bloc/sign_up_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +32,10 @@ void main() async {
     );
   }
   runApp(
+    // DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) => MyApp(), // Wrap your app
+    // ),
     const MyApp(),
   );
 }
@@ -49,8 +49,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String locale = Storage.getString('language') ?? 'ar';
-  Color color = primary;
-
+  Color color = AppColors.primary;
   @override
   void initState() {
     super.initState();
@@ -64,7 +63,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: true,
         child: BlocProvider(
-          create: (context) => AuthBloc()..add(CheckLogedIn()),
+          create: (context) => SignUpBloc()..add(CheckLogedIn()),
           child: MaterialApp(
             color: Colors.white,
             title: 'AQUAN',
@@ -74,29 +73,8 @@ class _MyAppState extends State<MyApp> {
             locale: Locale(locale),
             home: Scaffold(
               backgroundColor: Colors.white,
-              body: BlocConsumer<AuthBloc, AuthState>(
+              body: BlocConsumer<SignUpBloc, SignUpState>(
                 listener: (context, state) async {
-                  await Future.delayed(
-                    const Duration(seconds: 3),
-                  );
-                  if (state is AuthErrors) {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        SnackBar(
-                          backgroundColor: danger,
-                          duration: const Duration(seconds: 3),
-                          content: Text(
-                            state.message!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      );
-                  }
                   if (state is AuthLogedIn) {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -126,6 +104,7 @@ class _MyAppState extends State<MyApp> {
                       (route) => false,
                     );
                   }
+
                   if (state is AuthLogedOut) {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
@@ -134,9 +113,21 @@ class _MyAppState extends State<MyApp> {
                       (route) => false,
                     );
                   }
+                  if (state is AuthErrors) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        snackBar(
+                          status: false,
+                          message: state.message!,
+                        ),
+                      );
+                  }
                 },
                 builder: (context, state) {
-                  return Image.asset("assets/icon/aquan-logo-gif.gif");
+                  return
+                      // const LoginView();
+                      Image.asset("assets/icon/aquan-logo-gif.gif");
                 },
               ),
             ),
@@ -150,7 +141,6 @@ class _MyAppState extends State<MyApp> {
 class RestartWidget extends StatefulWidget {
   const RestartWidget({super.key, required this.child});
   final Widget child;
-
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
   }

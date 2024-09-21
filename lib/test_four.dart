@@ -1,305 +1,195 @@
-import 'dart:async';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+// import 'package:aquan/Helpers/colors.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:gap/gap.dart';
+// import 'package:motion_toast/resources/colors.dart';
+// import '../bloc/accounts_bloc.dart';
+// import '../model/accounts_model.dart';
 
-class MyAppFour extends StatefulWidget {
-  @override
-  _MyAppFourState createState() => _MyAppFourState();
-}
+// class MyAccountsView extends StatefulWidget {
+//   const MyAccountsView({super.key});
 
-class _MyAppFourState extends State<MyAppFour> {
-  Uint8List bytes = Uint8List(0);
-  late TextEditingController _inputController;
-  late TextEditingController _outputController;
+//   @override
+//   State<MyAccountsView> createState() => _MyAccountsViewState();
+// }
 
-  @override
-  initState() {
-    super.initState();
-    _inputController = TextEditingController();
-    _outputController = TextEditingController();
-  }
+// class _MyAccountsViewState extends State<MyAccountsView> {
+//   @override
+//   Widget build(BuildContext context) {
+//     final t = AppLocalizations.of(context)!;
+//     Size size = MediaQuery.of(context).size;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: Builder(
-          builder: (BuildContext context) {
-            return ListView(
-              children: <Widget>[
-                _qrCodeWidget(bytes, context),
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: _inputController,
-                        keyboardType: TextInputType.url,
-                        textInputAction: TextInputAction.go,
-                        onSubmitted: (value) => _generateBarCode(value),
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.text_fields),
-                          helperText:
-                              'Please input your code to generage qrcode image.',
-                          hintText: 'Please Input Your Code',
-                          hintStyle: TextStyle(fontSize: 15),
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 7, vertical: 15),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        controller: _outputController,
-                        maxLines: 2,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.wrap_text),
-                          helperText:
-                              'The barcode or qrcode you scan will be displayed in this area.',
-                          hintText:
-                              'The barcode or qrcode you scan will be displayed in this area.',
-                          hintStyle: TextStyle(fontSize: 15),
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 7, vertical: 15),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      _buttonGroup(),
-                      const SizedBox(height: 70),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _scanBytes(),
-          tooltip: 'Take a Photo',
-          child: const Icon(Icons.camera_alt),
-        ),
-      ),
-    );
-  }
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor:AppColors.white,
+//         elevation: 0,
+//         leading: IconButton(
+//           icon: const Icon(Icons.arrow_back, color:AppColors.black),
+//           onPressed: () {
+//             Navigator.of(context).pop();
+//           },
+//         ),
+//         title: Text(
+//           t.myAccounts,
+//           style: const TextStyle(color:AppColors.black),
+//         ),
+//         centerTitle: true,
+//       ),
+//       body: Container(
+//         padding: const EdgeInsets.all(10),
+//         child: BlocProvider<AccountsBloc>(
+//           create: (context) => AccountsBloc()
+//             ..add(
+//               GetAccounts(),
+//             ),
+//           child: BlocConsumer<AccountsBloc, AccountsState>(
+//             listener: (context, state) {
+//               if (state is AccountsUpdatedSuccess) {
+//                 ScaffoldMessenger.of(context)
+//                   ..hideCurrentSnackBar()
+//                   ..showSnackBar(
+//                     SnackBar(
+//                       backgroundColor: successColor,
+//                       duration: const Duration(seconds: 3),
+//                       content: Text(
+//                         t.accountsUpdated,
+//                         textAlign: TextAlign.center,
+//                         style: const TextStyle(
+//                           color: AppColors.white,
+//                           fontSize: 16,
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 context.read<AccountsBloc>().add(
+//                       GetAccounts(),
+//                     );
+//               }
+//               if (state is AccountsUpdatingFailure) {
+//                 ScaffoldMessenger.of(context)
+//                   ..hideCurrentSnackBar()
+//                   ..showSnackBar(
+//                     SnackBar(
+//                       backgroundColor: danger,
+//                       duration: const Duration(seconds: 3),
+//                       content: Text(
+//                         state.message,
+//                         textAlign: TextAlign.center,
+//                         style: const TextStyle(
+//                           color: AppColors.white,
+//                           fontSize: 16,
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//               }
+//             },
+//             builder: (context, state) {
+//               if (state is AccountsDone) {
+//                 List<Widget> childs = [];
+//                 List<TextEditingController> controllers = [];
+//                 final List<String> currencies = [];
+//                 state.accounts.every(
+//                   (account) {
+//                     TextEditingController controller =
+//                         TextEditingController(text: account.value.toString());
+//                     currencies.add(account.currency);
+//                     controllers.add(controller);
+//                     childs.add(
+//                       Text(
+//                         account.currency,
+//                         style: const TextStyle(
+//                           color: AppColors.black,
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                     );
+//                     childs.add(const Gap(10));
+//                     childs.add(
+//                       SizedBox(
+//                         width: size.width,
+//                         child: TextFormField(
+//                           controller: controller,
+//                           // validator: (value) {
+//                           //   if (value == null || value.isEmpty) {
+//                           //     return t.required;
+//                           //   }
 
-  Widget _qrCodeWidget(Uint8List bytes, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Card(
-        elevation: 6,
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-              decoration: const BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(4), topRight: Radius.circular(4)),
-              ),
-              child: const Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Icon(Icons.verified_user, size: 18, color: Colors.green),
-                  Text('  Generate Qrcode', style: TextStyle(fontSize: 15)),
-                  Spacer(),
-                  Icon(Icons.more_vert, size: 18, color: Colors.black54),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 40, right: 40, top: 30, bottom: 10),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 190,
-                    child: bytes.isEmpty
-                        ? const Center(
-                            child: Text('Empty code ... ',
-                                style: TextStyle(color: Colors.black38)),
-                          )
-                        : Image.memory(bytes),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 7, left: 25, right: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 5,
-                          child: GestureDetector(
-                            child: const Text(
-                              'remove',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.blue),
-                              textAlign: TextAlign.left,
-                            ),
-                            onTap: () =>
-                                setState(() => this.bytes = Uint8List(0)),
-                          ),
-                        ),
-                        const Text('|',
-                            style:
-                                TextStyle(fontSize: 15, color: Colors.black26)),
-                        Expanded(
-                          flex: 5,
-                          child: GestureDetector(
-                            onTap: () async {
-                              final success =
-                                  await ImageGallerySaver.saveImage(this.bytes);
-                              SnackBar snackBar;
-                              if (success) {
-                                // snackBar = new SnackBar(
-                                //     content:
-                                //         new Text('Successful Preservation!'));
-                                // Scaffold.of(context).showSnackBar(snackBar);
-                              } else {
-                                snackBar = const SnackBar(
-                                    content: Text('Save failed!'));
-                              }
-                            },
-                            child: const Text(
-                              'save',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.blue),
-                              textAlign: TextAlign.right,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const Divider(height: 2, color: Colors.black26),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-              child: const Row(
-                children: <Widget>[
-                  Icon(Icons.history, size: 16, color: Colors.black38),
-                  Text('  Generate History',
-                      style: TextStyle(fontSize: 14, color: Colors.black38)),
-                  Spacer(),
-                  Icon(Icons.chevron_right, size: 16, color: Colors.black38),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+//                           //   return null;
+//                           // },
+//                           decoration: InputDecoration(
+//                             border: OutlineInputBorder(
+//                               borderSide: const BorderSide(
+//                                 color: AppColors.black,
+//                               ),
+//                               borderRadius: BorderRadius.circular(10),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     );
+//                     childs.add(const Gap(20));
+//                     return true;
+//                   },
+//                 );
 
-  Widget _buttonGroup() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: SizedBox(
-            height: 120,
-            child: InkWell(
-              onTap: () => _generateBarCode(_inputController.text),
-              child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Image.asset('images/generate_qrcode.png'),
-                    ),
-                    const Divider(height: 20),
-                    const Expanded(flex: 1, child: Text("Generate")),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: SizedBox(
-            height: 120,
-            child: InkWell(
-              onTap: _scan,
-              child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Image.asset('images/scanner.png'),
-                    ),
-                    const Divider(height: 20),
-                    const Expanded(flex: 1, child: Text("Scan")),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: SizedBox(
-            height: 120,
-            child: InkWell(
-              onTap: _scanPhoto,
-              child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Image.asset('images/albums.png'),
-                    ),
-                    const Divider(height: 20),
-                    const Expanded(flex: 1, child: Text("Scan Photo")),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+//                 childs.add(
+//                   Container(
+//                     margin: const EdgeInsets.symmetric(vertical: 20),
+//                     width: size.width,
+//                     child: TextButton(
+//                       onPressed: () {
+//                         final List<dynamic> accountInfo = [];
+//                         for (var i = 0; i < controllers.length; i++) {
+//                           accountInfo.add(
+//                             {
+//                               "currency": currencies[i],
+//                               "value": controllers[i].text,
+//                             },
+//                           );
+//                         }
 
-  Future _scan() async {
-    await Permission.camera.request();
-    String? barcode = await scanner.scan();
-    if (barcode == null) {
-      print('nothing return.');
-    } else {
-      _outputController.text = barcode;
-    }
-  }
-
-  Future _scanPhoto() async {
-    await Permission.storage.request();
-    String barcode = await scanner.scanPhoto();
-    _outputController.text = barcode;
-  }
-
-  Future _scanPath(String path) async {
-    await Permission.storage.request();
-    String barcode = await scanner.scanPath(path);
-    _outputController.text = barcode;
-  }
-
-  Future _scanBytes() async {
-    // File file =
-    //     await ImagePicker().getImage(source: ImageSource.camera).then((picked) {
-    //   if (picked == null) return null;
-    //   return File(picked.path);
-    // });
-    // if (file == null) return;
-    // Uint8List bytes = file.readAsBytesSync();
-    // String barcode = await scanner.scanBytes(bytes);
-    // this._outputController.text = barcode;
-  }
-
-  Future _generateBarCode(String inputCode) async {
-    Uint8List result = await scanner.generateBarCode(inputCode);
-    setState(() => bytes = result);
-  }
-}
+//                         context.read<AccountsBloc>().add(
+//                               UpdateAccounts(
+//                                 accountInfo: accountInfo
+//                                     .map((e) => AccountInfo.fromJson(e))
+//                                     .toList(),
+//                               ),
+//                             );
+//                       },
+//                       style: TextButton.styleFrom(
+//                         textStyle: const TextStyle(fontSize: 20),
+//                         backgroundColor: AppColors.amber,
+//                         padding: const EdgeInsets.all(15),
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(15),
+//                         ),
+//                       ),
+//                       child: Text(
+//                         t.submit,
+//                         style: const TextStyle(
+//                           color: AppColors.black,
+//                           fontFamily: "Arial",
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//                 return ListView(
+//                   children: childs,
+//                 );
+//               }
+//               return Center(
+//                 child: CircularProgressIndicator(
+//                   color: AppColors.amber,
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
