@@ -1,6 +1,11 @@
-import '../../data/models/accounts_model.dart';
+import 'package:dartz/dartz.dart';
+
+import '../../../../core/errors/failure.dart';
+import '../entities/account.dart';
 
 abstract class AccountsRepository {
-  Future<GetUserAccounts> getAccounts();
-  Future<void> updateAccounts(GetUserAccounts getUserAccounts);
+  Future<Either<Failure, List<AccountEntity>>> getAccounts();
+  Future<Either<Failure, List<AccountEntity>>> updateAccounts({
+    required List<AccountEntity> accounts,
+  });
 }

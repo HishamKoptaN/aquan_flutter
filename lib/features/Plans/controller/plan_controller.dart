@@ -1,14 +1,14 @@
 import "dart:convert";
 import "dart:io";
 import "package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart";
-import "package:aquan/Helpers/routes.dart";
+import "package:aquan/core/database/api/routes.dart";
 import "package:http/http.dart" as http;
 
 class PlanController {
   bool isChecked = false;
   Future<Map<String, dynamic>> getPlans() async {
     http.Response response = await http.get(
-      Uri.parse(api['plans']!),
+      Uri.parse(routes['plans']!),
       headers: await SignUpController.getAuthHeaders(),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
@@ -41,7 +41,7 @@ class PlanController {
   Future<Map<String, dynamic>> getUserPlan(int id, File file) async {
     var request = http.MultipartRequest(
       "POST",
-      Uri.parse("${api['get_user_plan']!}/${id.toString()}"),
+      Uri.parse("${routes['get_user_plan']!}/${id.toString()}"),
     );
     request.headers.addAll(await SignUpController.getAuthHeaders());
     var response = await request.send();
@@ -54,7 +54,7 @@ class PlanController {
 
   Future<Map<String, dynamic>> getPaymentMethods() async {
     http.Response response = await http.get(
-      Uri.parse(api['plan_rates']!),
+      Uri.parse(routes['plan_rates']!),
       headers: await SignUpController.getAuthHeaders(),
     );
     Map<String, dynamic> data = await jsonDecode(response.body);

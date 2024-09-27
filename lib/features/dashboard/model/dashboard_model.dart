@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final getDashboardApiResModel = getDashboardApiResModelFromJson(jsonString);
-
 import 'dart:convert';
 
 GetDashboardApiResModel getDashboardApiResModelFromJson(String str) =>
@@ -11,16 +7,16 @@ String getDashboardApiResModelToJson(GetDashboardApiResModel data) =>
     json.encode(data.toJson());
 
 class GetDashboardApiResModel {
-  bool? status;
-  User? user;
-  List<Transfer>? transfers;
-  List<Currency>? exchangeRates;
-  List<SellingRate>? sellingRates;
-  List<BuyingRate>? buyingRates;
-  List<Currency>? currencies;
-  List<Rate>? rates;
-  Plan? plan;
-  double? commission;
+  final bool? status;
+  final User? user;
+  final List<Transfer>? transfers;
+  final List<Currency>? exchangeRates;
+  final List<SellingRate>? sellingRates;
+  final List<BuyingRate>? buyingRates;
+  final List<Currency>? currencies;
+  final List<Rate>? rates;
+  final Plan? plan;
+  final int? commission;
 
   GetDashboardApiResModel({
     this.status,
@@ -63,7 +59,7 @@ class GetDashboardApiResModel {
             ? []
             : List<Rate>.from(json["rates"]!.map((x) => Rate.fromJson(x))),
         plan: json["plan"] == null ? null : Plan.fromJson(json["plan"]),
-        commission: json["commission"]?.toDouble(),
+        commission: json["commission"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -93,9 +89,9 @@ class GetDashboardApiResModel {
 }
 
 class BuyingRate {
-  String? selling;
-  String? updatedAt;
-  int? to;
+  final String? selling;
+  final String? updatedAt;
+  final int? to;
 
   BuyingRate({
     this.selling,
@@ -117,13 +113,13 @@ class BuyingRate {
 }
 
 class Currency {
-  int? id;
-  String? status;
-  String? name;
-  String? nameCode;
-  String? comment;
-  String? createdAt;
-  String? updatedAt;
+  final int? id;
+  final String? status;
+  final String? name;
+  final String? nameCode;
+  final String? comment;
+  final String? createdAt;
+  final String? updatedAt;
 
   Currency({
     this.id,
@@ -157,21 +153,21 @@ class Currency {
 }
 
 class Plan {
-  int? id;
-  String? name;
-  int? amount;
-  int? userAmountPerReferal;
-  int? referedAmount;
-  int? amountAfterCount;
-  int? count;
-  double? transferCommission;
-  int? discount;
-  String? discountType;
-  int? dailyTransferCount;
-  int? monthlyTransferCount;
-  int? maxTransferCount;
-  String? createdAt;
-  String? updatedAt;
+  final int? id;
+  final String? name;
+  final int? amount;
+  final int? userAmountPerReferal;
+  final int? referedAmount;
+  final int? amountAfterCount;
+  final int? count;
+  final int? transferCommission;
+  final int? discount;
+  final String? discountType;
+  final int? dailyTransferCount;
+  final int? monthlyTransferCount;
+  final int? maxTransferCount;
+  final String? createdAt;
+  final String? updatedAt;
 
   Plan({
     this.id,
@@ -199,7 +195,7 @@ class Plan {
         referedAmount: json["refered_amount"],
         amountAfterCount: json["amount_after_count"],
         count: json["count"],
-        transferCommission: json["transfer_commission"]?.toDouble(),
+        transferCommission: json["transfer_commission"],
         discount: json["discount"],
         discountType: json["discount_type"],
         dailyTransferCount: json["daily_transfer_count"],
@@ -229,15 +225,15 @@ class Plan {
 }
 
 class Rate {
-  int? id;
-  bool? status;
-  int? planId;
-  int? from;
-  int? to;
-  String? selling;
-  String? buying;
-  String? createdAt;
-  String? updatedAt;
+  final int? id;
+  final bool? status;
+  final int? planId;
+  final int? from;
+  final int? to;
+  final String? selling;
+  final String? buying;
+  final String? createdAt;
+  final String? updatedAt;
 
   Rate({
     this.id,
@@ -277,9 +273,9 @@ class Rate {
 }
 
 class SellingRate {
-  String? selling;
-  String? updatedAt;
-  int? from;
+  final String? selling;
+  final String? updatedAt;
+  final int? from;
 
   SellingRate({
     this.selling,
@@ -301,22 +297,22 @@ class SellingRate {
 }
 
 class Transfer {
-  int? id;
-  String? status;
-  int? amount;
-  double? netAmount;
-  int? rate;
-  String? message;
-  String? image;
-  String? address;
-  int? employeeId;
-  int? userId;
-  int? senderCurrencyId;
-  int? receiverCurrencyId;
-  String? receiverAccount;
-  String? createdAt;
-  String? updatedAt;
-  ReceiverCurrency? receiverCurrency;
+  final int? id;
+  final String? status;
+  final int? amount;
+  final int? netAmount;
+  final int? rate;
+  final dynamic message;
+  final String? image;
+  final dynamic address;
+  final int? employeeId;
+  final int? userId;
+  final int? senderCurrencyId;
+  final int? receiverCurrencyId;
+  final String? receiverAccount;
+  final String? createdAt;
+  final String? updatedAt;
+  final ReceiverCurrency? receiverCurrency;
 
   Transfer({
     this.id,
@@ -341,7 +337,7 @@ class Transfer {
         id: json["id"],
         status: json["status"],
         amount: json["amount"],
-        netAmount: json["net_amount"]?.toDouble(),
+        netAmount: json["net_amount"],
         rate: json["rate"],
         message: json["message"],
         image: json["image"],
@@ -379,7 +375,7 @@ class Transfer {
 }
 
 class ReceiverCurrency {
-  String? name;
+  final String? name;
 
   ReceiverCurrency({
     this.name,
@@ -396,11 +392,11 @@ class ReceiverCurrency {
 }
 
 class User {
-  int? id;
-  String? name;
-  String? image;
-  int? balance;
-  int? planId;
+  final int? id;
+  final String? name;
+  final String? image;
+  final double? balance;
+  final int? planId;
 
   User({
     this.id,
@@ -414,7 +410,7 @@ class User {
         id: json["id"],
         name: json["name"],
         image: json["image"],
-        balance: json["balance"],
+        balance: json["balance"]?.toDouble(),
         planId: json["plan_id"],
       );
 

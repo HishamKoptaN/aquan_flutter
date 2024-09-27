@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../../../Helpers/snack_bar.dart';
+import '../../../../core/Helpers/snack_bar.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../bloc/login_bloc.dart';
 

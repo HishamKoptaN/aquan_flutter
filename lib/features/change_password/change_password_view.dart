@@ -1,13 +1,12 @@
 import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
-import 'package:aquan/features/Auth/User/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:motion_toast/resources/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/core/Helpers/styles.dart';
 
 import '../profile/bloc/profile_bloc.dart';
 
@@ -185,7 +184,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      child: state is UserLoading
+                      child: state is ProfileDone
                           ? const CircularProgressIndicator(
                               color: Colors.white,
                             )

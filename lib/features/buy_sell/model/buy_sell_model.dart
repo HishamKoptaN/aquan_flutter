@@ -7,20 +7,29 @@ String getBuySellApiResToJson(GetBuySellApiRes data) =>
     json.encode(data.toJson());
 
 class GetBuySellApiRes {
-  bool status;
-  bool buySellStatus;
-  String? buySellMessage;
-
-  int userPlanId;
-  List<CurrencyElement> currencies;
-  List<Rate> rates;
-  List<Account> accounts;
+  final bool status;
+  final bool buySellStatus;
+  final String buySellMessage;
+  final int totalMonthlyTransfers;
+  final int totalDailyTransfers;
+  final int userPlanId;
+  final int maxTransferCount;
+  final int monthlyTransferCount;
+  final int dailyTransferCount;
+  final List<CurrencyElement> currencies;
+  final List<Rate> rates;
+  final List<Account> accounts;
 
   GetBuySellApiRes({
     required this.status,
     required this.buySellStatus,
-    this.buySellMessage,
+    required this.buySellMessage,
+    required this.totalMonthlyTransfers,
+    required this.totalDailyTransfers,
     required this.userPlanId,
+    required this.maxTransferCount,
+    required this.monthlyTransferCount,
+    required this.dailyTransferCount,
     required this.currencies,
     required this.rates,
     required this.accounts,
@@ -31,7 +40,12 @@ class GetBuySellApiRes {
         status: json["status"],
         buySellStatus: json["buy_sell_status"],
         buySellMessage: json["buy_sell_message"],
+        totalMonthlyTransfers: json["total_monthly_transfers"],
+        totalDailyTransfers: json["total_daily_transfers"],
         userPlanId: json["user_plan_id"],
+        maxTransferCount: json["max_transfer_count"],
+        monthlyTransferCount: json["monthly_transfer_count"],
+        dailyTransferCount: json["daily_transfer_count"],
         currencies: List<CurrencyElement>.from(
             json["currencies"].map((x) => CurrencyElement.fromJson(x))),
         rates: List<Rate>.from(json["rates"].map((x) => Rate.fromJson(x))),
@@ -43,7 +57,12 @@ class GetBuySellApiRes {
         "status": status,
         "buy_sell_status": buySellStatus,
         "buy_sell_message": buySellMessage,
+        "total_monthly_transfers": totalMonthlyTransfers,
+        "total_daily_transfers": totalDailyTransfers,
         "user_plan_id": userPlanId,
+        "max_transfer_count": maxTransferCount,
+        "monthly_transfer_count": monthlyTransferCount,
+        "daily_transfer_count": dailyTransferCount,
         "currencies": List<dynamic>.from(currencies.map((x) => x.toJson())),
         "rates": List<dynamic>.from(rates.map((x) => x.toJson())),
         "accounts": List<dynamic>.from(accounts.map((x) => x.toJson())),
@@ -51,14 +70,14 @@ class GetBuySellApiRes {
 }
 
 class Account {
-  int id;
-  int userId;
-  int bankId;
-  String accountNumber;
-  String comment;
-  String createdAt;
-  String updatedAt;
-  AccountCurrency currency;
+  final int id;
+  final int userId;
+  final int bankId;
+  final String accountNumber;
+  final String comment;
+  final String createdAt;
+  final String updatedAt;
+  final AccountCurrency currency;
 
   Account({
     required this.id,
@@ -95,8 +114,8 @@ class Account {
 }
 
 class AccountCurrency {
-  int id;
-  String name;
+  final int id;
+  final String name;
 
   AccountCurrency({
     required this.id,
@@ -116,10 +135,10 @@ class AccountCurrency {
 }
 
 class CurrencyElement {
-  int id;
-  String name;
-  String nameCode;
-  String comment;
+  final int id;
+  final String name;
+  final String nameCode;
+  final String comment;
 
   CurrencyElement({
     required this.id,
@@ -145,15 +164,15 @@ class CurrencyElement {
 }
 
 class Rate {
-  int id;
-  bool status;
-  int planId;
-  int from;
-  int to;
-  String selling;
-  String buying;
-  String createdAt;
-  String updatedAt;
+  final int id;
+  final bool status;
+  final int planId;
+  final int from;
+  final int to;
+  final String selling;
+  final String buying;
+  final String createdAt;
+  final String updatedAt;
 
   Rate({
     required this.id,

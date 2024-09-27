@@ -90,7 +90,7 @@ class _PlansViewState extends State<PlansView> {
                           '${t.transfer_commission} ${plan.transferCommission.toString()}%',
                           '${t.dailyTransfers} ${plan.dailyTransferCount.toString()}\$',
                           '${t.monthlyTransfers} ${plan.monthlyTransferCount.toString()}\$',
-                          '${t.maxTransfer} ${plan.maxTransferCount.toString()}\$',
+                          '${t.max_transfer} ${plan.maxTransferCount.toString()}\$',
                         ];
                         bool isSelected = (plan.id == _selectedPlanId);
                         return GestureDetector(

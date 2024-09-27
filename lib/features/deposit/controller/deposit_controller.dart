@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
-import 'package:aquan/Helpers/routes.dart';
+import 'package:aquan/core/database/api/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DepositController {
   Future<Map<String, dynamic>> getDeposits() async {
     http.Response response = await http.get(
-      Uri.parse(api['deposit']!),
+      Uri.parse(routes['deposit']!),
       headers: await SignUpController.getAuthHeaders(),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
@@ -44,7 +44,7 @@ class DepositController {
 
   Future<Map<String, dynamic>> getPaymentMethods() async {
     http.Response response = await http.get(
-      Uri.parse(api['deposit_rates']!),
+      Uri.parse(routes['deposit_rates']!),
       headers: await SignUpController.getAuthHeaders(),
     );
     Map<String, dynamic> data = jsonDecode(response.body);

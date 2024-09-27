@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/core/Helpers/styles.dart';
 import 'package:aquan/features/tasks/bloc/task_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:motion_toast/resources/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../Helpers/snack_bar.dart';
+import '../../../core/Helpers/snack_bar.dart';
 import '../model/get_tasks_model.dart';
 
 class TaskScreen extends StatefulWidget {

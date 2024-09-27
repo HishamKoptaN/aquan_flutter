@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../Helpers/Storage.dart';
+import '../../../../core/Helpers/storage.dart';
 import '../controller/login_controller.dart';
 part 'login_event.dart';
 part 'login_state.dart';

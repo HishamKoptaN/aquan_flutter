@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final receivedAccountNumberApiRes = receivedAccountNumberApiResFromJson(jsonString);
-
 import 'dart:convert';
 
 ReceivedAccountNumberApiRes receivedAccountNumberApiResFromJson(String str) =>

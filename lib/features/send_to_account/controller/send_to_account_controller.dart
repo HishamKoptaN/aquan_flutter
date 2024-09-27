@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../Helpers/routes.dart';
+import '../../../core/database/api/routes.dart';
 import '../../Auth/sign_up/controller/sign_up_controller.dart';
 
 class SendToAccountController {
@@ -10,7 +10,7 @@ class SendToAccountController {
       String accountNumber) async {
     http.Response response = await http.get(
       Uri.parse(
-        '${api['transfer']}/$accountNumber',
+        '${routes['transfer']}/$accountNumber',
       ),
       headers: await SignUpController.getAuthHeaders(),
     );

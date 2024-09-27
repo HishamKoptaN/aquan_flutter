@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
 import 'package:aquan/features/support/bloc/support_bloc.dart';
 import 'package:bubble/bubble.dart';
@@ -10,6 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import '../../Auth/sign_up/controller/sign_up_controller.dart';
+import '../model/support_model.dart';
 
 class SupportView extends StatefulWidget {
   const SupportView({super.key});
@@ -41,6 +45,34 @@ class _SupportViewState extends State<SupportView> {
     margin: const BubbleEdges.only(top: 8, left: 50),
     alignment: Alignment.topRight,
   );
+  Future<List<Message>> fetchData() async {
+    final response = await http.get(
+      Uri.parse(
+        'https://aquan.aquan.website/api/support',
+      ),
+      headers: await SignUpController.getAuthHeaders(),
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      GetSupportApiResModel getSupportApiResModel =
+          GetSupportApiResModel.fromJson(data);
+      return getSupportApiResModel.messages ?? [];
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Stream<List<Message>> fetchDataAsStream() async* {
+    while (true) {
+      try {
+        final data = await fetchData();
+        yield data;
+      } catch (e) {
+        yield [];
+      }
+      await Future.delayed(const Duration(seconds: 3));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,42 +98,49 @@ class _SupportViewState extends State<SupportView> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: ListView.builder(
-                          controller: _sc,
-                          itemCount: state.messages.length,
-                          itemBuilder: (context, index) {
-                            final message = state.messages[index];
-                            bool isCurrentUser =
-                                currentUserId == message.userId;
-                            if (message.isFile == "yes") {
-                              return Bubble(
-                                style: isCurrentUser ? styleMe : styleSomebody,
-                                child: SizedBox(
-                                  width: 150.0,
-                                  height: 150.0,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl: message.message.toString(),
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return Bubble(
-                                style: isCurrentUser ? styleMe : styleSomebody,
-                                child: Text(
-                                  message.message.toString(),
-                                  style: TextStyle(
-                                    color: isCurrentUser
-                                        ? Colors.black
-                                        : Colors.white,
-                                  ),
-                                ),
-                              );
-                            }
+                        child: StreamBuilder<List<Message>>(
+                          stream: fetchDataAsStream(),
+                          builder: (context, snapshot) {
+                            return ListView.builder(
+                              controller: _sc,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                final message = snapshot.data![index];
+                                bool isCurrentUser =
+                                    currentUserId == message.userId;
+                                if (message.isFile == "yes") {
+                                  return Bubble(
+                                    style:
+                                        isCurrentUser ? styleMe : styleSomebody,
+                                    child: SizedBox(
+                                      width: 150.0,
+                                      height: 150.0,
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: message.message.toString(),
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Bubble(
+                                    style:
+                                        isCurrentUser ? styleMe : styleSomebody,
+                                    child: Text(
+                                      message.message.toString(),
+                                      style: TextStyle(
+                                        color: isCurrentUser
+                                            ? Colors.black
+                                            : Colors.white,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                            );
                           },
                         ),
                       ),

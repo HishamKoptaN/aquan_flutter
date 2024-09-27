@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:aquan/features/support/controller/support_controller.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,9 @@ part 'support_state.dart';
 class SupportBloc extends Bloc<SupportEvent, SupportState> {
   final SupportController _controller = SupportController();
   final DashboardController _dashboardController = DashboardController();
+  final _messagesController = StreamController<List<Message>>();
+
+  Stream<List<Message>> get messagesStream => _messagesController.stream;
 
   SupportBloc() : super(SupportInitial()) {
     on<GetFAQs>(

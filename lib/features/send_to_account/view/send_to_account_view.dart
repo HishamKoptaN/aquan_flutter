@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import '../../../core/utils/app_colors.dart';
-import '../../../Helpers/styles.dart';
+import '../../../core/Helpers/styles.dart';
 import '../../Layouts/app_layout.dart';
 import '../bloc/send_to_account_bloc.dart';
 import '../controller/send_to_account_controller.dart';

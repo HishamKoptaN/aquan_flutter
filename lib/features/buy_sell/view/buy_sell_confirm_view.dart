@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/core/Helpers/styles.dart';
 import 'package:aquan/features/transactions/view/transactions_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../Helpers/snack_bar.dart';
+import '../../../core/Helpers/snack_bar.dart';
 import '../../Layouts/app_layout.dart';
 import '../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../bloc/buy_sell_bloc.dart';

@@ -13,9 +13,11 @@
 	"oo": "أو",	
 	"upload":"رفع",
 	"commission":"العمولة",
-	"transfer_commission":"عمولة التحويل"
-,	"error":"خطأ", 	
-"choose_subscription": "اختر خطة الاشتراك",
+	"transfer_commission":"عمولة التحويل",
+	"error":"خطأ", 	
+    "choose_subscription": "اختر خطة الاشتراك",
+	"daily_transfer_limit": "وصلت للحد الاقصي للتحويل اليومي",	
+	"monthly_transfer_limit": "وصلت للحد الاقصي للتحويل الشهري",
 	"code_sent": "تم أرسال الكود",
 	"level":"المستوي",       
 	"subscription_now": "اشترك الآن للحصول على أفضل الأسعار وأسرع خدمة لتحويل الأموال بكل سهولة وأمان!",
@@ -169,8 +171,8 @@
 	"operation": "العملية",
 	"signInWithGoogle": "التسجيل باستخدام قوقل",
 	"required": "مطلوب",
-	"comment": "التعليق",	"select_account":"إختر حساب",
-
+	"comment": "التعليق",	
+	"select_account":"إختر حساب",
 	"pleaseCheckInfo": "المرجو التأكد من أن جميع المعلومات التي تم ارفاقها صحيحة من ثم:",
 	"transferAmount": "تحويل مبلغ:",
 	"toThisAccount": "الى الحساب التالي:",
@@ -195,7 +197,7 @@
 	"link": "رابط المهمة",
 	"copyrights": "جميع الحقوق محفوظة ©",
 	"next": "التالي",
-	"maxTransfer": "الحد الأعلى للتحويل",
+	"max_transfer": "الحد الأعلى للتحويل",
 	"details": "التفاصيل",
 	"cantMakeTransfer": "غير متاح حاليا"
 }

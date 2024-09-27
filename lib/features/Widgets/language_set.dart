@@ -1,7 +1,7 @@
-import 'package:aquan/Helpers/Storage.dart';
-import 'package:aquan/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../core/Helpers/storage.dart';
 
 class LanguageSetWidget extends StatelessWidget {
   LanguageSetWidget({

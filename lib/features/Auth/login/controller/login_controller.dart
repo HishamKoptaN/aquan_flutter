@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:aquan/Helpers/routes.dart';
-import 'package:aquan/Helpers/storage.dart';
+import 'package:aquan/core/database/api/routes.dart';
+import 'package:aquan/core/Helpers/storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../sign_up/controller/sign_up_controller.dart';
@@ -8,7 +8,7 @@ import '../../sign_up/controller/sign_up_controller.dart';
 class LoginController {
   Future<Map<String, dynamic>> login(String? email, String? password) async {
     http.Response response = await http.post(
-      Uri.parse(api['login']!),
+      Uri.parse(routes['login']!),
       body: {
         'email': email.toString(),
         'password': password.toString(),
@@ -28,7 +28,7 @@ class LoginController {
     String? code,
   ) async {
     http.Response response = await http.post(
-      Uri.parse(api['register']!),
+      Uri.parse(routes['register']!),
       body: {
         'email': email.toString(),
         'password': password.toString(),
@@ -51,7 +51,7 @@ class LoginController {
 
   Future<Map<String, dynamic>> isLogedIn(String? token) async {
     http.Response response = await http.post(
-      Uri.parse(api['check']!),
+      Uri.parse(routes['check']!),
       headers: await SignUpController.getAuthHeaders(),
     );
     if (response.statusCode == 200) {
@@ -74,7 +74,7 @@ class LoginController {
 
   Future<Map<String, dynamic>> resetPassword(String email) async {
     http.Response response = await http.post(
-      Uri.parse(api["password"]["reset"]!),
+      Uri.parse(routes["password"]["reset"]!),
       body: {"email": email},
     );
 
@@ -89,7 +89,7 @@ class LoginController {
 
   Future<Map<String, dynamic>> verifyEmail(String code) async {
     http.Response response = await http.post(
-      Uri.parse(api["confirm-email"]!),
+      Uri.parse(routes["confirm-email"]!),
       headers: await SignUpController.getAuthHeaders(),
       body: jsonEncode({"code": code}),
     );
@@ -106,7 +106,7 @@ class LoginController {
   Future<Map<String, dynamic>> signInWithGoogle(
       String email, String name) async {
     http.Response response = await http.post(
-      Uri.parse(api["auth-google"]!),
+      Uri.parse(routes["auth-google"]!),
       headers: await SignUpController.getAuthHeaders(),
       body: jsonEncode(
         {

@@ -1,5 +1,5 @@
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/Helpers/storage.dart';
+import 'package:aquan/core/Helpers/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';

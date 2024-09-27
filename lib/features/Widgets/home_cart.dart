@@ -1,5 +1,5 @@
-import 'package:aquan/Helpers/routes.dart';
-import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/core/database/api/routes.dart';
+import 'package:aquan/core/Helpers/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 

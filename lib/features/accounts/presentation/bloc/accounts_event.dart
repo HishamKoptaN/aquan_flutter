@@ -1,10 +1,10 @@
 part of 'accounts_bloc.dart';
 
-abstract class WalletEvent {}
+abstract class AccountsEvent {}
 
-class GetAccounts extends WalletEvent {}
+class GetAccountsEvent extends AccountsEvent {}
 
-class UpdateAccounts extends WalletEvent {
-  final GetUserAccounts getUserAccounts;
-  UpdateAccounts({required this.getUserAccounts});
+class UpdateAccountsEvent extends AccountsEvent {
+  final List<AccountEntity> accounts;
+  UpdateAccountsEvent({required this.accounts});
 }

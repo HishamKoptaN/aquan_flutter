@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:aquan/features/Plans/view/plans_view.dart';
 import 'package:aquan/features/deposit/bloc/deposit_bloc.dart';
-import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
 import 'package:aquan/features/withdraws_deposits/view/withdraws_deposits_view.dart';
 import 'package:file_picker/file_picker.dart';
@@ -13,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../../../Helpers/snack_bar.dart';
+import '../../../core/Helpers/snack_bar.dart';
 import '../../dashboard/model/dashboard_model.dart';
 import '../controller/deposit_controller.dart';
 
@@ -165,10 +164,10 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                           child: TextFormField(
                             controller: amountController,
                             keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              labelText: 'Amount',
-                              border: OutlineInputBorder(),
-                              suffixIcon: Icon(Icons.money),
+                            decoration: InputDecoration(
+                              labelText: t.amount,
+                              border: const OutlineInputBorder(),
+                              suffixIcon: const Icon(Icons.money),
                             ),
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.allow(

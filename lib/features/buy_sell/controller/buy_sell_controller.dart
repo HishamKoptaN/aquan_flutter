@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
-import 'package:aquan/Helpers/routes.dart';
+import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 
 class BuySellController {
@@ -81,7 +81,7 @@ class BuySellController {
   Future<Map<String, dynamic>> getEmolyeeId() async {
     var request = http.Request(
       "GET",
-      Uri.parse(api['get_employee_id']!),
+      Uri.parse(routes['get_employee_id']!),
     );
     request.headers.addAll(await SignUpController.getAuthHeaders());
     var response = await request.send();
@@ -96,7 +96,7 @@ class BuySellController {
 
   Future<Map<String, dynamic>> getUserByAccount(String accountId) async {
     http.Response response = await http.get(
-      Uri.parse(api['account']! + accountId),
+      Uri.parse(routes['account']! + accountId),
       headers: await SignUpController.getAuthHeaders(),
     );
     Map<String, dynamic> data = await jsonDecode(response.body);

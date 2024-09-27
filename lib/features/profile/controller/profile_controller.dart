@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
-import 'package:aquan/Helpers/routes.dart';
+import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +24,7 @@ class ProfileController {
 
   Future<Map<String, dynamic>> getProfileUser() async {
     http.Response response = await http.get(
-      Uri.parse(api['user']!),
+      Uri.parse(routes['user']!),
       headers: await SignUpController.getAuthHeaders(),
     );
     Map<String, dynamic> data = jsonDecode(response.body);
@@ -37,7 +37,7 @@ class ProfileController {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.MultipartRequest(
       "POST",
-      Uri.parse(api['profile']!),
+      Uri.parse(routes['profile']!),
     );
     request.headers.addAll(headers);
     request.files.add(
@@ -60,7 +60,7 @@ class ProfileController {
     String phone,
   ) async {
     http.Response response = await http.patch(
-      Uri.parse(api['profile']!),
+      Uri.parse(routes['profile']!),
       headers: await SignUpController.getAuthHeaders(),
       body: jsonEncode(
         {
@@ -80,7 +80,7 @@ class ProfileController {
     String newPasswordConfirmation,
   ) async {
     http.Response response = await http.post(
-      Uri.parse(api['change-password']!),
+      Uri.parse(routes['change-password']!),
       body: jsonEncode(
         {
           'currentPassword': currentPassword,

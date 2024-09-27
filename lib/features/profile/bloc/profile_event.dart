@@ -9,8 +9,6 @@ sealed class ProfileEvent extends Equatable {
 
 class GetProfileUser extends ProfileEvent {}
 
-class GetAccountsEvent extends ProfileEvent {}
-
 class UpdateProfile extends ProfileEvent {
   final String name;
   final String address;

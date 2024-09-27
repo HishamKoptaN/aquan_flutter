@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
-import 'package:aquan/Helpers/routes.dart';
+import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 
 class SupportController {
   Future<Map<String, dynamic>> getQuestions() async {
     http.Response response = await http.post(
-      Uri.parse(api['settings']!),
+      Uri.parse(routes['settings']!),
       headers: await SignUpController.getAuthHeaders(),
       body: jsonEncode(
         {
@@ -25,7 +25,11 @@ class SupportController {
   Future<Map<String, dynamic>> getChatMessages() async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.Request(
-        'GET', Uri.parse('https://aquan.aquan.website/api/support'));
+      'GET',
+      Uri.parse(
+        'https://aquan.aquan.website/api/support',
+      ),
+    );
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     var responseData = await response.stream.toBytes();
@@ -44,7 +48,7 @@ class SupportController {
     if (message is File) {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(api['support']!),
+        Uri.parse(routes['support']!),
       );
       request.headers.addAll(await SignUpController.getAuthHeaders());
       var pic = await http.MultipartFile.fromPath("message", message.path);
@@ -61,7 +65,7 @@ class SupportController {
     }
     if (message is String) {
       http.Response response = await http.post(
-        Uri.parse(api['support']!),
+        Uri.parse(routes['support']!),
         headers: await SignUpController.getAuthHeaders(),
         body: jsonEncode(
           {
@@ -82,7 +86,7 @@ class SupportController {
     if (message is File) {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(api['support']!),
+        Uri.parse(routes['support']!),
       );
       request.headers.addAll(await SignUpController.getAuthHeaders());
       var pic = await http.MultipartFile.fromPath("message", message.path);

@@ -17,13 +17,11 @@ class NavigatorBottomBarCnr {
     const SendToAccountView(),
     // const MyAppOne(),
     const BuySellview(),
-    const QrCodeView(),
-    // MyAppOne(),
-
+    // const QrCodeView(),
+    const MyStreamPage(),
     const SettingsScreen(),
   ];
   int currentIndex = 0;
-
   void setCurrentIndex(int index) async {
     currentIndex = index;
   }

@@ -19,7 +19,8 @@
 	"withdrawal_sended":"Withdrawal request sent successfully",
 	"balance": "Balance","upload":"Upload",		
 	"monthly_limit_withdrawal" : "You have reached your monthly withdrawal limit.",
-
+    "daily_transfer_limit":"You have reached your daily transfer limit.",	
+	"monthly_transfer_limit":"You have reached the maximum monthly transfer limit.",
 	"payment_account_information": "Payment account information",
 	"qr_code": "َQR Code",
 	 "close":"Close",
@@ -195,7 +196,7 @@
 	"link": "Task Link",
 	"copyrights": "All rights reserved",
 	"next": "Next",
-	"maxTransfer": "Max Transfer",
+	"max_transfer": "Max Transfer",
 	"details": "Details",
 	"cantMakeTransfer": "Not currently available"
 }

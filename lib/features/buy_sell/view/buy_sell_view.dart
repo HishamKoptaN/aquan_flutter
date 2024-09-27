@@ -1,5 +1,4 @@
 import 'package:aquan/features/buy_sell/bloc/buy_sell_bloc.dart';
-import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../../../Helpers/global_widgets.dart';
+import '../../../core/Helpers/global_widgets.dart';
+import '../../../core/Helpers/snack_bar.dart';
 import '../../Widgets/convert_currency_price.dart';
 import '../bloc/buy_sell_state.dart';
 import 'buy_sell_confirm_view.dart';
@@ -439,7 +439,45 @@ class _BuySellviewState extends State<BuySellview> {
                                     InkWell(
                                       onTap: () async {
                                         if (formkey.currentState!.validate()) {
-                                          if (receiverAccountController
+                                          if (state.getBuySellApiRes
+                                                  .totalMonthlyTransfers >=
+                                              state.getBuySellApiRes
+                                                  .monthlyTransferCount) {
+                                            ScaffoldMessenger.of(context)
+                                              ..hideCurrentSnackBar()
+                                              ..showSnackBar(
+                                                snackBar(
+                                                  status: false,
+                                                  message:
+                                                      t.monthly_transfer_limit,
+                                                ),
+                                              );
+                                          } else if (state.getBuySellApiRes
+                                                  .totalDailyTransfers >=
+                                              state.getBuySellApiRes
+                                                  .dailyTransferCount) {
+                                            ScaffoldMessenger.of(context)
+                                              ..hideCurrentSnackBar()
+                                              ..showSnackBar(
+                                                snackBar(
+                                                  status: false,
+                                                  message:
+                                                      t.daily_transfer_limit,
+                                                ),
+                                              );
+                                          } else if (netAmount >=
+                                              state.getBuySellApiRes
+                                                  .maxTransferCount) {
+                                            ScaffoldMessenger.of(context)
+                                              ..hideCurrentSnackBar()
+                                              ..showSnackBar(
+                                                snackBar(
+                                                  status: false,
+                                                  message:
+                                                      "${t.max_transfer} : ${state.getBuySellApiRes.maxTransferCount.toString()}",
+                                                ),
+                                              );
+                                          } else if (receiverAccountController
                                               .text.isNotEmpty) {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
@@ -515,8 +553,8 @@ class _BuySellviewState extends State<BuySellview> {
                                         ),
                                         child: Center(
                                           child: CustomText(
-                                            text:
-                                                "${state.getBuySellApiRes.buySellMessage}",
+                                            text: state.getBuySellApiRes
+                                                .buySellMessage,
                                             fontSize: 15.sp,
                                             color: Colors.black,
                                             maxLines: null,

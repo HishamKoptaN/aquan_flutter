@@ -1,13 +1,13 @@
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/core/Helpers/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../../../Helpers/global_widgets.dart';
-import '../../../Helpers/snack_bar.dart';
+import '../../../core/Helpers/global_widgets.dart';
+import '../../../core/Helpers/snack_bar.dart';
 import '../../Layouts/app_layout.dart';
 import '../../dashboard/model/dashboard_model.dart';
 import '../../withdraws_deposits/view/withdraws_deposits_view.dart';

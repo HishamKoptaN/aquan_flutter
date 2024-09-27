@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
-import 'package:aquan/Helpers/storage.dart';
+import 'package:aquan/core/Helpers/storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth/local_auth.dart';

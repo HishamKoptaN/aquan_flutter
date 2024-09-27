@@ -1,49 +1,52 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../controller/accounts_controller.dart';
-import '../../data/models/accounts_model.dart';
+import 'package:bloc/bloc.dart';
+import '../../domain/entities/account.dart';
+import '../../domain/usecases/get_accounts_usecase.dart';
+import '../../domain/usecases/update_accounts_usecase.dart';
 part 'accounts_event.dart';
 part 'accounts_state.dart';
 
-class AccountsBloc extends Bloc<WalletEvent, AccountsState> {
-  final AccountsController _accountsController = AccountsController();
-
-  AccountsBloc() : super(AccountsInitial()) {
-    on<GetAccounts>(
+class AccountsBloc extends Bloc<AccountsEvent, AccountsState> {
+  final GetAccountsUseCase getAccountsUseCase;
+  final UpdateAccountsUseCase updateAccountsUseCase;
+  AccountsBloc({
+    required this.getAccountsUseCase,
+    required this.updateAccountsUseCase,
+  }) : super(
+          AccountsInitial(),
+        ) {
+    on<GetAccountsEvent>(
       (event, emit) async {
         emit(AccountsLoading());
-        Map<String, dynamic> data = await _accountsController.getAccounts();
-        if (data['status']) {
-          GetUserAccounts getUserAccounts = GetUserAccounts.fromJson(data);
-          emit(
-            AccountsDone(getUserAccounts: getUserAccounts),
+        try {
+          final eitherResult = await getAccountsUseCase();
+          eitherResult.fold(
+            (failure) {
+              emit(AccountsError(message: failure.errMessage));
+            },
+            (accounts) {
+              emit(AccountsLoaded(accounts: accounts));
+            },
           );
-        } else if (!data['status']) {
-          emit(
-            AccountsError(
-              message: data['error'],
-            ),
-          );
+        } catch (error) {
+          emit(AccountsError(message: error.toString()));
         }
       },
     );
-
-    on<UpdateAccounts>(
+    on<UpdateAccountsEvent>(
       (event, emit) async {
         emit(AccountsLoading());
-        Map<String, dynamic> data = await _accountsController.updateAccounts(
-          getUserAccounts: event.getUserAccounts,
-        );
-        if (data['status']) {
-          emit(
-            AccountsUpdatedSuccess(),
+        try {
+          final eitherResult = await getAccountsUseCase();
+          eitherResult.fold(
+            (failure) {
+              emit(AccountsError(message: failure.errMessage));
+            },
+            (accounts) {
+              emit(AccountsLoaded(accounts: accounts));
+            },
           );
-        } else if (!data['status']) {
-          emit(
-            AccountsError(
-              message: data['error'],
-            ),
-          );
+        } catch (error) {
+          emit(AccountsError(message: error.toString()));
         }
       },
     );

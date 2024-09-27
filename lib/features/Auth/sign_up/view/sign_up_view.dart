@@ -1,14 +1,14 @@
 import 'package:aquan/features/Auth/sign_up/bloc/sign_up_bloc.dart';
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/Helpers/storage.dart';
+import 'package:aquan/core/Helpers/storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../Helpers/countrys_list.dart';
-import '../../../../Helpers/snack_bar.dart';
+import '../../../../core/Helpers/countrys_list.dart';
+import '../../../../core/Helpers/snack_bar.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../../login/view/login_view.dart';
 

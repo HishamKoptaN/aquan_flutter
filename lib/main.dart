@@ -1,20 +1,21 @@
 // ignore_for_file: unused_import
-import 'package:aquan/Helpers/Storage.dart';
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/Helpers/settings.dart';
-import 'package:aquan/Helpers/styles.dart';
+import 'package:aquan/core/Helpers/settings.dart';
+import 'package:aquan/core/Helpers/styles.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Helpers/app_observer.dart';
-import 'Helpers/snack_bar.dart';
+import 'core/Helpers/app_observer.dart';
+import 'core/Helpers/snack_bar.dart';
+import 'core/Helpers/storage.dart';
+import 'core/utils/app_colors.dart';
 import 'features/Auth/login/view/login_view.dart';
 import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import 'features/verify_code/verify_vode_view.dart';
 import 'features/Auth/sign_up/bloc/sign_up_bloc.dart';
+import 'test_two.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -153,9 +154,11 @@ class _RestartWidgetState extends State<RestartWidget> {
   Key key = UniqueKey();
   void restartApp() {
     StyleColors.init();
-    setState(() {
-      key = UniqueKey();
-    });
+    setState(
+      () {
+        key = UniqueKey();
+      },
+    );
   }
 
   @override

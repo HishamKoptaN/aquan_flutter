@@ -2,20 +2,18 @@ part of 'accounts_bloc.dart';
 
 abstract class AccountsState {}
 
-final class AccountsInitial extends AccountsState {}
+class AccountsInitial extends AccountsState {}
 
-final class AccountsLoading extends AccountsState {}
+class AccountsLoading extends AccountsState {}
 
-final class AccountsError extends AccountsState {
+class AccountsLoaded extends AccountsState {
+  final List<AccountEntity> accounts;
+  AccountsLoaded({required this.accounts});
+}
+
+class AccountsError extends AccountsState {
   final String message;
-
   AccountsError({required this.message});
 }
 
-class AccountsDone extends AccountsState {
-  final GetUserAccounts getUserAccounts;
-
-  AccountsDone({required this.getUserAccounts});
-}
-
-final class AccountsUpdatedSuccess extends AccountsState {}
+class AccountsUpdatedSuccess extends AccountsState {}

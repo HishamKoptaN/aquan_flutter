@@ -75,7 +75,7 @@ class _ChangePlanViewState extends State<ChangePlanView> {
                 '${t.transfer_commission} ${widget.plan.transferCommission.toString()}%',
                 '${t.dailyTransfers} ${widget.plan.dailyTransferCount.toString()}\$',
                 '${t.monthlyTransfers} ${widget.plan.monthlyTransferCount.toString()}\$',
-                '${t.maxTransfer} ${widget.plan.maxTransferCount.toString()}\$',
+                '${t.max_transfer} ${widget.plan.maxTransferCount.toString()}\$',
               ];
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
