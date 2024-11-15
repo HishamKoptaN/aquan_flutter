@@ -1,0 +1,8 @@
+flutter_native_splash:
+
+  color: "#ffffff"
+  image: assets/icon/aquan-yellow-logo.png
+
+  android_12:
+    image: assets/icon/aquan-yellow-logo.png
+    color: "#ffffff"

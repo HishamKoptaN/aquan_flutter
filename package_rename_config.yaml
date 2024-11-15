@@ -1,0 +1,32 @@
+package_rename_config:
+  android:
+    app_name: "aquan"        # اسم التطبيق
+    package_name: "com.aquan.app"  # اسم الحزمة
+    override_old_package: true  # لتجاهل الحزمة القديمة
+    lang: "en"                 # لغة التطبيق (اختياري)
+
+  ios:
+    app_name: "aquan"        # اسم التطبيق
+    bundle_name: "com.aquan.app"  # اسم الحزمة
+    package_name: "com.aquan.app"  # اسم الحزمة
+
+  linux:
+    app_name: "aquan"        # اسم التطبيق
+    package_name: "com.aquan.app"  # اسم الحزمة
+    exe_name: "aquan"        # اسم ملف التنفيذ
+
+  macos:
+    app_name: "aquan"        # اسم التطبيق
+    package_name: "com.aquan.app"  # اسم الحزمة
+    copyright_notice: "© 2024 IMolds"  # حقوق الطبع والنشر (اختياري)
+
+  web:
+    app_name: "aquan"        # اسم التطبيق
+    short_app_name: "aquan"  # اسم التطبيق المختصر (اختياري)
+    description: "aquan App" # وصف التطبيق (اختياري)
+
+  windows:
+    app_name: "aquan"        # اسم التطبيق
+    organization: "aquan"     # اسم المؤسسة (اختياري)
+    copyright_notice: "© 2024 IMolds"  # حقوق الطبع والنشر (اختياري)
+    exe_name: "aquan"        # اسم ملف التنفيذ

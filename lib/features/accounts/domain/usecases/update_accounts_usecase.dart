@@ -2,17 +2,17 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failure.dart';
-import '../entities/account.dart';
+import '../../data/models/accounts_model.dart';
 import '../repositories/accounts_repository.dart';
 
 class UpdateAccountsUseCase {
   final AccountsRepository repository;
   UpdateAccountsUseCase({required this.repository});
-  Future<Either<Failure, List<AccountEntity>>> call({
-    required List<AccountEntity> accounts,
+  Future<Either<Failure, List<Account>>> call({
+    required List<Account> accounts,
   }) async {
     return await repository.updateAccounts(
-      accounts: accounts,
+      accountsInfo: accounts,
     );
   }
 }

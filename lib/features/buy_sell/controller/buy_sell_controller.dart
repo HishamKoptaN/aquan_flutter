@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 
 class BuySellController {
   Future<Map<String, dynamic>> getCurrencies() async {
-    const String apiUrl = 'https://aquan.aquan.website/api/buy-sell';
+    const String apiUrl = 'https://api.aquan.website/app/buy-sell';
     http.Response response = await http.get(
       Uri.parse(apiUrl),
       headers: await SignUpController.getAuthHeaders(),
@@ -15,29 +15,11 @@ class BuySellController {
     return data;
   }
 
-  double calculateAmount({
-    required double rate,
-    required String currencyCode,
-    required double amount,
-  }) {
-    double resultAmount = 0;
-    if (currencyCode == 'SDG') {
-      resultAmount = amount / rate;
-    }
-    if (currencyCode == 'USDT') {
-      resultAmount = amount * rate;
-    }
-    if (currencyCode == 'USD') {
-      resultAmount = amount * rate;
-    }
-    return resultAmount;
-  }
-
   Future<Map<String, dynamic>> getReceivedAccountNumber(
       {required int id}) async {
     var request = http.Request(
       'GET',
-      Uri.parse('https://aquan.aquan.website/api/buy-sell/$id'),
+      Uri.parse('https://api.aquan.website/app/buy-sell/$id'),
     );
     http.StreamedResponse streamedResponse = await request.send();
     http.Response response = await http.Response.fromStream(streamedResponse);
@@ -47,7 +29,7 @@ class BuySellController {
   Future<Map<String, dynamic>> transferMoney({
     required int senderCurrencyId,
     required int receiverCurrencyId,
-    required String amount,
+    required double amount,
     required double netAmount,
     required double rate,
     required String receiverAccount,
@@ -56,19 +38,28 @@ class BuySellController {
   }) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.MultipartRequest(
-        'POST', Uri.parse('https://aquan.aquan.website/api/buy-sell'));
+      'POST',
+      Uri.parse(
+        'https://api.aquan.website/app/buy-sell',
+      ),
+    );
     request.fields.addAll(
       {
         'sender_currency_id': senderCurrencyId.toString(),
         'receiver_currency_id': receiverCurrencyId.toString(),
-        'amount': amount,
+        'amount': amount.toString(),
         'net_amount': netAmount.toString(),
         'rate': rate.toString(),
         'receiver_account': receiverAccount,
         'employee_id': employeeId.toString(),
       },
     );
-    request.files.add(await http.MultipartFile.fromPath('image', file!.path));
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'image',
+        file!.path,
+      ),
+    );
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     var responseData = await response.stream.toBytes();
@@ -90,7 +81,6 @@ class BuySellController {
       Map<String, dynamic> data = await json.decode(responseBody);
       return data;
     }
-
     throw Exception(response.reasonPhrase);
   }
 

@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/expentions.dart';
+import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failure.dart';
-import '../../domain/entities/account.dart';
 import '../../domain/repositories/accounts_repository.dart';
 import '../datasources/accounts_remote_data_source.dart';
+import '../models/accounts_model.dart';
 
 class AccountsRepositoryImpl implements AccountsRepository {
   final AccountsRemoteDataSource remoteDataSource;
@@ -12,7 +11,7 @@ class AccountsRepositoryImpl implements AccountsRepository {
     required this.remoteDataSource,
   });
   @override
-  Future<Either<Failure, List<AccountEntity>>> getAccounts() async {
+  Future<Either<Failure, List<Account>>> getAccounts() async {
     try {
       final accounts = await remoteDataSource.getAccounts();
       return Right(
@@ -21,25 +20,27 @@ class AccountsRepositoryImpl implements AccountsRepository {
     } on ServerException catch (e) {
       return Left(
         Failure(
-          errMessage: e.errorModel.errorMessage,
+          errMessage: e.errorModel.error!,
         ),
       );
     }
   }
 
   @override
-  Future<Either<Failure, List<AccountEntity>>> updateAccounts({
-    required List<AccountEntity> accounts,
+  Future<Either<Failure, List<Account>>> updateAccounts({
+    required List<Account> accountsInfo,
   }) async {
     try {
-      final accounts = await remoteDataSource.getAccounts();
+      final accounts = await remoteDataSource.updateAccounts(
+        accountsInfo: accountsInfo,
+      );
       return Right(
         accounts,
       );
     } on ServerException catch (e) {
       return Left(
         Failure(
-          errMessage: e.errorModel.errorMessage,
+          errMessage: e.errorModel.error!,
         ),
       );
     }

@@ -1,30 +1,11 @@
-import 'package:equatable/equatable.dart';
-
+import 'package:freezed_annotation/freezed_annotation.dart';
 import '../model/notification_model.dart';
+part 'notifications_state.freezed.dart';
 
-sealed class NotificationsState extends Equatable {
-  const NotificationsState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class NotificationsInitial extends NotificationsState {}
-
-final class NotificationsLoading extends NotificationsState {}
-
-class NotificationsLoadedSuccess extends NotificationsState {
-  List<Notification> notifications;
-  NotificationsLoadedSuccess({
-    required this.notifications,
-  });
-}
-
-class NotificationsError extends NotificationsState {
-  final String message;
-
-  NotificationsError({required this.message});
-
-  @override
-  List<Object> get props => [message];
+@freezed
+class NotificationsState with _$NotificationsState {
+  const factory NotificationsState.loading() = _loading;
+  const factory NotificationsState.loaded(
+      {required List<Notification> notifications}) = _loaded;
+  const factory NotificationsState.error({required String error}) = _error;
 }

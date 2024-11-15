@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +18,7 @@ class TasksController {
     try {
       var headers = await SignUpController.getAuthHeaders();
       var response = await http.get(
-        Uri.parse('https://aquan.aquan.website/api/tasks/$id'),
+        Uri.parse('https://api.aquan.website/app/tasks/$id'),
         headers: headers,
       );
       if (response.statusCode == 200) {
@@ -34,7 +34,7 @@ class TasksController {
   Future<Map<String, dynamic>> sendProof(int id, File file) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.MultipartRequest(
-        'POST', Uri.parse('https://aquan.aquan.website/api/tasks/$id'));
+        'POST', Uri.parse('https://api.aquan.website/app/tasks/$id'));
     request.files.add(await http.MultipartFile.fromPath('image', file.path));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();

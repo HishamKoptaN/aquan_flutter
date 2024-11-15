@@ -1,46 +1,26 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/support_model.dart';
+
 class SupportController {
-  Future<Map<String, dynamic>> getQuestions() async {
-    http.Response response = await http.post(
-      Uri.parse(routes['settings']!),
-      headers: await SignUpController.getAuthHeaders(),
-      body: jsonEncode(
-        {
-          "setting_name": "questions",
-        },
+  Future<List<Message>> fetchData() async {
+    final response = await http.get(
+      Uri.parse(
+        'https://api.aquan.website/app/support',
       ),
+      headers: await SignUpController.getAuthHeaders(),
     );
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      return data;
-    }
-    throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> getChatMessages() async {
-    var headers = await SignUpController.getAuthHeaders();
-    var request = http.Request(
-      'GET',
-      Uri.parse(
-        'https://aquan.aquan.website/api/support',
-      ),
-    );
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
-    var responseData = await response.stream.toBytes();
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(
-        String.fromCharCodes(responseData),
-      );
-      return data;
+      GetSupportApiResModel getSupportApiResModel =
+          GetSupportApiResModel.fromJson(data);
+      return getSupportApiResModel.messages ?? [];
     } else {
-      throw Exception(
-          'Failed to send file: ${String.fromCharCodes(responseData)}');
+      throw Exception('Failed to load data');
     }
   }
 

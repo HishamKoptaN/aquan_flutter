@@ -1,6 +1,4 @@
-// verify_email_event.dart
 part of 'verify_email_bloc.dart';
-
 sealed class VerifyEmailEvent extends Equatable {
   const VerifyEmailEvent();
 
@@ -10,7 +8,7 @@ sealed class VerifyEmailEvent extends Equatable {
 
 class SendEmailVerification extends VerifyEmailEvent {
   final String email;
-  SendEmailVerification({required this.email});
+  const SendEmailVerification({required this.email});
 }
 
 class SendVerificationCodeToEmailEvent extends VerifyEmailEvent {

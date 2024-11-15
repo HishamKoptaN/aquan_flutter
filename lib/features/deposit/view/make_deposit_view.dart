@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:aquan/features/Plans/view/plans_view.dart';
 import 'package:aquan/features/deposit/bloc/deposit_bloc.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
 import 'package:aquan/features/withdraws_deposits/view/withdraws_deposits_view.dart';
@@ -12,16 +11,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../../../core/Helpers/snack_bar.dart';
-import '../../dashboard/model/dashboard_model.dart';
+import '../../../core/utils/snack_bar.dart';
+import '../../../core/widgets/custom_text_widget.dart';
+import '../../dash/data/model/dash_res_model.dart';
 import '../controller/deposit_controller.dart';
 
 class MakeDepositView extends StatefulWidget {
-  const MakeDepositView({
+  MakeDepositView({
     super.key,
-    required this.currencies,
   });
-  final List<Currency> currencies;
 
   @override
   State<MakeDepositView> createState() => _MakeDepositViewState();
@@ -34,6 +32,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
   Currency? currency;
   double depositAmount = 0.0;
   double rate = 0.0;
+  final List<Currency> currencies = [];
   File? file;
   final NumberFormat formatter = NumberFormat('#,##0');
   @override
@@ -92,7 +91,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                   ),
                 ),
               );
-              widget.currencies.every(
+              currencies.every(
                 (curr) {
                   items.add(
                     DropdownMenuItem(
@@ -232,7 +231,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                         const Divider(),
                         Expanded(
                           flex: 1,
-                          child: MyText(
+                          child: CustomText(
                             text: t.payment_account_information,
                             fontSize: 15.sp,
                             color: Colors.black,
@@ -243,31 +242,29 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                           child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: state.getEmployeeAccountApiResModel
-                                    .accountInfo.length +
+                                    .accountInfo!.length +
                                 1,
                             itemBuilder: (context, index) {
                               if (index <
                                   state.getEmployeeAccountApiResModel
-                                      .accountInfo.length) {
+                                      .accountInfo!.length) {
                                 final method = state
                                     .getEmployeeAccountApiResModel
-                                    .accountInfo[index];
-                                currency = widget.currencies.firstWhere(
-                                  (curr) => curr.name == method.currency.name,
+                                    .accountInfo![index];
+                                currency = currencies.firstWhere(
+                                  (curr) => curr.name == method.currency!.name,
                                 );
                                 if (currency!.id! == 1) {
                                 } else {
-                                  rate = double.parse(
-                                    state.getEmployeeAccountApiResModel
-                                        .toBinanceRates
-                                        .firstWhere(
-                                          (rate) => currency!.id! == rate.from,
-                                        )
-                                        .selling,
-                                  );
+                                  rate = state.getEmployeeAccountApiResModel
+                                      .toBinanceRates!
+                                      .firstWhere(
+                                        (rate) => currency!.id! == rate.from,
+                                      )
+                                      .price!;
                                 }
-                                if (method.currency.name == "Payeer" ||
-                                    method.currency.name == "Perfect Money") {
+                                if (method.currency!.name == "Payeer" ||
+                                    method.currency!.name == "Perfect Money") {
                                   return const SizedBox.shrink();
                                 } else {
                                   return Padding(
@@ -283,8 +280,8 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                       ),
                                       child: Center(
                                         child: ExpansionTile(
-                                          title: MyText(
-                                            text: method.currency.name,
+                                          title: CustomText(
+                                            text: method.currency!.name!,
                                             fontSize: 12.sp,
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -307,7 +304,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     Gap(5.w),
                                                     Expanded(
                                                       flex: 1,
-                                                      child: MyText(
+                                                      child: CustomText(
                                                         text: t.amount,
                                                         fontSize: 12.sp,
                                                         color: Colors.black,
@@ -319,7 +316,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     ),
                                                     Expanded(
                                                       flex: 2,
-                                                      child: MyText(
+                                                      child: CustomText(
                                                         text: amountController
                                                                 .text.isNotEmpty
                                                             ? currency!.id == 1
@@ -357,7 +354,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     Gap(5.w),
                                                     Expanded(
                                                       flex: 1,
-                                                      child: MyText(
+                                                      child: CustomText(
                                                         text: t.accountNumber,
                                                         fontSize: 12.sp,
                                                         color: Colors.black,
@@ -371,7 +368,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                       flex: 2,
                                                       child: Row(
                                                         children: [
-                                                          MyText(
+                                                          CustomText(
                                                             text: method
                                                                 .accountNumber
                                                                 .toString(),
@@ -389,7 +386,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                                   .setData(
                                                                 ClipboardData(
                                                                   text: method
-                                                                      .accountNumber,
+                                                                      .accountNumber!,
                                                                 ),
                                                               );
                                                             },
@@ -414,7 +411,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     Gap(5.w),
                                                     Expanded(
                                                       flex: 1,
-                                                      child: MyText(
+                                                      child: CustomText(
                                                         text: t.name,
                                                         fontSize: 15.sp,
                                                         color: Colors.black,
@@ -426,9 +423,9 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     ),
                                                     Expanded(
                                                       flex: 2,
-                                                      child: MyText(
+                                                      child: CustomText(
                                                         text: method
-                                                            .currency.name
+                                                            .currency!.name
                                                             .toString(),
                                                         fontSize: 15.sp,
                                                         color: Colors.black,
@@ -450,7 +447,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     Gap(5.w),
                                                     Expanded(
                                                       flex: 1,
-                                                      child: MyText(
+                                                      child: CustomText(
                                                         text: t.comment,
                                                         fontSize: 12.sp,
                                                         color: Colors.black,
@@ -462,8 +459,8 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                     ),
                                                     Expanded(
                                                       flex: 2,
-                                                      child: MyText(
-                                                        text: method.comment,
+                                                      child: CustomText(
+                                                        text: method.comment!,
                                                         fontSize: 12.sp,
                                                         color: Colors.black,
                                                         fontWeight:

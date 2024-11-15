@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import 'bloc/local_auth_bloc.dart';
-import '../dashboard/view/dashboard_view.dart';
+import '../dash/presentation/view/dash_view.dart';
 import 'bloc/local_auth_event.dart';
 import 'bloc/local_auth_state.dart'; // تأكد من استيراد ملفات البلوك الخاصة بك
 
@@ -21,7 +21,7 @@ class BiometricScreen extends StatelessWidget {
             if (state is BiometricAuthenticated) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const DashboardView()),
+                MaterialPageRoute(builder: (context) => const DashView()),
               );
             } else if (state is BiometricError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -33,7 +33,11 @@ class BiometricScreen extends StatelessWidget {
             if (state is BiometricInitial || state is BiometricAuthenticated) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is BiometricError) {
-              return Center(child: Text('Authentication failed. Try again.'));
+              return const Center(
+                child: Text(
+                  'Authentication failed. Try again.',
+                ),
+              );
             }
             return const Center(child: CircularProgressIndicator());
           },

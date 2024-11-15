@@ -9,4 +9,5 @@ class AppColors {
   static const scaffoldBackgroundColor = Colors.white;
   static const danger = Colors.amber;
   static const amber = Colors.amber;
+  static const primaryColor = Colors.amber;
 }

@@ -1,48 +1,18 @@
-part of 'sign_up_bloc.dart';
+import '../../../../core/errors/api_error_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class SignUpState {}
+import '../data/models/sign_up_response_model.dart';
+part 'sign_up_state.freezed.dart';
 
-class SignUpInitial extends SignUpState {}
-
-class AuthLoading extends SignUpState {}
-
-class SignUpLoading extends SignUpState {}
-
-class CheckLoginLoading extends SignUpState {}
-
-class SignUpSuccessfully extends SignUpState {}
-
-class EmailNotVerify extends SignUpState {
-  final User user;
-  EmailNotVerify({
-    required this.user,
-  });
+@freezed
+class SignUpState with _$SignUpState {
+  const factory SignUpState.initial() = _Initial;
+  const factory SignUpState.signUp() = _SignUp;
+  const factory SignUpState.loading() = _Loading;
+  const factory SignUpState.success({
+    required SignUpResponseModel signUpResponseModel,
+  }) = _Success;
+  const factory SignUpState.error({
+    required ApiErrorModel apiErrorModel,
+  }) = _Error;
 }
-
-class EmailVerified extends SignUpState {
-  final bool verified;
-  final String? message;
-
-  EmailVerified({required this.verified, this.message});
-}
-
-class AuthLogedIn extends SignUpState {
-  final bool createPassword;
-  AuthLogedIn({this.createPassword = false});
-}
-
-class AuthLogedOut extends SignUpState {}
-
-class AuthErrors extends SignUpState {
-  final String? message;
-
-  AuthErrors({required this.message});
-}
-
-class ResetPassowrdEmailSent extends SignUpState {
-  final String message;
-
-  ResetPassowrdEmailSent({required this.message});
-}
-
-class SignUpCompleted extends SignUpState {}

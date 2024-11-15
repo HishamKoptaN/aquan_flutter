@@ -1,6 +1,5 @@
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/Helpers/styles.dart';
-import 'package:aquan/features/buy_sell/model/buy_sell_model.dart';
+import 'package:aquan/core/utils/styles.dart';
+import 'package:aquan/features/buy_sell/data/model/buy_sell_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

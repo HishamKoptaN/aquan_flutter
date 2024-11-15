@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/Helpers/styles.dart';
 import 'package:aquan/features/tasks/bloc/task_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +11,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:motion_toast/resources/colors.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../core/Helpers/snack_bar.dart';
+import '../../../core/utils/snack_bar.dart';
+import '../../../core/widgets/custom_text_widget.dart';
 import '../model/get_tasks_model.dart';
+import 'tasks_view.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({
@@ -35,6 +35,15 @@ class _TaskScreenState extends State<TaskScreen> {
     return AppLayout(
       route: t.task,
       showAppBar: true,
+      onPressed: () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const TasksScreen(),
+          ),
+          (route) => false,
+        );
+      },
       body: Container(
         padding: const EdgeInsets.all(8.00),
         child: BlocProvider<TaskBloc>(
@@ -66,21 +75,34 @@ class _TaskScreenState extends State<TaskScreen> {
               if (state is TaskDetailsLoadedSuccessfully) {
                 return ListView(
                   children: [
-                    Text(
-                      widget.task.name,
-                      style: cartHeading,
+                    CustomText(
+                      text: widget.task.name,
+                      textAlign: TextAlign.center,
+                      color: Colors.black,
+                      fontSize: 18.sp,
+                      maxLines: 3,
+                      fontWeight: null,
                     ),
-                    const Gap(20),
-                    Text(
-                      widget.task.description,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
+                    Gap(10.h),
+                    CustomText(
+                      text: widget.task.description,
+                      textAlign: TextAlign.center,
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                      maxLines: 5,
+                      fontWeight: null,
                     ),
+                    Gap(5.h),
+                    CustomText(
+                      text: "${t.reward_value}: ${widget.task.amount}",
+                      textAlign: TextAlign.start,
+                      color: Colors.black,
+                      fontSize: 10.sp,
+                      maxLines: 3,
+                      fontWeight: null,
+                    ),
+                    Gap(5.h),
                     Container(
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.only(top: 20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: const Border.fromBorderSide(
@@ -93,67 +115,30 @@ class _TaskScreenState extends State<TaskScreen> {
                         widget.task.image,
                       ),
                     ),
-                    const Gap(20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (!state.getTaskDetailsApiResModel.completed)
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            width: (size.width * 0.45),
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: InkWell(
-                              onTap: () async {
-                                final Uri url = Uri.parse(widget.task.link);
-                                if (!await launchUrl(url)) {}
-                              },
-                              child: Text(
-                                t.link,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
+                    Gap(10.h),
+                    if (!state.getTaskDetailsApiResModel.completed)
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        width: (size.width * 0.45),
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: InkWell(
+                          onTap: () async {
+                            final Uri url = Uri.parse(widget.task.link);
+                            if (!await launchUrl(url)) {}
+                          },
+                          child: CustomText(
+                            text: widget.task.link,
+                            textAlign: TextAlign.center,
+                            color: Colors.blue,
+                            fontSize: 10.sp,
+                            maxLines: 3,
+                            fontWeight: null,
                           ),
-                        const Gap(10),
-                        if (!state.getTaskDetailsApiResModel.completed)
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            width: (size.width * 0.45),
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                if (file != null) {
-                                  WidgetsBinding.instance.addPostFrameCallback(
-                                    (_) => context.read<TaskBloc>().add(
-                                          SendProof(
-                                            taskId: widget.task.id,
-                                            image: file!,
-                                          ),
-                                        ),
-                                  );
-                                }
-                              },
-                              child: Text(
-                                t.submit,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
+                        ),
+                      ),
                     if (state.getTaskDetailsApiResModel.completed)
                       Container(
                         width: size.width,
@@ -225,7 +210,38 @@ class _TaskScreenState extends State<TaskScreen> {
                           ),
                           const Gap(10),
                         ],
-                      )
+                      ),
+                    if (!state.getTaskDetailsApiResModel.completed)
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        width: (size.width * 0.45),
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            if (file != null) {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                (_) => context.read<TaskBloc>().add(
+                                      SendProof(
+                                        taskId: widget.task.id,
+                                        image: file!,
+                                      ),
+                                    ),
+                              );
+                            }
+                          },
+                          child: Text(
+                            t.submit,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 );
               }

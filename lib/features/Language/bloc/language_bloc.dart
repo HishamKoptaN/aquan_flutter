@@ -1,7 +1,5 @@
+import 'package:aquan/core/Helpers/shared_pref_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../core/Helpers/storage.dart';
-
 part 'language_event.dart';
 part 'language_state.dart';
 
@@ -10,19 +8,19 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     on<CheckLanguage>(
       (event, emit) {
         emit(LanguageInitial());
-        if (Storage.getString('language') == null) {
+        if (SharedPrefHelper.getString(key: 'language') == null) {
           emit(SetLanguage());
         } else {
           emit(LanguageSeted());
         }
       },
     );
-    on<SetLocale>((event, emit) {
-      emit(LanguageInitial());
-
-      Storage.setString("language", event.locale);
-
-      emit(LanguageSeted());
-    });
+    on<SetLocale>(
+      (event, emit) {
+        emit(LanguageInitial());
+        SharedPrefHelper.setData(key: "language", value: event.locale);
+        emit(LanguageSeted());
+      },
+    );
   }
 }

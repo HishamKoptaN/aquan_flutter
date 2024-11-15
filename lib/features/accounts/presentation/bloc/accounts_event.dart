@@ -5,6 +5,6 @@ abstract class AccountsEvent {}
 class GetAccountsEvent extends AccountsEvent {}
 
 class UpdateAccountsEvent extends AccountsEvent {
-  final List<AccountEntity> accounts;
+  final List<Account> accounts;
   UpdateAccountsEvent({required this.accounts});
 }

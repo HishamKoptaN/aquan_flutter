@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:local_auth/local_auth.dart';
 import '../../Auth/login/controller/login_controller.dart';
 import '../../profile/model/profile_model.dart';
-import '../../Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 import '../controller/verify_email_controller.dart';
 part 'verify_email_event.dart';
 part 'verify_email_state.dart';

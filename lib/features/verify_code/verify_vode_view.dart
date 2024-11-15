@@ -13,10 +13,10 @@ import '../profile/model/profile_model.dart';
 import 'bloc/verify_email_bloc.dart';
 
 class VerifyCode extends StatefulWidget {
-  User user;
+  String userEmail;
   VerifyCode({
     super.key,
-    required this.user,
+    required this.userEmail,
   });
 
   @override
@@ -285,7 +285,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                                   if (_timerSeconds == 0) {
                                     context.read<VerifyEmailBloc>().add(
                                           SendEmailVerification(
-                                            email: widget.user.email!,
+                                            email: widget.userEmail,
                                           ),
                                         );
                                     _startEmailVerification();

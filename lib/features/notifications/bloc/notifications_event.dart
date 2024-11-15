@@ -1,10 +1,7 @@
-part of 'notifications_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'notifications_event.freezed.dart';
 
-sealed class NotificationsEvent extends Equatable {
-  const NotificationsEvent();
-
-  @override
-  List<Object> get props => [];
+@freezed
+class NotificationsEvent with _$NotificationsEvent {
+  const factory NotificationsEvent.getNotifications() = _GetNotifications;
 }
-
-class GetNotifications extends NotificationsEvent {}

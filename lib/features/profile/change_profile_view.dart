@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:aquan/core/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/Helpers/countrys_list.dart';
 import 'bloc/profile_bloc.dart';
 
 class ChangeProfileScreen extends StatefulWidget {

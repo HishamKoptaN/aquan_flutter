@@ -1,42 +1,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../utils/app_colors.dart';
-
-class CustomText extends StatelessWidget {
-  String text;
-  double fontSize;
-  Color color;
-  int? maxLines;
-  FontWeight? fontWeight;
-  TextAlign? textAlign;
-  CustomText({
-    super.key,
-    required this.text,
-    required this.fontSize,
-    required this.color,
-    required this.maxLines,
-    required this.fontWeight,
-    this.textAlign,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontWeight: fontWeight,
-        color: color,
-        fontSize: fontSize,
-      ),
-      maxLines: maxLines,
-      overflow: TextOverflow.ellipsis,
-      softWrap: true,
-      textAlign: textAlign,
-    );
-  }
-}
+import '../widgets/custom_text_widget.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;

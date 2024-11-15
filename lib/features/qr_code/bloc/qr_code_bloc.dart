@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import '../../dashboard/controller/dashboard_controller.dart';
+import '../../dash/controller/dashboard_controller.dart';
 import '../controller/qr_code_controller.dart';
 import 'qr_code_event.dart';
 import 'qr_code_state.dart';

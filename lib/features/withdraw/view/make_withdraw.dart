@@ -1,5 +1,5 @@
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/Helpers/styles.dart';
+import 'package:aquan/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +7,9 @@ import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../../core/Helpers/global_widgets.dart';
-import '../../../core/Helpers/snack_bar.dart';
+import '../../../core/utils/snack_bar.dart';
 import '../../Layouts/app_layout.dart';
-import '../../dashboard/model/dashboard_model.dart';
+import '../../dash/data/model/dash_res_model.dart';
 import '../../withdraws_deposits/view/withdraws_deposits_view.dart';
 import '../bloc/withdraw_bloc.dart';
 import '../controller/withdraw_controller.dart';
@@ -18,10 +18,7 @@ import '../model/withdraw_rate.dart';
 class MakeWithdrawView extends StatefulWidget {
   const MakeWithdrawView({
     super.key,
-    required this.currencies,
   });
-
-  final List<Currency> currencies;
 
   @override
   State<MakeWithdrawView> createState() => _MakeWithdrawViewState();
@@ -34,6 +31,8 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
   TextEditingController receivingWalletController = TextEditingController();
   Currency? currency;
   double receiveAmount = 0;
+
+  get currencies => null;
   void calculateReceiveAmount({
     required GetWithdrawRateApiResModel getWithdrawRateApiResModel,
   }) {
@@ -43,13 +42,11 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
           (rate) => currency!.id! == rate.to,
         );
         if (hasCurrencyRate) {
-          double rate = double.parse(
-            getWithdrawRateApiResModel.fromBinanceRates!
-                .firstWhere(
-                  (rate) => currency!.id! == rate.to,
-                )
-                .selling,
-          );
+          double rate = getWithdrawRateApiResModel.fromBinanceRates!
+              .firstWhere(
+                (rate) => currency!.id! == rate.to,
+              )
+              .price!;
           receiveAmount =
               double.parse(amountController.text.replaceAll(',', '')) * rate;
         } else {
@@ -116,7 +113,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                   ),
                 ),
               );
-              widget.currencies.every(
+              currencies.every(
                 (method) {
                   items.add(
                     DropdownMenuItem(
@@ -156,7 +153,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                             ),
                             items: items,
                             onChanged: (value) {
-                              currency = widget.currencies.firstWhere(
+                              currency = currencies.firstWhere(
                                 (element) => element.name == value,
                               );
                               calculateReceiveAmount(

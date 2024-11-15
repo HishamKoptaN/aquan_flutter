@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../core/database/api/routes.dart';
-import '../../Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 
 class VerifyEmailController {
   Future<Map<String, dynamic>> verifyEmail(String code) async {

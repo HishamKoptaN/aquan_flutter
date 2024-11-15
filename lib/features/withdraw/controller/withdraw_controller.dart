@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,7 +29,7 @@ class WithdrawController {
   }) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.Request(
-        'POST', Uri.parse('https://aquan.aquan.website/api/withdraw'));
+        'POST', Uri.parse('https://api.aquan.website/app/withdraw'));
     request.body = json.encode(
       {
         "method": method,

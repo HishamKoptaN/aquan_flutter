@@ -1,5 +1,4 @@
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/Helpers/styles.dart';
+import 'package:aquan/core/utils/styles.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
 import 'package:aquan/features/tasks/bloc/task_bloc.dart';
 import 'package:flutter/material.dart';

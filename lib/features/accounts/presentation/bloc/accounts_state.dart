@@ -7,13 +7,17 @@ class AccountsInitial extends AccountsState {}
 class AccountsLoading extends AccountsState {}
 
 class AccountsLoaded extends AccountsState {
-  final List<AccountEntity> accounts;
+  final List<Account> accounts;
   AccountsLoaded({required this.accounts});
 }
 
 class AccountsError extends AccountsState {
   final String message;
-  AccountsError({required this.message});
+  final List<Account> accounts;
+  AccountsError({
+    required this.message,
+    required this.accounts,
+  });
 }
 
 class AccountsUpdatedSuccess extends AccountsState {}

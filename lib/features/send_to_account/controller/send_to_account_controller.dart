@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:aquan/core/Helpers/shared_pref_helper.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/database/api/routes.dart';
-import '../../Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 
 class SendToAccountController {
   Future<Map<String, dynamic>> getUserByAccountNumber(
@@ -12,7 +12,7 @@ class SendToAccountController {
       Uri.parse(
         '${routes['transfer']}/$accountNumber',
       ),
-      headers: await SignUpController.getAuthHeaders(),
+      // headers: await SharedPrefHelper.getAuthHeaders(),
     );
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
@@ -29,7 +29,7 @@ class SendToAccountController {
   ) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.Request('POST',
-        Uri.parse('https://aquan.aquan.website/api/transfer/$accountNumber'));
+        Uri.parse('https://api.aquan.website/app/transfer/$accountNumber'));
     request.body = json.encode(
       {"amount": amount},
     );

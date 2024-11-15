@@ -9,23 +9,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
-import '../../Auth/sign_up/controller/sign_up_controller.dart';
+import '../../dash/controller/dashboard_controller.dart';
 import '../model/support_model.dart';
 
 class SupportView extends StatefulWidget {
   const SupportView({super.key});
-
   @override
   State<SupportView> createState() => _SupportViewState();
 }
 
 class _SupportViewState extends State<SupportView> {
   final TextEditingController messageController = TextEditingController();
+  final DashboardController _dashboardController = DashboardController();
+  int? currentUserId;
   final ScrollController _sc = ScrollController();
-
   static const styleSomebody = BubbleStyle(
     nip: BubbleNip.leftCenter,
     color: Colors.grey,
@@ -45,115 +42,112 @@ class _SupportViewState extends State<SupportView> {
     margin: const BubbleEdges.only(top: 8, left: 50),
     alignment: Alignment.topRight,
   );
-  Future<List<Message>> fetchData() async {
-    final response = await http.get(
-      Uri.parse(
-        'https://aquan.aquan.website/api/support',
-      ),
-      headers: await SignUpController.getAuthHeaders(),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      GetSupportApiResModel getSupportApiResModel =
-          GetSupportApiResModel.fromJson(data);
-      return getSupportApiResModel.messages ?? [];
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
 
-  Stream<List<Message>> fetchDataAsStream() async* {
-    while (true) {
-      try {
-        final data = await fetchData();
-        yield data;
-      } catch (e) {
-        yield [];
-      }
-      await Future.delayed(const Duration(seconds: 3));
-    }
+  Future<int> getUserId() async {
+    Map<String, dynamic> user = await _dashboardController.loadUserData();
+    return user["id"];
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     final t = AppLocalizations.of(context)!;
     final Size size = MediaQuery.of(context).size;
     return AppLayout(
       route: t.support,
       showAppBar: true,
       body: BlocProvider(
-        create: (context) => SupportBloc()..add(GetChatMessages()),
+        create: (context) => SupportBloc()
+          ..add(
+            GetChatMessages(),
+          ),
         child: BlocConsumer<SupportBloc, SupportState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state is MessagesLoaded) {
+          listener: (context, state) {
+            if (state is MessageSended) {
               WidgetsBinding.instance.addPostFrameCallback(
-                (_) => _sc.jumpTo(_sc.position.maxScrollExtent),
-              );
-              messageController.clear();
-              final int currentUserId = state.user['id'];
-              return SafeArea(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: StreamBuilder<List<Message>>(
-                          stream: fetchDataAsStream(),
-                          builder: (context, snapshot) {
-                            return ListView.builder(
-                              controller: _sc,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                final message = snapshot.data![index];
-                                bool isCurrentUser =
-                                    currentUserId == message.userId;
-                                if (message.isFile == "yes") {
-                                  return Bubble(
-                                    style:
-                                        isCurrentUser ? styleMe : styleSomebody,
-                                    child: SizedBox(
-                                      width: 150.0,
-                                      height: 150.0,
-                                      child: CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: message.message.toString(),
-                                        placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  return Bubble(
-                                    style:
-                                        isCurrentUser ? styleMe : styleSomebody,
-                                    child: Text(
-                                      message.message.toString(),
-                                      style: TextStyle(
-                                        color: isCurrentUser
-                                            ? Colors.black
-                                            : Colors.white,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const Gap(10),
-                    _buildInputArea(context, t),
-                    const Gap(20),
-                  ],
+                (_) => _sc.jumpTo(
+                  _sc.position.minScrollExtent,
                 ),
               );
             }
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.amber),
+          },
+          builder: (context, state) {
+            if (state is MessagesLoaded) {
+              currentUserId = state.user['id'];
+            }
+            return SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: StreamBuilder<List<Message>>(
+                        stream: context.read<SupportBloc>().messagesStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          }
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return const Center(child: Text('No messages'));
+                          }
+                          final messages = snapshot.data!;
+                          return ListView.builder(
+                            controller: _sc,
+                            reverse: true,
+                            itemCount: messages.length,
+                            itemBuilder: (context, index) {
+                              final message = messages[index];
+                              bool isCurrentUser =
+                                  currentUserId == message.userId;
+                              if (message.isFile == "yes") {
+                                return Bubble(
+                                  style:
+                                      isCurrentUser ? styleMe : styleSomebody,
+                                  child: SizedBox(
+                                    width: 150.0,
+                                    height: 150.0,
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl: message.message.toString(),
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Bubble(
+                                  style:
+                                      isCurrentUser ? styleMe : styleSomebody,
+                                  child: Text(
+                                    message.message.toString(),
+                                    style: TextStyle(
+                                      color: isCurrentUser
+                                          ? Colors.black
+                                          : Colors.white,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  const Gap(10),
+                  _buildInputArea(context, t),
+                  const Gap(20),
+                ],
+              ),
             );
           },
         ),
@@ -180,7 +174,11 @@ class _SupportViewState extends State<SupportView> {
             onPressed: () {
               final message = messageController.text;
               if (message.isNotEmpty) {
-                context.read<SupportBloc>().add(SendMessage(message: message));
+                context.read<SupportBloc>().add(
+                      SendMessage(
+                        message: message,
+                      ),
+                    );
                 messageController.clear();
               }
             },
@@ -216,8 +214,14 @@ class _SupportViewState extends State<SupportView> {
                     onPressed: () async {
                       final result = await FilePicker.platform.pickFiles();
                       if (result != null) {
-                        File file = File(result.files.single.path!);
-                        context.read<SupportBloc>().add(SendFile(file: file));
+                        File file = File(
+                          result.files.single.path!,
+                        );
+                        context.read<SupportBloc>().add(
+                              SendFile(
+                                file: file,
+                              ),
+                            );
                       }
                     },
                   ),
@@ -229,5 +233,11 @@ class _SupportViewState extends State<SupportView> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _sc.dispose();
+    super.dispose();
   }
 }

@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:motion_toast/resources/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:aquan/core/Helpers/styles.dart';
+import 'package:aquan/core/utils/styles.dart';
 
 import '../profile/bloc/profile_bloc.dart';
 

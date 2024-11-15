@@ -1,19 +1,19 @@
-part of 'referals_bloc.dart';
+// part of 'referals_bloc.dart';
 
-abstract class ReferalsState {}
+// abstract class ReferalsState {}
 
-final class ReferalsInitial extends ReferalsState {}
+// final class ReferalsInitial extends ReferalsState {}
 
-final class ReferalsLoading extends ReferalsState {}
+// final class ReferalsLoading extends ReferalsState {}
 
-class ReferalsError extends ReferalsState {
-  final String? message;
+// class ReferalsError extends ReferalsState {
+//   final String? message;
 
-  ReferalsError({required this.message});
-}
+//   ReferalsError({required this.message});
+// }
 
-class ReferalsLoadedSuccessfully extends ReferalsState {
-  GetReferalsApiResModel getReferalsApiResModel;
+// class ReferalsLoadedSuccessfully extends ReferalsState {
+//   GetReferalsApiResModel getReferalsApiResModel;
 
-  ReferalsLoadedSuccessfully({required this.getReferalsApiResModel});
-}
+//   ReferalsLoadedSuccessfully({required this.getReferalsApiResModel});
+// }

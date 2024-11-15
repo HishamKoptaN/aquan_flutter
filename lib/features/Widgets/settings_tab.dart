@@ -1,8 +1,8 @@
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/Helpers/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+
+import '../../core/helpers/shared_pref_helper.dart';
 
 class SettingsTabWidget extends StatelessWidget {
   const SettingsTabWidget({
@@ -63,7 +63,7 @@ class SettingsTabWidget extends StatelessWidget {
               ],
             ),
             FaIcon(
-              Storage.getString('language') == 'en'
+              SharedPrefHelper.getString(key: 'language') == 'ar'
                   ? FontAwesomeIcons.angleRight
                   : FontAwesomeIcons.angleLeft,
               color: Colors.black.withOpacity(0.6),

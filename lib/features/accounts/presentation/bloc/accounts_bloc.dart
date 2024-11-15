@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import '../../domain/entities/account.dart';
+import '../../data/models/accounts_model.dart';
 import '../../domain/usecases/get_accounts_usecase.dart';
 import '../../domain/usecases/update_accounts_usecase.dart';
 part 'accounts_event.dart';
@@ -21,14 +21,28 @@ class AccountsBloc extends Bloc<AccountsEvent, AccountsState> {
           final eitherResult = await getAccountsUseCase();
           eitherResult.fold(
             (failure) {
-              emit(AccountsError(message: failure.errMessage));
+              emit(
+                AccountsError(
+                  message: failure.errMessage,
+                  accounts: [],
+                ),
+              );
             },
             (accounts) {
-              emit(AccountsLoaded(accounts: accounts));
+              emit(
+                AccountsLoaded(
+                  accounts: accounts,
+                ),
+              );
             },
           );
         } catch (error) {
-          emit(AccountsError(message: error.toString()));
+          emit(
+            AccountsError(
+              message: error.toString(),
+              accounts: [],
+            ),
+          );
         }
       },
     );
@@ -36,17 +50,31 @@ class AccountsBloc extends Bloc<AccountsEvent, AccountsState> {
       (event, emit) async {
         emit(AccountsLoading());
         try {
-          final eitherResult = await getAccountsUseCase();
+          final eitherResult = await updateAccountsUseCase(
+            accounts: event.accounts,
+          );
           eitherResult.fold(
             (failure) {
-              emit(AccountsError(message: failure.errMessage));
+              emit(
+                AccountsError(
+                  message: failure.errMessage,
+                  accounts: event.accounts,
+                ),
+              );
             },
             (accounts) {
-              emit(AccountsLoaded(accounts: accounts));
+              emit(
+                AccountsUpdatedSuccess(),
+              );
             },
           );
         } catch (error) {
-          emit(AccountsError(message: error.toString()));
+          emit(
+            AccountsError(
+              message: error.toString(),
+              accounts: event.accounts,
+            ),
+          );
         }
       },
     );

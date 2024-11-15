@@ -1,7 +1,4 @@
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/Helpers/storage.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
-import 'package:aquan/features/notifications/view/notifications_view.dart';
 import 'package:aquan/features/profile/profile_view.dart';
 import 'package:aquan/features/Widgets/settings_tab.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,12 +9,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../Auth/login/view/login_view.dart';
+import '../../core/helpers/shared_pref_helper.dart';
+import '../Auth/login/presentation/view/login_view.dart';
 import '../Language/view/change_language_view.dart';
-import '../Plans/view/plans_view.dart';
+import '../Plans/presentation/view/plans_view/plans_view.dart';
 import '../support/view/support_view.dart';
 import '../tasks/view/tasks_view.dart';
-import '../transactions/view/transactions_view.dart';
+import '../trans/presentation/view/trans_view.dart';
 import '../withdraws_deposits/view/withdraws_deposits_view.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -202,12 +200,12 @@ class SettingsScreen extends StatelessWidget {
             title: t.enableNotifications,
             icon: FontAwesomeIcons.bell,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NotificationsView(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const NotificationsView(),
+              //   ),
+              // );
             },
           ),
           SettingsTabWidget(
@@ -264,8 +262,9 @@ class SettingsScreen extends StatelessWidget {
           SettingsTabWidget(
             title: t.shareApp,
             icon: FontAwesomeIcons.share,
-            onTap: () => {
-              Share.share(Storage.getString("app_link") ?? 'AQUAN app'),
+            onTap: () async {
+              Share.share(await SharedPrefHelper.getString(key: "app_link") ??
+                  'AQUAN app');
             },
           ),
           SettingsTabWidget(
@@ -273,7 +272,8 @@ class SettingsScreen extends StatelessWidget {
             icon: FontAwesomeIcons.info,
             onTap: () async {
               Uri url = Uri.parse(
-                  Storage.getString("about_us_link") ?? 'htpps://google.com');
+                  await SharedPrefHelper.getString(key: "about_us_link") ??
+                      'htpps://google.com');
               if (!await launchUrl(url)) {
                 throw Exception('Could not launch $url');
               }
@@ -314,7 +314,7 @@ class SettingsScreen extends StatelessWidget {
                             Expanded(
                               child: TextButton(
                                 onPressed: () async {
-                                  Storage.setString("auth_token", '');
+                                  await SharedPrefHelper.clearAllSecuredData();
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                       builder: (context) => const LoginView(),
@@ -342,7 +342,7 @@ class SettingsScreen extends StatelessWidget {
                                 },
                                 child: Text(
                                   t.close,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                   ),
                                 ),
@@ -363,8 +363,9 @@ class SettingsScreen extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () async {
-                  Uri url = Uri.parse(Storage.getString("facebook_link") ??
-                      'htpps://facebook.com');
+                  Uri url = Uri.parse(
+                      await SharedPrefHelper.getString(key: "facebook_link") ??
+                          'htpps://facebook.com');
                   if (!await launchUrl(url)) {
                     throw Exception('Could not launch $url');
                   }
@@ -373,8 +374,9 @@ class SettingsScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () async {
-                  Uri url = Uri.parse(Storage.getString("instagram_link") ??
-                      'htpps://instagram.com');
+                  Uri url = Uri.parse(
+                      await SharedPrefHelper.getString(key: "instagram_link") ??
+                          'htpps://instagram.com');
                   if (!await launchUrl(url)) {
                     throw Exception('Could not launch $url');
                   }
@@ -383,8 +385,10 @@ class SettingsScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () async {
-                  Uri url = Uri.parse(Storage.getString("whatsapp_link") ??
-                      'htpps://whatsapp.com');
+                  Uri url = Uri.parse(
+                    await SharedPrefHelper.getString(key: "whatsapp_link") ??
+                        "",
+                  );
                   if (!await launchUrl(url)) {
                     throw Exception('Could not launch $url');
                   }
@@ -428,8 +432,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               CupertinoSwitch(
-                value: Storage.getBool("fingerprints", defaultValue: false) ??
-                    false,
+                value: false,
                 onChanged: (value) async {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setBool('fingerprints', value);

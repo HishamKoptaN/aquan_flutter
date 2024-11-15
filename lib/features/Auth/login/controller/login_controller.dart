@@ -1,20 +1,19 @@
 import 'dart:convert';
 import 'package:aquan/core/database/api/routes.dart';
-import 'package:aquan/core/Helpers/storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../sign_up/controller/sign_up_controller.dart';
+import '../../sign_up/data/controller/sign_up_controller.dart';
+import '../data/models/login_request_body.dart';
 
 class LoginController {
-  Future<Map<String, dynamic>> login(String? email, String? password) async {
+  Future<Map<String, dynamic>> login(
+      {required LoginRequestBody loginRequestBody}) async {
     http.Response response = await http.post(
       Uri.parse(routes['login']!),
-      body: {
-        'email': email.toString(),
-        'password': password.toString(),
-      },
+      body: loginRequestBody,
     );
-    Map<String, dynamic> data = jsonDecode(response.body);
+    Map<String, dynamic> data = jsonDecode(
+      response.body,
+    );
     return data;
   }
 
@@ -47,29 +46,6 @@ class LoginController {
     }
 
     throw Exception(response.reasonPhrase);
-  }
-
-  Future<Map<String, dynamic>> isLogedIn(String? token) async {
-    http.Response response = await http.post(
-      Uri.parse(routes['check']!),
-      headers: await SignUpController.getAuthHeaders(),
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      return data;
-    }
-
-    throw Exception(response.reasonPhrase);
-  }
-
-  static Future<Map<String, String>> getAuthHeaders() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ${prefs.getString('auth_token')}',
-      'Locale': Storage.getString('language') ?? 'ar'
-    };
   }
 
   Future<Map<String, dynamic>> resetPassword(String email) async {

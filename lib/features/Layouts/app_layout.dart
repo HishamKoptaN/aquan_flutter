@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/utils/app_colors.dart';
-import '../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppLayout extends StatefulWidget {
   AppLayout({
@@ -11,11 +9,13 @@ class AppLayout extends StatefulWidget {
     required this.body,
     required this.showAppBar,
     this.backArow = true,
+    this.onPressed,
   });
   final String route;
   final Widget body;
   final bool showAppBar;
   final bool backArow;
+  void Function()? onPressed;
 
   @override
   State<AppLayout> createState() => _AppLayoutState();
@@ -35,15 +35,16 @@ class _AppLayoutState extends State<AppLayout> {
                 leading: widget.backArow
                     ? IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.black),
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NavigateBarView(),
-                            ),
-                            (route) => false,
-                          );
-                        },
+                        onPressed: widget.onPressed ??
+                            () {
+                              Navigator.pop(context);
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const NavigateBarView(),
+                              //   ),
+                              // );
+                            },
                       )
                     : null,
                 title: Text(
@@ -53,7 +54,12 @@ class _AppLayoutState extends State<AppLayout> {
                 centerTitle: true,
               )
             : null,
-        body: widget.body,
+        body: Padding(
+          padding: EdgeInsets.all(
+            4.sp,
+          ),
+          child: widget.body,
+        ),
       ),
     );
   }

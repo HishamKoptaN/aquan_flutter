@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/Helpers/storage.dart';
+import '../../core/helpers/shared_pref_helper.dart';
 
 class LanguageSetWidget extends StatelessWidget {
   LanguageSetWidget({
@@ -10,7 +9,7 @@ class LanguageSetWidget extends StatelessWidget {
     required this.onChanged,
   });
 
-  final String locale = Storage.getString('language') ?? 'en';
+  final String locale = 'ar';
 
   final Function()? onPress;
   final Function onChanged;

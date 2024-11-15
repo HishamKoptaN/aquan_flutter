@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:aquan/features/Auth/sign_up/controller/sign_up_controller.dart';
+import '../../Auth/sign_up/data/controller/sign_up_controller.dart';
 import 'package:aquan/core/database/api/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +24,7 @@ class DepositController {
   }) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.MultipartRequest(
-        'POST', Uri.parse('https://aquan.aquan.website/api/deposit'));
+        'POST', Uri.parse('https://app.aquan.website/app/deposit'));
     request.fields.addAll(
       {
         'amount': amount.text,

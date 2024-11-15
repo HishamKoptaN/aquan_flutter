@@ -1,12 +1,13 @@
-const String domain = "https://aquan.aquan.website/api";
+const String domain = "https://api.aquan.website/app";
+const String authDomain = "https://api.aquan.website/auth";
 
 const Map<String, dynamic> routes = {
-  "login": "$domain/login",
-  "register": "$domain/register",
-  "check": "$domain/check",
+  "login": "$authDomain/login",
+  "register": "$authDomain/register",
+  "check": "$authDomain/check",
   "buy_sell_status": "$domain/api/buy_sell_status",
   "password": {
-    "reset": "$domain/auth/reset-password",
+    "reset": "$authDomain/auth/reset-password",
   },
   //-------------------------------//
   "get-account-name": "$domain/get-account-by-id/",

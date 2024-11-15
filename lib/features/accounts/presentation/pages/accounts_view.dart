@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../core/Helpers/snack_bar.dart';
-import '../../../../core/database/api/dio_consumer.dart';
+import '../../../../core/utils/snack_bar.dart';
+import '../../../Layouts/app_layout.dart';
 import '../../data/datasources/accounts_remote_data_source.dart';
 import '../../data/repositories/accounts_repository_impl.dart';
 import '../../domain/usecases/get_accounts_usecase.dart';
@@ -23,29 +23,23 @@ class MyAccountsView extends StatefulWidget {
 class _MyAccountsViewState extends State<MyAccountsView> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: MyAppBar(title: t.myAccounts),
+    return AppLayout(
+      route: t.myAccounts,
+      showAppBar: true,
       body: Container(
         padding: const EdgeInsets.all(10),
         child: BlocProvider<AccountsBloc>(
           create: (context) => AccountsBloc(
             getAccountsUseCase: GetAccountsUseCase(
               repository: AccountsRepositoryImpl(
-                remoteDataSource: AccountsRemoteDataSource(
-                  api: DioConsumer(
-                    dio: Dio(),
-                  ),
-                ),
+                remoteDataSource: AccountsRemoteDataSource(),
               ),
             ),
             updateAccountsUseCase: UpdateAccountsUseCase(
               repository: AccountsRepositoryImpl(
-                remoteDataSource: AccountsRemoteDataSource(
-                  api: DioConsumer(
-                    dio: Dio(),
-                  ),
-                ),
+                remoteDataSource: AccountsRemoteDataSource(),
               ),
             ),
           )..add(GetAccountsEvent()),
@@ -60,7 +54,9 @@ class _MyAccountsViewState extends State<MyAccountsView> {
                       message: t.accountsUpdated,
                     ),
                   );
-                context.read<AccountsBloc>().add(GetAccountsEvent());
+                context.read<AccountsBloc>().add(
+                      GetAccountsEvent(),
+                    );
               }
               if (state is AccountsError) {
                 ScaffoldMessenger.of(context)
@@ -78,13 +74,22 @@ class _MyAccountsViewState extends State<MyAccountsView> {
             },
             builder: (context, state) {
               if (state is AccountsError) {
-                return const Center(
-                  child: Text(
-                    "Try Again",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                return Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      context.read<AccountsBloc>().add(
+                            UpdateAccountsEvent(
+                              accounts: state.accounts,
+                            ),
+                          );
+                    },
+                    child: const Text(
+                      "Try Again",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 );
@@ -92,7 +97,55 @@ class _MyAccountsViewState extends State<MyAccountsView> {
               if (state is AccountsLoaded) {
                 return Column(
                   children: [
-                    AccountsList(accounts: state.accounts),
+                    SizedBox(
+                      height: 500.h,
+                      child: ListView.builder(
+                        itemCount: state.accounts.length,
+                        itemBuilder: (context, index) {
+                          var account = state.accounts[index];
+                          TextEditingController controller =
+                              TextEditingController(
+                            text: account.accountNumber,
+                          );
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 20,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  account.currency.name,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Gap(10),
+                                SizedBox(
+                                  width: size.width,
+                                  child: TextFormField(
+                                    controller: controller,
+                                    onChanged: (value) {
+                                      state.accounts[index].accountNumber =
+                                          value;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.black),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     SubmitButton(
                       onPressed: () {
                         context.read<AccountsBloc>().add(
@@ -107,7 +160,9 @@ class _MyAccountsViewState extends State<MyAccountsView> {
                 );
               }
               return const Center(
-                child: CircularProgressIndicator(color: Colors.amber),
+                child: CircularProgressIndicator(
+                  color: Colors.amber,
+                ),
               );
             },
           ),
@@ -117,78 +172,56 @@ class _MyAccountsViewState extends State<MyAccountsView> {
   }
 }
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  const MyAppBar({super.key, required this.title});
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-      title: Text(title, style: const TextStyle(color: Colors.black)),
-      centerTitle: true,
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class AccountsList extends StatelessWidget {
-  final List<AccountEntity> accounts;
-  const AccountsList({super.key, required this.accounts});
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: 500.h,
-      child: ListView.builder(
-        itemCount: accounts.length,
-        itemBuilder: (context, index) {
-          var account = accounts[index];
-          TextEditingController controller =
-              TextEditingController(text: account.accountNumber);
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  account.currency.name,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Gap(10),
-                SizedBox(
-                  width: size.width,
-                  child: TextFormField(
-                    controller: controller,
-                    onChanged: (value) {
-                      accounts[index].accountNumber = value;
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+// class AccountsList extends StatelessWidget {
+//   final List<Account> accounts;
+//   const AccountsList({super.key, required this.accounts});
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 500.h,
+//       child: ListView.builder(
+//         itemCount: accounts.length,
+//         itemBuilder: (context, index) {
+//           var account = accounts[index];
+//           TextEditingController controller =
+//               TextEditingController(text: account.accountNumber);
+//           return Padding(
+//             padding: const EdgeInsets.only(bottom: 20),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   account.currency.name,
+//                   style: const TextStyle(
+//                     color: Colors.black,
+//                     fontSize: 20,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//                 const Gap(10),
+//                 SizedBox(
+//                   width: size.width,
+//                   child: TextFormField(
+//                     controller: controller,
+//                     onChanged: (value) {
+//                       accounts[index].accountNumber = value;
+//                     },
+//                     decoration: InputDecoration(
+//                       border: OutlineInputBorder(
+//                         borderSide: const BorderSide(color: Colors.black),
+//                         borderRadius: BorderRadius.circular(10),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class SubmitButton extends StatelessWidget {
   final VoidCallback onPressed;
