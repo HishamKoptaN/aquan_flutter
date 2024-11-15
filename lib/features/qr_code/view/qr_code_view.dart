@@ -6,7 +6,6 @@ import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../core/utils/app_colors.dart';
 import '../../Layouts/app_layout.dart';
 import '../bloc/qr_code_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

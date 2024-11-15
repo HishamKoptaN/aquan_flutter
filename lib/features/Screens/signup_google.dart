@@ -1,13 +1,11 @@
 import 'package:aquan/features/Auth/sign_up/bloc/sign_up_bloc.dart';
 import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/features/dash/presentation/view/dash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/di/dependency_injection.dart';
-import '../Auth/login/presentation/view/login_view.dart';
 import '../Auth/sign_up/bloc/sign_up_state.dart';
 
 class SignUpGoogle extends StatefulWidget {

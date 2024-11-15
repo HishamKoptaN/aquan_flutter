@@ -7,9 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/utils/app_colors.dart';
 import '../navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import '../profile/model/profile_model.dart';
 import 'bloc/verify_email_bloc.dart';
 
 class VerifyCode extends StatefulWidget {

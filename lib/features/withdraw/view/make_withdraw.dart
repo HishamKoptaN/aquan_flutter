@@ -1,7 +1,5 @@
-import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/core/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
