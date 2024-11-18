@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/di/dependency_injection.dart';
 import '../Plans/presentation/bloc/plans_bloc.dart';
 import '../dash/presentation/bloc/dash_bloc.dart';
+import '../dash/presentation/bloc/dash_event.dart';
 import '../trans/presentation/bloc/trans_bloc.dart';
 import 'bloc/bottom_navigation_bar_bloc.dart';
 import 'bloc/bottom_navigation_bar_event.dart';
@@ -39,10 +40,9 @@ class _NavigateBarViewState extends State<NavigateBarView> {
           create: (context) => NavigationBloc(),
         ),
         BlocProvider<DashBloc>(
-          create: (context) => DashBloc(
-            getIt(),
-          ),
-        ),
+            create: (context) => DashBloc(
+                  getDashUseCase: getIt(),
+                )),
         BlocProvider<TransBloc>(
           create: (context) => TransBloc(
             getIt(),

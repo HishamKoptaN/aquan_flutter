@@ -6,7 +6,9 @@ import '../../../features/Plans/domain/repo_imp/plans_repo_impl.dart';
 import '../../../features/buy_sell/data/repo/buy_sell_repo.dart';
 import '../../../features/buy_sell/domain/repo_impl/buy_sell_repo_impl.dart';
 import '../../../features/dash/data/repo/dash_repo.dart';
-import '../../../features/dash/domain/repo_imp/login_repo_impl.dart';
+import '../../../features/dash/domain/repo_imp/dash_repo_impl.dart';
+import '../../../features/deposit/data/repo/deposit_repo.dart';
+import '../../../features/deposit/domain/repo_imp/deposit_repo_impl.dart';
 import '../../../features/main/data/repo_impl/main_repo_impl.dart';
 import '../../../features/main/domain/repo/main_repo.dart';
 import '../../../features/trans/data/repo/transactions_repo.dart';
@@ -70,6 +72,16 @@ class RepositoryModule extends DIModule {
       ..registerLazySingleton<BuySellRepoImpl>(
         () => BuySellRepoImpl(
           getIt(),
+        ),
+      )
+      ..registerLazySingleton<DepositRepo>(
+        () => DepositRepoImpl(
+          depsoitApi: getIt(),
+        ),
+      )
+      ..registerLazySingleton<DepositRepoImpl>(
+        () => DepositRepoImpl(
+          depsoitApi: getIt(),
         ),
       );
   }

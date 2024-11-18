@@ -6,19 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:aquan/core/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../core/singletons/user_singleton.dart';
 import 'bloc/profile_bloc.dart';
 
 class ChangeProfileScreen extends StatefulWidget {
   const ChangeProfileScreen({
     super.key,
-    required this.userName,
-    required this.address,
-    required this.phone,
   });
-
-  final String userName;
-  final String address;
-  final String phone;
 
   @override
   State<ChangeProfileScreen> createState() => _ChangeProfileScreenState();
@@ -105,12 +99,12 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                 error = state.message;
               }
               if (state is ProfileDone) {
-                nameController =
-                    TextEditingController(text: state.data['name'] ?? "");
-                phoneController =
-                    TextEditingController(text: state.data['phone'] ?? "");
-                addressController =
-                    TextEditingController(text: state.data['address'] ?? "");
+                nameController = TextEditingController(
+                    text: UserSingleton.instance.user!.name);
+                phoneController = TextEditingController(
+                    text: UserSingleton.instance.user!.phone);
+                addressController = TextEditingController(
+                    text: UserSingleton.instance.user!.address);
 
                 // List<DropdownMenuItem<String>> countriesList = [];
                 // for (var country in countries) {
@@ -134,9 +128,9 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                     if (error != null)
                       Container(
                         padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: AppColors.danger,
-                          borderRadius: const BorderRadius.all(
+                          borderRadius: BorderRadius.all(
                             Radius.circular(5),
                           ),
                         ),

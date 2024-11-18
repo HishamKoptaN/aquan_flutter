@@ -24,7 +24,11 @@ class DepositController {
   }) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.MultipartRequest(
-        'POST', Uri.parse('https://app.aquan.website/app/deposit'));
+      'POST',
+      Uri.parse(
+        'https://api.aquan.website/app/deposit',
+      ),
+    );
     request.fields.addAll(
       {
         'amount': amount.text,

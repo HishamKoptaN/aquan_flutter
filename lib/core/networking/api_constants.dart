@@ -9,6 +9,8 @@ class ApiConstants {
   static const String plans = "plans";
   static const String plansRates = "plans-rates";
   static const String buySell = "buy-sell";
+  static const String deposit = "deposit";
+  static const String depositRates = "deposit/rates";
 }
 
 class ApiErrors {

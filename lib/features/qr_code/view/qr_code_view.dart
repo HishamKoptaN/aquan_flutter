@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../core/singletons/user_singleton.dart';
 import '../../Layouts/app_layout.dart';
 import '../bloc/qr_code_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,8 +82,8 @@ class _QrCodeViewState extends State<QrCodeView> {
                                             padding: const EdgeInsets.all(40.0),
                                             child: BarcodeWidget(
                                               barcode: Barcode.qrCode(),
-                                              data:
-                                                  state.user["account_number"],
+                                              data: UserSingleton
+                                                  .instance.user!.accountNumber,
                                               height: height / 3,
                                               width: width / 1.75,
                                             ),

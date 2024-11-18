@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/singletons/rates_single_ton.dart';
 import '../../domain/use_cases/get_dash_use_case.dart';
 import 'dash_event.dart';
 import 'dash_state.dart';
 
 class DashBloc extends Bloc<DashEvent, DashState> {
   final GetDashUseCase getDashUseCase;
-  DashBloc(this.getDashUseCase)
+  DashBloc({required this.getDashUseCase, s})
       : super(
           const DashState.initial(),
         ) {
@@ -20,7 +21,9 @@ class DashBloc extends Bloc<DashEvent, DashState> {
             await result.when(
               success: (dashResModel) async {
                 emit(
-                  const DashState.success(),
+                  DashState.dashloaded(
+                    dashResModel: dashResModel!,
+                  ),
                 );
               },
               failure: (apiErrorModel) async {

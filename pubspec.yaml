@@ -78,9 +78,9 @@ dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.1
   flutter_lints: ^3.0.0
-  # dart run flutter_native_splash:create --path=flutter_native_splash.yaml
   flutter_test:
     sdk: flutter
+  # dart run flutter_native_splash:create --path=flutter_native_splash.yaml
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true

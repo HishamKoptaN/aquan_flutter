@@ -3,6 +3,7 @@ import '../../../features/Auth/sign_up/data/data_sources/sign_up_api.dart';
 import '../../../features/Plans/data/data_source/plans_api.dart';
 import '../../../features/buy_sell/data/data_source/buy_sell_api.dart';
 import '../../../features/dash/data/data_sources/dash_api.dart';
+import '../../../features/deposit/data/data_sources/deposit_api.dart';
 import '../../../features/main/data/datasources/main_api.dart';
 import '../../../features/trans/data/data_source/trans_api.dart';
 import '../../networking/dio_factory.dart';
@@ -46,6 +47,11 @@ class ApiModule extends DIModule {
       )
       ..registerLazySingleton(
         () => BuySellApi(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => DepositApi(
           getIt(),
         ),
       );

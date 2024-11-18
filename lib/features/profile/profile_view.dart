@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../core/singletons/user_singleton.dart';
 import '../accounts/presentation/pages/accounts_view.dart';
 import 'bloc/profile_bloc.dart';
 import 'change_profile_view.dart';
@@ -45,280 +46,273 @@ class _ProfileViewState extends State<ProfileView> {
         centerTitle: true,
       ),
       body: BlocProvider<ProfileBloc>(
-        create: (context) => ProfileBloc()
-          ..add(
-            GetProfileUser(),
-          ),
+        create: (context) => ProfileBloc(),
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            if (state is ProfileDone) {
-              return ListView(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 150.sp,
-                        width: 150.sp,
-                        decoration: BoxDecoration(
+            return ListView(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 150.sp,
+                      width: 150.sp,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            UserSingleton.instance.user!.image,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(100.0),
+                        ),
+                        border: Border.all(
                           color: Colors.amber,
-                          image: DecorationImage(
-                            image: NetworkImage(state.data['image'] ?? ""),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(100.0),
-                          ),
-                          border: Border.all(
-                            color: Colors.amber,
-                            width: 6.0,
-                          ),
+                          width: 6.0,
                         ),
                       ),
-                      const Gap(10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(FontAwesomeIcons.user),
-                          const Gap(10),
-                          Text(
-                            state.data['name'] ?? "",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    ),
+                    const Gap(10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(FontAwesomeIcons.user),
+                        const Gap(10),
+                        Text(
+                          UserSingleton.instance.user!.name,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      const Gap(5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            FontAwesomeIcons.envelope,
+                        ),
+                      ],
+                    ),
+                    const Gap(5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          FontAwesomeIcons.envelope,
+                          color: Colors.grey,
+                        ),
+                        const Gap(10),
+                        Text(
+                          UserSingleton.instance.user!.email,
+                          style: const TextStyle(
                             color: Colors.grey,
+                            fontSize: 20,
                           ),
-                          const Gap(10),
-                          Text(
-                            state.data['email'] ?? "",
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Gap(5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            FontAwesomeIcons.phone,
+                        ),
+                      ],
+                    ),
+                    const Gap(5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          FontAwesomeIcons.phone,
+                          color: Colors.green,
+                          size: 16,
+                        ),
+                        const Gap(10),
+                        Text(
+                          UserSingleton.instance.user!.phone,
+                          style: const TextStyle(
                             color: Colors.green,
-                            size: 16,
-                          ),
-                          const Gap(10),
-                          Text(
-                            state.data['phone'].toString(),
-                            style: const TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Gap(30),
-                      InkWell(
-                        onTap: () {
-                          WidgetsBinding.instance.addPostFrameCallback(
-                            (_) => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const PlansView(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(color: Colors.grey),
-                              bottom: BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                FontAwesomeIcons.arrowUpFromBracket,
-                                color: Colors.grey,
-                              ),
-                              const Gap(20),
-                              Expanded(
-                                child: Text(
-                                  t.upgradeAccount,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              const Icon(
-                                FontAwesomeIcons.caretLeft,
-                                color: Colors.grey,
-                                size: 18,
-                              ),
-                            ],
+                            fontSize: 20,
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          WidgetsBinding.instance.addPostFrameCallback(
-                              (_) => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => MyAccountsView(),
-                                    ),
-                                  ));
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
+                      ],
+                    ),
+                    const Gap(30),
+                    InkWell(
+                      onTap: () {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const PlansView(),
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                FontAwesomeIcons.buildingColumns,
-                                color: Colors.grey,
-                              ),
-                              const Gap(20),
-                              Expanded(
-                                child: Text(
-                                  t.myAccounts,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              const Icon(
-                                FontAwesomeIcons.caretLeft,
-                                color: Colors.grey,
-                                size: 18,
-                              ),
-                            ],
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(color: Colors.grey),
+                            bottom: BorderSide(color: Colors.grey),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          WidgetsBinding.instance.addPostFrameCallback(
-                            (_) => Navigator.of(context)
-                                .push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ChangeProfileScreen(
-                                      userName: state.data['username'] ?? "",
-                                      phone: state.data['phone'].toString(),
-                                      address: state.data['address'] ?? "",
-                                    ),
-                                  ),
-                                )
-                                .then(
-                                  (value) => context
-                                      .read<ProfileBloc>()
-                                      .add(GetProfileUser()),
-                                ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.arrowUpFromBracket,
+                              color: Colors.grey,
                             ),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                FontAwesomeIcons.userGear,
-                                color: Colors.grey,
-                              ),
-                              const Gap(20),
-                              Expanded(
-                                child: Text(
-                                  t.changeProfile,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
+                            const Gap(20),
+                            Expanded(
+                              child: Text(
+                                t.upgradeAccount,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
                                 ),
                               ),
-                              const Icon(
-                                FontAwesomeIcons.caretLeft,
-                                color: Colors.grey,
-                                size: 18,
-                              ),
-                            ],
-                          ),
+                            ),
+                            const Icon(
+                              FontAwesomeIcons.caretLeft,
+                              color: Colors.grey,
+                              size: 18,
+                            ),
+                          ],
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          WidgetsBinding.instance.addPostFrameCallback(
-                            (_) => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ChangePasswordScreen(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MyAccountsView(),
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                FontAwesomeIcons.pen,
-                                color: Colors.grey,
-                              ),
-                              const Gap(20),
-                              Expanded(
-                                child: Text(
-                                  t.changePassword,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              const Icon(
-                                FontAwesomeIcons.caretLeft,
-                                color: Colors.grey,
-                                size: 18,
-                              ),
-                            ],
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey),
                           ),
                         ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.buildingColumns,
+                              color: Colors.grey,
+                            ),
+                            const Gap(20),
+                            Expanded(
+                              child: Text(
+                                t.myAccounts,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              FontAwesomeIcons.caretLeft,
+                              color: Colors.grey,
+                              size: 18,
+                            ),
+                          ],
+                        ),
                       ),
-                      const Gap(20),
-                    ],
-                  )
-                ],
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.amber,
-              ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => Navigator.of(context)
+                              .push(
+                                MaterialPageRoute(
+                                  builder: (context) => ChangeProfileScreen(
+                                      // userName: state.data['username'] ?? "",
+                                      // phone: state.data['phone'].toString(),
+                                      // address: state.data['address'] ?? "",
+                                      ),
+                                ),
+                              )
+                              .then(
+                                (value) => context
+                                    .read<ProfileBloc>()
+                                    .add(GetProfileUser()),
+                              ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.userGear,
+                              color: Colors.grey,
+                            ),
+                            const Gap(20),
+                            Expanded(
+                              child: Text(
+                                t.changeProfile,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              FontAwesomeIcons.caretLeft,
+                              color: Colors.grey,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const ChangePasswordScreen(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.pen,
+                              color: Colors.grey,
+                            ),
+                            const Gap(20),
+                            Expanded(
+                              child: Text(
+                                t.changePassword,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              FontAwesomeIcons.caretLeft,
+                              color: Colors.grey,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                  ],
+                )
+              ],
             );
           },
         ),

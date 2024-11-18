@@ -56,12 +56,17 @@ class _BuySellviewState extends State<BuySellview> {
             getBuySellRatesUse: getIt(),
             getReceiveAccountNumberUseCase: getIt(),
             transferMoneyUseCase: getIt(),
-          )..add(
-              const BuySellEvent.getBuySelRates(),
-            ),
+          ),
           child: BlocConsumer<BuySellBloc, BuySellState>(
             listener: (context, state) {},
             builder: (context, state) {
+              state.whenOrNull(
+                initial: () {
+                  context.read<BuySellBloc>().add(
+                        const BuySellEvent.getBuySelRates(),
+                      );
+                },
+              );
               return state.maybeWhen(
                 buySellRatesLoaded: (buySellResModel) {
                   return ListView(

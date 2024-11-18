@@ -13,6 +13,8 @@ abstract class DashApi {
     String baseUrl,
   }) = _DashApi;
 
-  @POST(ApiConstants.dash)
+  @GET(
+    ApiConstants.dash,
+  )
   Future<DashResModel> get();
 }

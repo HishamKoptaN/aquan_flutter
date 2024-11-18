@@ -31,11 +31,11 @@ void main() async {
   Bloc.observer = AppBlocObserver();
   await Settings.setup();
   runApp(
+    MyApp(),
     // DevicePreview(
     //   enabled: !kReleaseMode,
     //   builder: (context) => MyApp(), // Wrap your app
     // ),
-    MyApp(),
   );
 }
 

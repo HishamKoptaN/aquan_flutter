@@ -7,6 +7,9 @@ import '../../../features/buy_sell/domain/use_cases/get_buy_sell_rates_use_case.
 import '../../../features/buy_sell/domain/use_cases/get_receive_account_number_use_case.dart';
 import '../../../features/buy_sell/domain/use_cases/transfer_money_use_case.dart';
 import '../../../features/dash/domain/use_cases/get_dash_use_case.dart';
+import '../../../features/deposit/domain/use_cases/deposit_use_case.dart';
+import '../../../features/deposit/domain/use_cases/get_deposits_use_case.dart';
+import '../../../features/deposit/domain/use_cases/get_employee_account_use_case.dart';
 import '../../../features/main/domain/usecases/check_use_case.dart';
 import '../../../features/trans/domain/use_cases/get_transactions_use_case.dart';
 import '../dependency_injection.dart';
@@ -68,6 +71,21 @@ class UseCaseModule extends DIModule {
       ..registerLazySingleton(
         () => TransferMoneyUseCase(
           buySellRepoImp: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetDepositstUseCase(
+          depositRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetEmployeeAccountUseCase(
+          depositRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => DepositUseCase(
+          depositRepoImpl: getIt(),
         ),
       );
   }
