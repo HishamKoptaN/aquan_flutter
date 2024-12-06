@@ -10,10 +10,14 @@ import '../model/get_tasks_model.dart';
 import 'task_details.dart';
 
 class TasksScreen extends StatelessWidget {
-  const TasksScreen({super.key});
+  const TasksScreen({
+    super.key,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    context,
+  ) {
     Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
     return AppLayout(
@@ -41,14 +45,14 @@ class TasksScreen extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     Task task = state.getTasksApiResModel.tasks[index];
                     return InkWell(
-                      onTap: () => {
+                      onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => TaskScreen(
                               task: task,
                             ),
                           ),
-                        ),
+                        );
                       },
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 20),

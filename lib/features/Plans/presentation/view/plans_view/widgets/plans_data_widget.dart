@@ -1,20 +1,21 @@
-import 'package:aquan/core/singletons/user_singleton.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aquan/features/plans/data/model/change_plan_request_body_model.dart';
+import 'package:aquan/features/plans/data/model/plan_model.dart';
+import 'package:aquan/features/plans/presentation/view/plans_view/widgets/subscription_option.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../../../core/singletons/plans_singleton.dart';
+import '../../../../../../core/singletons/user_singleton.dart';
 import '../../../../../../core/widgets/custom_button_widget.dart';
 import '../../../../../../core/widgets/custom_text_widget.dart';
-import '../../../../data/model/change_plan_request_body_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../change_plan/change_plan_view.dart';
-import 'subscription_option.dart';
 
 class PlansDataWidget extends StatefulWidget {
-  const PlansDataWidget({
+  PlansDataWidget({
     super.key,
+    required this.plans,
   });
-
+  List<Plan> plans;
   @override
   State<PlansDataWidget> createState() => _PlansDataWidgetState();
 }
@@ -61,9 +62,9 @@ class _PlansDataWidgetState extends State<PlansDataWidget> {
               child: ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: PlansSingleton.instance.get!.length,
+                itemCount: widget.plans.length,
                 itemBuilder: (context, index) {
-                  final plan = PlansSingleton.instance.get![index];
+                  final plan = widget.plans[index];
                   return GestureDetector(
                     onTap: () {
                       if (plan.id != UserSingleton.instance.user!.planId) {
@@ -116,19 +117,13 @@ class _PlansDataWidgetState extends State<PlansDataWidget> {
             ),
             CustomButtonWidget(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const SingleOpenExpansionList(),
-                //   ),
-                // );
                 if (_isChecked &&
                     ChangePlanRequestBodyModel().planInvoiceId != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ChangePlanView(
-                        plan: PlansSingleton.instance.get!
+                        plan: widget.plans
                             .where(
                               (plan) =>
                                   plan.id ==

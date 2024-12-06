@@ -13,6 +13,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/utils/snack_bar.dart';
 import '../../../core/widgets/custom_text_widget.dart';
+import '../../../core/widgets/toast_notifier.dart';
 import '../model/get_tasks_model.dart';
 import 'tasks_view.dart';
 
@@ -35,15 +36,6 @@ class _TaskScreenState extends State<TaskScreen> {
     return AppLayout(
       route: t.task,
       showAppBar: true,
-      onPressed: () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const TasksScreen(),
-          ),
-          (route) => false,
-        );
-      },
       body: Container(
         padding: const EdgeInsets.all(8.00),
         child: BlocProvider<TaskBloc>(
@@ -56,14 +48,10 @@ class _TaskScreenState extends State<TaskScreen> {
           child: BlocConsumer<TaskBloc, TaskState>(
             listener: (context, state) {
               if (state is ApproveSendSuccessfully) {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    snackBar(
-                      status: true,
-                      message: 'Approve send successfully',
-                    ),
-                  );
+                ToastNotifier().showSuccess(
+                  context: context,
+                  message: t.success,
+                );
                 context.read<TaskBloc>().add(
                       GetTaskDetails(
                         id: widget.task.id,

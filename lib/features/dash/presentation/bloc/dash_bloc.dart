@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/singletons/rates_single_ton.dart';
+import '../../../../core/singletons/currencies_singleton.dart';
 import '../../domain/use_cases/get_dash_use_case.dart';
 import 'dash_event.dart';
 import 'dash_state.dart';
@@ -20,9 +20,12 @@ class DashBloc extends Bloc<DashEvent, DashState> {
             final result = await getDashUseCase.get();
             await result.when(
               success: (dashResModel) async {
+                CurrenciesSingleton.instance.load(
+                  currencies: dashResModel!.currencies,
+                );
                 emit(
                   DashState.dashloaded(
-                    dashResModel: dashResModel!,
+                    dashResModel: dashResModel,
                   ),
                 );
               },

@@ -1,6 +1,6 @@
+import 'package:aquan/features/plans/data/model/plan_rate.dart';
+import 'package:aquan/features/plans/domain/repo_imp/plans_repo_impl.dart';
 import '../../../../core/networking/api_result.dart';
-import '../../data/model/plan_rate.dart';
-import '../repo_imp/plans_repo_impl.dart';
 
 class GetPlansRatesUseCase {
   final PlansRepoImpl plansRepoImp;

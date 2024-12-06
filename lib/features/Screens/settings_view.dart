@@ -7,12 +7,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../core/helpers/constants.dart';
 import '../../core/helpers/shared_pref_helper.dart';
 import '../Auth/login/presentation/view/login_view.dart';
 import '../Language/view/change_language_view.dart';
-import '../Plans/presentation/view/plans_view/plans_view.dart';
+import '../notifications/present/view/notifications_view.dart';
+import '../plans/presentation/view/plans_view/plans_view.dart';
 import '../support/view/support_view.dart';
 import '../tasks/view/tasks_view.dart';
 import '../trans/presentation/view/trans_view.dart';
@@ -22,8 +23,16 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   void setFingerprints(value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('fingerprints', value);
+    await SharedPrefHelper.setData(
+      key: SharedPrefKeys.fingerprints,
+      value: value,
+    );
+  }
+
+  Future<bool> getFingerprints() async {
+    return await SharedPrefHelper.getBool(
+      key: SharedPrefKeys.fingerprints,
+    );
   }
 
   @override
@@ -200,12 +209,12 @@ class SettingsScreen extends StatelessWidget {
             title: t.enableNotifications,
             icon: FontAwesomeIcons.bell,
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const NotificationsView(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationsView(),
+                ),
+              );
             },
           ),
           SettingsTabWidget(
@@ -218,12 +227,12 @@ class SettingsScreen extends StatelessWidget {
           SettingsTabWidget(
             title: t.tasks,
             icon: Icons.task,
-            onTap: () => {
+            onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const TasksScreen(),
                 ),
-              )
+              );
             },
           ),
           // SettingsTabWidget(
@@ -408,7 +417,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  void showBiometricBottomSheet(BuildContext context) {
+  void showBiometricBottomSheet(BuildContext context) async {
     showModalBottomSheet(
       useRootNavigator: true,
       useSafeArea: true,
@@ -416,32 +425,55 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) {
         final size = MediaQuery.of(context).size;
-        return Container(
-          height: size.height * .2,
-          width: size.width,
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Biometrics Authentication', // استخدم النص الخاص بك هنا
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(height: 20),
-              CupertinoSwitch(
-                value: false,
-                onChanged: (value) async {
-                  final prefs = await SharedPreferences.getInstance();
-                  await prefs.setBool('fingerprints', value);
-                  await Future.delayed(const Duration(microseconds: 50));
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
+        return FutureBuilder<bool>(
+          future: getFingerprints(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text('Error loading biometric settings.'),
+              );
+            }
+            bool initValue = snapshot.data ?? false;
+
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return Container(
+                  height: size.height * .2,
+                  width: size.width,
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Biometrics Authentication',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      CupertinoSwitch(
+                        value: initValue,
+                        onChanged: (value) async {
+                          setState(
+                            () {
+                              initValue = value;
+                            },
+                          );
+                          setFingerprints(
+                            value,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         );
       },
     );

@@ -1,18 +1,18 @@
-import 'package:aquan/features/Layouts/app_layout.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import '../../../../core/singletons/user_singleton.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
-import '../../../Plans/presentation/view/plans_view/plans_view.dart';
-import '../../../deposit/pesent/view/make_deposit_view/make_deposit_view.dart';
+import '../../../Layouts/app_layout.dart';
+import '../../../deposit/view/make_deposit_view.dart';
+import '../../../plans/presentation/view/plans_view/plans_view.dart';
 import '../../../profile/profile_view.dart';
 import '../../../trans/presentation/view/trans_view.dart';
-import '../../../withdraw/view/make_withdraw.dart';
+import '../../../withdraw/present/view/make_withdraw.dart';
 import 'widgets/last_two_operation_widget.dart';
 import 'widgets/rates_widget.dart';
 
@@ -271,7 +271,9 @@ class _DashViewState extends State<DashView> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const MakeDepositView(),
+                            builder: (context) => const MakeDepositView(
+                                // currencies: dashResModel.currencies,
+                                ),
                           ),
                         );
                       },

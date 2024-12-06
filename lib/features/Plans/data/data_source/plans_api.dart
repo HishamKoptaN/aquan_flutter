@@ -26,7 +26,7 @@ abstract class PlansApi {
   Future<PlanRate> getPlansRates();
   // ! Change plan rate
   @POST(
-    ApiConstants.plansRates,
+    ApiConstants.plans,
   )
   Future<void> change({
     @Body() required FormData formData,

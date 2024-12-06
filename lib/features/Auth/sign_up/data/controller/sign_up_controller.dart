@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../../core/helpers/constants.dart';
+import '../../../../../core/helpers/shared_pref_helper.dart';
 import '../../../../profile/model/profile_model.dart';
 
 class SignUpController {
@@ -65,11 +66,13 @@ class SignUpController {
   }
 
   static Future<Map<String, String>> getAuthHeaders() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    dynamic userToken = await SharedPrefHelper.getSecuredString(
+      key: SharedPrefKeys.userToken,
+    );
     return {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${prefs.getString('auth_token')}',
+      'Authorization': 'Bearer $userToken',
       // 'Locale': Storage.getString('language') ?? 'ar'
     };
   }

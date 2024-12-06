@@ -1,13 +1,11 @@
-import 'package:aquan/features/accounts/domain/entities/account.dart';
 import 'package:aquan/features/accounts/domain/usecases/update_accounts_usecase.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../../../../core/utils/snack_bar.dart';
+import '../../../../core/widgets/toast_notifier.dart';
 import '../../../Layouts/app_layout.dart';
 import '../../data/datasources/accounts_remote_data_source.dart';
 import '../../data/repositories/accounts_repository_impl.dart';
@@ -46,30 +44,20 @@ class _MyAccountsViewState extends State<MyAccountsView> {
           child: BlocConsumer<AccountsBloc, AccountsState>(
             listener: (context, state) {
               if (state is AccountsUpdatedSuccess) {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    snackBar(
-                      status: true,
-                      message: t.accountsUpdated,
-                    ),
-                  );
+                ToastNotifier().showSuccess(
+                  context: context,
+                  message: t.success,
+                );
+
                 context.read<AccountsBloc>().add(
                       GetAccountsEvent(),
                     );
               }
               if (state is AccountsError) {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    snackBar(
-                      status: false,
-                      message: state.message,
-                    ),
-                  );
-                if (kDebugMode) {
-                  print(state.message);
-                }
+                ToastNotifier().showError(
+                  context: context,
+                  message: t.error,
+                );
               }
             },
             builder: (context, state) {

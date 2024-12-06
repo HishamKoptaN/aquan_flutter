@@ -83,9 +83,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         Radius.circular(5),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       "state.message!",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -100,9 +100,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         Radius.circular(5),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       " state.message",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                       ),
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/singletons/plans_singleton.dart';
 import '../../domain/use_cases/change_plan_use_case.dart';
 import '../../domain/use_cases/get_plans_rates_use_case.dart';
 import '../../domain/use_cases/get_plans_use_case.dart';
@@ -21,31 +20,26 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
       (event, emit) async {
         await event.when(
           get: () async {
-            if (PlansSingleton.instance.get != null) {
-              emit(
-                const PlansState.plansLoaded(),
-              );
-            } else {
-              emit(
-                const PlansState.loading(),
-              );
-              final result = await getPlansUseCase.get();
-              await result.when(
-                success: (resultPlanRate) async {
-                  PlansSingleton.instance.plans = resultPlanRate!;
-                  emit(
-                    const PlansState.plansLoaded(),
-                  );
-                },
-                failure: (apiErrorModel) async {
-                  emit(
-                    PlansState.failure(
-                      apiErrorModel: apiErrorModel,
-                    ),
-                  );
-                },
-              );
-            }
+            emit(
+              const PlansState.loading(),
+            );
+            final result = await getPlansUseCase.get();
+            await result.when(
+              success: (plans) async {
+                emit(
+                  PlansState.plansLoaded(
+                    plans: plans!,
+                  ),
+                );
+              },
+              failure: (apiErrorModel) async {
+                emit(
+                  PlansState.failure(
+                    apiErrorModel: apiErrorModel,
+                  ),
+                );
+              },
+            );
           },
           getPlansRates: () async {
             emit(

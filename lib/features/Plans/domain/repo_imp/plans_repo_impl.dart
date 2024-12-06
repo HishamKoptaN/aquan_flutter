@@ -1,11 +1,10 @@
+import 'package:aquan/features/plans/data/data_source/plans_api.dart';
+import 'package:aquan/features/plans/data/model/plan_model.dart';
+import 'package:aquan/features/plans/data/model/plan_rate.dart';
+import 'package:aquan/features/plans/data/repo/plans_repo.dart';
 import 'package:dio/dio.dart';
-
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
-import '../../data/data_source/plans_api.dart';
-import '../../data/model/plan_model.dart';
-import '../../data/model/plan_rate.dart';
-import '../../data/repo/plans_repo.dart';
 
 class PlansRepoImpl implements PlansRepo {
   final PlansApi plansApi;

@@ -1,16 +1,17 @@
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/plans/data/model/change_plan_request_body_model.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_bloc.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_event.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_state.dart';
+import 'package:aquan/features/plans/presentation/view/plans_view/widgets/plans_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:aquan/features/Plans/presentation/bloc/plans_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/dependency_injection.dart';
+import '../../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/try_againwidget.dart';
-import '../../../data/model/change_plan_request_body_model.dart';
-import '../../bloc/plans_event.dart';
-import '../../bloc/plans_state.dart';
-import 'widgets/plans_data_widget.dart';
+import '../../../../Layouts/app_layout.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlansView extends StatefulWidget {
   const PlansView({super.key});
@@ -64,8 +65,10 @@ class _PlansViewState extends State<PlansView> {
           },
           builder: (context, state) {
             return state.maybeWhen(
-              plansLoaded: () {
-                return const PlansDataWidget();
+              plansLoaded: (plans) {
+                return PlansDataWidget(
+                  plans: plans,
+                );
               },
               failure: (error) {
                 return Center(
@@ -78,7 +81,7 @@ class _PlansViewState extends State<PlansView> {
               },
               loading: () {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CustomCircularProgress(),
                 );
               },
               orElse: () {

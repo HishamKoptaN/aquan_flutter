@@ -10,6 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/utils/snack_bar.dart';
+import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
@@ -69,14 +70,10 @@ class _LoginViewState extends State<LoginView> {
               );
             },
             error: (error) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar(
-                    status: false,
-                    message: error.apiErrorModel.error!,
-                  ),
-                );
+              ToastNotifier().showError(
+                context: context,
+                message: t.error,
+              );
             },
           );
         },

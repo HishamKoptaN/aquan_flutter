@@ -1,10 +1,11 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aquan/features/plans/data/model/change_plan_request_body_model.dart';
+import 'package:aquan/features/plans/data/model/plan_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../../../core/singletons/user_singleton.dart';
 import '../../../../../../core/widgets/custom_text_widget.dart';
-import '../../../../data/model/change_plan_request_body_model.dart';
-import '../../../../data/model/plan_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SubscriptionOption extends StatefulWidget {
   SubscriptionOption({

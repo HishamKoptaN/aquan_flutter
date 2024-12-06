@@ -1,4 +1,4 @@
-import '../../features/Plans/data/model/plan_rate.dart';
+import '../../features/plans/data/model/plan_rate.dart';
 
 class PlanRateSingleton {
   PlanRate? _planRate;

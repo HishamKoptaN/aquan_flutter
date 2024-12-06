@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/Helpers/app_observer.dart';
 import 'core/Helpers/constants.dart';
 import 'core/Helpers/shared_pref_helper.dart';
-import 'core/networking/dio_factory.dart';
 import 'core/utils/app_colors.dart';
 import 'features/Auth/login/presentation/view/login_view.dart';
 import 'features/Layouts/app_layout.dart';
@@ -21,6 +20,10 @@ void main() async {
   await Injection.inject();
   await ScreenUtil.ensureScreenSize();
   SharedPrefHelper;
+  String locale = await SharedPrefHelper.getString(
+        key: SharedPrefKeys.languageCode,
+      ) ??
+      'ar';
   FlutterError.onError = (
     details,
   ) {
@@ -31,7 +34,9 @@ void main() async {
   Bloc.observer = AppBlocObserver();
   await Settings.setup();
   runApp(
-    MyApp(),
+    MyApp(
+      locale: locale,
+    ),
     // DevicePreview(
     //   enabled: !kReleaseMode,
     //   builder: (context) => MyApp(), // Wrap your app
@@ -40,11 +45,16 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  String locale = 'ar';
+  MyApp({
+    super.key,
+    required this.locale,
+  });
+  final String locale;
   Color color = AppColors.primary;
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    context,
+  ) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -115,7 +125,9 @@ class MyApp extends StatelessWidget {
                 },
                 builder: (context, state) {
                   state.whenOrNull();
-                  return Image.asset("assets/icon/aquan-logo-gif.gif");
+                  return Image.asset(
+                    "assets/icon/aquan-logo-gif.gif",
+                  );
                 },
               ),
             ),
@@ -140,12 +152,9 @@ class RestartWidget extends StatefulWidget {
 class _RestartWidgetState extends State<RestartWidget> {
   Key key = UniqueKey();
   void restartApp() {
-    // StyleColors.init();
-    setState(
-      () {
-        key = UniqueKey();
-      },
-    );
+    setState(() {
+      key = UniqueKey();
+    });
   }
 
   @override
@@ -155,14 +164,4 @@ class _RestartWidgetState extends State<RestartWidget> {
       child: widget.child,
     );
   }
-}
-
-Future<void> saveUserToken(String token) async {
-  await SharedPrefHelper.setSecuredString(
-    key: SharedPrefKeys.userToken,
-    value: token,
-  );
-  DioFactory.setTokenIntoHeaderAfterLogin(
-    token,
-  );
 }

@@ -8,7 +8,7 @@ import '../buy_sell/presentation/view/buy_sell_view.dart';
 import '../dash/presentation/view/dash_view.dart';
 import '../profile/profile_view.dart';
 import '../qr_code/view/qr_code_view.dart';
-import '../send_to_account/view/send_to_account_view.dart';
+import '../send_to_account/present/view/send_to_account_view.dart';
 
 class NavigatorBottomBarCnr {
   final List<Widget> pages = [

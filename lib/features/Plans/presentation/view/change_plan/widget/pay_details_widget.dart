@@ -1,15 +1,18 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:aquan/features/plans/data/model/change_plan_request_body_model.dart';
+import 'package:aquan/features/plans/data/model/plan_model.dart';
+import 'package:aquan/features/plans/data/model/plan_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_bloc.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_state.dart';
+
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/widgets/custom_text_widget.dart';
-import '../../../../data/model/change_plan_request_body_model.dart';
-import '../../../../data/model/plan_model.dart';
-import '../../../../data/model/plan_rate.dart';
 
 class PayDetailsWidget extends StatefulWidget {
   const PayDetailsWidget({

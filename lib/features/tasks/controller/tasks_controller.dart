@@ -10,16 +10,17 @@ class TasksController {
       Uri.parse(routes['tasks']!),
       headers: await SignUpController.getAuthHeaders(),
     );
-    Map<String, dynamic> data = jsonDecode(response.body);
+    Map<String, dynamic> data = jsonDecode(
+      response.body,
+    );
     return data;
   }
 
   Future<Map<String, dynamic>> getTaskDetails(int id) async {
     try {
-      var headers = await SignUpController.getAuthHeaders();
       var response = await http.get(
         Uri.parse('https://api.aquan.website/app/tasks/$id'),
-        headers: headers,
+        headers: await SignUpController.getAuthHeaders(),
       );
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
@@ -34,8 +35,17 @@ class TasksController {
   Future<Map<String, dynamic>> sendProof(int id, File file) async {
     var headers = await SignUpController.getAuthHeaders();
     var request = http.MultipartRequest(
-        'POST', Uri.parse('https://api.aquan.website/app/tasks/$id'));
-    request.files.add(await http.MultipartFile.fromPath('image', file.path));
+      'POST',
+      Uri.parse(
+        'https://api.aquan.website/app/tasks/$id',
+      ),
+    );
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'image',
+        file.path,
+      ),
+    );
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     var responseData = await response.stream.toBytes();

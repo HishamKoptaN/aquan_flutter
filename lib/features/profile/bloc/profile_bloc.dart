@@ -3,14 +3,11 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Auth/login/controller/login_controller.dart';
 import '../controller/profile_controller.dart';
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final LoginController userController = LoginController();
-
   final ProfileController profileController = ProfileController();
   ProfileBloc() : super(ProfileInitial()) {
     on<GetProfileUser>(

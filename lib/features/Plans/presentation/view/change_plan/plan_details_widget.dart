@@ -1,22 +1,24 @@
+import 'package:aquan/features/plans/data/model/plan_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'change_plan_view.dart';
 
 class PlanDetailsWidget extends StatelessWidget {
   const PlanDetailsWidget({
     super.key,
     required this.t,
-    required this.widget,
     required this.features,
+    required this.plan,
   });
 
   final AppLocalizations t;
-  final ChangePlanView widget;
   final List<String> features;
+  final Plan plan;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    context,
+  ) {
     return Container(
       height: 150.h,
       margin: EdgeInsets.only(
@@ -40,14 +42,14 @@ class PlanDetailsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${t.level} ${widget.plan.name}",
+                    "${t.level} ${plan.name}",
                     style: TextStyle(
                       fontSize: 18.sp,
                       color: Colors.black,
                     ),
                   ),
                   Text(
-                    widget.plan.amount > 0 ? '\$${widget.plan.amount}' : t.free,
+                    plan.amount > 0 ? '\$${plan.amount}' : t.free,
                     style: TextStyle(
                       fontSize: 15.sp,
                       color: Colors.grey,

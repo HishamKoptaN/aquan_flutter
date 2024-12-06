@@ -11,6 +11,7 @@ import '../../../../core/utils/snack_bar.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
+import '../../../../core/widgets/toast_notifier.dart';
 import '../../../Widgets/convert_currency_price.dart';
 import '../bloc/buy_sell_event.dart';
 import '../bloc/buy_sell_state.dart';
@@ -464,58 +465,40 @@ class _BuySellviewState extends State<BuySellview> {
                                                   toAmountController.text,
                                                 ) <
                                                 10.0) {
-                                              ScaffoldMessenger.of(context)
-                                                ..hideCurrentSnackBar()
-                                                ..showSnackBar(
-                                                  snackBar(
-                                                    status: false,
-                                                    message:
-                                                        "${t.min_transfer} 10 \$",
-                                                  ),
-                                                );
+                                              ToastNotifier().showError(
+                                                context: context,
+                                                message:
+                                                    "${t.min_transfer} 10 \$",
+                                              );
                                             } else if (fromWallet!.id == 2) {
                                               if (buySellResModel
                                                       .totalMonthlyTransfers! >
                                                   buySellResModel
                                                       .monthlyTransferCount!) {
-                                                ScaffoldMessenger.of(
-                                                  context,
-                                                )
-                                                  ..hideCurrentSnackBar()
-                                                  ..showSnackBar(
-                                                    snackBar(
-                                                      status: false,
-                                                      message: t
-                                                          .monthly_transfer_limit,
-                                                    ),
-                                                  );
+                                                ToastNotifier().showError(
+                                                  context: context,
+                                                  message:
+                                                      t.monthly_transfer_limit,
+                                                );
                                               } else if (buySellResModel
                                                       .totalDailyTransfers! >
                                                   buySellResModel
                                                       .dailyTransferCount!) {
-                                                ScaffoldMessenger.of(context)
-                                                  ..hideCurrentSnackBar()
-                                                  ..showSnackBar(
-                                                    snackBar(
-                                                      status: false,
-                                                      message: t
-                                                          .daily_transfer_limit,
-                                                    ),
-                                                  );
+                                                ToastNotifier().showError(
+                                                  context: context,
+                                                  message:
+                                                      t.daily_transfer_limit,
+                                                );
                                               } else if (double.parse(
                                                     toAmountController.text,
                                                   ) >
                                                   buySellResModel
                                                       .maxTransferCount!) {
-                                                ScaffoldMessenger.of(context)
-                                                  ..hideCurrentSnackBar()
-                                                  ..showSnackBar(
-                                                    snackBar(
-                                                      status: false,
-                                                      message:
-                                                          "${t.max_transfer} : ${buySellResModel.maxTransferCount.toString()}",
-                                                    ),
-                                                  );
+                                                ToastNotifier().showError(
+                                                  context: context,
+                                                  message:
+                                                      "${t.max_transfer} : ${buySellResModel.maxTransferCount.toString()}",
+                                                );
                                               } else {
                                                 String newAmount =
                                                     fromAmountController.text

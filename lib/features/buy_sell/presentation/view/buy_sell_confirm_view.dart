@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/utils/snack_bar.dart';
+import '../../../../core/widgets/toast_notifier.dart';
 import '../../../Layouts/app_layout.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../bloc/buy_sell_bloc.dart';
@@ -64,14 +65,11 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
             listener: (context, state) {
               state.whenOrNull(
                 success: () {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      snackBar(
-                        status: true,
-                        message: t.transfer_successfully,
-                      ),
-                    );
+                  ToastNotifier().showSuccess(
+                    context: context,
+                    message: t.success,
+                  );
+
                   WidgetsBinding.instance.addPostFrameCallback(
                     (_) {
                       Navigator.pushAndRemoveUntil(
@@ -85,14 +83,10 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                   );
                 },
                 failure: (error) {
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      snackBar(
-                        status: false,
-                        message: error.error!,
-                      ),
-                    );
+                  ToastNotifier().showError(
+                    context: context,
+                    message: t.error,
+                  );
                 },
               );
             },

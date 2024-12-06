@@ -19,7 +19,7 @@ const Map<String, dynamic> routes = {
   "currencies": "$domain/currencies",
   "public": "$domain/public",
   "plan_rates": "$domain/plan/rates",
-  "deposit_rates": "$domain/deposit/rates",
+  "deposit/rates": "$domain/deposit/rates",
   "tasks": "$domain/tasks",
   "withdraws_deposits": "$domain/withdraws-deposits",
   "notifications": "$domain/notifications",
@@ -39,7 +39,7 @@ const Map<String, dynamic> routes = {
   "transactions": "$domain/transactions",
   "deposit": "$domain/deposit",
   "withdraw": "$domain/withdraw",
-  "withdraw_rates": "$domain/withdraw/rates",
+  "withdraw/rates": "$domain/withdraw/rates",
   "transfer": "$domain/transfer",
 //-------------------------------//
   "settings": "$domain/settings",

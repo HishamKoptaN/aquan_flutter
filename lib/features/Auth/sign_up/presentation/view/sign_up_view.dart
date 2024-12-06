@@ -8,6 +8,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../../core/utils/snack_bar.dart';
 import '../../../../../core/di/dependency_injection.dart';
+import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../../../login/presentation/view/login_view.dart';
 import '../../bloc/sign_up_event.dart';
@@ -77,31 +78,23 @@ class _SignUpViewState extends State<SignUpView> {
       child: BlocConsumer<SignUpBloc, SignUpState>(
         listener: (context, state) {
           state.maybeWhen(
-            error: (error) async {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar(
-                    status: false,
-                    message: error.error!,
-                  ),
-                );
-            },
             success: (apiErrorModel) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar(
-                    status: true,
-                    message: "Success",
-                  ),
-                );
+              ToastNotifier().showSuccess(
+                context: context,
+                message: t!.success,
+              );
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const NavigateBarView(),
                 ),
                 (route) => false,
+              );
+            },
+            error: (error) async {
+              ToastNotifier().showError(
+                context: context,
+                message: t!.error,
               );
             },
             orElse: () {},

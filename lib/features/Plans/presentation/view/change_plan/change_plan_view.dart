@@ -1,25 +1,25 @@
 import 'dart:io';
 
-import 'package:aquan/features/Layouts/app_layout.dart';
-import 'package:aquan/features/Plans/presentation/bloc/plans_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aquan/features/plans/data/model/change_plan_request_body_model.dart';
+import 'package:aquan/features/plans/data/model/plan_model.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_bloc.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_event.dart';
+import 'package:aquan/features/plans/presentation/bloc/plans_state.dart';
+import 'package:aquan/features/plans/presentation/view/change_plan/plan_details_widget.dart';
+import 'package:aquan/features/plans/presentation/view/change_plan/widget/pay_details_widget.dart';
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/snack_bar.dart';
+import '../../../../../core/widgets/toast_notifier.dart';
+import '../../../../Layouts/app_layout.dart';
 import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import '../../../data/model/change_plan_request_body_model.dart';
-import '../../../data/model/plan_model.dart';
-import '../../bloc/plans_event.dart';
-import '../../bloc/plans_state.dart';
-import 'plan_details_widget.dart';
-import 'widget/pay_details_widget.dart';
 
 class ChangePlanView extends StatefulWidget {
   const ChangePlanView({
@@ -51,11 +51,9 @@ class _ChangePlanViewState extends State<ChangePlanView> {
           listener: (context, state) {
             state.whenOrNull(
               success: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  snackBar(
-                    status: true,
-                    message: "Pay Done successfully",
-                  ),
+                ToastNotifier().showSuccess(
+                  context: context,
+                  message: t.success,
                 );
                 WidgetsBinding.instance.addPostFrameCallback(
                   (_) {
@@ -70,11 +68,9 @@ class _ChangePlanViewState extends State<ChangePlanView> {
                 );
               },
               failure: (apiErrorModel) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  snackBar(
-                    status: true,
-                    message: "Pay Failed",
-                  ),
+                ToastNotifier().showError(
+                  context: context,
+                  message: t.error,
                 );
               },
             );
@@ -95,7 +91,7 @@ class _ChangePlanViewState extends State<ChangePlanView> {
                     children: [
                       PlanDetailsWidget(
                         t: t,
-                        widget: widget,
+                        plan: widget.plan,
                         features: features,
                       ),
                       Gap(35.h),
