@@ -16,7 +16,6 @@ import '../../../core/utils/snack_bar.dart';
 import '../../../core/widgets/custom_text_widget.dart';
 import '../../../core/widgets/toast_notifier.dart';
 import '../../dash/data/model/dash_res_model.dart';
-import '../controller/deposit_controller.dart';
 
 class MakeDepositView extends StatefulWidget {
   const MakeDepositView({
@@ -27,7 +26,6 @@ class MakeDepositView extends StatefulWidget {
 }
 
 class _MakeDepositViewState extends State<MakeDepositView> {
-  DepositController depositController = DepositController();
   final formkey = GlobalKey<FormState>();
   final TextEditingController amountController = TextEditingController();
   Currency? currency;

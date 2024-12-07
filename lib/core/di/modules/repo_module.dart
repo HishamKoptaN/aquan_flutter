@@ -13,6 +13,8 @@ import '../../../features/main/data/repo_impl/main_repo_impl.dart';
 import '../../../features/main/domain/repo/main_repo.dart';
 import '../../../features/send_to_account/data/repo/send_to_account_repo.dart';
 import '../../../features/send_to_account/domain/repo_imp/send_to_account_repo_impl.dart';
+import '../../../features/support/data/repo/support_repo.dart';
+import '../../../features/support/domain/repo_impl/support_repo_impl.dart';
 import '../../../features/trans/data/repo/transactions_repo.dart';
 import '../../../features/trans/domain/repo_imp/transactions_repo_impl.dart';
 import '../../../features/withdraw/data/repo/withdraws_repo.dart';
@@ -23,90 +25,101 @@ class RepositoryModule extends DIModule {
   @override
   Future<void> provides() async {
     getIt
-      ..registerLazySingleton<MainRepo>(
-        () => MainRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<LoginRepoImpl>(
-        () => LoginRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<SignUpRepo>(
-        () => SignUpRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<DashRepo>(
-        () => DashRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<DashRepoImpl>(
-        () => DashRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<TransRepoImpl>(
-        () => TransRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<TransRepo>(
-        () => TransRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<WithdrawsRepoImpl>(
-        () => WithdrawsRepoImpl(
-          withdrawsApi: getIt(),
-        ),
-      )
-      ..registerLazySingleton<WithdrawsRepo>(
-        () => WithdrawsRepoImpl(
-          withdrawsApi: getIt(),
-        ),
-      )
-      ..registerLazySingleton<PlansRepoImpl>(
-        () => PlansRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<PlansRepo>(
-        () => PlansRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<BuySellRepo>(
-        () => BuySellRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<BuySellRepoImpl>(
-        () => BuySellRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<SendToAccountRepo>(
-        () => SendToAccountRepoImpl(
-          sendToAccountApi: getIt(),
-        ),
-      )
-      ..registerLazySingleton<SendToAccountRepoImpl>(
-        () => SendToAccountRepoImpl(
-          sendToAccountApi: getIt(),
-        ),
-      )
-      ..registerLazySingleton<NotificationsRepo>(
-        () => NotificationsRepoImpl(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton<NotificationsRepoImpl>(
-        () => NotificationsRepoImpl(
-          getIt(),
-        ),
-      );
+          ..registerLazySingleton<MainRepo>(
+            () => MainRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<LoginRepoImpl>(
+            () => LoginRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<SignUpRepo>(
+            () => SignUpRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<DashRepo>(
+            () => DashRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<DashRepoImpl>(
+            () => DashRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<TransRepoImpl>(
+            () => TransRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<TransRepo>(
+            () => TransRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<WithdrawsRepoImpl>(
+            () => WithdrawsRepoImpl(
+              withdrawsApi: getIt(),
+            ),
+          )
+          ..registerLazySingleton<WithdrawsRepo>(
+            () => WithdrawsRepoImpl(
+              withdrawsApi: getIt(),
+            ),
+          )
+          ..registerLazySingleton<PlansRepoImpl>(
+            () => PlansRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<PlansRepo>(
+            () => PlansRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<BuySellRepo>(
+            () => BuySellRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<BuySellRepoImpl>(
+            () => BuySellRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<SendToAccountRepo>(
+            () => SendToAccountRepoImpl(
+              sendToAccountApi: getIt(),
+            ),
+          )
+          ..registerLazySingleton<SendToAccountRepoImpl>(
+            () => SendToAccountRepoImpl(
+              sendToAccountApi: getIt(),
+            ),
+          )
+          ..registerLazySingleton<NotificationsRepo>(
+            () => NotificationsRepoImpl(
+              getIt(),
+            ),
+          )
+          ..registerLazySingleton<NotificationsRepoImpl>(
+            () => NotificationsRepoImpl(
+              getIt(),
+            ),
+          )
+        // ..registerLazySingleton<SupportRepo>(
+        //   () => SupportRepoImpl(
+        //     firestore: getIt(),
+        //   ),
+        // )
+        // ..registerLazySingleton<SupportRepoImpl>(
+        //   () => SupportRepoImpl(
+        //     firestore: getIt(),
+        //   ),
+        // )
+        ;
   }
 }

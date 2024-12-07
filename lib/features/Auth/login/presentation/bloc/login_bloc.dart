@@ -1,4 +1,4 @@
-import 'package:aquan/core/Helpers/shared_pref_helper.dart';
+import 'package:aquan/core/helpers/shared_pref_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/helpers/constants.dart';
 import '../../domain/use_cases/login_use_case.dart';
@@ -16,6 +16,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (event, emit) async {
         await event.when(
           login: (loginRequestBody) async {
+            emit(
+              const LoginState.loading(),
+            );
             final response = await loginUseCase.login(
               loginRequestBody: loginRequestBody,
             );
@@ -23,7 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               success: (response) async {
                 await SharedPrefHelper.setSecuredString(
                   key: SharedPrefKeys.userToken,
-                  value: response!.token,
+                  value: response!.token!,
                 );
                 emit(
                   const LoginState.success(),

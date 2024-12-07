@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../../../../core/Helpers/global_widgets.dart';
+import '../../../../core/helpers/global_widgets.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/singletons/currencies_singleton.dart';
 import '../../../../core/utils/snack_bar.dart';
@@ -190,7 +190,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                               controller: amountController,
                               label: t.withdrawAmount,
                               enabled: true,
-                              isNumeric: true,
+                              // isNumeric: true,
                               icon: const Icon(
                                 Icons.money,
                               ),
@@ -200,6 +200,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                                       withdrawRatesResModel,
                                 );
                               },
+                              initialValue: '',
                             ),
                             const Gap(20),
                             TextField(

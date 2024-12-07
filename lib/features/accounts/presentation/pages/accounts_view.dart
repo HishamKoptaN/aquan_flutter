@@ -1,15 +1,12 @@
-import 'package:aquan/features/accounts/domain/usecases/update_accounts_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widgets/toast_notifier.dart';
 import '../../../Layouts/app_layout.dart';
-import '../../data/datasources/accounts_remote_data_source.dart';
-import '../../data/repositories/accounts_repository_impl.dart';
-import '../../domain/usecases/get_accounts_usecase.dart';
 import '../bloc/accounts_bloc.dart';
 
 class MyAccountsView extends StatefulWidget {
@@ -30,16 +27,8 @@ class _MyAccountsViewState extends State<MyAccountsView> {
         padding: const EdgeInsets.all(10),
         child: BlocProvider<AccountsBloc>(
           create: (context) => AccountsBloc(
-            getAccountsUseCase: GetAccountsUseCase(
-              repository: AccountsRepositoryImpl(
-                remoteDataSource: AccountsRemoteDataSource(),
-              ),
-            ),
-            updateAccountsUseCase: UpdateAccountsUseCase(
-              repository: AccountsRepositoryImpl(
-                remoteDataSource: AccountsRemoteDataSource(),
-              ),
-            ),
+            getAccountsUseCase: getIt(),
+            updateAccountsUseCase: getIt(),
           )..add(GetAccountsEvent()),
           child: BlocConsumer<AccountsBloc, AccountsState>(
             listener: (context, state) {

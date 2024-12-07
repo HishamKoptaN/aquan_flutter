@@ -4,6 +4,7 @@ import '../../../features/buy_sell/presentation/bloc/buy_sell_bloc.dart';
 import '../../../features/dash/presentation/bloc/dash_bloc.dart';
 import '../../../features/main/presentation/bloc/main_bloc.dart';
 import '../../../features/send_to_account/present/bloc/send_to_account_bloc.dart';
+import '../../../features/support/present/bloc/support_bloc.dart';
 import '../../../features/trans/presentation/bloc/trans_bloc.dart';
 import '../../../features/withdraw/present/bloc/withdraws_bloc.dart';
 import '../dependency_injection.dart';
@@ -56,6 +57,12 @@ class BlocModule extends DIModule {
           getNameOfUserByAccountUseCase: getIt(),
           sendToAccountUseCase: getIt(),
         ),
+      )
+      ..registerLazySingleton<SupportBloc>(
+        () => SupportBloc(
+            // getMsgsUseCase: getIt(),
+            // sendMsgUseCase: getIt(),
+            ),
       );
   }
 }

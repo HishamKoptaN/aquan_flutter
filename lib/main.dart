@@ -1,12 +1,12 @@
-import 'package:aquan/core/Helpers/settings.dart';
+import 'package:aquan/core/helpers/settings.dart';
 import 'package:aquan/core/di/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/Helpers/app_observer.dart';
-import 'core/Helpers/constants.dart';
-import 'core/Helpers/shared_pref_helper.dart';
+import 'core/helpers/app_observer.dart';
+import 'core/helpers/constants.dart';
+import 'core/helpers/shared_pref_helper.dart';
 import 'core/utils/app_colors.dart';
 import 'features/Auth/login/presentation/view/login_view.dart';
 import 'features/Layouts/app_layout.dart';
@@ -14,11 +14,17 @@ import 'features/main/presentation/bloc/main_bloc.dart';
 import 'features/main/presentation/bloc/main_event.dart';
 import 'features/main/presentation/bloc/main_state.dart';
 import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Injection.inject();
   await ScreenUtil.ensureScreenSize();
+
   SharedPrefHelper;
   String locale = await SharedPrefHelper.getString(
         key: SharedPrefKeys.languageCode,
@@ -88,7 +94,9 @@ class MyApp extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NavigateBarView(),
+                          builder: (context) =>
+                              // const SupportView(),
+                              const NavigateBarView(),
                         ),
                         (route) => false,
                       );

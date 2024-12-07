@@ -10,6 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/utils/snack_bar.dart';
+import '../../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../bloc/login_bloc.dart';
@@ -212,18 +213,19 @@ class _LoginViewState extends State<LoginView> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Center(
-                                child:
-                                    // (state is AuthLoading)
-                                    //     ? const CircularProgressIndicator(
-                                    //         color: Colors.white,
-                                    //       )
-                                    //     :
-                                    Text(
-                                  t.login,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: "Arial",
-                                      fontSize: 25.sp),
+                                child: state.maybeWhen(
+                                  loading: () {
+                                    return const CustomCircularProgress();
+                                  },
+                                  orElse: () {
+                                    return Text(
+                                      t.login,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "Arial",
+                                          fontSize: 25.sp),
+                                    );
+                                  },
                                 ),
                               ),
                             ),

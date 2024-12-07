@@ -1,8 +1,8 @@
 import 'package:aquan/features/main/data/datasources/main_api.dart';
 import 'package:aquan/features/main/domain/repo/main_repo.dart';
 import '../../../../core/errors/api_error_handler.dart';
+import '../../../../core/models/user.dart';
 import '../../../../core/networking/api_result.dart';
-import '../../../../core/singletons/user_singleton.dart';
 
 class MainRepoImpl implements MainRepo {
   final MainApi mainApi;

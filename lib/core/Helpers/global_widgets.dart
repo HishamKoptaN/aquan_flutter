@@ -4,25 +4,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/custom_text_widget.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-  final bool isNumeric;
-  final Widget? icon;
-  // final bool isCurrency;
-  final bool enabled;
-  final Function(dynamic value) onChanged;
-
-  const CustomTextField({
+  CustomTextField({
     super.key,
-    required this.controller,
-    required this.label,
-    required this.enabled,
+    this.controller,
+    this.label,
+    this.hint,
+    this.initialValue,
+    this.enabled,
     this.icon,
-    // required this.isCurrency,
-    this.isNumeric = false,
     required this.onChanged,
+    this.keyboardType,
   });
-
+  final TextEditingController? controller;
+  final String? initialValue;
+  final String? label;
+  final String? hint;
+  final Widget? icon;
+  final bool? enabled;
+  final Function(dynamic value) onChanged;
+  TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -32,7 +32,8 @@ class CustomTextField extends StatelessWidget {
       width: width,
       child: TextFormField(
         controller: controller,
-        keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
+        initialValue: initialValue,
+        keyboardType: keyboardType,
         enabled: enabled,
         onChanged: onChanged,
         style: TextStyle(
@@ -69,9 +70,6 @@ class CustomTextField extends StatelessWidget {
               return "required";
             }
             return 'Please enter $label';
-          }
-          if (isNumeric && int.tryParse(value) == null) {
-            return 'Please enter a valid number';
           }
           return null;
         },
