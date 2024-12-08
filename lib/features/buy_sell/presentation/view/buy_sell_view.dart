@@ -1,13 +1,12 @@
 import 'package:aquan/features/buy_sell/presentation/bloc/buy_sell_bloc.dart';
 import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/buy_sell/presentation/view/widgets/button_buy_sell_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import '../../../../core/utils/snack_bar.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
@@ -46,6 +45,35 @@ class _BuySellviewState extends State<BuySellview> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final t = AppLocalizations.of(context);
+
+    String? validateTransfer({
+      required BuySellResModel buySellResModel,
+    }) {
+      double amount = double.parse(
+        toAmountController.text,
+      );
+      if (amount < 10.0) {
+        return "${t!.min_transfer} 10 \$";
+      }
+      if (fromWallet!.id == 2) {
+        if (buySellResModel.totalMonthlyTransfers! >
+            buySellResModel.monthlyTransferCount!) {
+          return t!.monthly_transfer_limit;
+        }
+
+        if (buySellResModel.totalDailyTransfers! >
+            buySellResModel.dailyTransferCount!) {
+          return t!.daily_transfer_limit;
+        }
+
+        if (amount > buySellResModel.maxTransferCount!) {
+          return "${t!.max_transfer} : ${buySellResModel.maxTransferCount.toString()}";
+        }
+      }
+
+      return null;
+    }
+
     return AppLayout(
       route: t!.buyandsell,
       showAppBar: true,
@@ -443,7 +471,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                   ),
                                                 ),
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                         Gap(20.h),
@@ -451,117 +479,41 @@ class _BuySellviewState extends State<BuySellview> {
                                     ),
                                   ),
                                 ),
-                                Gap(30.h),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          if (formkey.currentState!
-                                              .validate()) {
-                                            if (double.parse(
-                                                  toAmountController.text,
-                                                ) <
-                                                10.0) {
-                                              ToastNotifier().showError(
-                                                context: context,
-                                                message:
-                                                    "${t.min_transfer} 10 \$",
-                                              );
-                                            } else if (fromWallet!.id == 2) {
-                                              if (buySellResModel
-                                                      .totalMonthlyTransfers! >
-                                                  buySellResModel
-                                                      .monthlyTransferCount!) {
-                                                ToastNotifier().showError(
-                                                  context: context,
-                                                  message:
-                                                      t.monthly_transfer_limit,
-                                                );
-                                              } else if (buySellResModel
-                                                      .totalDailyTransfers! >
-                                                  buySellResModel
-                                                      .dailyTransferCount!) {
-                                                ToastNotifier().showError(
-                                                  context: context,
-                                                  message:
-                                                      t.daily_transfer_limit,
-                                                );
-                                              } else if (double.parse(
-                                                    toAmountController.text,
-                                                  ) >
-                                                  buySellResModel
-                                                      .maxTransferCount!) {
-                                                ToastNotifier().showError(
-                                                  context: context,
-                                                  message:
-                                                      "${t.max_transfer} : ${buySellResModel.maxTransferCount.toString()}",
-                                                );
-                                              } else {
-                                                String newAmount =
-                                                    fromAmountController.text
-                                                        .replaceAll(',', '');
-                                                TransferMoneyRquestmodel()
-                                                        .senderCurrencyId =
-                                                    fromWallet!.id.toString();
-                                                TransferMoneyRquestmodel()
-                                                        .receiverCurrencyId =
-                                                    toWallet!.id;
+                                ButtonBuySellWidget(
+                                  onTap: () async {
+                                    if (formkey.currentState!.validate()) {
+                                      String? errorMessage = validateTransfer(
+                                        buySellResModel: buySellResModel,
+                                      );
+                                      if (errorMessage != null) {
+                                        ToastNotifier().showError(
+                                          context: context,
+                                          message: errorMessage,
+                                        );
+                                      } else {
+                                        String newAmount = fromAmountController
+                                            .text
+                                            .replaceAll(',', '');
+                                        TransferMoneyRquestmodel()
+                                          ..senderCurrencyId =
+                                              fromWallet!.id.toString()
+                                          ..receiverCurrencyId = toWallet!.id
+                                          ..amount = newAmount
+                                          ..rate = rate
+                                          ..receiverAccount =
+                                              receiverAccountController.text;
 
-                                                TransferMoneyRquestmodel()
-                                                    .amount = newAmount;
-
-                                                TransferMoneyRquestmodel()
-                                                    .rate = rate;
-
-                                                TransferMoneyRquestmodel()
-                                                        .receiverAccount =
-                                                    receiverAccountController
-                                                        .text;
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return const BuySellConfirmView();
-                                                    },
-                                                  ),
-                                                );
-                                              }
-                                            }
-                                          }
-                                        },
-                                        child: Container(
-                                          height: 50.h,
-                                          width: 90.w,
-                                          decoration: BoxDecoration(
-                                            color: Colors.amber,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BuySellConfirmView(),
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                t.next,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                    fontSize: 20.sp),
-                                              ),
-                                              FaIcon(
-                                                Icons.arrow_forward_ios,
-                                                color: Colors.black,
-                                                size: 20.sp,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                        );
+                                      }
+                                    }
+                                  },
                                 ),
+                                Gap(30.h),
                               ],
                             ),
                             buySellResModel.buySellStatus!

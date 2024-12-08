@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import '../../../../../core/models/auth.dart';
 import '../../../../../core/networking/api_constants.dart';
 import '../models/login_request_body.dart';
-import '../models/login_response.dart';
 part 'login_api.g.dart';
 
 @RestApi(
@@ -15,7 +15,7 @@ abstract class LoginApi {
   }) = _LoginApi;
 
   @POST(ApiConstants.login)
-  Future<LoginResponse> login({
+  Future<Auth> login({
     @Body() required LoginRequestBody loginRequestBody,
   });
 }

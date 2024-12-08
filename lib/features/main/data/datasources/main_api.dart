@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/models/user.dart';
 import '../../../../core/networking/api_constants.dart';
-import '../../../../core/singletons/user_singleton.dart';
 part 'main_api.g.dart';
 
 @RestApi(

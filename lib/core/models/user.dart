@@ -6,9 +6,10 @@ part 'user.g.dart';
 class User with _$User {
   const factory User({
     @JsonKey(name: "id") @Default(0) int id,
+    @JsonKey(name: "status") bool? status,
+    @JsonKey(name: "name") @Default("") String name,
     @JsonKey(name: "account_number") @Default("") String accountNumber,
     @JsonKey(name: "online_offline") @Default("") String onlineOffline,
-    @JsonKey(name: "name") @Default("") String name,
     @JsonKey(name: "username") @Default("") String username,
     @JsonKey(name: "email") @Default("") String email,
     @JsonKey(name: "image") @Default("") String image,
@@ -17,7 +18,6 @@ class User with _$User {
     @JsonKey(name: "balance") @Default(0.0) double balance,
     @JsonKey(name: "plan_id") @Default(1) int planId,
     @JsonKey(name: "upgraded_at") @Default("") String upgradedAt,
-    @JsonKey(name: "status") bool? status,
     @JsonKey(name: "token") String? token,
     @JsonKey(name: "password") String? password,
     @JsonKey(name: "comment") String? comment,
