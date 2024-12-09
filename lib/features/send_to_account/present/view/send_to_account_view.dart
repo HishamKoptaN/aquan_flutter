@@ -11,7 +11,7 @@ import '../../../../core/utils/styles.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
 import '../../../../core/widgets/toast_notifier.dart';
-import '../../../Layouts/app_layout.dart';
+import '../../../layouts/app_layout.dart';
 import '../../data/model/transfer_request_body_model.dart';
 import '../bloc/send_to_account_bloc.dart';
 import '../bloc/send_to_account_event.dart';

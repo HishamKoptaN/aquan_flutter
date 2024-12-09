@@ -1,4 +1,4 @@
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:aquan/features/profile/profile_view.dart';
 import 'package:aquan/features/Widgets/settings_tab.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/helpers/constants.dart';
 import '../../core/helpers/shared_pref_helper.dart';
 import '../Auth/login/presentation/view/login_view.dart';
-import '../Language/view/change_language_view.dart';
+import '../language/view/change_language_view.dart';
 import '../notifications/present/view/notifications_view.dart';
 import '../plans/presentation/view/plans_view/plans_view.dart';
 import '../support/view/support_view.dart';

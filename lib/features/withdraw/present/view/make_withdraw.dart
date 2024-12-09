@@ -10,7 +10,7 @@ import '../../../../core/singletons/currencies_singleton.dart';
 import '../../../../core/utils/snack_bar.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../core/widgets/toast_notifier.dart';
-import '../../../Layouts/app_layout.dart';
+import '../../../layouts/app_layout.dart';
 import '../../../dash/data/model/dash_res_model.dart';
 import '../../../withdraws_deposits/view/withdraws_deposits_view.dart';
 import '../../data/model/withdraw_request_body_model.dart';
@@ -119,7 +119,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                             value: method.name,
                             alignment: AlignmentDirectional.center,
                             child: Text(
-                              method.name,
+                              method.name ?? '',
                               overflow: TextOverflow.visible,
                               style: const TextStyle(
                                 fontSize: 20,

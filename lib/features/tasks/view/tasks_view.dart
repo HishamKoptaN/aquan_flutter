@@ -1,5 +1,5 @@
 import 'package:aquan/core/utils/styles.dart';
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:aquan/features/tasks/bloc/task_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

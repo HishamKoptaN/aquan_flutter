@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widgets/toast_notifier.dart';
-import '../../../Layouts/app_layout.dart';
+import '../../../layouts/app_layout.dart';
 import '../bloc/accounts_bloc.dart';
 
 class MyAccountsView extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:aquan/features/deposit/bloc/deposit_bloc.dart';
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:aquan/features/withdraws_deposits/view/withdraws_deposits_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -432,7 +432,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                                                   CreateDeposit(
                                                     file: file!,
                                                     amount: amountController,
-                                                    method: currency!.id,
+                                                    method: currency!.id ?? 0,
                                                     employeeId: state
                                                         .getEmployeeAccountApiResModel
                                                         .employeeId!,

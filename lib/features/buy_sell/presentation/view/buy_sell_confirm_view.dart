@@ -15,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/utils/snack_bar.dart';
 import '../../../../core/widgets/toast_notifier.dart';
-import '../../../Layouts/app_layout.dart';
+import '../../../layouts/app_layout.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../bloc/buy_sell_bloc.dart';
 import '../bloc/buy_sell_event.dart';

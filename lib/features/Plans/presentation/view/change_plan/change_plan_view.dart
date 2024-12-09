@@ -18,7 +18,7 @@ import 'package:aquan/features/plans/presentation/view/change_plan/widget/pay_de
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
-import '../../../../Layouts/app_layout.dart';
+import '../../../../layouts/app_layout.dart';
 import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 
 class ChangePlanView extends StatefulWidget {

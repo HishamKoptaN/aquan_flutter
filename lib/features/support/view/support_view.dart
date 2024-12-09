@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:aquan/features/support/present/bloc/support_bloc.dart';
 import '../../../core/singletons/user_singleton.dart';
 import '../../../core/widgets/custom_circular_progress.dart';

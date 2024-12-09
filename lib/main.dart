@@ -9,7 +9,7 @@ import 'core/helpers/constants.dart';
 import 'core/helpers/shared_pref_helper.dart';
 import 'core/utils/app_colors.dart';
 import 'features/Auth/login/presentation/view/login_view.dart';
-import 'features/Layouts/app_layout.dart';
+import 'features/layouts/app_layout.dart';
 import 'features/main/presentation/bloc/main_bloc.dart';
 import 'features/main/presentation/bloc/main_event.dart';
 import 'features/main/presentation/bloc/main_state.dart';

@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/singletons/user_singleton.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
-import '../../../Layouts/app_layout.dart';
+import '../../../layouts/app_layout.dart';
 import '../../../deposit/view/make_deposit_view.dart';
 import '../../../plans/presentation/view/plans_view/plans_view.dart';
 import '../../../profile/profile_view.dart';

@@ -1,5 +1,5 @@
 import 'package:aquan/features/buy_sell/presentation/bloc/buy_sell_bloc.dart';
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:aquan/features/buy_sell/presentation/view/widgets/button_buy_sell_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';

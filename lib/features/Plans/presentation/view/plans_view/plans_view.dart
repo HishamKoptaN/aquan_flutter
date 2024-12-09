@@ -10,7 +10,7 @@ import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/try_againwidget.dart';
-import '../../../../Layouts/app_layout.dart';
+import '../../../../layouts/app_layout.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlansView extends StatefulWidget {

@@ -38,26 +38,26 @@ class RatesWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: dashResModel.exchangeRates.length,
+                itemCount: dashResModel.exchangeRates?.length,
                 itemBuilder: (context, index) {
-                  var exchangeRate = dashResModel.exchangeRates[index];
+                  var exchangeRate = dashResModel.exchangeRates![index];
                   var comission = dashResModel.commission;
                   final sellingRateValue = dashResModel.sellingPrices
-                      .firstWhere(
+                      ?.firstWhere(
                         (sellingRate) => sellingRate.from == exchangeRate.id,
                       )
                       .price;
                   final buyingRateValue = dashResModel.buyingPrices
-                      .firstWhere(
+                      ?.firstWhere(
                         (buyingRate) => buyingRate.to == exchangeRate.id,
                       )
                       .price;
                   String formattedSellingRate = NumberFormat('#,##0').format(
-                    ((sellingRateValue / 100) * comission - sellingRateValue)
+                    ((sellingRateValue! / 100) * comission! - sellingRateValue)
                         .abs(),
                   );
                   final formattedBuyingRate = NumberFormat('#,##0').format(
-                    ((buyingRateValue / 100) * comission + buyingRateValue)
+                    ((buyingRateValue! / 100) * comission + buyingRateValue)
                         .abs(),
                   );
                   return Container(
@@ -76,7 +76,7 @@ class RatesWidget extends StatelessWidget {
                               children: [
                                 Gap(5.h),
                                 CustomText(
-                                  text: exchangeRate.name,
+                                  text: exchangeRate.name ?? '',
                                   fontSize: 18.sp,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class RatesWidget extends StatelessWidget {
                                   maxLines: 2,
                                 ),
                                 CustomText(
-                                  text: exchangeRate.updatedAt,
+                                  text: exchangeRate.updatedAt ?? '',
                                   fontSize: 14.sp,
                                   color: Colors.black,
                                   maxLines: 2,
