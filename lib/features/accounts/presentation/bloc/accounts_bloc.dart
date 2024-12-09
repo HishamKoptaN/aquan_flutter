@@ -1,81 +1,79 @@
-import 'package:bloc/bloc.dart';
-import '../../data/models/accounts_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/singletons/accounts_singleton.dart';
+import '../../domain/usecases/edit_accounts_usecase.dart';
 import '../../domain/usecases/get_accounts_usecase.dart';
-import '../../domain/usecases/update_accounts_usecase.dart';
-part 'accounts_event.dart';
-part 'accounts_state.dart';
+import 'accounts_event.dart';
+import 'accounts_state.dart';
 
 class AccountsBloc extends Bloc<AccountsEvent, AccountsState> {
   final GetAccountsUseCase getAccountsUseCase;
-  final UpdateAccountsUseCase updateAccountsUseCase;
+  final EditAccountUseCase editAccountUseCase;
+
   AccountsBloc({
     required this.getAccountsUseCase,
-    required this.updateAccountsUseCase,
+    required this.editAccountUseCase,
   }) : super(
-          AccountsInitial(),
+          const AccountsState.initial(),
         ) {
-    on<GetAccountsEvent>(
+    on<AccountsEvent>(
       (event, emit) async {
-        emit(AccountsLoading());
-        try {
-          final eitherResult = await getAccountsUseCase();
-          eitherResult.fold(
-            (failure) {
-              emit(
-                AccountsError(
-                  message: failure.errMessage,
-                  accounts: [],
-                ),
-              );
-            },
-            (accounts) {
-              emit(
-                AccountsLoaded(
-                  accounts: accounts,
-                ),
-              );
-            },
-          );
-        } catch (error) {
-          emit(
-            AccountsError(
-              message: error.toString(),
-              accounts: [],
-            ),
-          );
-        }
-      },
-    );
-    on<UpdateAccountsEvent>(
-      (event, emit) async {
-        emit(AccountsLoading());
-        try {
-          final eitherResult = await updateAccountsUseCase(
-            accounts: event.accounts,
-          );
-          eitherResult.fold(
-            (failure) {
-              emit(
-                AccountsError(
-                  message: failure.errMessage,
-                  accounts: event.accounts,
-                ),
-              );
-            },
-            (accounts) {
-              emit(
-                AccountsUpdatedSuccess(),
-              );
-            },
-          );
-        } catch (error) {
-          emit(
-            AccountsError(
-              message: error.toString(),
-              accounts: event.accounts,
-            ),
-          );
-        }
+        await event.when(
+          get: () async {
+            emit(
+              const AccountsState.loading(),
+            );
+            final result = await getAccountsUseCase.get();
+            await result.when(
+              success: (response) async {
+                AccountsSingleton.instance.accounts = response;
+                emit(
+                  const AccountsState.loaded(),
+                );
+              },
+              failure: (apiErrorModel) async {
+                emit(
+                  AccountsState.failure(
+                    apiErrorModel: apiErrorModel,
+                  ),
+                );
+              },
+            );
+          },
+          edit: (accounts) async {
+            emit(
+              const AccountsState.loading(),
+            );
+            final result = await editAccountUseCase.edit(
+              accounts: accounts,
+            );
+            await result.when(
+              success: (
+                response,
+              ) async {
+                AccountsSingleton.instance.accounts = response;
+
+                emit(
+                  const AccountsState.success(),
+                );
+                emit(
+                  const AccountsState.loaded(),
+                );
+              },
+              failure: (
+                apiErrorModel,
+              ) async {
+                emit(
+                  AccountsState.failure(
+                    apiErrorModel: apiErrorModel,
+                  ),
+                );
+                emit(
+                  const AccountsState.loaded(),
+                );
+              },
+            );
+          },
+        );
       },
     );
   }

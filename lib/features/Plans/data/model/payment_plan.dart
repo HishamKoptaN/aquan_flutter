@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../../core/models/currency.dart';
 
 GetPlansRatesApiResModel getPlansRatesApiResModelFromJson(String str) =>
     GetPlansRatesApiResModel.fromJson(json.decode(str));
@@ -83,22 +84,6 @@ class AccountInfo {
         "created_at": createdAt,
         "updated_at": updatedAt,
         "currency": currency.toJson(),
-      };
-}
-
-class Currency {
-  String name;
-
-  Currency({
-    required this.name,
-  });
-
-  factory Currency.fromJson(Map<String, dynamic> json) => Currency(
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
       };
 }
 

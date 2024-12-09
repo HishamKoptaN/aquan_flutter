@@ -8,8 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:aquan/features/plans/presentation/bloc/plans_bloc.dart';
-import 'package:aquan/features/plans/presentation/bloc/plans_state.dart';
 
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/widgets/custom_text_widget.dart';
@@ -75,7 +73,7 @@ class _PayDetailsWidgetState extends State<PayDetailsWidget> {
                       );
                     },
                     title: Text(
-                      currency.currency.name,
+                      currency.currency.name ?? '',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -133,7 +131,7 @@ class _PayDetailsWidgetState extends State<PayDetailsWidget> {
                                   fontSize: 14.sp,
                                 ),
                                 CustomText(
-                                  text: currency.currency.name,
+                                  text: currency.currency.name ?? '',
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: 14.sp,

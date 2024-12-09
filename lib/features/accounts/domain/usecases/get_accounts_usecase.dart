@@ -1,14 +1,13 @@
-import 'package:dartz/dartz.dart';
-import '../../../../core/errors/failure.dart';
-import '../../data/models/accounts_model.dart';
-import '../repositories/accounts_repository.dart';
+import '../../../../core/networking/api_result.dart';
+import '../../../../core/singletons/account.dart';
+import '../repo/accounts_rep.dart';
 
 class GetAccountsUseCase {
-  final AccountsRepository repository;
+  final AccountsRepo acountsRepo;
   GetAccountsUseCase({
-    required this.repository,
+    required this.acountsRepo,
   });
-  Future<Either<Failure, List<Account>>> call() async {
-    return await repository.getAccounts();
+  Future<ApiResult<List<Account>>> get() async {
+    return await acountsRepo.get();
   }
 }

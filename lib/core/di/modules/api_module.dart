@@ -1,5 +1,7 @@
 import '../../../features/Auth/login/data/data_sources/login_api.dart';
 import '../../../features/Auth/sign_up/data/data_sources/sign_up_api.dart';
+import '../../../features/accounts/data/datasources/accounts_api.dart';
+import '../../../features/deposit/data/data_sources/deposits_api.dart';
 import '../../../features/notifications/data/datasources/notifications_api.dart';
 import '../../../features/plans/data/data_source/plans_api.dart';
 import '../../../features/buy_sell/data/data_source/buy_sell_api.dart';
@@ -53,6 +55,11 @@ class ApiModule extends DIModule {
         ),
       )
       ..registerLazySingleton(
+        () => DepositsApi(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
         () => WithdrawsApi(
           getIt(),
         ),
@@ -64,6 +71,11 @@ class ApiModule extends DIModule {
       )
       ..registerLazySingleton(
         () => NotificationsApi(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => AccountsApi(
           getIt(),
         ),
       );

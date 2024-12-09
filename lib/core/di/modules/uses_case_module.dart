@@ -1,5 +1,10 @@
 import '../../../features/Auth/login/domain/use_cases/login_use_case.dart';
 import '../../../features/Auth/sign_up/domain/use_cases/sign_up_use_case.dart';
+import '../../../features/accounts/domain/usecases/edit_accounts_usecase.dart';
+import '../../../features/accounts/domain/usecases/get_accounts_usecase.dart';
+import '../../../features/deposit/domain/use_cases/deposit_use_case.dart';
+import '../../../features/deposit/domain/use_cases/get_deposits_use_case.dart';
+import '../../../features/deposit/domain/use_cases/get_employee_account_use_case.dart';
 import '../../../features/notifications/domain/use_cases/get_notifications_use_case.dart';
 import '../../../features/plans/domain/use_cases/change_plan_use_case.dart';
 import '../../../features/plans/domain/use_cases/get_plans_rates_use_case.dart';
@@ -23,101 +28,115 @@ class UseCaseModule extends DIModule {
   @override
   Future<void> provides() async {
     getIt
-          ..registerLazySingleton(
-            () => CheckUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => LoginUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => SignUpUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetDashUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetTransUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetWithdrawsUseCase(
-              withdrawsRepoImpl: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetWithdrawRatessUseCase(
-              withdrawsRepoImpl: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => AddWithdrawUseCase(
-              withdrawsRepoImpl: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetPlansUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetPlansRatesUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => ChangePlanUseCase(
-              getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetBuySellRatesUse(
-              buySellRepoImp: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetReceiveAccountNumberUseCase(
-              buySellRepoImp: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => TransferMoneyUseCase(
-              buySellRepoImp: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetNameOfUserByAccountUseCase(
-              sendToAccountRepoImpl: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => SendToAccountUseCase(
-              sendToAccountRepoImpl: getIt(),
-            ),
-          )
-          ..registerLazySingleton(
-            () => GetNotificationsUseCase(
-              notificationsRepoImp: getIt(),
-            ),
-          )
-        // ..registerLazySingleton(
-        //   () => GetMsgsUseCase(
-        //     supportRepo: getIt(),
-        //   ),
-        // )
-        // ..registerLazySingleton(
-        //   () => SendMsgUseCase(
-        //     supportRepo: getIt(),
-        //   ),
-        // )
-        ;
+      ..registerLazySingleton(
+        () => CheckUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => LoginUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => SignUpUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetDashUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetTransUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetDepositstUseCase(
+          depositRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetEmployeeAccountUseCase(
+          depositRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => DepositUseCase(
+          depositRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetWithdrawsUseCase(
+          withdrawsRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetWithdrawRatessUseCase(
+          withdrawsRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => AddWithdrawUseCase(
+          withdrawsRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetPlansUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetPlansRatesUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => ChangePlanUseCase(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetBuySellRatesUse(
+          buySellRepoImp: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetReceiveAccountNumberUseCase(
+          buySellRepoImp: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => TransferMoneyUseCase(
+          buySellRepoImp: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetNameOfUserByAccountUseCase(
+          sendToAccountRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => SendToAccountUseCase(
+          sendToAccountRepoImpl: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetNotificationsUseCase(
+          notificationsRepoImp: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => GetAccountsUseCase(
+          acountsRepo: getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => EditAccountUseCase(
+          acountsRepo: getIt(),
+        ),
+      );
   }
 }

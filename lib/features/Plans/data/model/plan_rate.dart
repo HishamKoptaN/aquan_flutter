@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../core/models/currency.dart';
 part 'plan_rate.freezed.dart';
 part 'plan_rate.g.dart';
 
@@ -32,16 +34,6 @@ class AccountInfo with _$AccountInfo {
 
   factory AccountInfo.fromJson(Map<String, dynamic> json) =>
       _$AccountInfoFromJson(json);
-}
-
-@freezed
-class Currency with _$Currency {
-  const factory Currency({
-    @JsonKey(name: "name") @Default('') String name,
-  }) = _Currency;
-
-  factory Currency.fromJson(Map<String, dynamic> json) =>
-      _$CurrencyFromJson(json);
 }
 
 @freezed

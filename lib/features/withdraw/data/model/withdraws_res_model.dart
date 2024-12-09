@@ -5,6 +5,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
+import '../../../../core/models/currency.dart';
+import '../../../plans/data/model/plan_rate.dart';
+import '../../../withdraws_deposits/model/withdraws_deposits_model.dart';
+
 part 'withdraws_res_model.freezed.dart';
 part 'withdraws_res_model.g.dart';
 
@@ -32,14 +36,4 @@ class Withdraw with _$Withdraw {
 
   factory Withdraw.fromJson(Map<String, dynamic> json) =>
       _$WithdrawFromJson(json);
-}
-
-@freezed
-class Currency with _$Currency {
-  const factory Currency({
-    @JsonKey(name: "name") String? name,
-  }) = _Currency;
-
-  factory Currency.fromJson(Map<String, dynamic> json) =>
-      _$CurrencyFromJson(json);
 }

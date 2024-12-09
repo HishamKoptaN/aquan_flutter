@@ -1,4 +1,4 @@
-import '../../features/dash/data/model/dash_res_model.dart';
+import '../models/currency.dart';
 
 class CurrenciesSingleton {
   List<Currency>? _currencies;

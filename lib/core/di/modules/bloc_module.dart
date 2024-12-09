@@ -1,7 +1,9 @@
 import '../../../features/Auth/login/presentation/bloc/login_bloc.dart';
 import '../../../features/Auth/sign_up/bloc/sign_up_bloc.dart';
+import '../../../features/accounts/presentation/bloc/accounts_bloc.dart';
 import '../../../features/buy_sell/presentation/bloc/buy_sell_bloc.dart';
 import '../../../features/dash/presentation/bloc/dash_bloc.dart';
+import '../../../features/deposit/pesent/bloc/deposits_bloc.dart';
 import '../../../features/main/presentation/bloc/main_bloc.dart';
 import '../../../features/send_to_account/present/bloc/send_to_account_bloc.dart';
 import '../../../features/support/present/bloc/support_bloc.dart';
@@ -31,6 +33,13 @@ class BlocModule extends DIModule {
       ..registerLazySingleton<DashBloc>(
         () => DashBloc(
           getDashUseCase: getIt(),
+        ),
+      )
+      ..registerLazySingleton<DepositsBloc>(
+        () => DepositsBloc(
+          getDepositstUseCase: getIt(),
+          getEmployeeAccountUseCase: getIt(),
+          depositUseCase: getIt(),
         ),
       )
       ..registerLazySingleton<WithdrawsBloc>(
@@ -63,6 +72,12 @@ class BlocModule extends DIModule {
             // getMsgsUseCase: getIt(),
             // sendMsgUseCase: getIt(),
             ),
+      )
+      ..registerLazySingleton<AccountsBloc>(
+        () => AccountsBloc(
+          getAccountsUseCase: getIt(),
+          editAccountUseCase: getIt(),
+        ),
       );
   }
 }

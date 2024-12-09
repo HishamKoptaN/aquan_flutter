@@ -4,6 +4,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
+
+import '../../../../core/singletons/account.dart';
 part 'buy_sell_model.freezed.dart';
 part 'buy_sell_model.g.dart';
 
@@ -32,23 +34,6 @@ class BuySellResModel with _$BuySellResModel {
 
   factory BuySellResModel.fromJson(Map<String, dynamic> json) =>
       _$BuySellResModelFromJson(json);
-}
-
-@freezed
-class Account with _$Account {
-  const factory Account({
-    @JsonKey(name: "id") int? id,
-    @JsonKey(name: "user_id") int? userId,
-    @JsonKey(name: "bank_id") int? bankId,
-    @JsonKey(name: "account_number") String? accountNumber,
-    @JsonKey(name: "comment") String? comment,
-    @JsonKey(name: "created_at") String? createdAt,
-    @JsonKey(name: "updated_at") String? updatedAt,
-    @JsonKey(name: "currency") AccountCurrency? currency,
-  }) = _Account;
-
-  factory Account.fromJson(Map<String, dynamic> json) =>
-      _$AccountFromJson(json);
 }
 
 @freezed

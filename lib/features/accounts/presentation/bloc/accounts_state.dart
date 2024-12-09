@@ -1,23 +1,14 @@
-part of 'accounts_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../../core/errors/api_error_model.dart';
+part 'accounts_state.freezed.dart';
 
-abstract class AccountsState {}
-
-class AccountsInitial extends AccountsState {}
-
-class AccountsLoading extends AccountsState {}
-
-class AccountsLoaded extends AccountsState {
-  final List<Account> accounts;
-  AccountsLoaded({required this.accounts});
+@freezed
+class AccountsState with _$AccountsState {
+  const factory AccountsState.initial() = _Initial;
+  const factory AccountsState.loaded() = _AccountsLoaded;
+  const factory AccountsState.loading() = _Loading;
+  const factory AccountsState.success() = _Success;
+  const factory AccountsState.failure({
+    required ApiErrorModel apiErrorModel,
+  }) = _Failure;
 }
-
-class AccountsError extends AccountsState {
-  final String message;
-  final List<Account> accounts;
-  AccountsError({
-    required this.message,
-    required this.accounts,
-  });
-}
-
-class AccountsUpdatedSuccess extends AccountsState {}

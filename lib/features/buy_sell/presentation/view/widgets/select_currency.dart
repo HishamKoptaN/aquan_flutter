@@ -2,6 +2,7 @@ import 'package:aquan/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../../core/models/currency.dart';
 import '../../../../dash/data/model/dash_res_model.dart';
 
 class SelectCurrencyWidget extends StatelessWidget {

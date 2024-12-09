@@ -106,7 +106,7 @@ class _WithdrawsAndDepositsViewState extends State<WithdrawsAndDepositsView> {
                                   ),
                                 ),
                                 dataCell(
-                                  title: withdraw.currency.name,
+                                  title: withdraw.currency.name ?? '',
                                 ),
                                 dataCell(
                                   title: withdraw.createdAt.toString(),

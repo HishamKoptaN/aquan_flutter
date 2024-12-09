@@ -9,6 +9,7 @@ import 'core/helpers/constants.dart';
 import 'core/helpers/shared_pref_helper.dart';
 import 'core/utils/app_colors.dart';
 import 'features/Auth/login/presentation/view/login_view.dart';
+import 'features/accounts/presentation/pages/accounts_view.dart';
 import 'features/layouts/app_layout.dart';
 import 'features/main/presentation/bloc/main_bloc.dart';
 import 'features/main/presentation/bloc/main_event.dart';
@@ -95,8 +96,9 @@ class MyApp extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              // const SupportView(),
-                              const NavigateBarView(),
+                              // !
+                              const AccountsView(),
+                          // const NavigateBarView(),
                         ),
                         (route) => false,
                       );

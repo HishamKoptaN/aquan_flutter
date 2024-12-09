@@ -5,6 +5,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
 
+import '../../../../core/models/currency.dart';
+
 part 'dash_res_model.freezed.dart';
 part 'dash_res_model.g.dart';
 
@@ -38,22 +40,6 @@ class BuyingPrice with _$BuyingPrice {
 
   factory BuyingPrice.fromJson(Map<String, dynamic> json) =>
       _$BuyingPriceFromJson(json);
-}
-
-@freezed
-class Currency with _$Currency {
-  const factory Currency({
-    @JsonKey(name: "id") int? id,
-    @JsonKey(name: "status") bool? status,
-    @JsonKey(name: "name") String? name,
-    @JsonKey(name: "name_code") String? nameCode,
-    @JsonKey(name: "comment") String? comment,
-    @JsonKey(name: "created_at") String? createdAt,
-    @JsonKey(name: "updated_at") String? updatedAt,
-  }) = _Currency;
-
-  factory Currency.fromJson(Map<String, dynamic> json) =>
-      _$CurrencyFromJson(json);
 }
 
 @freezed

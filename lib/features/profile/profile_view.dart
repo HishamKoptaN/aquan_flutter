@@ -177,7 +177,7 @@ class _ProfileViewState extends State<ProfileView> {
                         WidgetsBinding.instance.addPostFrameCallback(
                           (_) => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => MyAccountsView(),
+                              builder: (context) => AccountsView(),
                             ),
                           ),
                         );

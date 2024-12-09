@@ -1,10 +1,11 @@
-part of 'accounts_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../../core/singletons/account.dart';
+part 'accounts_event.freezed.dart';
 
-abstract class AccountsEvent {}
-
-class GetAccountsEvent extends AccountsEvent {}
-
-class UpdateAccountsEvent extends AccountsEvent {
-  final List<Account> accounts;
-  UpdateAccountsEvent({required this.accounts});
+@freezed
+class AccountsEvent with _$AccountsEvent {
+  const factory AccountsEvent.get() = _Get;
+  const factory AccountsEvent.edit({
+    required List<Account> accounts,
+  }) = _Edit;
 }

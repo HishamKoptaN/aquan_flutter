@@ -1,18 +1,18 @@
 import 'package:aquan/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/helpers/global_widgets.dart';
 import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/models/currency.dart';
 import '../../../../core/singletons/currencies_singleton.dart';
-import '../../../../core/utils/snack_bar.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../core/widgets/toast_notifier.dart';
 import '../../../layouts/app_layout.dart';
-import '../../../dash/data/model/dash_res_model.dart';
-import '../../../withdraws_deposits/view/withdraws_deposits_view.dart';
+import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import '../../data/model/withdraw_request_body_model.dart';
 import '../bloc/withdraws_bloc.dart';
 import '../../data/model/withdraw_rates_res_model.dart';
@@ -33,7 +33,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
 
   TextEditingController amountController = TextEditingController();
   TextEditingController receivingWalletController = TextEditingController();
-  Currency? currency;
+  int? selectedcurrencyId;
   double receiveAmount = 0;
 
   void calculateReceiveAmount({
@@ -42,12 +42,12 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
     setState(
       () {
         bool hasCurrencyRate = getWithdrawRateApiResModel.fromBinanceRates.any(
-          (rate) => currency!.id == rate.to,
+          (rate) => selectedcurrencyId == rate.to,
         );
         if (hasCurrencyRate) {
           double rate = getWithdrawRateApiResModel.fromBinanceRates
               .firstWhere(
-                (rate) => currency!.id == rate.to,
+                (rate) => selectedcurrencyId == rate.to,
               )
               .price;
           receiveAmount =
@@ -91,7 +91,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WithdrawsAndDepositsView(),
+                      builder: (context) => const NavigateBarView(),
                     ),
                     (route) => false,
                   );
@@ -131,7 +131,6 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                       },
                     );
                   }
-
                   return ListView(
                     children: [
                       Form(
@@ -140,7 +139,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                           children: [
                             Text(t.withdrawMethod),
                             const Gap(10),
-                            DropdownButtonFormField<String>(
+                            DropdownButtonFormField<Currency?>(
                               value: null,
                               isExpanded: true,
                               decoration: InputDecoration(
@@ -151,27 +150,29 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
-                              items: items,
+                              items: CurrenciesSingleton.instance.get!.map(
+                                (currency) {
+                                  return DropdownMenuItem<Currency>(
+                                    value: currency,
+                                    child: Text(
+                                      currency.name ?? "",
+                                    ),
+                                  );
+                                },
+                              ).toList(),
                               onChanged: (value) {
                                 if (value != null) {
-                                  var selectedCurrency = CurrenciesSingleton
-                                      .instance.get
-                                      ?.firstWhere(
-                                    (element) => element.name == value,
-                                    orElse: () =>
-                                        null!, // إذا لم نجد العنصر نعيد null
+                                  selectedcurrencyId = value.id;
+                                  calculateReceiveAmount(
+                                    getWithdrawRateApiResModel:
+                                        withdrawRatesResModel,
                                   );
-                                  if (selectedCurrency != null) {
-                                    currency = selectedCurrency;
-                                    calculateReceiveAmount(
-                                      getWithdrawRateApiResModel:
-                                          withdrawRatesResModel,
-                                    );
-                                  }
                                 }
                               },
                             ),
-                            const Gap(20),
+                            Gap(
+                              20.h,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -185,12 +186,13 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                                 ),
                               ],
                             ),
-                            const Gap(20),
+                            Gap(
+                              20.h,
+                            ),
                             CustomTextField(
                               controller: amountController,
                               label: t.withdrawAmount,
                               enabled: true,
-                              // isNumeric: true,
                               icon: const Icon(
                                 Icons.money,
                               ),
@@ -200,7 +202,6 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                                       withdrawRatesResModel,
                                 );
                               },
-                              initialValue: '',
                             ),
                             const Gap(20),
                             TextField(

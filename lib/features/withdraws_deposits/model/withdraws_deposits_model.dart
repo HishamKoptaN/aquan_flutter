@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../../../core/models/currency.dart';
+
 GetWithdrawDepositsApiResModel getWithdrawDepositsApiResModelFromJson(
         String str) =>
     GetWithdrawDepositsApiResModel.fromJson(json.decode(str));
@@ -98,21 +100,5 @@ class WithdrawsDeposit {
         "type": type,
         "currency": currency.toJson(),
         "employee_id": employeeId,
-      };
-}
-
-class Currency {
-  String name;
-
-  Currency({
-    required this.name,
-  });
-
-  factory Currency.fromJson(Map<String, dynamic> json) => Currency(
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
       };
 }
