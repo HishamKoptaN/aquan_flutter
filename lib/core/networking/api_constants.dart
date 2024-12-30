@@ -2,20 +2,29 @@ class ApiConstants {
   static const String apiBaseUrl = "https://api.aquan.website/app/";
   static const String apiAuthBaseUrl = "https://api.aquan.website/auth/";
   static const String check = "check";
+  static const String sendOtp = "send-password-otp";
+  static const String verifyOtp = "verify-password-otp";
+  static const String resetPassword = "reset-password";
+  static const String sendEmailOtp = "send-email-otp";
+  static const String verifyEmailOtp = "verify-email-otp";
   static const String login = "login";
-  static const String signup = "register";
+  static const String signup = "sign-up";
+  static const String addEmail = "add-email";
+  static const String editPass = "edit-pass";
   static const String dash = "dash";
   static const String withdraws = "withdraws";
-  static const String withdrawRates = "withdraw/rates";
+  static const String withdrawRates = "withdraw-rates";
   static const String trans = "trans";
   static const String transfer = "transfer";
   static const String plans = "plans";
   static const String accounts = "accounts";
-  static const String plansRates = "plans/rates";
+  static const String plansRates = "plans-rates";
   static const String buySell = "buy-sell";
   static const String deposits = "deposits";
   static const String depositRates = "deposit-rates";
   static const String notifications = "notifications";
+  static const String tasks = "tasks";
+  static const String profile = "profile";
 }
 
 class ApiErrors {

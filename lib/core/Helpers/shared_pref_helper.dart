@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../networking/dio_factory.dart';
 
 class SharedPrefHelper {
   // private constructor as I don't want to allow creating an instance of this class itself.
@@ -62,14 +63,18 @@ class SharedPrefHelper {
   }
 
   /// Gets an int value from SharedPreferences with given [key].
-  static Future<int> getInt({required String key}) async {
+  static Future<int> getInt({
+    required String key,
+  }) async {
     debugPrint('SharedPrefHelper : getInt with key : $key');
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getInt(key) ?? 0;
   }
 
   /// Gets an String value from SharedPreferences with given [key].
-  static Future<String?> getString({required String key}) async {
+  static Future<String?> getString({
+    required String key,
+  }) async {
     debugPrint('SharedPrefHelper : getString with key : $key');
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? value = sharedPreferences.getString(key);
@@ -89,10 +94,15 @@ class SharedPrefHelper {
       key: key,
       value: value,
     );
+    DioFactory.setTokenIntoHeaderAfterLogin(
+      token: value,
+    );
   }
 
   /// Gets an String value from FlutterSecureStorage with given [key].
-  static Future<dynamic> getSecuredString({required String key}) async {
+  static Future<dynamic> getSecuredString({
+    required String key,
+  }) async {
     const flutterSecureStorage = FlutterSecureStorage();
     debugPrint(
       'FlutterSecureStorage : getSecuredString with key :',

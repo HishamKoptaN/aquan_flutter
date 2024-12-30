@@ -18,7 +18,7 @@ class WithdrawRatesResModel with _$WithdrawRatesResModel {
 @freezed
 class FromBinanceRate with _$FromBinanceRate {
   const factory FromBinanceRate({
-    @Default(0.0) @JsonKey(name: "price") double price,
+    @Default(0) @JsonKey(name: "price") int price,
     @Default("") @JsonKey(name: "updated_at") String updatedAt,
     @Default("") @JsonKey(name: "currency_name") String currencyName,
     @Default(0) @JsonKey(name: "to") int to,

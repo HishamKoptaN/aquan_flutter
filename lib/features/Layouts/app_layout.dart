@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppLayout extends StatefulWidget {
   AppLayout({
     super.key,
-    required this.route,
+    this.route,
     required this.body,
     required this.showAppBar,
     this.backArow = true,
     this.onPressed,
   });
-  final String route;
+  final String? route;
   final Widget body;
   final bool showAppBar;
   final bool backArow;
@@ -48,7 +48,7 @@ class _AppLayoutState extends State<AppLayout> {
                       )
                     : null,
                 title: Text(
-                  widget.route,
+                  widget.route ?? '',
                   style: const TextStyle(color: Colors.black),
                 ),
                 centerTitle: true,
@@ -56,7 +56,7 @@ class _AppLayoutState extends State<AppLayout> {
             : null,
         body: Padding(
           padding: EdgeInsets.all(
-            4.sp,
+            5.sp,
           ),
           child: widget.body,
         ),

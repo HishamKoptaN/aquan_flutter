@@ -1,20 +1,19 @@
 import 'dart:io';
 
 class TransferMoneyRquestmodel {
-  static final TransferMoneyRquestmodel _instance =
-      TransferMoneyRquestmodel._();
-  factory TransferMoneyRquestmodel() {
-    return _instance;
-  }
-  TransferMoneyRquestmodel._();
   String? senderCurrencyId;
   int? receiverCurrencyId;
   String? amount;
   String? netAmount;
-  double? rate;
+  int? rate;
   String? receiverAccount;
   String? employeeId;
   File? imageFile;
+  static final TransferMoneyRquestmodel _instance =
+      TransferMoneyRquestmodel._internal();
+  static TransferMoneyRquestmodel get instance => _instance;
+  TransferMoneyRquestmodel._internal();
+
   Map<String, dynamic> toJson() => {
         'sender_currency_id': senderCurrencyId,
         'receiver_currency_id': receiverCurrencyId,

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import '../../../../core/models/currency.dart';
-import '../../../../core/singletons/account.dart';
+import '../../../../core/models/account.dart';
 
 GetBuySellApiRes getBuySellApiResFromJson(String str) =>
     GetBuySellApiRes.fromJson(json.decode(str));

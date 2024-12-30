@@ -1,6 +1,6 @@
 import 'package:aquan/core/networking/api_result.dart';
 
-import '../../data/model/withdraw_request_body_model.dart';
+import '../../data/model/withdraw_req_body_model.dart';
 import '../repo_imp/withdraws_repo_impl.dart';
 
 class AddWithdrawUseCase {
@@ -9,10 +9,10 @@ class AddWithdrawUseCase {
     required this.withdrawsRepoImpl,
   });
   Future<ApiResult<void>> addWithdraw({
-    required WithdrawRequestBody withdrawRequestBody,
+    required WithdrawReqBodyModel withdrawReqBodyModel,
   }) async {
     return await withdrawsRepoImpl.addWithdraw(
-      withdrawRequestBody: withdrawRequestBody,
+      withdrawReqBodyModel: withdrawReqBodyModel,
     );
   }
 }

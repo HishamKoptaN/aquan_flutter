@@ -4,11 +4,8 @@ part 'support_event.freezed.dart';
 
 @freezed
 class SupportEvent with _$SupportEvent {
-  const factory SupportEvent.getMsgs({
-    required int chatId,
-  }) = _GetMsgs;
+  const factory SupportEvent.getMsgs() = _GetMsgs;
   const factory SupportEvent.sendMsg({
-    required int chatId,
     required MsgSend msgSend,
   }) = _SendMsg;
 }

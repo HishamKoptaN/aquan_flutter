@@ -12,14 +12,14 @@ class SettingsTabWidget extends StatelessWidget {
     required this.icon,
   });
 
-  final Function onTap;
-  final String title;
-  final IconData icon;
+  final Function? onTap;
+  final String? title;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap(),
+      onTap: () => onTap!(),
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
@@ -53,7 +53,7 @@ class SettingsTabWidget extends StatelessWidget {
                 ),
                 const Gap(10),
                 Text(
-                  title,
+                  title ?? '',
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.6),
                     fontSize: 20,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../features/dash/presentation/view/dash_view.dart';
+import '../../features/dash/present/view/dash_view.dart';
 import 'routes.dart';
 
 class AppRoutes {

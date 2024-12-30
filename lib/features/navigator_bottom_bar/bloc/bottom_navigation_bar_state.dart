@@ -24,5 +24,7 @@ class LogedIn extends NavigationState {}
 class MainErrors extends NavigationState {
   final String? message;
 
-  MainErrors({required this.message});
+  MainErrors({
+    required this.message,
+  });
 }

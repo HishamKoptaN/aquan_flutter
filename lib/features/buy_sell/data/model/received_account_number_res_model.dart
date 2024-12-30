@@ -3,22 +3,9 @@
 //     final receivedAccountNumberResModel = receivedAccountNumberResModelFromJson(jsonString);
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
-
-import '../../../../core/models/currency.dart';
-import '../../../../core/singletons/account.dart';
-import '../../../accounts/data/models/accounts_model.dart';
-
+import '../../../../core/models/account.dart';
 part 'received_account_number_res_model.freezed.dart';
 part 'received_account_number_res_model.g.dart';
-
-ReceivedAccountNumberResModel receivedAccountNumberResModelFromJson(
-        String str) =>
-    ReceivedAccountNumberResModel.fromJson(json.decode(str));
-
-String receivedAccountNumberResModelToJson(
-        ReceivedAccountNumberResModel data) =>
-    json.encode(data.toJson());
 
 @freezed
 class ReceivedAccountNumberResModel with _$ReceivedAccountNumberResModel {

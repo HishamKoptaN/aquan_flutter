@@ -60,7 +60,9 @@ class DepositsBloc extends Bloc<DepositEvent, DepositsState> {
             );
           },
           add: (formData) async {
-            emit(const DepositsState.loading());
+            emit(
+              const DepositsState.loading(),
+            );
             final result = await depositUseCase.deposit(
               formData: formData,
             );

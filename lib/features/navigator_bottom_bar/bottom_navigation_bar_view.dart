@@ -1,20 +1,22 @@
 import 'package:aquan/features/layouts/app_layout.dart';
-import 'package:aquan/features/plans/presentation/bloc/plans_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/di/dependency_injection.dart';
-import '../dash/presentation/bloc/dash_bloc.dart';
-import '../trans/presentation/bloc/trans_bloc.dart';
+import '../dash/present/bloc/dash_bloc.dart';
+import '../plans/present/bloc/plans_bloc.dart';
+import '../trans/present/bloc/trans_bloc.dart';
 import 'bloc/bottom_navigation_bar_bloc.dart';
 import 'bloc/bottom_navigation_bar_event.dart';
 import 'bloc/bottom_navigation_bar_state.dart';
 import 'bottom_navigation_bar_controller.dart';
 
 class NavigateBarView extends StatefulWidget {
-  const NavigateBarView({super.key});
+  const NavigateBarView({
+    super.key,
+  });
 
   @override
   State<NavigateBarView> createState() => _NavigateBarViewState();
@@ -34,6 +36,7 @@ class _NavigateBarViewState extends State<NavigateBarView> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     return MultiBlocProvider(
+      key: const Key('NavigateBarView'),
       providers: [
         BlocProvider(
           create: (context) => NavigationBloc(),
@@ -115,18 +118,26 @@ class _NavigateBarViewState extends State<NavigateBarView> {
             ),
             BottomNavigationBarItem(
               label: t.send,
-              icon: const Icon(Icons.add_to_home_screen_outlined),
+              icon: const Icon(
+                Icons.add_to_home_screen_outlined,
+              ),
             ),
             BottomNavigationBarItem(
-              icon: const Icon(FontAwesomeIcons.moneyBillTransfer),
+              icon: const Icon(
+                FontAwesomeIcons.moneyBillTransfer,
+              ),
               label: t.buyandsell,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.qr_code_2_rounded),
+              icon: const Icon(
+                Icons.qr_code_2_rounded,
+              ),
               label: t.qr_code,
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(
+                Icons.settings,
+              ),
               label: t.settings,
             ),
           ],

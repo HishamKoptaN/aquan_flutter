@@ -19,15 +19,15 @@ abstract class DepositsApi {
   )
   Future<DepositsResModel> get();
 //!
-
   @GET(
     ApiConstants.depositRates,
   )
   Future<EmployeeAccountResModel> getEmployeeAccount();
-
 //!
   @POST(
     ApiConstants.deposits,
   )
-  Future<void> deposits();
+  Future<void> deposits({
+    @Body() required FormData formData,
+  });
 }

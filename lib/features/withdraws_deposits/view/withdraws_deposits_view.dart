@@ -62,7 +62,7 @@ class _WithdrawsAndDepositsViewState extends State<WithdrawsAndDepositsView> {
                             label: t.thePrice,
                           ),
                           dataColumn(
-                            label: t.method,
+                            label: t.withdraw_method,
                           ),
                           dataColumn(
                             label: t.date,

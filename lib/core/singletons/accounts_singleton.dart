@@ -1,4 +1,4 @@
-import 'account.dart';
+import '../models/account.dart';
 
 class AccountsSingleton {
   // Private variable to store accounts

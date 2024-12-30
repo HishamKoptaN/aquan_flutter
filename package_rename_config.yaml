@@ -1,32 +1,32 @@
 package_rename_config:
   android:
-    app_name: "aquan"        # اسم التطبيق
-    package_name: "com.aquan.app"  # اسم الحزمة
+    app_name: "aquan_dev"        # اسم التطبيق
+    package_name: "com.aquan.app.dev"  # اسم الحزمة
     override_old_package: true  # لتجاهل الحزمة القديمة
     lang: "en"                 # لغة التطبيق (اختياري)
 
   ios:
-    app_name: "aquan"        # اسم التطبيق
-    bundle_name: "com.aquan.app"  # اسم الحزمة
-    package_name: "com.aquan.app"  # اسم الحزمة
+    app_name: "aquan_dev"        # اسم التطبيق
+    bundle_name: "com.aquan.app.dev"  # اسم الحزمة
+    package_name: "com.aquan.app.dev"  # اسم الحزمة
 
   linux:
-    app_name: "aquan"        # اسم التطبيق
-    package_name: "com.aquan.app"  # اسم الحزمة
-    exe_name: "aquan"        # اسم ملف التنفيذ
+    app_name: "aquan_dev"        # اسم التطبيق
+    package_name: "com.aquan.app.dev"  # اسم الحزمة
+    exe_name: "aquan_dev"        # اسم ملف التنفيذ
 
   macos:
-    app_name: "aquan"        # اسم التطبيق
-    package_name: "com.aquan.app"  # اسم الحزمة
+    app_name: "aquan_dev"        # اسم التطبيق
+    package_name: "com.aquan.app.dev"  # اسم الحزمة
     copyright_notice: "© 2024 IMolds"  # حقوق الطبع والنشر (اختياري)
 
   web:
-    app_name: "aquan"        # اسم التطبيق
-    short_app_name: "aquan"  # اسم التطبيق المختصر (اختياري)
-    description: "aquan App" # وصف التطبيق (اختياري)
+    app_name: "aquan_dev"        # اسم التطبيق
+    short_app_name: "aquan_dev"  # اسم التطبيق المختصر (اختياري)
+    description: "aquan App dev" # وصف التطبيق (اختياري)
 
   windows:
-    app_name: "aquan"        # اسم التطبيق
-    organization: "aquan"     # اسم المؤسسة (اختياري)
+    app_name: "aquan_dev"        # اسم التطبيق
+    organization: "aquan_dev"     # اسم المؤسسة (اختياري)
     copyright_notice: "© 2024 IMolds"  # حقوق الطبع والنشر (اختياري)
-    exe_name: "aquan"        # اسم ملف التنفيذ
+    exe_name: "aquan_dev"        # اسم ملف التنفيذ

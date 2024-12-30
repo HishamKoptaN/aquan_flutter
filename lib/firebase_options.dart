@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBJzNWXsV-UPdSYod2eagdHvS3V_6AEYW4',
-    appId: '1:468746216391:web:4cea5452411bc488306fe2',
-    messagingSenderId: '468746216391',
-    projectId: 'aquan-c8534',
-    authDomain: 'aquan-c8534.firebaseapp.com',
-    storageBucket: 'aquan-c8534.firebasestorage.app',
-    measurementId: 'G-0RSEN21NEH',
+    apiKey: 'AIzaSyDGRoVPV3sCSbRq-08v1rBvnSVg7BNMXAQ',
+    appId: '1:19118574319:web:1f05a4fcf822a742eb291a',
+    messagingSenderId: '19118574319',
+    projectId: 'aquan-dev',
+    authDomain: 'aquan-dev.firebaseapp.com',
+    storageBucket: 'aquan-dev.firebasestorage.app',
+    measurementId: 'G-4ZC76GWQH0',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA8O57eAtziO8vuXsAD7qQUH7p0MfxpiLw',
-    appId: '1:468746216391:android:5eb07a2c5d05089e306fe2',
-    messagingSenderId: '468746216391',
-    projectId: 'aquan-c8534',
-    storageBucket: 'aquan-c8534.firebasestorage.app',
+    apiKey: 'AIzaSyAktff8ZOyRmO2VtaJzGTaDxn20hmQ07b4',
+    appId: '1:19118574319:android:1bdb6ba41686756deb291a',
+    messagingSenderId: '19118574319',
+    projectId: 'aquan-dev',
+    storageBucket: 'aquan-dev.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDp4OcRqCKP8z4eFWAj3cQAULQ_IAPAxC0',
-    appId: '1:468746216391:ios:073d74df9b800c2f306fe2',
-    messagingSenderId: '468746216391',
-    projectId: 'aquan-c8534',
-    storageBucket: 'aquan-c8534.firebasestorage.app',
-    iosBundleId: 'com.aquan.app',
+    apiKey: 'AIzaSyB53iUt4Hm3ojD0P-1AA42SytdUtGRtZxI',
+    appId: '1:19118574319:ios:085e585d27c3acd4eb291a',
+    messagingSenderId: '19118574319',
+    projectId: 'aquan-dev',
+    storageBucket: 'aquan-dev.firebasestorage.app',
+    iosBundleId: 'com.aquan.app.dev',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDp4OcRqCKP8z4eFWAj3cQAULQ_IAPAxC0',
-    appId: '1:468746216391:ios:073d74df9b800c2f306fe2',
-    messagingSenderId: '468746216391',
-    projectId: 'aquan-c8534',
-    storageBucket: 'aquan-c8534.firebasestorage.app',
-    iosBundleId: 'com.aquan.app',
+    apiKey: 'AIzaSyB53iUt4Hm3ojD0P-1AA42SytdUtGRtZxI',
+    appId: '1:19118574319:ios:085e585d27c3acd4eb291a',
+    messagingSenderId: '19118574319',
+    projectId: 'aquan-dev',
+    storageBucket: 'aquan-dev.firebasestorage.app',
+    iosBundleId: 'com.aquan.app.dev',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBJzNWXsV-UPdSYod2eagdHvS3V_6AEYW4',
-    appId: '1:468746216391:web:76cdd5c394942c21306fe2',
-    messagingSenderId: '468746216391',
-    projectId: 'aquan-c8534',
-    authDomain: 'aquan-c8534.firebaseapp.com',
-    storageBucket: 'aquan-c8534.firebasestorage.app',
-    measurementId: 'G-C1SY8RDEPE',
+    apiKey: 'AIzaSyDGRoVPV3sCSbRq-08v1rBvnSVg7BNMXAQ',
+    appId: '1:19118574319:web:9cd2ae9778f3c37ceb291a',
+    messagingSenderId: '19118574319',
+    projectId: 'aquan-dev',
+    authDomain: 'aquan-dev.firebaseapp.com',
+    storageBucket: 'aquan-dev.firebasestorage.app',
+    measurementId: 'G-LZX7VY9WP1',
   );
+
 }

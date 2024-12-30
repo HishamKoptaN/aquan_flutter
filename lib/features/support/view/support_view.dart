@@ -8,10 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
-import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:aquan/features/support/present/bloc/support_bloc.dart';
 import '../../../core/singletons/user_singleton.dart';
 import '../../../core/widgets/custom_circular_progress.dart';
+import '../../layouts/app_layout.dart';
 import '../data/model/msg.dart';
 import '../data/model/msg_send.dart';
 import '../present/bloc/support_event.dart';
@@ -48,9 +48,46 @@ class _SupportViewState extends State<SupportView> {
     ),
     alignment: Alignment.topRight,
   );
-  String formatTimestamp(Timestamp timestamp) {
+  String formatTimestamp(
+    Timestamp timestamp,
+  ) {
     DateTime dateTime = timestamp.toDate();
-    return DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+    return DateFormat(
+      'yyyy-MM-dd HH:mm',
+    ).format(
+      dateTime,
+    );
+  }
+
+  Future<void> initializeChat(String userId) async {
+    try {
+      final chatRef =
+          FirebaseFirestore.instance.collection('support').doc(userId);
+
+      final chatSnapshot = await chatRef.get();
+      if (!chatSnapshot.exists) {
+        await chatRef.set(
+          {
+            'user_image': UserSingleton.instance.user!.image,
+            'user_name': UserSingleton.instance.user!.firstName,
+            'last_msg_timestamp': FieldValue.serverTimestamp(),
+          },
+        );
+      }
+    } catch (e) {}
+  }
+
+  void onChatPageOpened() async {
+    final userId = UserSingleton.instance.user!.id.toString();
+    await initializeChat(
+      userId,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    onChatPageOpened();
   }
 
   @override
@@ -175,7 +212,6 @@ class _SupportViewState extends State<SupportView> {
                             );
                             context.read<SupportBloc>().add(
                                   SupportEvent.sendMsg(
-                                    chatId: UserSingleton.instance.user!.id,
                                     msgSend: msgSend,
                                   ),
                                 );
@@ -218,16 +254,6 @@ class _SupportViewState extends State<SupportView> {
                       ],
                     ),
                   ),
-                  // SendMsgForm(
-                  //   onPressed: () {
-                  //     context.read<SupportBloc>().add(
-                  //           SupportEvent.sendMsg(
-                  //             msg: msg,
-                  //             chatId: UserSingleton.instance.user!.id,
-                  //           ),
-                  //         );
-                  //   },
-                  // ),
                   Gap(
                     10.h,
                   ),

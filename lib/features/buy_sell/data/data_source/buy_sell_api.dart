@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/networking/api_constants.dart';
-import '../model/buy_sell_model.dart';
+import '../model/buy_sell_res_model.dart';
 import '../model/received_account_number_res_model.dart';
 part 'buy_sell_api.g.dart';
 

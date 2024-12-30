@@ -1,8 +1,10 @@
-import '../../../features/Auth/login/data/repo_imp/login_repo_impl.dart';
-import '../../../features/Auth/sign_up/data/repo_impl/sign_up_repo_imp.dart';
-import '../../../features/Auth/sign_up/domain/repo/sign_up_repo.dart';
+import '../../../features/auth/login/data/repo_imp/login_repo_impl.dart';
+import '../../../features/auth/reset_password/data/repo/reset_password_repo_impl.dart';
+import '../../../features/auth/sign_up/data/repo_impl/sign_up_repo_imp.dart';
+import '../../../features/auth/sign_up/domain/repo/sign_up_repo.dart';
 import '../../../features/accounts/data/repo_impl/accounts_repo_impl.dart';
 import '../../../features/accounts/domain/repo/accounts_rep.dart';
+import '../../../features/auth/verify_email/data/repo/email_verify_repo_impl.dart';
 import '../../../features/deposit/data/repo/deposits_repo.dart';
 import '../../../features/deposit/domain/repo_imp/deposits_repo_impl.dart';
 import '../../../features/notifications/data/repo/notifications_repo.dart';
@@ -15,8 +17,12 @@ import '../../../features/dash/data/repo/dash_repo.dart';
 import '../../../features/dash/domain/repo_imp/dash_repo_impl.dart';
 import '../../../features/main/data/repo_impl/main_repo_impl.dart';
 import '../../../features/main/domain/repo/main_repo.dart';
+import '../../../features/profile/data/repo/profile_repo.dart';
+import '../../../features/profile/domain/repo_impl/profile_repo_impl.dart';
 import '../../../features/send_to_account/data/repo/send_to_account_repo.dart';
 import '../../../features/send_to_account/domain/repo_imp/send_to_account_repo_impl.dart';
+import '../../../features/tasks/data/repo/tasks_repo.dart';
+import '../../../features/tasks/domain/repo_impl/tasks_repo_impl.dart';
 import '../../../features/trans/data/repo/transactions_repo.dart';
 import '../../../features/trans/domain/repo_imp/transactions_repo_impl.dart';
 import '../../../features/withdraw/data/repo/withdraws_repo.dart';
@@ -32,6 +38,16 @@ class RepositoryModule extends DIModule {
           getIt(),
         ),
       )
+      ..registerLazySingleton<VerifyEmailRepoImpl>(
+        () => VerifyEmailRepoImpl(
+          verifyEmailApi: getIt(),
+        ),
+      )
+      ..registerLazySingleton<ResetPassRepoImpl>(
+        () => ResetPassRepoImpl(
+          resetPassApi: getIt(),
+        ),
+      )
       ..registerLazySingleton<LoginRepoImpl>(
         () => LoginRepoImpl(
           getIt(),
@@ -39,7 +55,7 @@ class RepositoryModule extends DIModule {
       )
       ..registerLazySingleton<SignUpRepo>(
         () => SignUpRepoImpl(
-          getIt(),
+          signUpApi: getIt(),
         ),
       )
       ..registerLazySingleton<DashRepo>(
@@ -129,6 +145,21 @@ class RepositoryModule extends DIModule {
       )
       ..registerLazySingleton<AccountsRepoImpl>(
         () => AccountsRepoImpl(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton<TasksRepo>(
+        () => TasksRepoImpl(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton<ProfileRepo>(
+        () => ProfileRepoImpl(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton<ProfileRepoImpl>(
+        () => ProfileRepoImpl(
           getIt(),
         ),
       );

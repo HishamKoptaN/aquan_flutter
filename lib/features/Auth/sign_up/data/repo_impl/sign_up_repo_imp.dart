@@ -2,27 +2,31 @@ import '../../../../../core/errors/api_error_handler.dart';
 import '../../../../../core/networking/api_result.dart';
 import '../../domain/repo/sign_up_repo.dart';
 import '../data_sources/sign_up_api.dart';
-import '../models/sign_up_request_body.dart';
-import '../models/sign_up_response_model.dart';
+import '../models/sign_up_req_body.dart';
+import '../models/sign_up_res_model.dart';
 
 class SignUpRepoImpl implements SignUpRepo {
-  final SignUpApi _signUpApi;
+  final SignUpApi signUpApi;
 
-  SignUpRepoImpl(this._signUpApi);
+  SignUpRepoImpl({
+    required this.signUpApi,
+  });
   @override
-  Future<ApiResult<SignUpResponseModel>> signUp({
-    required SignUpRequestBody signUpRequestBody,
+  Future<ApiResult<SignUpResModel>> signUp({
+    required SignUpReqBody signUpReqBody,
   }) async {
     try {
-      final response = await _signUpApi.signUp(
-        signUpRequestBody: signUpRequestBody,
+      final response = await signUpApi.signUp(
+        signUpReqBody: signUpReqBody,
       );
       return ApiResult.success(
         data: response,
       );
     } catch (error) {
       return ApiResult.failure(
-        apiErrorModel: ApiErrorHandler.handle(error: error),
+        apiErrorModel: ApiErrorHandler.handle(
+          error: error,
+        ),
       );
     }
   }

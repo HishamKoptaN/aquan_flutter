@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/networking/api_constants.dart';
 import '../model/username_by_account_res_model.dart';
-import '../model/transfer_request_body_model.dart';
+import '../model/transfer_req_body.dart';
 part 'send_to_account_api.g.dart';
 
 @RestApi(
@@ -23,6 +23,6 @@ abstract class SendToAccountApi {
     ApiConstants.transfer,
   )
   Future<void> send({
-    @Body() required TransferRequestBody transferRequestBody,
+    @Body() required TransferReqBody transferReqBody,
   });
 }

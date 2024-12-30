@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/singletons/withdraw_rates_singleton.dart';
+import '../../data/model/withdraw_rates_res_model.dart';
 import '../../domain/use_cases/add_withdraw_use_case.dart';
 import '../../domain/use_cases/get_withdraw_rates_use_case.dart';
 import '../../domain/use_cases/get_withdraws_use_case.dart';
@@ -16,6 +18,7 @@ class WithdrawsBloc extends Bloc<WithdrawsEvent, WithdrawsState> {
   }) : super(
           const WithdrawsState.initial(),
         ) {
+    WithdrawRatesResModel? withdrawRatesResModel;
     on<WithdrawsEvent>(
       (event, emit) async {
         await event.when(
@@ -47,14 +50,18 @@ class WithdrawsBloc extends Bloc<WithdrawsEvent, WithdrawsState> {
             );
             final result = await getWithdrawRatesUseCase.getWithdrawRates();
             await result.when(
-              success: (withdrawRatesResModel) async {
+              success: (
+                withdrawRatesResModel,
+              ) async {
+                WithdrawRatesResSingleton.instance.withdrawRatesResModel =
+                    withdrawRatesResModel;
                 emit(
-                  WithdrawsState.withdrawRatesLoaded(
-                    withdrawRatesResModel: withdrawRatesResModel!,
-                  ),
+                  const WithdrawsState.withdrawRatesLoaded(),
                 );
               },
-              failure: (apiErrorModel) async {
+              failure: (
+                apiErrorModel,
+              ) async {
                 emit(
                   WithdrawsState.failure(
                     apiErrorModel: apiErrorModel,
@@ -63,12 +70,14 @@ class WithdrawsBloc extends Bloc<WithdrawsEvent, WithdrawsState> {
               },
             );
           },
-          addWithdraw: (withdrawRequestBody) async {
+          addWithdraw: (
+            withdrawReqBodyModel,
+          ) async {
             emit(
               const WithdrawsState.loading(),
             );
             final result = await addWithdrawUseCase.addWithdraw(
-              withdrawRequestBody: withdrawRequestBody,
+              withdrawReqBodyModel: withdrawReqBodyModel,
             );
             await result.when(
               success: (dashResModel) async {
@@ -81,6 +90,9 @@ class WithdrawsBloc extends Bloc<WithdrawsEvent, WithdrawsState> {
                   WithdrawsState.failure(
                     apiErrorModel: apiErrorModel,
                   ),
+                );
+                emit(
+                  const WithdrawsState.withdrawRatesLoaded(),
                 );
               },
             );

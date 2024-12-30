@@ -6,9 +6,11 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   NavigationBloc() : super(NavigationInitial()) {
     on<ChangePageEvent>(
       (event, emit) {
-        emit(NavigationPageChanged(
-          event.pageIndex,
-        ));
+        emit(
+          NavigationPageChanged(
+            event.pageIndex,
+          ),
+        );
       },
     );
   }

@@ -1,4 +1,4 @@
-import 'package:aquan/features/withdraw/data/model/withdraw_request_body_model.dart';
+import 'package:aquan/features/withdraw/data/model/withdraw_req_body_model.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_source/withdraw_api.dart';
@@ -46,10 +46,12 @@ class WithdrawsRepoImpl implements WithdrawsRepo {
 
   @override
   Future<ApiResult<void>> addWithdraw({
-    required WithdrawRequestBody withdrawRequestBody,
+    required WithdrawReqBodyModel withdrawReqBodyModel,
   }) async {
     try {
-      await withdrawsApi.getWithdrawRates();
+      await withdrawsApi.addWithdraw(
+        withdrawReqBodyModel: withdrawReqBodyModel,
+      );
       return const ApiResult.success(
         data: null,
       );

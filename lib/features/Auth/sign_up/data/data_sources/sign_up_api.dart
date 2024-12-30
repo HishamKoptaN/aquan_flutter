@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/networking/api_constants.dart';
-import '../models/sign_up_request_body.dart';
-import '../models/sign_up_response_model.dart';
+import '../models/sign_up_req_body.dart';
+import '../models/sign_up_res_model.dart';
 part 'sign_up_api.g.dart';
 
 @RestApi(
@@ -16,7 +16,7 @@ abstract class SignUpApi {
   @POST(
     ApiConstants.signup,
   )
-  Future<SignUpResponseModel> signUp({
-    @Body() required SignUpRequestBody signUpRequestBody,
+  Future<SignUpResModel> signUp({
+    @Body() required SignUpReqBody signUpReqBody,
   });
 }

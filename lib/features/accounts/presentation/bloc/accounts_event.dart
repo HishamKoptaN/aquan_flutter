@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../../core/singletons/account.dart';
+import '../../../../core/models/account.dart';
 part 'accounts_event.freezed.dart';
 
 @freezed

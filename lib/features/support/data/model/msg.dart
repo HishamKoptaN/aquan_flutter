@@ -5,14 +5,11 @@ import 'dart:convert';
 part 'msg.freezed.dart';
 part 'msg.g.dart';
 
-// لتحويل JSON إلى نموذج Msg
 Msg msgFromJson(String str) => Msg.fromJson(json.decode(str));
-// لتحويل نموذج Msg إلى JSON
 String msgToJson(Msg data) => json.encode(data.toJson());
 
 @freezed
 class Msg with _$Msg {
-  // النموذج المسؤول عن استقبال البيانات
   const factory Msg({
     @JsonKey(name: "content") String? content,
     @JsonKey(name: "sender_id") int? senderId,

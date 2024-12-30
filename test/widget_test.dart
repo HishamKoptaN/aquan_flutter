@@ -1,32 +1,38 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-
+import 'package:aquan/core/di/dependency_injection.dart';
+import 'package:aquan/core/helpers/app_observer.dart';
+import 'package:aquan/core/helpers/constants.dart';
+import 'package:aquan/core/helpers/settings.dart';
+import 'package:aquan/core/helpers/shared_pref_helper.dart';
+import 'package:aquan/firebase_options.dart';
 import 'package:aquan/main.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+void main() async {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  testWidgets('اختبار تسجيل الدخول بنجاح', (tester) async {
+    // قم بتشغيل التطبيق
     await tester.pumpWidget(MyApp(
-      locale: '',
+      locale: 'ar',
     ));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // ابحث عن الحقول التي نحتاج لاختبارها
+    final emailField = find.byKey(const Key('emailField'));
+    final passwordField = find.byKey(const Key('passwordField'));
+    final loginButton = find.byKey(const Key('loginButton'));
+    // إدخال اسم المستخدم وكلمة المرور
+    await tester.enterText(emailField, 'user');
+    await tester.enterText(passwordField, 'admin');
+    // اضغط على زر تسجيل الدخول
+    await tester.tap(loginButton);
+    // انتظر حتى يتم تحديث واجهة المستخدم بعد الضغط على الزر
+    await tester.pumpAndSettle();
+    // تحقق من الانتقال إلى الشاشة التالية
+    expect(find.byKey(const Key('NavigateBarView')), findsOneWidget);
   });
 }

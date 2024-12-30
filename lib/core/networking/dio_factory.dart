@@ -8,7 +8,9 @@ class DioFactory {
   DioFactory._();
   static Dio? dio;
   static Future<Dio> setupDio() async {
-    Duration timeOut = const Duration(seconds: 15);
+    Duration timeOut = const Duration(
+      seconds: 15,
+    );
     if (dio == null) {
       dio = Dio();
       dio!
@@ -28,12 +30,6 @@ class DioFactory {
     }
   }
 
-  static void setTokenIntoHeaderAfterLogin(String token) {
-    dio?.options.headers = {
-      'Authorization': 'Bearer $token',
-    };
-  }
-
   static void addDioInterceptor() {
     dio?.interceptors.add(
       PrettyDioLogger(
@@ -42,5 +38,17 @@ class DioFactory {
         responseHeader: true,
       ),
     );
+  }
+
+  static void setTokenIntoHeaderAfterLogin({
+    required String token,
+  }) async {
+    dio?.options.headers = {
+      'Authorization': 'Bearer ${await SharedPrefHelper.getSecuredString(
+        key: SharedPrefKeys.userToken,
+      )}',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    };
   }
 }

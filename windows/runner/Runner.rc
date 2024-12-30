@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "aquan" "\0"
-            VALUE "FileDescription", "aquan" "\0"
+            VALUE "CompanyName", "aquan_dev" "\0"
+            VALUE "FileDescription", "aquan_dev" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "aquan" "\0"
+            VALUE "InternalName", "aquan_dev" "\0"
             VALUE "LegalCopyright", "© 2024 IMolds" "\0"
-            VALUE "OriginalFilename", "aquan.exe" "\0"
-            VALUE "ProductName", "aquan" "\0"
+            VALUE "OriginalFilename", "aquan_dev.exe" "\0"
+            VALUE "ProductName", "aquan_dev" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

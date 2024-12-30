@@ -12,9 +12,7 @@ class WithdrawsState with _$WithdrawsState {
   const factory WithdrawsState.withdrawsLoaded({
     required List<Withdraw>? withdraws,
   }) = _WithdrawsLoaded;
-  const factory WithdrawsState.withdrawRatesLoaded({
-    required WithdrawRatesResModel withdrawRatesResModel,
-  }) = _WithdrawRatesLoaded;
+  const factory WithdrawsState.withdrawRatesLoaded() = _WithdrawRatesLoaded;
   const factory WithdrawsState.amountSentSuccessfully() =
       AmountSentSuccessfully;
   const factory WithdrawsState.failure({

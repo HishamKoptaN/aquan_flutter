@@ -1,5 +1,5 @@
 import '../../../../core/networking/api_result.dart';
-import '../../../../core/singletons/account.dart';
+import '../../../../core/models/account.dart';
 
 abstract class AccountsRepo {
   Future<ApiResult<List<Account>>> get();

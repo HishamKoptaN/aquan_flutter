@@ -1,9 +1,12 @@
-import 'package:aquan/features/Layouts/app_layout.dart';
+import 'package:aquan/features/withdraw/data/model/withdraws_res_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
+import '../../../../core/widgets/widget_column_header.dart';
+import '../../../layouts/app_layout.dart';
 import '../bloc/withdraws_bloc.dart';
 import '../bloc/withdraws_event.dart';
 import '../bloc/withdraws_state.dart';
@@ -16,7 +19,9 @@ class WithdrawsView extends StatefulWidget {
 
 class _WithdrawsViewState extends State<WithdrawsView> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
     return AppLayout(
@@ -36,149 +41,60 @@ class _WithdrawsViewState extends State<WithdrawsView> {
             builder: (context, state) {
               return state.maybeWhen(
                 withdrawsLoaded: (withdraws) {
-                  List<Widget> childs = [];
-                  double width = (size.width / 6) - 10;
-                  childs.add(
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.deepOrange.shade700,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            width: width,
-                            child: Text(
-                              t.id,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
+                  return ListView.builder(
+                    itemCount: withdraws!.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Container(
+                          padding: const EdgeInsets.all(
+                            10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrange.shade700,
+                            borderRadius: BorderRadius.circular(
+                              10,
                             ),
                           ),
-                          SizedBox(
-                            width: width,
-                            child: Text(
-                              t.status,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              buildColumnHeader(
+                                t.id,
                               ),
-                            ),
+                              buildColumnHeader(
+                                t.status,
+                              ),
+                              buildColumnHeader(
+                                t.thePrice,
+                              ),
+                              buildColumnHeader(
+                                t.withdraw_method,
+                              ),
+                              buildColumnHeader(
+                                t.date,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: width,
-                            child: Text(
-                              t.thePrice,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width,
-                            child: Text(
-                              t.method,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width,
-                            child: Text(
-                              t.date,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                  for (var withdraw in withdraws!) {
-                    String status = t.pending;
-                    Color color = Colors.orange;
-                    if (withdraw.status == "completed") {
-                      status = t.completed;
-                      color = Colors.green;
-                    }
-                    if (withdraw.status == "rejected") {
-                      status = t.rejected;
-                      color = Colors.red;
-                    }
-                    childs.add(
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            SizedBox(
-                              width: width,
-                              child: Text(
-                                withdraw.id.toString(),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: width,
-                              child: Text(
-                                status,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: color,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: width,
-                              child: Text(
-                                withdraw.amount.toString(),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: width,
-                              child: Text(
-                                withdraw.currency!.name!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: width,
-                              child: Text(
-                                withdraw.createdAt!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                  return ListView(
-                    children: childs,
+                        );
+                      }
+                      final withdraw = withdraws[index - 1];
+                      String status = t.pending;
+                      Color color = Colors.orange;
+                      if (withdraw.status == "accepted") {
+                        status = t.completed;
+                        color = Colors.green;
+                      }
+                      if (withdraw.status == "rejected") {
+                        status = t.rejected;
+                        color = Colors.red;
+                      }
+                      return buildWithdrawRow(
+                        withdraw,
+                        status,
+                        color,
+                        t,
+                      );
+                    },
                   );
                 },
                 orElse: () {
@@ -195,6 +111,49 @@ class _WithdrawsViewState extends State<WithdrawsView> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildWithdrawRow(
+    Withdraw withdraw,
+    String status,
+    Color color,
+    t,
+  ) {
+    return Container(
+      width: 40.w,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(
+        vertical: 5,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          buildTransactionDetail(text: withdraw.id.toString()),
+          buildTransactionDetail(
+            text: status,
+          ),
+          buildTransactionDetail(
+              text: withdraw.amount.toString(), isPrice: true),
+          buildTransactionDetail(
+            text: withdraw.currency!.name!,
+          ),
+          buildTransactionDetail(
+            text: withdraw.createdAt!,
+          ),
+        ],
       ),
     );
   }

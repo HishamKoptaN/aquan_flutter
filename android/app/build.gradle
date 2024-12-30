@@ -26,8 +26,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.aquan.app"
-    compileSdkVersion flutter.compileSdkVersion
+    namespace = "com.aquan.app.dev"
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -42,9 +42,12 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     defaultConfig {
-        applicationId = "com.aquan.app"
+        applicationId = "com.aquan.app.dev"
         minSdk =  21
         targetSdk = 34
         versionCode = flutter.versionCode

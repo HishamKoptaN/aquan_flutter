@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_source/buy_sell_api.dart';
-import '../../data/model/buy_sell_model.dart';
+import '../../data/model/buy_sell_res_model.dart';
 import '../../data/repo/buy_sell_repo.dart';
 
 class BuySellRepoImpl implements BuySellRepo {

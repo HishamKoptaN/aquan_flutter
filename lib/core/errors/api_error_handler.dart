@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'api_error_model.dart';
 
 class ApiErrorHandler {
-  static ApiErrorModel handle({required dynamic error}) {
+  static ApiErrorModel handle({
+    required dynamic error,
+  }) {
     if (error is DioException) {
       switch (error.type) {
         case DioExceptionType.connectionError:
@@ -50,7 +52,6 @@ class ApiErrorHandler {
 ApiErrorModel _handleError(dynamic data) {
   print(data);
   return ApiErrorModel(
-    status: data['status'],
     error: data['error'] ?? "Unknown error occurred",
   );
 }

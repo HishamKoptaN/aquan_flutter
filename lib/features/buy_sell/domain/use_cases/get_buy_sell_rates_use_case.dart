@@ -1,5 +1,5 @@
 import '../../../../core/networking/api_result.dart';
-import '../../data/model/buy_sell_model.dart';
+import '../../data/model/buy_sell_res_model.dart';
 import '../repo_impl/buy_sell_repo_impl.dart';
 
 class GetBuySellRatesUse {

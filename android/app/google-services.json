@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "468746216391",
-    "project_id": "aquan-c8534",
-    "storage_bucket": "aquan-c8534.firebasestorage.app"
+    "project_number": "19118574319",
+    "project_id": "aquan-dev",
+    "storage_bucket": "aquan-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:468746216391:android:5eb07a2c5d05089e306fe2",
+        "mobilesdk_app_id": "1:19118574319:android:1bdb6ba41686756deb291a",
         "android_client_info": {
-          "package_name": "com.aquan.app"
+          "package_name": "com.aquan.app.dev"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA8O57eAtziO8vuXsAD7qQUH7p0MfxpiLw"
+          "current_key": "AIzaSyAktff8ZOyRmO2VtaJzGTaDxn20hmQ07b4"
         }
       ],
       "services": {

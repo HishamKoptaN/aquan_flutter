@@ -1,6 +1,6 @@
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
-import '../../../../core/singletons/account.dart';
+import '../../../../core/models/account.dart';
 import '../../domain/repo/accounts_rep.dart';
 import '../datasources/accounts_api.dart';
 

@@ -1,11 +1,13 @@
 import 'package:aquan/features/deposit/pesent/bloc/deposits_bloc.dart';
-import 'package:aquan/features/Layouts/app_layout.dart';
 import 'package:aquan/features/deposit/pesent/bloc/deposits_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/dependency_injection.dart';
+import '../../../../../core/widgets/widget_column_header.dart';
+import '../../../../layouts/app_layout.dart';
+import '../../../data/model/deposits_res_model.dart';
 import '../../bloc/deposits_state.dart';
 
 class DepositsView extends StatelessWidget {
@@ -14,7 +16,6 @@ class DepositsView extends StatelessWidget {
   });
   @override
   Widget build(context) {
-    Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
     return AppLayout(
       route: t.deposits,
@@ -36,92 +37,58 @@ class DepositsView extends StatelessWidget {
             );
             return state.maybeWhen(
               depositsLoaded: (
-                depositsResModel,
+                deposits,
               ) {
-                List<Widget> childs = [];
-                childs.add(
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          width: (size.width / 3) - 10,
-                          child: Text(
-                            t.status,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        SizedBox(
-                          width: (size.width / 3) - 10,
-                          child: Text(
-                            t.amount,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        SizedBox(
-                          width: (size.width / 3) - 10,
-                          child: Text(
-                            t.method,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-                depositsResModel.deposits!.every(
-                  (transaction) {
-                    childs.add(
-                      Container(
+                return ListView.builder(
+                  itemCount: deposits.deposits!.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
+                          color: Colors.deepOrange.shade700,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                              width: (size.width / 3) - 10,
-                              child: Text(
-                                transaction.status!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            buildColumnHeader(
+                              t.id,
                             ),
-                            SizedBox(
-                              width: (size.width / 3) - 10,
-                              child: Text(
-                                NumberFormat('#,##0').format(
-                                  transaction.amount,
-                                ),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            buildColumnHeader(
+                              t.status,
                             ),
-                            SizedBox(
-                              width: (size.width / 3) - 10,
-                              child: Text(
-                                transaction.currency!.name!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                            buildColumnHeader(
+                              t.thePrice,
+                            ),
+                            buildColumnHeader(
+                              t.deposit_method,
+                            ),
+                            buildColumnHeader(
+                              t.date,
                             ),
                           ],
                         ),
-                      ),
+                      );
+                    }
+                    final deposit = deposits.deposits![index - 1];
+                    String status = t.pending;
+                    Color color = Colors.orange;
+                    if (deposit.status == "completed") {
+                      status = t.completed;
+                      color = Colors.green;
+                    }
+                    if (deposit.status == "rejected") {
+                      status = t.rejected;
+                      color = Colors.red;
+                    }
+                    return buildWithdrawRow(
+                      deposit,
+                      status,
+                      color,
+                      t,
                     );
-                    return true;
                   },
-                );
-                return ListView(
-                  children: childs,
                 );
               },
               loading: () {
@@ -141,6 +108,54 @@ class DepositsView extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget buildWithdrawRow(
+    Deposit deposit,
+    String status,
+    Color color,
+    t,
+  ) {
+    return Container(
+      width: 40.w,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(
+        vertical: 5,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          buildTransactionDetail(
+            text: deposit.id.toString(),
+          ),
+          buildTransactionDetail(
+            text: status,
+          ),
+          buildTransactionDetail(
+            text: deposit.amount.toString(),
+            isPrice: true,
+          ),
+          buildTransactionDetail(
+            text: deposit.currency!.name!,
+          ),
+          buildTransactionDetail(
+            text: deposit.createdAt!,
+          ),
+          // buildTransactionDetail(withdraw.createdAt),
+        ],
       ),
     );
   }

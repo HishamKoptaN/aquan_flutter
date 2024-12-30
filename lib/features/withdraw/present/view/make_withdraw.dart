@@ -1,19 +1,22 @@
-import 'package:aquan/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
-import '../../../../core/helpers/global_widgets.dart';
 import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/methods/format_as_currency.dart';
 import '../../../../core/models/currency.dart';
 import '../../../../core/singletons/currencies_singleton.dart';
+import '../../../../core/singletons/withdraw_rates_singleton.dart';
 import '../../../../core/widgets/custom_circular_progress.dart';
+import '../../../../core/widgets/custom_dropdown_button.dart';
+import '../../../../core/widgets/custom_text_button_widget.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../../../core/widgets/custom_text_widget.dart';
 import '../../../../core/widgets/toast_notifier.dart';
 import '../../../layouts/app_layout.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import '../../data/model/withdraw_request_body_model.dart';
+import '../../data/model/withdraw_req_body_model.dart';
 import '../bloc/withdraws_bloc.dart';
 import '../../data/model/withdraw_rates_res_model.dart';
 import '../bloc/withdraws_event.dart';
@@ -30,37 +33,9 @@ class MakeWithdrawView extends StatefulWidget {
 
 class _MakeWithdrawViewState extends State<MakeWithdrawView> {
   final formkey = GlobalKey<FormState>();
-
-  TextEditingController amountController = TextEditingController();
+  WithdrawReqBodyModel? withdrawReqBodyModel = const WithdrawReqBodyModel();
+  int? receiveAmount;
   TextEditingController receivingWalletController = TextEditingController();
-  int? selectedcurrencyId;
-  double receiveAmount = 0;
-
-  void calculateReceiveAmount({
-    required WithdrawRatesResModel getWithdrawRateApiResModel,
-  }) {
-    setState(
-      () {
-        bool hasCurrencyRate = getWithdrawRateApiResModel.fromBinanceRates.any(
-          (rate) => selectedcurrencyId == rate.to,
-        );
-        if (hasCurrencyRate) {
-          double rate = getWithdrawRateApiResModel.fromBinanceRates
-              .firstWhere(
-                (rate) => selectedcurrencyId == rate.to,
-              )
-              .price;
-          receiveAmount =
-              double.parse(amountController.text.replaceAll(',', '')) * rate;
-          WithdrawRequestBody().amount;
-        } else {
-          receiveAmount =
-              double.parse(amountController.text.replaceAll(',', ''));
-          WithdrawRequestBody().amount;
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +62,6 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                     context: context,
                     message: t.success,
                   );
-
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
@@ -96,186 +70,161 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                     (route) => false,
                   );
                 },
-                failure: (e) {
+                failure: (apiErrorModel) {
                   ToastNotifier().showError(
                     context: context,
-                    message: t.error,
+                    message: apiErrorModel.error ?? t.error,
                   );
                 },
               );
             },
             builder: (context, state) {
               return state.maybeWhen(
-                withdrawRatesLoaded: (
-                  withdrawRatesResModel,
-                ) {
-                  List<DropdownMenuItem<String>> items = [];
-                  var currencies = CurrenciesSingleton.instance.get;
-                  if (currencies != null) {
-                    currencies.every(
-                      (method) {
-                        items.add(
-                          DropdownMenuItem(
-                            value: method.name,
-                            alignment: AlignmentDirectional.center,
-                            child: Text(
-                              method.name ?? '',
-                              overflow: TextOverflow.visible,
-                              style: const TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        );
-                        return true;
-                      },
-                    );
-                  }
+                withdrawRatesLoaded: () {
+                  final withdrawRatesResModel =
+                      WithdrawRatesResSingleton.instance.withdrawRatesResModel;
                   return ListView(
                     children: [
                       Form(
                         key: formkey,
                         child: Column(
                           children: [
-                            Text(t.withdrawMethod),
-                            const Gap(10),
-                            DropdownButtonFormField<Currency?>(
-                              value: null,
-                              isExpanded: true,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 20,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              items: CurrenciesSingleton.instance.get!.map(
-                                (currency) {
-                                  return DropdownMenuItem<Currency>(
-                                    value: currency,
-                                    child: Text(
-                                      currency.name ?? "",
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                              onChanged: (value) {
-                                if (value != null) {
-                                  selectedcurrencyId = value.id;
-                                  calculateReceiveAmount(
-                                    getWithdrawRateApiResModel:
-                                        withdrawRatesResModel,
-                                  );
-                                }
-                              },
+                            CustomText(
+                              text: t.withdrawMethod,
                             ),
                             Gap(
-                              20.h,
+                              10.h,
+                            ),
+                            CustomDropdownButton<Currency>(
+                              height: 50.h,
+                              width: double.infinity,
+                              hint: t.withdrawMethod,
+                              items: CurrenciesSingleton.instance.get ?? [],
+                              selectedItem:
+                                  CurrenciesSingleton.instance.get?.firstWhere(
+                                (currency) =>
+                                    currency.id == withdrawReqBodyModel?.method,
+                                orElse: () =>
+                                    CurrenciesSingleton.instance.get!.first,
+                              ),
+                              onChanged: (v) {
+                                setState(
+                                  () {
+                                    withdrawReqBodyModel =
+                                        withdrawReqBodyModel!.copyWith(
+                                      method: v?.id,
+                                    );
+                                    if (withdrawReqBodyModel?.method != null) {
+                                      calculateReceiveAmount(
+                                        getWithdrawRateApiResModel:
+                                            withdrawRatesResModel!,
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                              itemLabel: (currency) => currency.name ?? '',
+                            ),
+                            Gap(
+                              10.h,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  t.commission,
-                                  style: cartHeading,
+                                CustomText(
+                                  text: t.commission,
+                                  fontSize: 15.sp,
                                 ),
-                                const Text(
-                                  "0.0",
-                                  style: cartHeading,
+                                CustomText(
+                                  text: "0.0",
+                                  fontSize: 15.sp,
                                 ),
                               ],
                             ),
                             Gap(
-                              20.h,
+                              10.h,
                             ),
-                            CustomTextField(
-                              controller: amountController,
-                              label: t.withdrawAmount,
+                            CustomTextFormField(
+                              width: double.infinity,
+                              initialValue: withdrawReqBodyModel?.amount != null
+                                  ? withdrawReqBodyModel?.amount.toString()
+                                  : '',
+                              labelText: t.withdrawAmount,
                               enabled: true,
-                              icon: const Icon(
+                              suffixIcon: const Icon(
                                 Icons.money,
                               ),
-                              onChanged: (value) {
+                              onChanged: (v) {
+                                withdrawReqBodyModel =
+                                    withdrawReqBodyModel?.copyWith(
+                                  amount: getIntValueFromFormatingString(
+                                    input: v!,
+                                  ),
+                                );
                                 calculateReceiveAmount(
                                   getWithdrawRateApiResModel:
-                                      withdrawRatesResModel,
+                                      withdrawRatesResModel!,
+                                );
+                              },
+                              isPrice: true,
+                            ),
+                            Gap(
+                              10.h,
+                            ),
+                            CustomTextFormField(
+                              width: double.infinity,
+                              controller: receivingWalletController,
+                              labelText: t.yourWallet,
+                              keyboardType: TextInputType.number,
+                              onChanged: (v) {
+                                withdrawReqBodyModel =
+                                    withdrawReqBodyModel!.copyWith(
+                                  receivingAccountNumber: int.parse(
+                                    v!,
+                                  ),
                                 );
                               },
                             ),
-                            const Gap(20),
-                            TextField(
-                              controller: receivingWalletController,
-                              decoration: InputDecoration(
-                                labelText: t.yourWallet,
-                                border: const OutlineInputBorder(),
-                              ),
+                            Gap(
+                              10.h,
                             ),
-                            const Gap(20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  t.receivedAmount,
-                                  style: cartHeading,
+                                CustomText(
+                                  text: t.receivedAmount,
                                 ),
-                                Text(
-                                  NumberFormat('#,###')
-                                      .format(receiveAmount)
-                                      .toString(),
-                                  style: cartHeading,
+                                CustomText(
+                                  text: receiveAmount == null
+                                      ? '0'
+                                      : receiveAmount.toString(),
+                                  isPrice: true,
+                                  showCurrencySymbol: false,
                                 )
                               ],
                             ),
-                            const Gap(20),
-                            SizedBox(
-                              width: size.width,
-                              child: TextButton(
-                                onPressed: () async {
-                                  if (withdrawRatesResModel.totalWithdrawals >=
-                                      5000) {
-                                    ToastNotifier().showWarning(
-                                      context: context,
-                                      message: t.monthly_limit_withdrawal,
-                                    );
-                                  }
-
-                                  context.read<WithdrawsBloc>().add(
-                                        WithdrawsEvent.addWithdraw(
-                                          withdrawRequestBody:
-                                              WithdrawRequestBody(),
-                                        ),
-                                      );
+                            Gap(
+                              20.h,
+                            ),
+                            CustomTextButtonWidget(
+                              onPressed: () {
+                                onClickSubmit(
+                                  context: context,
+                                  t: t,
+                                  withdrawRatesResModel: withdrawRatesResModel!,
+                                );
+                              },
+                              widget: state.maybeWhen(
+                                loading: () {
+                                  return const CustomCircularProgress();
                                 },
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(fontSize: 20),
-                                  backgroundColor: Colors.amber,
-                                  padding: const EdgeInsets.all(15),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: const BorderSide(
-                                      color: Colors.amber,
-                                    ),
-                                  ),
-                                ),
-                                child: state.maybeWhen(
-                                  loading: () {
-                                    return const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    );
-                                  },
-                                  orElse: () {
-                                    return Text(
-                                      t.submit,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: "Arial",
-                                      ),
-                                    );
-                                  },
-                                ),
+                                orElse: () {
+                                  return CustomText(
+                                    text: t.submit,
+                                    color: Colors.white,
+                                    fontFamily: "Arial",
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -293,5 +242,56 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
         ),
       ),
     );
+  }
+
+  void calculateReceiveAmount({
+    required WithdrawRatesResModel getWithdrawRateApiResModel,
+  }) {
+    setState(
+      () {
+        bool hasCurrencyRate = getWithdrawRateApiResModel.fromBinanceRates.any(
+          (rate) => withdrawReqBodyModel?.method == rate.to,
+        );
+        if (hasCurrencyRate) {
+          int rate = getWithdrawRateApiResModel.fromBinanceRates
+              .firstWhere((rate) => withdrawReqBodyModel?.method == rate.to)
+              .price;
+          // احسب فقط القيمة التي سيتم استلامها بدون تعديل المبلغ الأصلي
+          receiveAmount = (withdrawReqBodyModel?.amount ?? 0) * rate;
+        } else {
+          // إذا لم تكن هناك أسعار صرف، احتفظ بالقيمة الأصلية
+          receiveAmount = withdrawReqBodyModel?.amount ?? 0;
+        }
+      },
+    );
+  }
+
+  Future<void> onClickSubmit({
+    required BuildContext context,
+    required AppLocalizations t,
+    required WithdrawRatesResModel withdrawRatesResModel,
+  }) async {
+    if (withdrawReqBodyModel!.amount! < 10) {
+      ToastNotifier().showError(
+        context: context,
+        message: "Enter an amount greater than 10\$",
+      );
+    } else if (withdrawRatesResModel.totalWithdrawals >= 5000) {
+      ToastNotifier().showWarning(
+        context: context,
+        message: t.monthly_limit_withdrawal,
+      );
+    }
+    if (withdrawRatesResModel.totalWithdrawals >= 5000) {
+      ToastNotifier().showWarning(
+        context: context,
+        message: t.monthly_limit_withdrawal,
+      );
+    }
+    context.read<WithdrawsBloc>().add(
+          WithdrawsEvent.addWithdraw(
+            withdrawReqBodyModel: withdrawReqBodyModel!,
+          ),
+        );
   }
 }

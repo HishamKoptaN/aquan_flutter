@@ -57,7 +57,9 @@ class PlansRepoImpl implements PlansRepo {
       );
     } catch (error) {
       return ApiResult.failure(
-        apiErrorModel: ApiErrorHandler.handle(error: error),
+        apiErrorModel: ApiErrorHandler.handle(
+          error: error,
+        ),
       );
     }
   }

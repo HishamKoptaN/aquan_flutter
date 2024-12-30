@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import 'bloc/local_auth_bloc.dart';
-import '../dash/presentation/view/dash_view.dart';
+import '../dash/present/view/dash_view.dart';
 import 'bloc/local_auth_event.dart';
 import 'bloc/local_auth_state.dart'; // تأكد من استيراد ملفات البلوك الخاصة بك
 

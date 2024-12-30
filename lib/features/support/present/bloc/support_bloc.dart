@@ -5,65 +5,50 @@ import 'support_event.dart';
 import 'support_state.dart';
 
 class SupportBloc extends Bloc<SupportEvent, SupportState> {
-  // final GetMsgsUseCase getMsgsUseCase;
-  // final SendMsgUseCase sendMsgUseCase;
-  SupportBloc(
-      // {required this.getMsgsUseCase,
-      // required this.sendMsgUseCase,}
-      )
-      : super(
-          const SupportState.initial(),
-        ) {
+  SupportBloc() : super(const SupportState.initial()) {
     on<SupportEvent>(
       (event, emit) async {
         await event.when(
-          getMsgs: (
-            chatId,
-          ) async {
-            emit(
-              const SupportState.loading(),
+          getMsgs: () async {},
+          sendMsg: (msgSend) async {
+            await _sendMessage(
+              msgSend,
+              emit,
             );
-          },
-          sendMsg: (
-            chatId,
-            msgSend,
-          ) async {
-            try {
-              await FirebaseFirestore.instance
-                  .collection('support')
-                  .doc(
-                    chatId.toString(),
-                  )
-                  .collection('msgs')
-                  .add(msgSend.toJson())
-                  .then(
-                (value) async {
-                  await FirebaseFirestore.instance
-                      .collection('support')
-                      .doc(
-                        chatId.toString(),
-                      )
-                      .update(
-                    {
-                      'user_image': UserSingleton.instance.user!.image,
-                      'user_name': UserSingleton.instance.user!.name,
-                      'last_msg_timestamp': FieldValue.serverTimestamp(),
-                    },
-                  );
-                },
-              ).catchError(
-                (error) {
-                  emit(
-                    const SupportState.failure(
-                      error: '',
-                    ),
-                  );
-                },
-              );
-            } catch (e) {}
           },
         );
       },
     );
+  }
+
+  Future<void> _sendMessage(
+    dynamic msgSend,
+    Emitter<SupportState> emit,
+  ) async {
+    try {
+      final userId = UserSingleton.instance.user!.id.toString();
+
+      await FirebaseFirestore.instance
+          .collection(
+            'support',
+          )
+          .doc(
+            userId,
+          )
+          .collection('msgs')
+          .add(
+            msgSend.toJson(),
+          );
+
+      emit(
+        const SupportState.success(),
+      );
+    } catch (error) {
+      emit(
+        SupportState.failure(
+          error: error.toString(),
+        ),
+      );
+    }
   }
 }

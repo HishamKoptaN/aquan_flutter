@@ -42,13 +42,13 @@ class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
             );
           },
           sendPaymentToOtherAccount: (
-            transferRequestBody,
+            transferReqBody,
           ) async {
             emit(
               const SendToAccountState.loading(),
             );
             final result = await sendToAccountUseCase.send(
-              transferRequestBody: transferRequestBody,
+              transferReqBody: transferReqBody,
             );
             await result.when(
               success: (getUserByAccountApiResModel) async {

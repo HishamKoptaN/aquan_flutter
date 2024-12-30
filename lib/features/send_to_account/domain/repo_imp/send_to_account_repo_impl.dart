@@ -3,7 +3,7 @@ import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/datasources/send_to_account_api.dart';
 import '../../data/model/username_by_account_res_model.dart';
-import '../../data/model/transfer_request_body_model.dart';
+import '../../data/model/transfer_req_body.dart';
 import '../../data/repo/send_to_account_repo.dart';
 
 class SendToAccountRepoImpl implements SendToAccountRepo {
@@ -34,11 +34,11 @@ class SendToAccountRepoImpl implements SendToAccountRepo {
 
   @override
   Future<ApiResult<PlanRate>> send({
-    required TransferRequestBody transferRequestBody,
+    required TransferReqBody transferReqBody,
   }) async {
     try {
       await sendToAccountApi.send(
-        transferRequestBody: transferRequestBody,
+        transferReqBody: transferReqBody,
       );
       return const ApiResult.success(
         data: null,

@@ -3,7 +3,7 @@ import '../../../../../core/models/auth.dart';
 import '../../../../../core/networking/api_result.dart';
 import '../../domain/repo/login_repo.dart';
 import '../data_sources/login_api.dart';
-import '../models/login_request_body.dart';
+import '../models/login_req_body.dart';
 
 class LoginRepoImpl implements LoginRepo {
   final LoginApi loginApi;
@@ -13,11 +13,11 @@ class LoginRepoImpl implements LoginRepo {
 
   @override
   Future<ApiResult<Auth>> login({
-    required LoginRequestBody loginRequestBody,
+    required LoginReqBody loginReqBody,
   }) async {
     try {
       final response = await loginApi.login(
-        loginRequestBody: loginRequestBody,
+        loginReqBody: loginReqBody,
       );
       return ApiResult.success(
         data: response,

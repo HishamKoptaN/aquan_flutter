@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../core/di/dependency_injection.dart';
-import '../../../../core/singletons/account.dart';
+import '../../../../core/models/account.dart';
 import '../../../../core/singletons/accounts_singleton.dart';
 import '../../../../core/widgets/toast_notifier.dart';
 import '../../../layouts/app_layout.dart';

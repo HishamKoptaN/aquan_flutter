@@ -50,7 +50,9 @@ class DepositsRepoImpl implements DepositsRepo {
     required FormData formData,
   }) async {
     try {
-      await depsoitsApi.get();
+      await depsoitsApi.deposits(
+        formData: formData,
+      );
       return const ApiResult.success(
         data: null,
       );

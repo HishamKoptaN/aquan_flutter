@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/networking/api_constants.dart';
-import '../model/withdraw_request_body_model.dart';
+import '../model/withdraw_req_body_model.dart';
 import '../model/withdraws_res_model.dart';
 import '../model/withdraw_rates_res_model.dart';
 part 'withdraw_api.g.dart';
@@ -29,6 +29,6 @@ abstract class WithdrawsApi {
     ApiConstants.withdraws,
   )
   Future<void> addWithdraw({
-    @Body() required WithdrawRequestBody withdrawRequestBody,
+    @Body() required WithdrawReqBodyModel withdrawReqBodyModel,
   });
 }

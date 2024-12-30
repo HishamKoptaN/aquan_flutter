@@ -8,24 +8,23 @@ import 'core/helpers/app_observer.dart';
 import 'core/helpers/constants.dart';
 import 'core/helpers/shared_pref_helper.dart';
 import 'core/utils/app_colors.dart';
-import 'features/Auth/login/presentation/view/login_view.dart';
-import 'features/accounts/presentation/pages/accounts_view.dart';
+import 'features/auth/login/present/view/login_view.dart';
+import 'features/auth/verify_email/present/view/send_email_otp_view.dart';
 import 'features/layouts/app_layout.dart';
-import 'features/main/presentation/bloc/main_bloc.dart';
-import 'features/main/presentation/bloc/main_event.dart';
-import 'features/main/presentation/bloc/main_state.dart';
+import 'features/main/present/bloc/main_bloc.dart';
+import 'features/main/present/bloc/main_event.dart';
+import 'features/main/present/bloc/main_state.dart';
 import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Injection.inject();
   await ScreenUtil.ensureScreenSize();
-
   SharedPrefHelper;
   String locale = await SharedPrefHelper.getString(
         key: SharedPrefKeys.languageCode,
@@ -44,10 +43,6 @@ void main() async {
     MyApp(
       locale: locale,
     ),
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) => MyApp(), // Wrap your app
-    // ),
   );
 }
 
@@ -74,7 +69,8 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         child: BlocProvider(
           create: (context) => MainBloc(
-            getIt(),
+            checkUseCase: getIt(),
+            editPassUseCase: getIt(),
           )..add(
               const MainEvent.check(),
             ),
@@ -84,7 +80,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            locale: Locale(locale),
+            locale: Locale(
+              locale,
+            ),
             home: AppLayout(
               route: "",
               showAppBar: false,
@@ -92,29 +90,6 @@ class MyApp extends StatelessWidget {
                 listener: (context, state) async {
                   state.mapOrNull(
                     logedIn: (notVerify) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              // !
-                              const AccountsView(),
-                          // const NavigateBarView(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                    notVerify: (data) {
-                      // Navigator.pushAndRemoveUntil(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => VerifyCode(
-                      //       userEmail: data.user.name,
-                      //     ),
-                      //   ),
-                      //   (route) => false,
-                      // );
-                    },
-                    verified: (veified) {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -131,10 +106,18 @@ class MyApp extends StatelessWidget {
                         (route) => false,
                       );
                     },
+                    notVerify: (data) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SendEmailOtpView(),
+                        ),
+                        (route) => false,
+                      );
+                    },
                   );
                 },
                 builder: (context, state) {
-                  state.whenOrNull();
                   return Image.asset(
                     "assets/icon/aquan-logo-gif.gif",
                   );
@@ -149,7 +132,10 @@ class MyApp extends StatelessWidget {
 }
 
 class RestartWidget extends StatefulWidget {
-  const RestartWidget({super.key, required this.child});
+  const RestartWidget({
+    super.key,
+    required this.child,
+  });
   final Widget child;
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
