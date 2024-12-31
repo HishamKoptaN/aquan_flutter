@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
@@ -260,9 +260,9 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                _handleSignIn(
-                                  context.read<SignUpBloc>(),
-                                );
+                                // _handleSignIn(
+                                //   context.read<SignUpBloc>(),
+                                // );
                               },
                               child: Container(
                                 height: 40.h,
@@ -326,19 +326,19 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void _handleSignIn(SignUpBloc bloc) async {
-    try {
-      GoogleSignIn googleSignIn = GoogleSignIn();
-      GoogleSignInAccount? account = await googleSignIn.signIn();
+  // void _handleSignIn(SignUpBloc bloc) async {
+  //   try {
+  //     GoogleSignIn googleSignIn = GoogleSignIn();
+  //     GoogleSignInAccount? account = await googleSignIn.signIn();
 
-      if (account != null) {
-        // bloc.add(
-        //   SignInWithGoogle(
-        //     email: account.email,
-        //     name: account.displayName!,
-        //   ),
-        // );
-      }
-    } catch (error) {}
-  }
+  //     if (account != null) {
+  //       // bloc.add(
+  //       //   SignInWithGoogle(
+  //       //     email: account.email,
+  //       //     name: account.displayName!,
+  //       //   ),
+  //       // );
+  //     }
+  //   } catch (error) {}
+  // }
 }

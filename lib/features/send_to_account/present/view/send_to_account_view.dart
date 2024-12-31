@@ -19,7 +19,9 @@ import '../bloc/send_to_account_event.dart';
 import '../bloc/send_to_account_state.dart';
 
 class SendToAccountView extends StatefulWidget {
-  const SendToAccountView({super.key});
+  const SendToAccountView({
+    super.key,
+  });
 
   @override
   State<SendToAccountView> createState() => _SendToAccountViewState();

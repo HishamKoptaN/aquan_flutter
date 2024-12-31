@@ -1,9 +1,9 @@
-import 'package:aquan/features/layouts/app_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aquan/features/layouts/app_layout.dart';
 import '../../core/di/dependency_injection.dart';
 import '../dash/present/bloc/dash_bloc.dart';
 import '../plans/present/bloc/plans_bloc.dart';

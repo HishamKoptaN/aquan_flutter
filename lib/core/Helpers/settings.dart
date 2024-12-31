@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:aquan/core/database/api/routes.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:aquan/core/database/api/routes.dart';
 
 class Settings {
   static Future setup() async {

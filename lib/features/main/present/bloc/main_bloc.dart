@@ -1,10 +1,12 @@
-import 'package:aquan/core/helpers/shared_pref_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
+
+import 'package:aquan/core/helpers/shared_pref_helper.dart';
+
 import '../../../../core/helpers/constants.dart';
 import '../../../../core/singletons/user_singleton.dart';
-import '../../domain/usecases/edit_pass_use_case.dart';
 import '../../domain/usecases/check_use_case.dart';
+import '../../domain/usecases/edit_pass_use_case.dart';
 import 'main_event.dart';
 import 'main_state.dart';
 

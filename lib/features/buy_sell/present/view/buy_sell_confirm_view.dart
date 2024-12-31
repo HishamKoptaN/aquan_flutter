@@ -1,26 +1,29 @@
 import 'dart:io';
-import 'package:aquan/core/di/dependency_injection.dart';
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/utils/styles.dart';
-import 'package:aquan/features/trans/present/view/trans_view.dart';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:aquan/core/di/dependency_injection.dart';
+import 'package:aquan/core/utils/app_colors.dart';
+import 'package:aquan/core/utils/styles.dart';
+import 'package:aquan/features/trans/present/view/trans_view.dart';
+
 import '../../../../core/widgets/custom_text_widget.dart';
 import '../../../../core/widgets/toast_notifier.dart';
 import '../../../layouts/app_layout.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../data/model/transfer_money_model.dart';
 import '../bloc/buy_sell_bloc.dart';
 import '../bloc/buy_sell_event.dart';
 import '../bloc/buy_sell_state.dart';
-import '../../data/model/transfer_money_model.dart';
 
 class BuySellConfirmView extends StatefulWidget {
   const BuySellConfirmView({
@@ -332,7 +335,9 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                                         backgroundColor: Colors.black,
                                         onVisible: () async {
                                           await Future.delayed(
-                                            const Duration(seconds: 3),
+                                            const Duration(
+                                              seconds: 3,
+                                            ),
                                             () {
                                               setState(
                                                 () {

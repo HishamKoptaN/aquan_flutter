@@ -1,15 +1,15 @@
 import 'dart:io';
-import 'package:aquan/core/singletons/user_singleton.dart';
+import 'dart:typed_data';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../Layouts/app_layout.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
-import 'dart:typed_data';
+import 'package:aquan/core/singletons/user_singleton.dart';
+import '../../Layouts/app_layout.dart';
 
 class QrCodeView extends StatefulWidget {
   const QrCodeView({super.key});
@@ -26,7 +26,7 @@ class _QrCodeViewState extends State<QrCodeView> {
       final directory = await getApplicationDocumentsDirectory();
       final imagePath = await File('${directory.path}/screenshot.png').create();
       await imagePath.writeAsBytes(screenshot);
-      Share.shareFiles([imagePath.path], text: 'Here is my QR code');
+      Share.shareXFiles([XFile(imagePath.path)], text: 'Here is my QR code');
     }
 
     final t = AppLocalizations.of(context)!;
