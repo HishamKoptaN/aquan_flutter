@@ -42,7 +42,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with: 
-          flutter-version: '3.24.4'
+          flutter-version: '^3.6.0'
       #! 6. تحميل التبعيات
       - name: Flutter pub get
         run: flutter pub get
