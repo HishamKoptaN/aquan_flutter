@@ -49,7 +49,9 @@ class _AppLayoutState extends State<AppLayout> {
                     : null,
                 title: Text(
                   widget.route ?? '',
-                  style: const TextStyle(color: Colors.black),
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
                 centerTitle: true,
               )

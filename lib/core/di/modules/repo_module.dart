@@ -24,7 +24,7 @@ import '../../../features/send_to_account/domain/repo_imp/send_to_account_repo_i
 import '../../../features/tasks/data/repo/tasks_repo.dart';
 import '../../../features/tasks/domain/repo_impl/tasks_repo_impl.dart';
 import '../../../features/trans/data/repo/transactions_repo.dart';
-import '../../../features/trans/domain/repo_imp/transactions_repo_impl.dart';
+import '../../../features/trans/domain/repo_imp/trans_repo_impl.dart';
 import '../../../features/withdraw/data/repo/withdraws_repo.dart';
 import '../../../features/withdraw/domain/repo_imp/withdraws_repo_impl.dart';
 import '../dependency_injection.dart';

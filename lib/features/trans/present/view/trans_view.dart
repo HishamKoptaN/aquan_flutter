@@ -8,6 +8,7 @@ import '../../../../core/singletons/trans_singleton.dart';
 import '../../../../core/widgets/widget_column_header.dart';
 import '../../../layouts/app_layout.dart';
 import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../bloc/trans_event.dart';
 import '../bloc/trans_state.dart';
 
 class TransactionsView extends StatelessWidget {
@@ -29,7 +30,9 @@ class TransactionsView extends StatelessWidget {
       body: BlocProvider(
         create: (context) => TransBloc(
           getIt(),
-        ),
+        )..add(
+            const TransEvent.get(),
+          ),
         child: BlocConsumer<TransBloc, TransState>(
           listener: (context, state) {
             state.whenOrNull();

@@ -44,7 +44,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
     ];
     return AppLayout(
       route: t.changeLanguage,
-      showAppBar: false,
+      showAppBar: true,
       body: BlocProvider<LanguageBloc>(
         create: (context) => LanguageBloc(),
         child: BlocBuilder<LanguageBloc, LanguageState>(

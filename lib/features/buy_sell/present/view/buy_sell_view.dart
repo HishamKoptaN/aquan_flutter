@@ -97,14 +97,17 @@ class _BuySellviewState extends State<BuySellview> {
                                               onChangedFromCurrency: (
                                                 currency,
                                               ) {
-                                                fromAmountController.clear();
-                                                fromCurrency = currency!;
-                                                if (toCurrency == currency) {
-                                                  toCurrency = null;
-                                                }
-                                                fromCurrency = currency;
                                                 setState(
-                                                  () {},
+                                                  () {
+                                                    fromAmountController
+                                                        .clear();
+                                                    fromCurrency = currency!;
+                                                    if (toCurrency ==
+                                                        currency) {
+                                                      toCurrency = null;
+                                                    }
+                                                    fromCurrency = currency;
+                                                  },
                                                 );
                                               },
                                               onChangedToCurrency: (
@@ -151,7 +154,6 @@ class _BuySellviewState extends State<BuySellview> {
                                                 onChanged: (v) {
                                                   setState(
                                                     () {
-                                                      debugPrint('$v');
                                                       netAmount =
                                                           calculateAmount(
                                                         amount:
@@ -166,9 +168,18 @@ class _BuySellviewState extends State<BuySellview> {
                                                         rate: rate,
                                                       );
                                                       toAmountController.text =
-                                                          netAmount.toString();
+                                                          formatter.format(
+                                                        int.parse(
+                                                          netAmount.toString(),
+                                                        ),
+                                                      );
                                                       fromAmountController
-                                                          .text = v.toString();
+                                                              .text =
+                                                          formatter.format(
+                                                        int.parse(
+                                                          v.toString(),
+                                                        ),
+                                                      );
                                                     },
                                                   );
                                                 },
@@ -194,11 +205,20 @@ class _BuySellviewState extends State<BuySellview> {
                                                                 .nameCode!,
                                                         rate: rate,
                                                       );
+
                                                       fromAmountController
                                                               .text =
-                                                          netAmount.toString();
+                                                          formatter.format(
+                                                        int.parse(
+                                                          netAmount.toString(),
+                                                        ),
+                                                      );
                                                       toAmountController.text =
-                                                          netAmount.toString();
+                                                          formatter.format(
+                                                        int.parse(
+                                                          netAmount.toString(),
+                                                        ),
+                                                      );
                                                     },
                                                   );
                                                 },
@@ -208,23 +228,14 @@ class _BuySellviewState extends State<BuySellview> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    CustomText(
-                                                      text: t.accountId,
-                                                      fontSize: 16.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ],
-                                                ),
                                                 Gap(
                                                   20.h,
                                                 ),
                                                 CustomTextFormField(
                                                   controller:
                                                       receiverAccountController,
-                                                  hintText: t.accountId,
+                                                  hintText: t
+                                                      .the_account_you_will_receive_the_money_from,
                                                   suffixIcon:
                                                       PopupMenuButton<Account>(
                                                     icon: const Icon(
@@ -473,7 +484,9 @@ class _BuySellviewState extends State<BuySellview> {
     required AppLocalizations? t,
   }) {
     int amount;
-    amount = int.parse(toAmountController.text);
+    amount = getIntValueFromFormatingString(
+      input: toAmountController.text,
+    )!;
     if (amount < 10) {
       return "${t?.min_transfer} 10 \$";
     }

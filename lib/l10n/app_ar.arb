@@ -166,6 +166,7 @@
 	"accountInfo": "حسابات الأموال",
 	"sendToAnOtherAccount": "التحويل لحساب آخر",
 	"accountId": "رقم حساب المستلم",
+	"the_account_you_will_receive_the_money_from":"الحساب الذي ستستلم عليه المبلغ",
 	"search": "بحث",
 	"min_transfer":"الحد الادني للتحويل",
 	"transfer_successfully":"تم التحويل بنجاح",

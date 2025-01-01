@@ -40,8 +40,13 @@ class MainBloc extends Bloc<MainEvent, MainState> {
                       const MainState.notVerify(),
                     );
                   } else if (res?.verified == true) {
+                    bool checkBiom = await SharedPrefHelper.getBool(
+                      key: SharedPrefKeys.fingerprints,
+                    );
                     emit(
-                      const MainState.logedIn(),
+                      MainState.logedIn(
+                        checkBiom: checkBiom,
+                      ),
                     );
                   }
                 },

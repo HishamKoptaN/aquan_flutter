@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
-import 'package:aquan/features/plans/data/model/plan_model.dart';
+import '../../../../data/model/plan.dart';
 
 class ImageWidget extends StatefulWidget {
   ImageWidget({

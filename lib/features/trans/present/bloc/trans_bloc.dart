@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/singletons/trans_singleton.dart';
-import '../../domain/use_cases/get_transactions_use_case.dart';
+import '../../domain/use_cases/get_trans_use_case.dart';
 import 'trans_event.dart';
 import 'trans_state.dart';
 
@@ -24,7 +24,9 @@ class TransBloc extends Bloc<TransEvent, TransState> {
               const TransState.dataLoaded(),
             );
           },
-          failure: (apiErrorModel) async {
+          failure: (
+            apiErrorModel,
+          ) async {
             emit(
               TransState.failure(
                 apiErrorModel: apiErrorModel,

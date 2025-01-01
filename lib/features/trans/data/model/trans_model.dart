@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../../core/models/currency.dart';
 part 'trans_model.freezed.dart';
 part 'trans_model.g.dart';
 
@@ -43,22 +44,12 @@ class Trans with _$Trans {
     @Default('')
     String updatedAt, // القيمة الافتراضية = ''
     @JsonKey(name: "sender_currency")
-    @Default(ErCurrency(name: ''))
-    ErCurrency senderCurrency, // القيمة الافتراضية = 'ErCurrency(name: '')'
+    @Default(Currency(name: ''))
+    Currency senderCurrency, // القيمة الافتراضية = 'ErCurrency(name: '')'
     @JsonKey(name: "receiver_currency")
-    @Default(ErCurrency(name: ''))
-    ErCurrency receiverCurrency, // القيمة الافتراضية = 'ErCurrency(name: '')'
+    @Default(Currency(name: ''))
+    Currency receiverCurrency, // القيمة الافتراضية = 'ErCurrency(name: '')'
   }) = _Trans;
 
   factory Trans.fromJson(Map<String, dynamic> json) => _$TransFromJson(json);
-}
-
-@freezed
-class ErCurrency with _$ErCurrency {
-  const factory ErCurrency({
-    @JsonKey(name: "name") @Default('') String name, // القيمة الافتراضية = ''
-  }) = _ErCurrency;
-
-  factory ErCurrency.fromJson(Map<String, dynamic> json) =>
-      _$ErCurrencyFromJson(json);
 }

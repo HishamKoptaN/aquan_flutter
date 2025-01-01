@@ -26,7 +26,7 @@ import '../../../features/send_to_account/domain/use_cases/send_to_account_use_c
 import '../../../features/tasks/domain/use_cases/get_task_details_use_case.dart';
 import '../../../features/tasks/domain/use_cases/get_tasks_use_case.dart';
 import '../../../features/tasks/domain/use_cases/proof_task_use_case.dart';
-import '../../../features/trans/domain/use_cases/get_transactions_use_case.dart';
+import '../../../features/trans/domain/use_cases/get_trans_use_case.dart';
 import '../../../features/withdraw/domain/use_cases/add_withdraw_use_case.dart';
 import '../../../features/withdraw/domain/use_cases/get_withdraw_rates_use_case.dart';
 import '../../../features/withdraw/domain/use_cases/get_withdraws_use_case.dart';

@@ -10,21 +10,31 @@ class _AnimatedCheckState extends State<AnimatedCheck>
     with TickerProviderStateMixin {
   late AnimationController scaleController = AnimationController(
       duration: const Duration(milliseconds: 800), vsync: this);
-  late Animation<double> scaleAnimation =
-      CurvedAnimation(parent: scaleController, curve: Curves.elasticOut);
+  late Animation<double> scaleAnimation = CurvedAnimation(
+    parent: scaleController,
+    curve: Curves.elasticOut,
+  );
   late AnimationController checkController = AnimationController(
-      duration: const Duration(milliseconds: 400), vsync: this);
-  late Animation<double> checkAnimation =
-      CurvedAnimation(parent: checkController, curve: Curves.linear);
+    duration: const Duration(
+      milliseconds: 400,
+    ),
+    vsync: this,
+  );
+  late Animation<double> checkAnimation = CurvedAnimation(
+    parent: checkController,
+    curve: Curves.linear,
+  );
 
   @override
   void initState() {
     super.initState();
-    scaleController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        checkController.forward();
-      }
-    });
+    scaleController.addStatusListener(
+      (status) {
+        if (status == AnimationStatus.completed) {
+          checkController.forward();
+        }
+      },
+    );
     scaleController.forward();
   }
 
@@ -53,7 +63,11 @@ class _AnimatedCheckState extends State<AnimatedCheck>
           axis: Axis.horizontal,
           axisAlignment: -1,
           child: Center(
-            child: Icon(Icons.check, color: Colors.white, size: iconSize),
+            child: Icon(
+              Icons.check,
+              color: Colors.white,
+              size: iconSize,
+            ),
           ),
         ),
       ),

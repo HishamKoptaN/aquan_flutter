@@ -15,6 +15,7 @@
 	"password_too_short": "Password too short",
 	"or": "Or",
 	"wait": "Wait",
+	"the_account_you_will_receive_the_money_from":"The account you will receive the money from",
 	"enter_your_email":"Enter your email",
 	"amount_to_be_transferred":"Amount to be transferred",
     "select_deposit_method":"Select deposit method",

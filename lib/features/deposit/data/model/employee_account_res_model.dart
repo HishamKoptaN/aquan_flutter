@@ -1,21 +1,7 @@
-// To parse this JSON data, do
-//
-//     final employeeAccountResModel = employeeAccountResModelFromJson(jsonString);
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
-
 import '../../../../core/models/currency.dart';
-import '../../../plans/data/model/payment_plan.dart';
-
 part 'employee_account_res_model.freezed.dart';
 part 'employee_account_res_model.g.dart';
-
-EmployeeAccountResModel employeeAccountResModelFromJson(String str) =>
-    EmployeeAccountResModel.fromJson(json.decode(str));
-
-String employeeAccountResModelToJson(EmployeeAccountResModel data) =>
-    json.encode(data.toJson());
 
 @freezed
 class EmployeeAccountResModel with _$EmployeeAccountResModel {

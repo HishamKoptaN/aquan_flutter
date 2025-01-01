@@ -11,6 +11,7 @@ import 'core/utils/app_colors.dart';
 import 'features/auth/login/present/view/login_view.dart';
 import 'features/auth/verify_email/present/view/send_email_otp_view.dart';
 import 'features/layouts/app_layout.dart';
+import 'features/local_auth/biometric_view.dart';
 import 'features/main/present/bloc/main_bloc.dart';
 import 'features/main/present/bloc/main_event.dart';
 import 'features/main/present/bloc/main_state.dart';
@@ -88,17 +89,27 @@ class MyApp extends StatelessWidget {
               showAppBar: false,
               body: BlocConsumer<MainBloc, MainState>(
                 listener: (context, state) async {
-                  state.mapOrNull(
-                    logedIn: (notVerify) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NavigateBarView(),
-                        ),
-                        (route) => false,
-                      );
+                  state.whenOrNull(
+                    logedIn: (checkBiom) async {
+                      if (checkBiom) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BiometricView(),
+                          ),
+                          (route) => false,
+                        );
+                      } else if (!checkBiom) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavigateBarView(),
+                          ),
+                          (route) => false,
+                        );
+                      }
                     },
-                    logedOut: (_) {
+                    logedOut: () {
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const LoginView(),
@@ -106,7 +117,7 @@ class MyApp extends StatelessWidget {
                         (route) => false,
                       );
                     },
-                    notVerify: (data) {
+                    notVerify: () {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

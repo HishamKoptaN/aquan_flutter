@@ -7,10 +7,12 @@ class MainState with _$MainState {
   const factory MainState.initial() = _Initial;
   const factory MainState.loading() = _Loading;
   const factory MainState.success() = _Success;
+  const factory MainState.logedIn({
+    required bool checkBiom,
+  }) = _LogedIn;
+  const factory MainState.logedOut() = _LogedOut;
+  const factory MainState.notVerify() = _NotVerify;
   const factory MainState.failure({
     required ApiErrorModel apiErrorModel,
   }) = _Failure;
-  const factory MainState.logedIn() = _LogedIn;
-  const factory MainState.logedOut() = _LogedOut;
-  const factory MainState.notVerify() = _NotVerify;
 }

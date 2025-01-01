@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/networking/api_constants.dart';
-import '../model/plan_model.dart';
+import '../model/plan.dart';
 import '../model/plan_rate.dart';
 part 'plans_api.g.dart';
 

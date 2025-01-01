@@ -1,13 +1,12 @@
-import 'package:aquan/features/plans/data/model/plan_model.dart';
 import 'package:aquan/features/plans/data/model/plan_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/widgets/custom_text_widget.dart';
+import '../../../../data/model/plan.dart';
 
 class PayDetailsWidget extends StatefulWidget {
   const PayDetailsWidget({
@@ -39,13 +38,13 @@ class _PayDetailsWidgetState extends State<PayDetailsWidget> {
           itemCount: widget.planRate.accountInfo.length,
           itemBuilder: (context, index) {
             final currency = widget.planRate.accountInfo[index];
-            int amount = widget.plan.amount;
+            int? amount = widget.plan.amount;
             if (currency.id == 1) rate = 1;
             if (currency.bankId == 3 || currency.bankId == 4) {
               return const SizedBox.shrink();
             }
             if (currency.bankId == 2) {
-              amount = widget.plan.amount *
+              amount = widget.plan.amount! *
                   widget.planRate.toBinanceRates.first.price;
             }
             return Padding(
@@ -160,9 +159,7 @@ class _PayDetailsWidgetState extends State<PayDetailsWidget> {
                                   fontSize: 14.sp,
                                 ),
                                 CustomText(
-                                  text: NumberFormat('#,##0').format(
-                                    amount,
-                                  ),
+                                  text: amount.toString(),
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: 14.sp,

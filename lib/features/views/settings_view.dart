@@ -161,61 +161,6 @@ class SettingsScreen extends StatelessWidget {
               )
             },
           ),
-          // IconButton(
-          //   icon: const Icon(Icons.brightness_6),
-          //   onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-          // ),
-          // SettingsTabWidget(
-          //   title: t.changeColor,
-          //   icon: FontAwesomeIcons.brush,
-          //   onTap: () {
-          //     List<Widget> childs = [];
-          //     colors.every(
-          //       (color) {
-          //         childs.add(
-          //           GestureDetector(
-          //             onTap: () {
-          //               Storage.setString(
-          //                 "color",
-          //                 color.value.toRadixString(16),
-          //               );
-
-          //               RestartWidget.restartApp(context);
-          //             },
-          //             child: Container(
-          //               height: 50,
-          //               width: 50,
-          //               decoration: BoxDecoration(
-          //                 color: color,
-          //                 borderRadius: BorderRadius.circular(100),
-          //               ),
-          //             ),
-          //           ),
-          //         );
-
-          //         return true;
-          //       },
-          //     );
-          //     showModalBottomSheet(
-          //       useRootNavigator: true,
-          //       useSafeArea: true,
-          //       enableDrag: true,
-          //       context: context,
-          //       builder: (context) {
-          //         return Container(
-          //           height: size.height * .5,
-          //           width: size.width,
-          //           padding: const EdgeInsets.all(10),
-          //           child: Wrap(
-          //             spacing: 10,
-          //             runSpacing: 10,
-          //             children: childs,
-          //           ),
-          //         );
-          //       },
-          //     );
-          //   },
-          // ),
           SettingsTabWidget(
             title: t.enableNotifications,
             icon: FontAwesomeIcons.bell,
@@ -246,17 +191,6 @@ class SettingsScreen extends StatelessWidget {
               );
             },
           ),
-          // SettingsTabWidget(
-          //   title: t.referals,
-          //   icon: Icons.verified_user_outlined,
-          //   onTap: () => {
-          //     Navigator.of(context).push(
-          //       MaterialPageRoute(
-          //         builder: (context) => const ReferalView(),
-          //       ),
-          //     )
-          //   },
-          // ),
           const Gap(10),
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -448,7 +382,6 @@ class SettingsScreen extends StatelessWidget {
               );
             }
             bool initValue = snapshot.data ?? false;
-
             return StatefulBuilder(
               builder: (context, setState) {
                 return Container(

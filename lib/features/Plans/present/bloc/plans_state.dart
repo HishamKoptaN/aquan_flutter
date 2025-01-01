@@ -1,7 +1,7 @@
-import 'package:aquan/features/plans/data/model/plan_model.dart';
 import 'package:aquan/features/plans/data/model/plan_rate.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../core/errors/api_error_model.dart';
+import '../../data/model/plan.dart';
 part 'plans_state.freezed.dart';
 
 @freezed

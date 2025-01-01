@@ -77,7 +77,7 @@ class LastTwoOperationWidget extends StatelessWidget {
                       Column(
                         children: [
                           CustomText(
-                            text: transfer.receiverCurrency.name,
+                            text: transfer.receiverCurrency.name ?? '',
                             fontSize: 18.sp,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

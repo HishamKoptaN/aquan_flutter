@@ -65,148 +65,153 @@ class _SendToAccountViewState extends State<SendToAccountView> {
           builder: (context, state) {
             return SingleChildScrollView(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomTextFormField(
-                    controller: accountNumberTextEditingController,
-                    labelText: t.accountId,
-                    onChanged: (v) {
-                      transferReqBody = transferReqBody.copyWith(
-                        accountNumber: v,
-                      );
-                    },
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.qr_code_scanner_sharp),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomTextFormField(
+                      controller: accountNumberTextEditingController,
+                      labelText: t.accountId,
+                      onChanged: (v) {
+                        transferReqBody = transferReqBody.copyWith(
+                          accountNumber: v,
+                        );
+                      },
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.qr_code_scanner_sharp),
+                        onPressed: () async {
+                          final scannedValue = await _scanBarcode();
+                          if (scannedValue != null && scannedValue.isNotEmpty) {
+                            setState(
+                              () {
+                                accountNumberTextEditingController.text =
+                                    scannedValue;
+                              },
+                            );
+                            context.read<SendToAccountBloc>().add(
+                                  SendToAccountEvent.getNameOfUserByAccount(
+                                    accountNumber: scannedValue,
+                                  ),
+                                );
+                          } else {
+                            setState(
+                              () {
+                                accountNumberTextEditingController.text =
+                                    scannedValue ?? '';
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    Gap(
+                      10.h,
+                    ),
+                    CustomTextButtonWidget(
                       onPressed: () async {
-                        final scannedValue = await _scanBarcode();
-                        if (scannedValue != null && scannedValue.isNotEmpty) {
-                          setState(
-                            () {
-                              accountNumberTextEditingController.text =
-                                  scannedValue;
-                            },
-                          );
+                        if (accountNumberTextEditingController
+                            .text.isNotEmpty) {
                           context.read<SendToAccountBloc>().add(
                                 SendToAccountEvent.getNameOfUserByAccount(
-                                  accountNumber: scannedValue,
+                                  accountNumber:
+                                      accountNumberTextEditingController.text,
                                 ),
                               );
-                        } else {
-                          setState(
-                            () {
-                              accountNumberTextEditingController.text =
-                                  scannedValue ?? '';
-                            },
-                          );
                         }
                       },
+                      widget: state.maybeWhen(
+                        orElse: () {
+                          return CustomText(
+                            text: t.search,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                          );
+                        },
+                        loading: () {
+                          return const CustomCircularProgress();
+                        },
+                      ),
                     ),
-                  ),
-                  Gap(
-                    10.h,
-                  ),
-                  CustomTextButtonWidget(
-                    onPressed: () async {
-                      if (accountNumberTextEditingController.text.isNotEmpty) {
-                        context.read<SendToAccountBloc>().add(
-                              SendToAccountEvent.getNameOfUserByAccount(
-                                accountNumber:
-                                    accountNumberTextEditingController.text,
-                              ),
-                            );
-                      }
-                    },
-                    widget: state.maybeWhen(
-                      orElse: () {
-                        return CustomText(
-                          text: t.search,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        );
-                      },
-                      loading: () {
-                        return const CustomCircularProgress();
-                      },
+                    Gap(
+                      10.h,
                     ),
-                  ),
-                  Gap(
-                    10.h,
-                  ),
-                  SizedBox(
-                    child: state.maybeWhen(
-                      userNameLoaded: (userNameLoaded) {
-                        return Column(
-                          children: [
-                            CustomText(
-                              text:
-                                  "${userNameLoaded.firstName!} ${userNameLoaded.lastName!}",
-                              color: Colors.black,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            Gap(
-                              10.h,
-                            ),
-                            CustomTextFormField(
-                              keyboardType: TextInputType.number,
-                              labelText: t.amount,
-                              suffixIcon: const Icon(
-                                FontAwesomeIcons.dollarSign,
+                    SizedBox(
+                      child: state.maybeWhen(
+                        userNameLoaded: (userNameLoaded) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomText(
+                                text:
+                                    "${userNameLoaded.firstName!} ${userNameLoaded.lastName!}",
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                               ),
-                              isPrice: true,
-                              onChanged: (v) {
-                                setState(
-                                  () {
-                                    transferReqBody = transferReqBody.copyWith(
-                                      amount: getIntValueFromFormatingString(
-                                        input: v!,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            Gap(
-                              10.h,
-                            ),
-                            CustomTextButtonWidget(
-                              onPressed: () async {
-                                if (accountNumberTextEditingController
-                                    .text.isNotEmpty) {
-                                  context.read<SendToAccountBloc>().add(
-                                        SendToAccountEvent
-                                            .sendPaymentToOtherAccount(
-                                          transferReqBody: transferReqBody,
+                              Gap(
+                                10.h,
+                              ),
+                              CustomTextFormField(
+                                keyboardType: TextInputType.number,
+                                labelText: t.amount,
+                                suffixIcon: const Icon(
+                                  FontAwesomeIcons.dollarSign,
+                                ),
+                                isPrice: true,
+                                onChanged: (v) {
+                                  setState(
+                                    () {
+                                      transferReqBody =
+                                          transferReqBody.copyWith(
+                                        amount: getIntValueFromFormatingString(
+                                          input: v!,
                                         ),
                                       );
-                                }
-                              },
-                              widget: state.maybeWhen(
-                                orElse: () {
-                                  return CustomText(
-                                    text: t.send,
-                                    fontSize: 20.sp,
-                                    color: transferReqBody.amount == null
-                                        ? Colors.grey
-                                        : Colors.black,
-                                    fontWeight: FontWeight.bold,
+                                    },
                                   );
                                 },
-                                loading: () {
-                                  return const CustomCircularProgress();
-                                },
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                      orElse: () {
-                        return const SizedBox();
-                      },
+                              Gap(
+                                10.h,
+                              ),
+                              CustomTextButtonWidget(
+                                onPressed: () async {
+                                  if (transferReqBody.amount != null) {
+                                    context.read<SendToAccountBloc>().add(
+                                          SendToAccountEvent
+                                              .sendPaymentToOtherAccount(
+                                            transferReqBody: transferReqBody,
+                                          ),
+                                        );
+                                  }
+                                },
+                                widget: state.maybeWhen(
+                                  orElse: () {
+                                    return CustomText(
+                                      text: t.send,
+                                      fontSize: 20.sp,
+                                      color: transferReqBody.amount == null
+                                          ? Colors.grey
+                                          : Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    );
+                                  },
+                                  loading: () {
+                                    return const CustomCircularProgress();
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        orElse: () {
+                          return const SizedBox();
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

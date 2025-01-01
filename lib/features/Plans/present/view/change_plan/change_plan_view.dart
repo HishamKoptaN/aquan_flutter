@@ -6,16 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:aquan/features/plans/data/model/plan_model.dart';
-
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/custom_text_button_widget.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../layouts/app_layout.dart';
-import '../../../../layouts/app_layout.dart';
 import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../data/model/plan.dart';
 import '../../bloc/plans_bloc.dart';
 import '../../bloc/plans_event.dart';
 import '../../bloc/plans_state.dart';

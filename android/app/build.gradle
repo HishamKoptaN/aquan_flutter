@@ -1,13 +1,13 @@
 plugins {
     id "com.android.application"
-    id 'com.google.gms.google-services'
-    id "kotlin-android"
+    id 'com.google.gms.google-services' // إضافات خدمات Google
+    id "kotlin-android" // إضافة Plugin لـ Kotlin
     id "dev.flutter.flutter-gradle-plugin"
 }
 
 android {
     namespace = "com.aquan.app.dev"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34 // تحديد إصدار SDK الذي يجب استخدامه
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -16,20 +16,23 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_1_8 // التأكد من توافق Kotlin مع Java 1.8
     }
 
     defaultConfig {
         applicationId = "com.aquan.app.dev"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 21
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
             signingConfig = signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
         }
     }
 }

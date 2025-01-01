@@ -1,5 +1,5 @@
 import 'package:aquan/core/networking/api_result.dart';
-import 'package:aquan/features/plans/data/model/plan_model.dart';
+import '../../data/model/plan.dart';
 import '../repo_imp/plans_repo_impl.dart';
 
 class GetPlansUseCase {

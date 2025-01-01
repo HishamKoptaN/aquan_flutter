@@ -1,4 +1,4 @@
-import 'package:aquan/features/plans/data/model/plan_model.dart';
+import '../../features/plans/data/model/plan.dart';
 
 class PlansSingleton {
   List<Plan>? _plans;

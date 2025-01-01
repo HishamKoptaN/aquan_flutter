@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import '../../../../core/models/currency.dart';
 part 'plan_rate.freezed.dart';
 part 'plan_rate.g.dart';
@@ -7,7 +6,6 @@ part 'plan_rate.g.dart';
 @freezed
 class PlanRate with _$PlanRate {
   const factory PlanRate({
-    @JsonKey(name: "user_plan") @Default(0) int userPlan,
     @JsonKey(name: "employee_id") @Default(0) int employeeId,
     @JsonKey(name: "account_info") @Default([]) List<AccountInfo> accountInfo,
     @JsonKey(name: "to_binance_rates")

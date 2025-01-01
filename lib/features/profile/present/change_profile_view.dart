@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../../../core/widgets/custom_text_form_field.dart';
 import '../../../core/singletons/user_singleton.dart';
 import '../../../core/widgets/custom_text_widget.dart';
 import '../../../core/widgets/toast_notifier.dart';
+import '../../layouts/app_layout.dart';
 import 'bloc/profile_bloc.dart';
 import 'bloc/profile_event.dart';
 import 'bloc/profile_state.dart';
@@ -43,109 +45,88 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
+    return AppLayout(
+      route: t.changeProfile,
+      showAppBar: true,
+      backArow: false,
+      body: BlocProvider<ProfileBloc>(
+        create: (context) => ProfileBloc(
+          editProfileUseCase: getIt(),
+        ),
+        child: BlocConsumer<ProfileBloc, ProfileState>(
+          listener: (context, state) {
+            state.whenOrNull(
+              success: () {
+                ToastNotifier().showSuccess(
+                  context: context,
+                  message: t.success,
+                );
+              },
+              failure: (a) {
+                ToastNotifier().showError(
+                  context: context,
+                  message: t.error,
+                );
+              },
+            );
           },
-        ),
-        title: Text(
-          t.changeProfile,
-          style: const TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        width: size.width,
-        child: BlocProvider<ProfileBloc>(
-          create: (context) => ProfileBloc(
-            editProfileUseCase: getIt(),
-          ),
-          child: BlocConsumer<ProfileBloc, ProfileState>(
-            listener: (context, state) {
-              state.whenOrNull(
-                success: () {
-                  ToastNotifier().showSuccess(
-                    context: context,
-                    message: t.success,
-                  );
-                },
-                failure: (a) {
-                  ToastNotifier().showError(
-                    context: context,
-                    message: t.error,
-                  );
-                },
-              );
-            },
-            builder: (context, state) {
-              firstNameController = TextEditingController(
-                text: UserSingleton.instance.user!.firstName,
-              );
-              lastNameController = TextEditingController(
-                text: UserSingleton.instance.user!.lastName,
-              );
-              phoneController = TextEditingController(
-                text: UserSingleton.instance.user!.phone,
-              );
-              addressController = TextEditingController(
-                text: UserSingleton.instance.user!.address,
-              );
-              return ListView(
+          builder: (context, state) {
+            firstNameController = TextEditingController(
+              text: UserSingleton.instance.user!.firstName,
+            );
+            lastNameController = TextEditingController(
+              text: UserSingleton.instance.user!.lastName,
+            );
+            phoneController = TextEditingController(
+              text: UserSingleton.instance.user!.phone,
+            );
+            addressController = TextEditingController(
+              text: UserSingleton.instance.user!.address,
+            );
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Gap(
-                    50.h,
-                  ),
-                  Form(
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            FilePickerResult? result =
-                                await FilePicker.platform.pickFiles();
-                            if (result != null) {
-                              File file = File(result.files.single.path!);
-                              setState(
-                                () {
-                                  this.file = file;
-                                },
-                              );
-                            }
+                  InkWell(
+                    onTap: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+                      if (result != null) {
+                        File file = File(result.files.single.path!);
+                        setState(
+                          () {
+                            this.file = file;
                           },
-                          child: Container(
-                            height: 150.sp,
-                            width: 150.sp,
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              image: DecorationImage(
-                                image: file != null
-                                    ? FileImage(
-                                        file!,
-                                      )
-                                    : NetworkImage(
-                                        UserSingleton.instance.user?.image ??
-                                            ""),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(100.0)),
-                              border: Border.all(
-                                color: Colors.amber,
-                                width: 6.0,
-                              ),
-                            ),
-                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 150.sp,
+                      width: 150.sp,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        image: DecorationImage(
+                          image: file != null
+                              ? FileImage(
+                                  file!,
+                                )
+                              : NetworkImage(
+                                  UserSingleton.instance.user?.image ?? ""),
+                          fit: BoxFit.cover,
                         ),
-                      ],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100.0)),
+                        border: Border.all(
+                          color: Colors.amber,
+                          width: 6.0,
+                        ),
+                      ),
                     ),
                   ),
                   Gap(
-                    15.h,
+                    30.h,
                   ),
                   CustomTextFormField(
                     controller: firstNameController,
@@ -155,6 +136,9 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       Icons.account_box,
                     ),
                   ),
+                  Gap(
+                    15.h,
+                  ),
                   CustomTextFormField(
                     controller: lastNameController,
                     labelText: t.last_name,
@@ -163,12 +147,18 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                       Icons.account_box,
                     ),
                   ),
+                  Gap(
+                    15.h,
+                  ),
                   CustomTextFormField(
                     controller: addressController,
                     labelText: t.address,
                     suffixIcon: const Icon(
                       Icons.location_on_outlined,
                     ),
+                  ),
+                  Gap(
+                    15.h,
                   ),
                   CustomTextFormField(
                     controller: phoneController,
@@ -217,9 +207,9 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
                     25.h,
                   ),
                 ],
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
