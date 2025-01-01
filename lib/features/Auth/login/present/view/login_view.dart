@@ -1,25 +1,4 @@
-import 'package:aquan/features/Layouts/app_layout.dart';
-import 'package:aquan/features/auth/sign_up/present/view/sign_up_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
-import '../../../../../core/di/dependency_injection.dart';
-import '../../../../../core/widgets/custom_circular_progress.dart';
-import '../../../../../core/widgets/custom_text_form_field.dart';
-import '../../../../../core/widgets/custom_text_form_password_field.dart';
-import '../../../../../core/widgets/custom_text_widget.dart';
-import '../../../../../core/widgets/toast_notifier.dart';
-import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import '../../../reset_password/present/view/enter_email_view.dart';
-import '../../../sign_up/present/bloc/sign_up_bloc.dart';
-import '../../../verify_email/present/view/send_email_otp_view.dart';
-import '../bloc/login_bloc.dart';
-import '../bloc/login_event.dart';
-import '../bloc/login_state.dart';
-import '../../data/models/login_req_body.dart';
+import 'package:aquan/all_imports.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({

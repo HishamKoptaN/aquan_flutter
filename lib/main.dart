@@ -1,23 +1,4 @@
-import 'package:aquan/core/helpers/settings.dart';
-import 'package:aquan/core/di/dependency_injection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/helpers/app_observer.dart';
-import 'core/helpers/constants.dart';
-import 'core/helpers/shared_pref_helper.dart';
-import 'core/utils/app_colors.dart';
-import 'features/auth/login/present/view/login_view.dart';
-import 'features/auth/verify_email/present/view/send_email_otp_view.dart';
-import 'features/layouts/app_layout.dart';
-import 'features/local_auth/biometric_view.dart';
-import 'features/main/present/bloc/main_bloc.dart';
-import 'features/main/present/bloc/main_event.dart';
-import 'features/main/present/bloc/main_state.dart';
-import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:aquan/all_imports.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
