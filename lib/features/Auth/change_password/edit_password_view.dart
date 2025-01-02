@@ -1,18 +1,4 @@
-import 'package:aquan/features/layouts/app_layout.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gap/gap.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../core/widgets/custom_text_button_widget.dart';
-import '../../../core/widgets/custom_text_form_field.dart';
-import '../../../core/widgets/custom_text_widget.dart';
-import '../../../core/widgets/toast_notifier.dart';
-import '../../main/data/models/edit_pass_req_body_model.dart';
-import '../../main/present/bloc/main_bloc.dart';
-import '../../main/present/bloc/main_event.dart';
-import '../../main/present/bloc/main_state.dart';
+import 'package:aquan/all_imports.dart';
 
 class EditPassView extends StatefulWidget {
   const EditPassView({super.key});

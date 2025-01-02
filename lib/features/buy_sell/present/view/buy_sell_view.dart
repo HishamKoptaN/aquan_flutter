@@ -262,7 +262,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                               Account>(
                                                             value: account,
                                                             child: Text(
-                                                              '${account.currency!.name!} - ${account.accountNumber}',
+                                                              '${account.currency?.name ?? ''} - ${account.accountNumber ?? ''}',
                                                             ),
                                                           );
                                                         },

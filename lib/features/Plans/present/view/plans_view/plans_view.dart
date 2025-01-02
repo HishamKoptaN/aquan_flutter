@@ -13,17 +13,14 @@ import '../../bloc/plans_state.dart';
 import 'widgets/plans_data_widget.dart';
 
 class PlansView extends StatefulWidget {
-  const PlansView({super.key});
+  const PlansView({
+    super.key,
+  });
   @override
   State<PlansView> createState() => _PlansViewState();
 }
 
 class _PlansViewState extends State<PlansView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(context) {
     final t = AppLocalizations.of(context)!;
