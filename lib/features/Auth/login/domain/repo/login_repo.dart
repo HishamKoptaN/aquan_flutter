@@ -6,4 +6,5 @@ abstract class LoginRepo {
   Future<ApiResult<Auth>> login({
     required LoginReqBody loginReqBody,
   });
+  Future<ApiResult<Auth>> google();
 }

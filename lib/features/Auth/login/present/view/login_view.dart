@@ -4,7 +4,6 @@ class LoginView extends StatefulWidget {
   const LoginView({
     super.key,
   });
-
   @override
   State<LoginView> createState() => _LoginViewState();
 }
@@ -13,32 +12,20 @@ class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   LoginReqBody loginReqBody = const LoginReqBody();
   bool showPassword = true;
-
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(
+    context,
+  ) {
     late final AppLocalizations t = AppLocalizations.of(context)!;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    validator(String? value) {
-      if (value == null) {
-        return t.required;
-      }
-      if (value.isEmpty) {
-        return t.required;
-      }
-      return null;
-    }
-
     return AppLayout(
+      key: const Key('login_view'),
       showAppBar: false,
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(
-          getIt(),
+          loginUseCase: getIt(),
+          loginWithGoogleUseCase: getIt(),
         ),
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
@@ -110,13 +97,23 @@ class _LoginViewState extends State<LoginView> {
                               ),
                             ),
                             CustomTextFormField(
-                              key: const Key('emailField'),
+                              key: const Key('email_field'),
                               onChanged: (v) {
                                 loginReqBody = loginReqBody.copyWith(
                                   email: v,
                                 );
+                                _formKey.currentState!.validate();
                               },
-                              validator: validator,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return t.required;
+                                } else if (!RegExp(
+                                  r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                                ).hasMatch(value)) {
+                                  return t.invalid_email;
+                                }
+                                return null;
+                              },
                               labelText: t.e_mail,
                               suffixIcon: const Icon(
                                 Icons.email,
@@ -126,13 +123,14 @@ class _LoginViewState extends State<LoginView> {
                               20.h,
                             ),
                             CustomTextFormPasswordField(
-                              key: const Key('passwordField'),
+                              key: const Key('password_field'),
                               labelText: t.password,
                               showTogglePassword: true,
                               onChanged: (v) {
                                 loginReqBody = loginReqBody.copyWith(
                                   password: v,
                                 );
+                                _formKey.currentState!.validate();
                               },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -169,7 +167,7 @@ class _LoginViewState extends State<LoginView> {
                               20.h,
                             ),
                             GestureDetector(
-                              key: const Key('loginButton'),
+                              key: const Key('login_button'),
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<LoginBloc>().add(
@@ -238,10 +236,15 @@ class _LoginViewState extends State<LoginView> {
                               20.h,
                             ),
                             GestureDetector(
-                              onTap: () {
-                                // _handleSignIn(
-                                //   context.read<SignUpBloc>(),
-                                // );
+                              onTap: () async {
+                                state.maybeWhen(
+                                  loading: () {},
+                                  orElse: () {
+                                    context.read<LoginBloc>().add(
+                                          const LoginEvent.google(),
+                                        );
+                                  },
+                                );
                               },
                               child: Container(
                                 height: 40.h,
@@ -304,20 +307,4 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-
-  // void _handleSignIn(SignUpBloc bloc) async {
-  //   try {
-  //     GoogleSignIn googleSignIn = GoogleSignIn();
-  //     GoogleSignInAccount? account = await googleSignIn.signIn();
-
-  //     if (account != null) {
-  //       // bloc.add(
-  //       //   SignInWithGoogle(
-  //       //     email: account.email,
-  //       //     name: account.displayName!,
-  //       //   ),
-  //       // );
-  //     }
-  //   } catch (error) {}
-  // }
 }

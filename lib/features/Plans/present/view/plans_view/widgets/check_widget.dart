@@ -1,6 +1,10 @@
 import 'package:aquan/all_imports.dart';
 
 class AnimatedCheck extends StatefulWidget {
+  const AnimatedCheck({
+    super.key,
+  });
+
   @override
   _AnimatedCheckState createState() => _AnimatedCheckState();
 }

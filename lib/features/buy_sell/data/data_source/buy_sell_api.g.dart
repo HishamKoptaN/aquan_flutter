@@ -57,21 +57,20 @@ class _BuySellApi implements BuySellApi {
   }
 
   @override
-  Future<ReceivedAccountNumberResModel> getReceiveAccountNumber(
-      {int? id}) async {
+  Future<Account> getReceiveAccountNumber({int? id}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final _data = id;
-    final _options = _setStreamType<ReceivedAccountNumberResModel>(Options(
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<Account>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'buy-sell',
+          'buy-sell/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -81,9 +80,9 @@ class _BuySellApi implements BuySellApi {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ReceivedAccountNumberResModel _value;
+    late Account _value;
     try {
-      _value = ReceivedAccountNumberResModel.fromJson(_result.data!);
+      _value = Account.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -92,7 +91,7 @@ class _BuySellApi implements BuySellApi {
   }
 
   @override
-  Future<void> transfer({required FormData formData}) async {
+  Future<void> transferMoney({required FormData formData}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

@@ -21,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
     this.isPrice = false,
     this.backgroundColor = Colors.white,
     this.validator,
+    this.decoration,
   });
   final String? initialValue;
   final TextEditingController? controller;
@@ -36,30 +37,56 @@ class CustomTextFormField extends StatelessWidget {
   final bool isPrice;
   final Color? backgroundColor;
   String? Function(String?)? validator;
+  final InputDecoration? decoration;
   @override
   Widget build(context) {
     final t = AppLocalizations.of(context)!;
 
-    return Container(
-      height: height ?? 60.h,
+    return SizedBox(
+      height: height ?? 75.h,
       width: width ?? 300.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.grey[200],
-      ),
       child: TextFormField(
         controller: controller,
         onChanged: onChanged,
-        decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          border: InputBorder.none,
-          suffixIcon: suffixIcon,
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 20,
-          ),
-        ),
+        decoration: decoration ??
+            InputDecoration(
+              filled: true,
+              fillColor: Colors.grey[200],
+              labelText: labelText,
+              hintText: hintText,
+              suffixIcon: suffixIcon,
+              border: InputBorder.none,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  10,
+                ),
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1.5.h,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1.5.h,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: Colors.red,
+                  width: 1.5.h,
+                ),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: Colors.red,
+                  width: 1.5.h,
+                ),
+              ),
+            ),
         keyboardType: keyboardType,
         enabled: enabled,
         obscureText: obscureText!,

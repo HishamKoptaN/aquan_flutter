@@ -16,44 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginEvent {
-  LoginReqBody get loginReqBody => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(LoginReqBody loginReqBody) login,
+    required TResult Function() google,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(LoginReqBody loginReqBody)? login,
+    TResult? Function()? google,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(LoginReqBody loginReqBody)? login,
+    TResult Function()? google,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Login value) login,
+    required TResult Function(_LoginWithGoogle value) google,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Login value)? login,
+    TResult? Function(_LoginWithGoogle value)? google,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Login value)? login,
+    TResult Function(_LoginWithGoogle value)? google,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of LoginEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LoginEventCopyWith<LoginEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -62,10 +61,6 @@ abstract class $LoginEventCopyWith<$Res> {
   factory $LoginEventCopyWith(
           LoginEvent value, $Res Function(LoginEvent) then) =
       _$LoginEventCopyWithImpl<$Res, LoginEvent>;
-  @useResult
-  $Res call({LoginReqBody loginReqBody});
-
-  $LoginReqBodyCopyWith<$Res> get loginReqBody;
 }
 
 /// @nodoc
@@ -80,40 +75,16 @@ class _$LoginEventCopyWithImpl<$Res, $Val extends LoginEvent>
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? loginReqBody = null,
-  }) {
-    return _then(_value.copyWith(
-      loginReqBody: null == loginReqBody
-          ? _value.loginReqBody
-          : loginReqBody // ignore: cast_nullable_to_non_nullable
-              as LoginReqBody,
-    ) as $Val);
-  }
-
-  /// Create a copy of LoginEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LoginReqBodyCopyWith<$Res> get loginReqBody {
-    return $LoginReqBodyCopyWith<$Res>(_value.loginReqBody, (value) {
-      return _then(_value.copyWith(loginReqBody: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$LoginImplCopyWith<$Res> implements $LoginEventCopyWith<$Res> {
+abstract class _$$LoginImplCopyWith<$Res> {
   factory _$$LoginImplCopyWith(
           _$LoginImpl value, $Res Function(_$LoginImpl) then) =
       __$$LoginImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({LoginReqBody loginReqBody});
 
-  @override
   $LoginReqBodyCopyWith<$Res> get loginReqBody;
 }
 
@@ -138,6 +109,16 @@ class __$$LoginImplCopyWithImpl<$Res>
           : loginReqBody // ignore: cast_nullable_to_non_nullable
               as LoginReqBody,
     ));
+  }
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LoginReqBodyCopyWith<$Res> get loginReqBody {
+    return $LoginReqBodyCopyWith<$Res>(_value.loginReqBody, (value) {
+      return _then(_value.copyWith(loginReqBody: value));
+    });
   }
 }
 
@@ -178,6 +159,7 @@ class _$LoginImpl implements _Login {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(LoginReqBody loginReqBody) login,
+    required TResult Function() google,
   }) {
     return login(loginReqBody);
   }
@@ -186,6 +168,7 @@ class _$LoginImpl implements _Login {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(LoginReqBody loginReqBody)? login,
+    TResult? Function()? google,
   }) {
     return login?.call(loginReqBody);
   }
@@ -194,6 +177,7 @@ class _$LoginImpl implements _Login {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(LoginReqBody loginReqBody)? login,
+    TResult Function()? google,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -206,6 +190,7 @@ class _$LoginImpl implements _Login {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Login value) login,
+    required TResult Function(_LoginWithGoogle value) google,
   }) {
     return login(this);
   }
@@ -214,6 +199,7 @@ class _$LoginImpl implements _Login {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Login value)? login,
+    TResult? Function(_LoginWithGoogle value)? google,
   }) {
     return login?.call(this);
   }
@@ -222,6 +208,7 @@ class _$LoginImpl implements _Login {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Login value)? login,
+    TResult Function(_LoginWithGoogle value)? google,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -235,13 +222,116 @@ abstract class _Login implements LoginEvent {
   const factory _Login({required final LoginReqBody loginReqBody}) =
       _$LoginImpl;
 
-  @override
   LoginReqBody get loginReqBody;
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoginImplCopyWith<_$LoginImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoginWithGoogleImplCopyWith<$Res> {
+  factory _$$LoginWithGoogleImplCopyWith(_$LoginWithGoogleImpl value,
+          $Res Function(_$LoginWithGoogleImpl) then) =
+      __$$LoginWithGoogleImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoginWithGoogleImplCopyWithImpl<$Res>
+    extends _$LoginEventCopyWithImpl<$Res, _$LoginWithGoogleImpl>
+    implements _$$LoginWithGoogleImplCopyWith<$Res> {
+  __$$LoginWithGoogleImplCopyWithImpl(
+      _$LoginWithGoogleImpl _value, $Res Function(_$LoginWithGoogleImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoginWithGoogleImpl implements _LoginWithGoogle {
+  const _$LoginWithGoogleImpl();
+
+  @override
+  String toString() {
+    return 'LoginEvent.google()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoginWithGoogleImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(LoginReqBody loginReqBody) login,
+    required TResult Function() google,
+  }) {
+    return google();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(LoginReqBody loginReqBody)? login,
+    TResult? Function()? google,
+  }) {
+    return google?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(LoginReqBody loginReqBody)? login,
+    TResult Function()? google,
+    required TResult orElse(),
+  }) {
+    if (google != null) {
+      return google();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Login value) login,
+    required TResult Function(_LoginWithGoogle value) google,
+  }) {
+    return google(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Login value)? login,
+    TResult? Function(_LoginWithGoogle value)? google,
+  }) {
+    return google?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Login value)? login,
+    TResult Function(_LoginWithGoogle value)? google,
+    required TResult orElse(),
+  }) {
+    if (google != null) {
+      return google(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoginWithGoogle implements LoginEvent {
+  const factory _LoginWithGoogle() = _$LoginWithGoogleImpl;
 }

@@ -36,6 +36,7 @@ class _DashViewState extends State<DashView> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return AppLayout(
+      key: const Key('dash_view'),
       route: t.home,
       showAppBar: false,
       body: ListView(

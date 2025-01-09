@@ -1,8 +1,6 @@
+import 'package:aquan/all_imports.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../../../core/networking/api_constants.dart';
-import '../model/buy_sell_res_model.dart';
-import '../model/received_account_number_res_model.dart';
 part 'buy_sell_api.g.dart';
 
 @RestApi(
@@ -18,19 +16,17 @@ abstract class BuySellApi {
     ApiConstants.buySell,
   )
   Future<BuySellResModel> getBuySellRates();
-
 // ! GET Receive Account Number
-  @GET(
-    ApiConstants.buySell,
-  )
-  Future<ReceivedAccountNumberResModel> getReceiveAccountNumber({
-    @Body() required int? id,
+  @GET("${ApiConstants.buySell}/{id}")
+  Future<Account> getReceiveAccountNumber({
+    @Path("id") required int? id,
   });
+
   // ! Transfer Money
   @POST(
     ApiConstants.buySell,
   )
-  Future<void> transfer({
+  Future<void> transferMoney({
     @Body() required FormData formData,
   });
 }

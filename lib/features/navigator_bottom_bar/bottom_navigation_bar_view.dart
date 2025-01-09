@@ -36,7 +36,7 @@ class _NavigateBarViewState extends State<NavigateBarView> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     return MultiBlocProvider(
-      key: const Key('NavigateBarView'),
+      key: const Key('navigate_bar_view'),
       providers: [
         BlocProvider(
           create: (context) => NavigationBloc(),

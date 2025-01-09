@@ -67,7 +67,7 @@ class AccountInfo {
   factory AccountInfo.fromJson(Map<String, dynamic> json) => AccountInfo(
         id: json["id"],
         userId: json["user_id"],
-        bankId: json["bank_id"],
+        bankId: json["currency_id"],
         accountNumber: json["account_number"],
         comment: json["comment"],
         createdAt: json["created_at"],
@@ -78,7 +78,7 @@ class AccountInfo {
   Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
-        "bank_id": bankId,
+        "currency_id": bankId,
         "account_number": accountNumber,
         "comment": comment,
         "created_at": createdAt,

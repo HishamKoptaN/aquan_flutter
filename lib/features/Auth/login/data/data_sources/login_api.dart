@@ -20,4 +20,8 @@ abstract class LoginApi {
   Future<Auth> login({
     @Body() required LoginReqBody loginReqBody,
   });
+  @POST(
+    ApiConstants.google,
+  )
+  Future<Auth> google();
 }

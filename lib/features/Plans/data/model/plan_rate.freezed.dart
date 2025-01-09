@@ -248,7 +248,7 @@ mixin _$AccountInfo {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: "user_id")
   int get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: "bank_id")
+  @JsonKey(name: "currency_id")
   int get bankId => throw _privateConstructorUsedError;
   @JsonKey(name: "account_number")
   String get accountNumber => throw _privateConstructorUsedError;
@@ -280,7 +280,7 @@ abstract class $AccountInfoCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int id,
       @JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "bank_id") int bankId,
+      @JsonKey(name: "currency_id") int bankId,
       @JsonKey(name: "account_number") String accountNumber,
       @JsonKey(name: "comment") String comment,
       @JsonKey(name: "created_at") String createdAt,
@@ -372,7 +372,7 @@ abstract class _$$AccountInfoImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "id") int id,
       @JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "bank_id") int bankId,
+      @JsonKey(name: "currency_id") int bankId,
       @JsonKey(name: "account_number") String accountNumber,
       @JsonKey(name: "comment") String comment,
       @JsonKey(name: "created_at") String createdAt,
@@ -448,7 +448,7 @@ class _$AccountInfoImpl implements _AccountInfo {
   const _$AccountInfoImpl(
       {@JsonKey(name: "id") this.id = 0,
       @JsonKey(name: "user_id") this.userId = 0,
-      @JsonKey(name: "bank_id") this.bankId = 0,
+      @JsonKey(name: "currency_id") this.bankId = 0,
       @JsonKey(name: "account_number") this.accountNumber = '',
       @JsonKey(name: "comment") this.comment = '',
       @JsonKey(name: "created_at") this.createdAt = '',
@@ -465,7 +465,7 @@ class _$AccountInfoImpl implements _AccountInfo {
   @JsonKey(name: "user_id")
   final int userId;
   @override
-  @JsonKey(name: "bank_id")
+  @JsonKey(name: "currency_id")
   final int bankId;
   @override
   @JsonKey(name: "account_number")
@@ -532,7 +532,7 @@ abstract class _AccountInfo implements AccountInfo {
   const factory _AccountInfo(
       {@JsonKey(name: "id") final int id,
       @JsonKey(name: "user_id") final int userId,
-      @JsonKey(name: "bank_id") final int bankId,
+      @JsonKey(name: "currency_id") final int bankId,
       @JsonKey(name: "account_number") final String accountNumber,
       @JsonKey(name: "comment") final String comment,
       @JsonKey(name: "created_at") final String createdAt,
@@ -549,7 +549,7 @@ abstract class _AccountInfo implements AccountInfo {
   @JsonKey(name: "user_id")
   int get userId;
   @override
-  @JsonKey(name: "bank_id")
+  @JsonKey(name: "currency_id")
   int get bankId;
   @override
   @JsonKey(name: "account_number")

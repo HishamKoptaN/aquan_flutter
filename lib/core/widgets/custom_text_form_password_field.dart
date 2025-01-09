@@ -46,13 +46,9 @@ class _CustomTextFormPasswordFieldState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: widget.height ?? 60.h,
+    return SizedBox(
+      height: widget.height ?? 75.h,
       width: widget.width ?? 300.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.grey[200],
-      ),
       child: TextFormField(
         controller: widget.controller,
         onChanged: widget.onChanged,
@@ -60,6 +56,8 @@ class _CustomTextFormPasswordFieldState
         obscureText: _obscureText,
         keyboardType: widget.keyboardType,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey[200],
           labelText: widget.labelText,
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.showTogglePassword
@@ -77,18 +75,35 @@ class _CustomTextFormPasswordFieldState
                 )
               : null,
           border: InputBorder.none,
-          // border: widget.border ??
-          //     OutlineInputBorder(
-          //       borderSide: const BorderSide(
-          //         color: Colors.black,
-          //       ),
-          //       borderRadius: BorderRadius.circular(
-          //         10,
-          //       ),
-          //     ),
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 20,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(
+              10,
+            ),
+            borderSide: BorderSide(
+              color: Colors.transparent,
+              width: 1.5.h,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 1.5.h,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.transparent,
+              width: 1.5.h,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 1.5.h,
+            ),
           ),
         ),
       ),

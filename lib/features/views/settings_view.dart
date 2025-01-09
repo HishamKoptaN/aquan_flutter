@@ -268,6 +268,15 @@ class SettingsScreen extends StatelessWidget {
                             Expanded(
                               child: TextButton(
                                 onPressed: () async {
+// class GoogleSignInProvider {
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
+//   final GoogleSignIn _googleSignIn = GoogleSignIn();
+//   Future<void> signOut() async {
+//     await _googleSignIn.signOut();
+//     await _auth.signOut();
+//   }
+// }
+
                                   await SharedPrefHelper.clearAllSecuredData();
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(

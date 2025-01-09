@@ -24,8 +24,8 @@ mixin _$Account {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "user_id")
   int? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: "bank_id")
-  int? get bankId => throw _privateConstructorUsedError;
+  @JsonKey(name: "currency_id")
+  int? get currencyId => throw _privateConstructorUsedError;
   @JsonKey(name: "account_number")
   String? get accountNumber => throw _privateConstructorUsedError;
   @JsonKey(name: "comment")
@@ -36,6 +36,8 @@ mixin _$Account {
   String? get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: "currency")
   Currency? get currency => throw _privateConstructorUsedError;
+  @JsonKey(name: "user")
+  User? get user => throw _privateConstructorUsedError;
 
   /// Serializes this Account to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,14 +56,16 @@ abstract class $AccountCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? id,
       @JsonKey(name: "user_id") int? userId,
-      @JsonKey(name: "bank_id") int? bankId,
+      @JsonKey(name: "currency_id") int? currencyId,
       @JsonKey(name: "account_number") String? accountNumber,
       @JsonKey(name: "comment") String? comment,
       @JsonKey(name: "created_at") String? createdAt,
       @JsonKey(name: "updated_at") String? updatedAt,
-      @JsonKey(name: "currency") Currency? currency});
+      @JsonKey(name: "currency") Currency? currency,
+      @JsonKey(name: "user") User? user});
 
   $CurrencyCopyWith<$Res>? get currency;
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -81,12 +85,13 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
   $Res call({
     Object? id = freezed,
     Object? userId = freezed,
-    Object? bankId = freezed,
+    Object? currencyId = freezed,
     Object? accountNumber = freezed,
     Object? comment = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? currency = freezed,
+    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -97,9 +102,9 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      bankId: freezed == bankId
-          ? _value.bankId
-          : bankId // ignore: cast_nullable_to_non_nullable
+      currencyId: freezed == currencyId
+          ? _value.currencyId
+          : currencyId // ignore: cast_nullable_to_non_nullable
               as int?,
       accountNumber: freezed == accountNumber
           ? _value.accountNumber
@@ -121,6 +126,10 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ) as $Val);
   }
 
@@ -137,6 +146,20 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
       return _then(_value.copyWith(currency: value) as $Val);
     });
   }
+
+  /// Create a copy of Account
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -149,15 +172,18 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int? id,
       @JsonKey(name: "user_id") int? userId,
-      @JsonKey(name: "bank_id") int? bankId,
+      @JsonKey(name: "currency_id") int? currencyId,
       @JsonKey(name: "account_number") String? accountNumber,
       @JsonKey(name: "comment") String? comment,
       @JsonKey(name: "created_at") String? createdAt,
       @JsonKey(name: "updated_at") String? updatedAt,
-      @JsonKey(name: "currency") Currency? currency});
+      @JsonKey(name: "currency") Currency? currency,
+      @JsonKey(name: "user") User? user});
 
   @override
   $CurrencyCopyWith<$Res>? get currency;
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -175,12 +201,13 @@ class __$$AccountImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? userId = freezed,
-    Object? bankId = freezed,
+    Object? currencyId = freezed,
     Object? accountNumber = freezed,
     Object? comment = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? currency = freezed,
+    Object? user = freezed,
   }) {
     return _then(_$AccountImpl(
       id: freezed == id
@@ -191,9 +218,9 @@ class __$$AccountImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      bankId: freezed == bankId
-          ? _value.bankId
-          : bankId // ignore: cast_nullable_to_non_nullable
+      currencyId: freezed == currencyId
+          ? _value.currencyId
+          : currencyId // ignore: cast_nullable_to_non_nullable
               as int?,
       accountNumber: freezed == accountNumber
           ? _value.accountNumber
@@ -215,6 +242,10 @@ class __$$AccountImplCopyWithImpl<$Res>
           ? _value.currency
           : currency // ignore: cast_nullable_to_non_nullable
               as Currency?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 }
@@ -225,12 +256,13 @@ class _$AccountImpl implements _Account {
   const _$AccountImpl(
       {@JsonKey(name: "id") this.id,
       @JsonKey(name: "user_id") this.userId,
-      @JsonKey(name: "bank_id") this.bankId,
+      @JsonKey(name: "currency_id") this.currencyId,
       @JsonKey(name: "account_number") this.accountNumber,
       @JsonKey(name: "comment") this.comment,
       @JsonKey(name: "created_at") this.createdAt,
       @JsonKey(name: "updated_at") this.updatedAt,
-      @JsonKey(name: "currency") this.currency});
+      @JsonKey(name: "currency") this.currency,
+      @JsonKey(name: "user") this.user});
 
   factory _$AccountImpl.fromJson(Map<String, dynamic> json) =>
       _$$AccountImplFromJson(json);
@@ -242,8 +274,8 @@ class _$AccountImpl implements _Account {
   @JsonKey(name: "user_id")
   final int? userId;
   @override
-  @JsonKey(name: "bank_id")
-  final int? bankId;
+  @JsonKey(name: "currency_id")
+  final int? currencyId;
   @override
   @JsonKey(name: "account_number")
   final String? accountNumber;
@@ -259,10 +291,13 @@ class _$AccountImpl implements _Account {
   @override
   @JsonKey(name: "currency")
   final Currency? currency;
+  @override
+  @JsonKey(name: "user")
+  final User? user;
 
   @override
   String toString() {
-    return 'Account(id: $id, userId: $userId, bankId: $bankId, accountNumber: $accountNumber, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt, currency: $currency)';
+    return 'Account(id: $id, userId: $userId, currencyId: $currencyId, accountNumber: $accountNumber, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt, currency: $currency, user: $user)';
   }
 
   @override
@@ -272,7 +307,8 @@ class _$AccountImpl implements _Account {
             other is _$AccountImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.bankId, bankId) || other.bankId == bankId) &&
+            (identical(other.currencyId, currencyId) ||
+                other.currencyId == currencyId) &&
             (identical(other.accountNumber, accountNumber) ||
                 other.accountNumber == accountNumber) &&
             (identical(other.comment, comment) || other.comment == comment) &&
@@ -281,13 +317,14 @@ class _$AccountImpl implements _Account {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.currency, currency) ||
-                other.currency == currency));
+                other.currency == currency) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, bankId,
-      accountNumber, comment, createdAt, updatedAt, currency);
+  int get hashCode => Object.hash(runtimeType, id, userId, currencyId,
+      accountNumber, comment, createdAt, updatedAt, currency, user);
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.
@@ -309,12 +346,13 @@ abstract class _Account implements Account {
   const factory _Account(
       {@JsonKey(name: "id") final int? id,
       @JsonKey(name: "user_id") final int? userId,
-      @JsonKey(name: "bank_id") final int? bankId,
+      @JsonKey(name: "currency_id") final int? currencyId,
       @JsonKey(name: "account_number") final String? accountNumber,
       @JsonKey(name: "comment") final String? comment,
       @JsonKey(name: "created_at") final String? createdAt,
       @JsonKey(name: "updated_at") final String? updatedAt,
-      @JsonKey(name: "currency") final Currency? currency}) = _$AccountImpl;
+      @JsonKey(name: "currency") final Currency? currency,
+      @JsonKey(name: "user") final User? user}) = _$AccountImpl;
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$AccountImpl.fromJson;
 
@@ -325,8 +363,8 @@ abstract class _Account implements Account {
   @JsonKey(name: "user_id")
   int? get userId;
   @override
-  @JsonKey(name: "bank_id")
-  int? get bankId;
+  @JsonKey(name: "currency_id")
+  int? get currencyId;
   @override
   @JsonKey(name: "account_number")
   String? get accountNumber;
@@ -342,6 +380,9 @@ abstract class _Account implements Account {
   @override
   @JsonKey(name: "currency")
   Currency? get currency;
+  @override
+  @JsonKey(name: "user")
+  User? get user;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.

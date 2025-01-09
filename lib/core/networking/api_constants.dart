@@ -8,6 +8,7 @@ class ApiConstants {
   static const String sendEmailOtp = "send-email-otp";
   static const String verifyEmailOtp = "verify-email-otp";
   static const String login = "login";
+  static const String google = "google";
   static const String signup = "sign-up";
   static const String addEmail = "add-email";
   static const String editPass = "edit-pass";

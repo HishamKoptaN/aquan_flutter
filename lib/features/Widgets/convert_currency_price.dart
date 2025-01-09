@@ -46,6 +46,43 @@ class ConvertCurrencyPrice extends StatelessWidget {
             onChanged: onChanged,
             keyboardType: TextInputType.number,
             isPrice: true,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  color: Colors.black,
+                  width: 1.0,
+                ),
+              ),
+              border: const OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.blue,
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.red,
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 10.h,
+                horizontal: 20.w,
+              ),
+            ),
           ),
         ],
       ),

@@ -52,24 +52,29 @@ class SelectCurrenciesWidgetState extends State<SelectCurrenciesWidget> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Colors.black,
-                width: 1.0,
+                width: 1.sp,
               ),
             ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<Currency>(
-                isExpanded: true,
-                value: widget.fromCurrency,
-                onChanged: widget.onChangedFromCurrency,
-                items: widget.currencies!.map(
-                  (currency) {
-                    return DropdownMenuItem<Currency>(
-                      value: currency,
-                      child: Text(
-                        currency.name!,
-                      ),
-                    );
-                  },
-                ).toList(),
+            child: Padding(
+              padding: EdgeInsets.all(
+                2.5.sp,
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<Currency>(
+                  isExpanded: true,
+                  value: widget.fromCurrency,
+                  onChanged: widget.onChangedFromCurrency,
+                  items: widget.currencies!.map(
+                    (currency) {
+                      return DropdownMenuItem<Currency>(
+                        value: currency,
+                        child: Text(
+                          currency.name!,
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
               ),
             ),
           ),
@@ -92,28 +97,33 @@ class SelectCurrenciesWidgetState extends State<SelectCurrenciesWidget> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Colors.black,
-                width: 1.0,
+                width: 1.sp,
               ),
             ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<Currency>(
-                isExpanded: true,
-                value: widget.toCurrency,
-                onChanged: widget.onChangedToCurrency,
-                items: widget.currencies!.where(
-                  (Currency currency) {
-                    return currency != widget.fromCurrency;
-                  },
-                ).map(
-                  (Currency currency) {
-                    return DropdownMenuItem<Currency>(
-                      value: currency,
-                      child: Text(
-                        currency.name!,
-                      ),
-                    );
-                  },
-                ).toList(),
+            child: Padding(
+              padding: EdgeInsets.all(
+                2.5.sp,
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<Currency>(
+                  isExpanded: true,
+                  value: widget.toCurrency,
+                  onChanged: widget.onChangedToCurrency,
+                  items: widget.currencies!.where(
+                    (Currency currency) {
+                      return currency != widget.fromCurrency;
+                    },
+                  ).map(
+                    (Currency currency) {
+                      return DropdownMenuItem<Currency>(
+                        value: currency,
+                        child: Text(
+                          currency.name!,
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
               ),
             ),
           ),

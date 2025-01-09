@@ -25,6 +25,8 @@ class EnterEmailView extends StatefulWidget {
 }
 
 class _EnterEmailViewState extends State<EnterEmailView> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   SendOtpReqBodyModel sendOtpReqBodyModel = const SendOtpReqBodyModel();
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class _EnterEmailViewState extends State<EnterEmailView> {
           builder: (context, state) {
             return Center(
               child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,22 +86,35 @@ class _EnterEmailViewState extends State<EnterEmailView> {
                         sendOtpReqBodyModel = sendOtpReqBodyModel.copyWith(
                           email: v!,
                         );
+                        _formKey.currentState!.validate();
                       },
                       labelText: t.e_mail,
                       suffixIcon: const Icon(
                         Icons.email,
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return t.required;
+                        } else if (!RegExp(
+                          r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                        ).hasMatch(value)) {
+                          return t.invalid_email;
+                        }
+                        return null;
+                      },
                     ),
                     Gap(
                       20.h,
                     ),
                     CustomTextButtonWidget(
                       onPressed: () {
-                        context.read<ResetPassBloc>().add(
-                              ResetPassEvent.sendOtp(
-                                sendOtpReqBodyModel: sendOtpReqBodyModel,
-                              ),
-                            );
+                        if (_formKey.currentState!.validate()) {
+                          context.read<ResetPassBloc>().add(
+                                ResetPassEvent.sendOtp(
+                                  sendOtpReqBodyModel: sendOtpReqBodyModel,
+                                ),
+                              );
+                        }
                       },
                       widget: state.maybeWhen(
                         loading: () {

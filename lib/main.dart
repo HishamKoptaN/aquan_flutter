@@ -8,6 +8,7 @@ Future<void> main() async {
   await Injection.inject();
   await ScreenUtil.ensureScreenSize();
   SharedPrefHelper;
+  await SharedPrefHelper.clearAllSecuredData();
   String locale = await SharedPrefHelper.getString(
         key: SharedPrefKeys.languageCode,
       ) ??
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
+      key: const Key('my_app'),
       child: ScreenUtilInit(
         designSize: Size(
           width,

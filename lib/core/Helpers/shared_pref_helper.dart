@@ -94,7 +94,7 @@ class SharedPrefHelper {
       key: key,
       value: value,
     );
-    DioFactory.setTokenIntoHeaderAfterLogin(
+    await DioFactory.setTokenIntoHeaderAfterLogin(
       token: value,
     );
   }

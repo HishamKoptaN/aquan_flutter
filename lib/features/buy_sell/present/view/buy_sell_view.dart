@@ -1,33 +1,12 @@
-import 'package:aquan/core/widgets/custom_text_button_widget.dart';
-import 'package:aquan/features/buy_sell/present/bloc/buy_sell_bloc.dart';
-import 'package:aquan/features/layouts/app_layout.dart';
-import 'package:aquan/features/buy_sell/present/view/widgets/button_buy_sell_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../core/di/dependency_injection.dart';
-import '../../../../core/methods/format_as_currency.dart';
-import '../../../../core/models/account.dart';
-import '../../../../core/models/currency.dart';
-import '../../../../core/widgets/custom_circular_progress.dart';
-import '../../../../core/widgets/custom_text_form_field.dart';
-import '../../../../core/widgets/custom_text_widget.dart';
-import '../../../../core/widgets/toast_notifier.dart';
-import '../../../widgets/convert_currency_price.dart';
-import '../bloc/buy_sell_event.dart';
-import '../bloc/buy_sell_state.dart';
-import '../../data/model/buy_sell_res_model.dart';
-import '../../data/model/transfer_money_model.dart';
-import 'buy_sell_confirm_view.dart';
-import 'widgets/select_curencies_widget.dart';
+import 'package:aquan/all_imports.dart';
 
 class BuySellview extends StatefulWidget {
   const BuySellview({super.key});
   @override
   State<BuySellview> createState() => _BuySellviewState();
 }
+
+TransferMoneyReqmodel transferMoneyReqmodel = const TransferMoneyReqmodel();
 
 class _BuySellviewState extends State<BuySellview> {
   final formkey = GlobalKey<FormState>();
@@ -155,7 +134,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                   setState(
                                                     () {
                                                       netAmount =
-                                                          calculateAmount(
+                                                          calculateFirstAmount(
                                                         amount:
                                                             getIntValueFromFormatingString(
                                                                   input:
@@ -189,11 +168,10 @@ class _BuySellviewState extends State<BuySellview> {
                                                 controller: toAmountController,
                                                 wallet: toCurrency,
                                                 onChanged: (v) {
-                                                  debugPrint('$v');
                                                   setState(
                                                     () {
-                                                      int netAmount =
-                                                          calculateAmount(
+                                                      netAmount =
+                                                          calculateFirstAmount(
                                                         amount:
                                                             getIntValueFromFormatingString(
                                                                   input:
@@ -205,7 +183,6 @@ class _BuySellviewState extends State<BuySellview> {
                                                                 .nameCode!,
                                                         rate: rate,
                                                       );
-
                                                       fromAmountController
                                                               .text =
                                                           formatter.format(
@@ -215,9 +192,7 @@ class _BuySellviewState extends State<BuySellview> {
                                                       );
                                                       toAmountController.text =
                                                           formatter.format(
-                                                        int.parse(
-                                                          netAmount.toString(),
-                                                        ),
+                                                        v.toString(),
                                                       );
                                                     },
                                                   );
@@ -234,40 +209,96 @@ class _BuySellviewState extends State<BuySellview> {
                                                 CustomTextFormField(
                                                   controller:
                                                       receiverAccountController,
-                                                  hintText: t
-                                                      .the_account_you_will_receive_the_money_from,
-                                                  suffixIcon:
-                                                      PopupMenuButton<Account>(
-                                                    icon: const Icon(
-                                                      Icons.arrow_drop_down,
+                                                  decoration: InputDecoration(
+                                                    hintText: t
+                                                        .the_account_you_will_receive_the_money_from,
+                                                    suffixIcon: PopupMenuButton<
+                                                        Account>(
+                                                      icon: const Icon(
+                                                        Icons.arrow_drop_down,
+                                                      ),
+                                                      onSelected: (
+                                                        value,
+                                                      ) {
+                                                        receiverAccountController
+                                                                .text =
+                                                            value
+                                                                .accountNumber!;
+                                                      },
+                                                      itemBuilder: (BuildContext
+                                                          context) {
+                                                        return buySellResModel
+                                                            .accounts!
+                                                            .map<
+                                                                PopupMenuEntry<
+                                                                    Account>>(
+                                                          (
+                                                            Account account,
+                                                          ) {
+                                                            return PopupMenuItem<
+                                                                Account>(
+                                                              value: account,
+                                                              child: Text(
+                                                                '${account.currency?.name ?? ''} - ${account.accountNumber ?? ''}',
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).toList();
+                                                      },
                                                     ),
-                                                    onSelected: (
-                                                      value,
-                                                    ) {
-                                                      receiverAccountController
-                                                              .text =
-                                                          value.accountNumber!;
-                                                    },
-                                                    itemBuilder:
-                                                        (BuildContext context) {
-                                                      return buySellResModel
-                                                          .accounts!
-                                                          .map<
-                                                              PopupMenuEntry<
-                                                                  Account>>(
-                                                        (
-                                                          Account account,
-                                                        ) {
-                                                          return PopupMenuItem<
-                                                              Account>(
-                                                            value: account,
-                                                            child: Text(
-                                                              '${account.currency?.name ?? ''} - ${account.accountNumber ?? ''}',
-                                                            ),
-                                                          );
-                                                        },
-                                                      ).toList();
-                                                    },
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.black,
+                                                        width: 1.0,
+                                                      ),
+                                                    ),
+                                                    border:
+                                                        const OutlineInputBorder(),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.blue,
+                                                        width: 1.5,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    errorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.red,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Colors.red,
+                                                        width: 1.5,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                      vertical: 10.h,
+                                                      horizontal: 20.w,
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -293,21 +324,44 @@ class _BuySellviewState extends State<BuySellview> {
                                               message: errorMessage,
                                             );
                                           } else {
-                                            TransferMoneyRquestmodel.instance
-                                              ..senderCurrencyId =
-                                                  fromCurrency!.id.toString()
-                                              ..receiverCurrencyId =
-                                                  toCurrency!.id
-                                              ..amount =
-                                                  fromAmountController.text
-                                              ..rate = rate
-                                              ..receiverAccount =
-                                                  receiverAccountController
-                                                      .text;
+                                            transferMoneyReqmodel =
+                                                transferMoneyReqmodel.copyWith(
+                                              senderCurrencyId:
+                                                  fromCurrency!.id,
+                                            );
+                                            transferMoneyReqmodel =
+                                                transferMoneyReqmodel.copyWith(
+                                              receiverCurrencyId:
+                                                  toCurrency!.id,
+                                            );
+                                            transferMoneyReqmodel =
+                                                transferMoneyReqmodel.copyWith(
+                                              amount:
+                                                  getIntValueFromFormatingString(
+                                                input:
+                                                    fromAmountController.text,
+                                              )!,
+                                            );
+                                            transferMoneyReqmodel =
+                                                transferMoneyReqmodel.copyWith(
+                                              netAmount: netAmount,
+                                            );
+                                            transferMoneyReqmodel =
+                                                transferMoneyReqmodel.copyWith(
+                                                    rate: rate);
+                                            transferMoneyReqmodel =
+                                                transferMoneyReqmodel.copyWith(
+                                              receiverAccount: int.parse(
+                                                receiverAccountController.text,
+                                              ),
+                                            );
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const BuySellConfirmView(),
+                                                    BuySellConfirmView(
+                                                  transferMoneyReqmodel:
+                                                      transferMoneyReqmodel,
+                                                ),
                                               ),
                                             );
                                           }
@@ -461,7 +515,7 @@ class _BuySellviewState extends State<BuySellview> {
     );
   }
 
-  int calculateAmount({
+  int calculateFirstAmount({
     required int rate,
     required String currencyCode,
     required int amount,
@@ -478,6 +532,24 @@ class _BuySellviewState extends State<BuySellview> {
     }
     return resultAmount;
   }
+
+  // int calculateSecondAmount({
+  //   required int rate,
+  //   required String currencyCode,
+  //   required int amount,
+  // }) {
+  //   int resultAmount = 0;
+  //   if (currencyCode == 'SDG') {
+  //     resultAmount = (amount / rate).toInt();
+  //   }
+  //   if (currencyCode == 'USDT') {
+  //     resultAmount = (amount * rate).toInt();
+  //   }
+  //   if (currencyCode == 'USD') {
+  //     resultAmount = (amount * rate).toInt();
+  //   }
+  //   return resultAmount;
+  // }
 
   String? validateTransfer({
     required BuySellResModel buySellResModel,

@@ -30,7 +30,7 @@ _$AccountInfoImpl _$$AccountInfoImplFromJson(Map<String, dynamic> json) =>
     _$AccountInfoImpl(
       id: (json['id'] as num?)?.toInt() ?? 0,
       userId: (json['user_id'] as num?)?.toInt() ?? 0,
-      bankId: (json['bank_id'] as num?)?.toInt() ?? 0,
+      bankId: (json['currency_id'] as num?)?.toInt() ?? 0,
       accountNumber: json['account_number'] as String? ?? '',
       comment: json['comment'] as String? ?? '',
       createdAt: json['created_at'] as String? ?? '',
@@ -44,7 +44,7 @@ Map<String, dynamic> _$$AccountInfoImplToJson(_$AccountInfoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'user_id': instance.userId,
-      'bank_id': instance.bankId,
+      'currency_id': instance.bankId,
       'account_number': instance.accountNumber,
       'comment': instance.comment,
       'created_at': instance.createdAt,

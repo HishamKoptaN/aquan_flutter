@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 import '../helpers/constants.dart';
 import '../helpers/shared_pref_helper.dart';
 
@@ -9,7 +8,7 @@ class DioFactory {
   static Dio? dio;
   static Future<Dio> setupDio() async {
     Duration timeOut = const Duration(
-      seconds: 15,
+      seconds: 60,
     );
     if (dio == null) {
       dio = Dio();
@@ -40,7 +39,7 @@ class DioFactory {
     );
   }
 
-  static void setTokenIntoHeaderAfterLogin({
+  static Future<void> setTokenIntoHeaderAfterLogin({
     required String token,
   }) async {
     dio?.options.headers = {

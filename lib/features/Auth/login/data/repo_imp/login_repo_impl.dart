@@ -28,4 +28,18 @@ class LoginRepoImpl implements LoginRepo {
       );
     }
   }
+
+  @override
+  Future<ApiResult<Auth>> google() async {
+    try {
+      final response = await loginApi.google();
+      return ApiResult.success(data: response);
+    } catch (error) {
+      return ApiResult.failure(
+        apiErrorModel: ApiErrorHandler.handle(
+          error: error,
+        ),
+      );
+    }
+  }
 }

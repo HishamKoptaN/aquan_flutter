@@ -22,9 +22,7 @@ mixin _$BuySellState {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) =>
@@ -34,9 +32,7 @@ mixin _$BuySellState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) =>
@@ -46,9 +42,7 @@ mixin _$BuySellState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),
@@ -132,12 +126,18 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
+class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   const _$InitialImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BuySellState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'BuySellState.initial'));
   }
 
   @override
@@ -156,9 +156,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) {
@@ -171,9 +169,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) {
@@ -186,9 +182,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),
@@ -271,12 +265,18 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
+class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   const _$LoadingImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BuySellState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'BuySellState.loading'));
   }
 
   @override
@@ -295,9 +295,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) {
@@ -310,9 +308,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) {
@@ -325,9 +321,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),
@@ -436,15 +430,25 @@ class __$$BuySellRatesLLoadedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$BuySellRatesLLoadedImpl implements _BuySellRatesLLoaded {
+class _$BuySellRatesLLoadedImpl
+    with DiagnosticableTreeMixin
+    implements _BuySellRatesLLoaded {
   const _$BuySellRatesLLoadedImpl({required this.buySellResModel});
 
   @override
   final BuySellResModel buySellResModel;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BuySellState.buySellRatesLoaded(buySellResModel: $buySellResModel)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BuySellState.buySellRatesLoaded'))
+      ..add(DiagnosticsProperty('buySellResModel', buySellResModel));
   }
 
   @override
@@ -475,9 +479,7 @@ class _$BuySellRatesLLoadedImpl implements _BuySellRatesLLoaded {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) {
@@ -490,9 +492,7 @@ class _$BuySellRatesLLoadedImpl implements _BuySellRatesLLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) {
@@ -505,9 +505,7 @@ class _$BuySellRatesLLoadedImpl implements _BuySellRatesLLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),
@@ -586,10 +584,9 @@ abstract class _$$RceivedAccountNumberLoadedImplCopyWith<$Res> {
           $Res Function(_$RceivedAccountNumberLoadedImpl) then) =
       __$$RceivedAccountNumberLoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({ReceivedAccountNumberResModel receivedAccountNumberResModel});
+  $Res call({Account account});
 
-  $ReceivedAccountNumberResModelCopyWith<$Res>
-      get receivedAccountNumberResModel;
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -606,13 +603,13 @@ class __$$RceivedAccountNumberLoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? receivedAccountNumberResModel = null,
+    Object? account = null,
   }) {
     return _then(_$RceivedAccountNumberLoadedImpl(
-      receivedAccountNumberResModel: null == receivedAccountNumberResModel
-          ? _value.receivedAccountNumberResModel
-          : receivedAccountNumberResModel // ignore: cast_nullable_to_non_nullable
-              as ReceivedAccountNumberResModel,
+      account: null == account
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
     ));
   }
 
@@ -620,27 +617,35 @@ class __$$RceivedAccountNumberLoadedImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ReceivedAccountNumberResModelCopyWith<$Res>
-      get receivedAccountNumberResModel {
-    return $ReceivedAccountNumberResModelCopyWith<$Res>(
-        _value.receivedAccountNumberResModel, (value) {
-      return _then(_value.copyWith(receivedAccountNumberResModel: value));
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$RceivedAccountNumberLoadedImpl implements _RceivedAccountNumberLoaded {
-  const _$RceivedAccountNumberLoadedImpl(
-      {required this.receivedAccountNumberResModel});
+class _$RceivedAccountNumberLoadedImpl
+    with DiagnosticableTreeMixin
+    implements _RceivedAccountNumberLoaded {
+  const _$RceivedAccountNumberLoadedImpl({required this.account});
 
   @override
-  final ReceivedAccountNumberResModel receivedAccountNumberResModel;
+  final Account account;
 
   @override
-  String toString() {
-    return 'BuySellState.rceivedAccountNumberLoaded(receivedAccountNumberResModel: $receivedAccountNumberResModel)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BuySellState.rceivedAccountNumberLoaded(account: $account)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'BuySellState.rceivedAccountNumberLoaded'))
+      ..add(DiagnosticsProperty('account', account));
   }
 
   @override
@@ -648,14 +653,11 @@ class _$RceivedAccountNumberLoadedImpl implements _RceivedAccountNumberLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RceivedAccountNumberLoadedImpl &&
-            (identical(other.receivedAccountNumberResModel,
-                    receivedAccountNumberResModel) ||
-                other.receivedAccountNumberResModel ==
-                    receivedAccountNumberResModel));
+            (identical(other.account, account) || other.account == account));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, receivedAccountNumberResModel);
+  int get hashCode => Object.hash(runtimeType, account);
 
   /// Create a copy of BuySellState
   /// with the given fields replaced by the non-null parameter values.
@@ -673,13 +675,11 @@ class _$RceivedAccountNumberLoadedImpl implements _RceivedAccountNumberLoaded {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) {
-    return rceivedAccountNumberLoaded(receivedAccountNumberResModel);
+    return rceivedAccountNumberLoaded(account);
   }
 
   @override
@@ -688,13 +688,11 @@ class _$RceivedAccountNumberLoadedImpl implements _RceivedAccountNumberLoaded {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) {
-    return rceivedAccountNumberLoaded?.call(receivedAccountNumberResModel);
+    return rceivedAccountNumberLoaded?.call(account);
   }
 
   @override
@@ -703,15 +701,13 @@ class _$RceivedAccountNumberLoadedImpl implements _RceivedAccountNumberLoaded {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),
   }) {
     if (rceivedAccountNumberLoaded != null) {
-      return rceivedAccountNumberLoaded(receivedAccountNumberResModel);
+      return rceivedAccountNumberLoaded(account);
     }
     return orElse();
   }
@@ -764,11 +760,10 @@ class _$RceivedAccountNumberLoadedImpl implements _RceivedAccountNumberLoaded {
 }
 
 abstract class _RceivedAccountNumberLoaded implements BuySellState {
-  const factory _RceivedAccountNumberLoaded(
-      {required final ReceivedAccountNumberResModel
-          receivedAccountNumberResModel}) = _$RceivedAccountNumberLoadedImpl;
+  const factory _RceivedAccountNumberLoaded({required final Account account}) =
+      _$RceivedAccountNumberLoadedImpl;
 
-  ReceivedAccountNumberResModel get receivedAccountNumberResModel;
+  Account get account;
 
   /// Create a copy of BuySellState
   /// with the given fields replaced by the non-null parameter values.
@@ -798,12 +793,18 @@ class __$$SuccessImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SuccessImpl implements _Success {
+class _$SuccessImpl with DiagnosticableTreeMixin implements _Success {
   const _$SuccessImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BuySellState.success()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'BuySellState.success'));
   }
 
   @override
@@ -822,9 +823,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) {
@@ -837,9 +836,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) {
@@ -852,9 +849,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),
@@ -951,15 +946,23 @@ class __$$FailureImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FailureImpl implements _Failure {
+class _$FailureImpl with DiagnosticableTreeMixin implements _Failure {
   const _$FailureImpl({required this.apiErrorModel});
 
   @override
   final ApiErrorModel apiErrorModel;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'BuySellState.failure(apiErrorModel: $apiErrorModel)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BuySellState.failure'))
+      ..add(DiagnosticsProperty('apiErrorModel', apiErrorModel));
   }
 
   @override
@@ -989,9 +992,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function() loading,
     required TResult Function(BuySellResModel buySellResModel)
         buySellRatesLoaded,
-    required TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)
-        rceivedAccountNumberLoaded,
+    required TResult Function(Account account) rceivedAccountNumberLoaded,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
   }) {
@@ -1004,9 +1005,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult? Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult? Function(Account account)? rceivedAccountNumberLoaded,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
   }) {
@@ -1019,9 +1018,7 @@ class _$FailureImpl implements _Failure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(BuySellResModel buySellResModel)? buySellRatesLoaded,
-    TResult Function(
-            ReceivedAccountNumberResModel receivedAccountNumberResModel)?
-        rceivedAccountNumberLoaded,
+    TResult Function(Account account)? rceivedAccountNumberLoaded,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     required TResult orElse(),

@@ -7,4 +7,5 @@ class LoginEvent with _$LoginEvent {
   const factory LoginEvent.login({
     required LoginReqBody loginReqBody,
   }) = _Login;
+  const factory LoginEvent.google() = _LoginWithGoogle;
 }

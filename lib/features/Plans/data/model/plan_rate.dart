@@ -22,7 +22,7 @@ class AccountInfo with _$AccountInfo {
   const factory AccountInfo({
     @JsonKey(name: "id") @Default(0) int id,
     @JsonKey(name: "user_id") @Default(0) int userId,
-    @JsonKey(name: "bank_id") @Default(0) int bankId,
+    @JsonKey(name: "currency_id") @Default(0) int bankId,
     @JsonKey(name: "account_number") @Default('') String accountNumber,
     @JsonKey(name: "comment") @Default('') String comment,
     @JsonKey(name: "created_at") @Default('') String createdAt,

@@ -1,9 +1,8 @@
-import 'package:aquan/features/buy_sell/data/model/received_account_number_res_model.dart';
+import 'package:aquan/all_imports.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_source/buy_sell_api.dart';
-import '../../data/model/buy_sell_res_model.dart';
 import '../../data/repo/buy_sell_repo.dart';
 
 class BuySellRepoImpl implements BuySellRepo {
@@ -29,7 +28,7 @@ class BuySellRepoImpl implements BuySellRepo {
   }
 
   @override
-  Future<ApiResult<ReceivedAccountNumberResModel>> getReceiveAccountNumber({
+  Future<ApiResult<Account>> getReceiveAccountNumber({
     required int? id,
   }) async {
     try {
@@ -53,7 +52,9 @@ class BuySellRepoImpl implements BuySellRepo {
     required FormData formData,
   }) async {
     try {
-      await plansApi.getBuySellRates();
+      await plansApi.transferMoney(
+        formData: formData,
+      );
       return const ApiResult.success(
         data: null,
       );

@@ -33,7 +33,7 @@ SignUpReqBody signUpReqBody = const SignUpReqBody();
 
 class _SignUpViewState extends State<SignUpView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String _isoCode = "SD";
   bool isLoading = false;
   @override
@@ -96,7 +96,7 @@ class _SignUpViewState extends State<SignUpView> {
               alignment: Alignment.center,
               color: Colors.white,
               child: Form(
-                key: formKey,
+                key: _formKey,
                 child: ListView(
                   children: [
                     Gap(
@@ -117,6 +117,7 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           firstName: v,
                         );
+                        _formKey.currentState!.validate();
                       },
                       labelText: t.first_name,
                       suffixIcon: const Icon(
@@ -124,13 +125,14 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     Gap(
-                      30.h,
+                      15.h,
                     ),
                     CustomTextFormField(
                       onChanged: (v) {
                         signUpReqBody = signUpReqBody.copyWith(
                           lastName: v,
                         );
+                        _formKey.currentState!.validate();
                       },
                       labelText: t.last_name,
                       suffixIcon: const Icon(
@@ -138,15 +140,11 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     Gap(
-                      30.h,
+                      15.h,
                     ),
-                    Container(
+                    SizedBox(
                       height: 70.h,
                       width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        color: Colors.grey[200],
-                      ),
                       child: InternationalPhoneNumberInput(
                         onInputChanged: (PhoneNumber v) {
                           signUpReqBody = signUpReqBody.copyWith(
@@ -155,6 +153,7 @@ class _SignUpViewState extends State<SignUpView> {
                           signUpReqBody = signUpReqBody.copyWith(
                             countryCode: v.isoCode!,
                           );
+                          _formKey.currentState!.validate();
                         },
                         selectorConfig: const SelectorConfig(
                           selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -176,24 +175,60 @@ class _SignUpViewState extends State<SignUpView> {
                           signed: true,
                           decimal: true,
                         ),
-                        inputDecoration: const InputDecoration(
-                          border: InputBorder.none, // إزالة الخط السفلي
-                          enabledBorder: InputBorder.none,
-                          // إزالة الخط السفلي في الوضع العادي
-                          focusedBorder: InputBorder
-                              .none, // إزالة الخط السفلي في وضع التركيز
-                          hintStyle: TextStyle(
+                        validator: (String? value) {
+                          final sanitizedValue =
+                              value?.replaceAll(' ', '') ?? '';
+                          if (sanitizedValue.isEmpty) {
+                            return 'الرجاء إدخال رقم الهاتف';
+                          }
+                          if (!RegExp(r'^\d+$').hasMatch(sanitizedValue)) {
+                            return 'الرقم يجب أن يحتوي على أرقام فقط';
+                          }
+                          if (sanitizedValue.length <= 6) {
+                            return 'الرقم يجب أن يكون أكثر من 6 أرقام';
+                          }
+                          return null;
+                        },
+                        inputDecoration: InputDecoration(
+                          border: InputBorder.none,
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.red,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.red,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          hintStyle: const TextStyle(
                             color: Colors.grey,
-                          ), // نمط النص التوضيحي
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 20,
                           ),
                         ),
                       ),
                     ),
                     Gap(
-                      30.h,
+                      15.h,
                     ),
                     CustomTextFormField(
                       labelText: t.e_mail,
@@ -201,13 +236,16 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           email: v,
                         );
+                        _formKey.currentState!.validate();
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return t.required;
                         } else if (!RegExp(
-                                r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                            .hasMatch(value)) {
+                          r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                        ).hasMatch(
+                          value,
+                        )) {
                           return t.invalid_email;
                         }
                         return null;
@@ -217,7 +255,7 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     Gap(
-                      30.h,
+                      15.h,
                     ),
                     CustomTextFormPasswordField(
                       labelText: t.password,
@@ -226,6 +264,7 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           password: v,
                         );
+                        _formKey.currentState!.validate();
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -237,7 +276,7 @@ class _SignUpViewState extends State<SignUpView> {
                       },
                     ),
                     Gap(
-                      10.h,
+                      15.h,
                     ),
                     CustomTextFormPasswordField(
                       labelText: t.passwordConfirmation,
@@ -246,6 +285,7 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           passwordConfirmation: v,
                         );
+                        _formKey.currentState!.validate();
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -257,11 +297,11 @@ class _SignUpViewState extends State<SignUpView> {
                       },
                     ),
                     Gap(
-                      30.h,
+                      15.h,
                     ),
                     CustomTextButtonWidget(
                       onPressed: () async {
-                        if (!formKey.currentState!.validate()) {
+                        if (!_formKey.currentState!.validate()) {
                           return;
                         } else {
                           context.read<SignUpBloc>().add(
