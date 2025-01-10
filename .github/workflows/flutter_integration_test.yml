@@ -1,23 +1,26 @@
-name: Flutter Integration Tests
+name: Update Screenshots
 
 on:
   push:
     branches:
-      - dev
+      - dev  # يتم تشغيل الخطوات عند أي تحديث للفرع الرئيسي
   pull_request:
 
 jobs:
   integration_test:
     runs-on: ubuntu-latest
+
     steps:
       # 1. إعداد Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.4'
+          flutter-version: 'stable'
+
       # 2. تثبيت الحزم
       - name: Install dependencies
         run: flutter pub get
+
       # 3. تشغيل الاختبارات باستخدام xvfb
       - name: Run integration tests
         run: |
@@ -25,9 +28,19 @@ jobs:
           sudo apt-get install -y libgl1-mesa-glx
           xvfb-run -s "-screen 0 1920x1080x24" flutter test integration_test/
 
-      # 4. رفع الصور كـ artifacts
-      - name: Upload screenshots
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-screenshots
-          path: test_screenshots/
+      # 4. نسخ الصور إلى المجلد المناسب
+      - name: Copy screenshots
+        run: |
+          mkdir -p assets/screenshots
+          cp -r test_screenshots/* assets/screenshots/
+
+      # 5. الالتزام (Commit) بالتغييرات ودفعها (Push) إلى المستودع
+      - name: Commit and push screenshots
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add assets/screenshots/
+          git commit -m "Update screenshots"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
