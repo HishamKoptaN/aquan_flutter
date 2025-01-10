@@ -3,7 +3,7 @@ name: Integration Tests
 on:
   push:
     branches:
-      - dev  # تشغيل الخطوات عند تحديث الفرع الرئيسي
+      - dev  # تشغيل الخطوات عند التحديث على فرع dev
   pull_request:
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
 
       #! 3. إعداد محاكي Android
       - name: Set up Android Emulator
-        uses: reactivecircus/android-emulator-runner@v3
+        uses: reactivecircus/android-emulator-runner@v2  # النسخة الصحيحة
         with:
           api-level: 30              # إصدار API
           target: google_apis        # الهدف: Google APIs
