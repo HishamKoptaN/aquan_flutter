@@ -1,9 +1,9 @@
-name: Integration Tests
+name: Integration Tests with Android Emulator
 
 on:
   push:
     branches:
-      - dev  # تشغيل الخطوات عند التحديث على فرع dev
+      - dev
   pull_request:
 
 jobs:
@@ -13,40 +13,43 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      #! 1. تثبيت الأدوات الأساسية
-      - name: Install basic tools
-        run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils
+      # تثبيت الأدوات الأساسية
+      - name: Install required tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl unzip lib32stdc++6 lib32z1
 
-      #! 2. إعداد Flutter
+      # إعداد Android SDK
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+
+      # إعداد Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.0.0'
           channel: stable
 
-      #! 3. إعداد محاكي Android
-      - name: Set up Android Emulator
-        uses: reactivecircus/android-emulator-runner@v2  # النسخة الصحيحة
+      # إعداد محاكي Android
+      - name: Launch Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30              # إصدار API
-          target: google_apis        # الهدف: Google APIs
-          arch: x86_64               # معمارية المحاكي
-          profile: Pixel_4           # اسم المحاكي
-          emulator-options: "-no-boot-anim -no-window"
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: Pixel_4
+          emulator-options: "-no-boot-anim -no-window -gpu swiftshader_indirect"
+          disable-linux-hw-accel: true
+          disable-animations: true
 
-      #! 4. تشغيل المحاكي
-      - name: Start Android Emulator
-        run: adb devices
-        env:
-          ANDROID_HOME: /usr/local/lib/android/sdk
-
-      #! 5. التحقق من الأجهزة المتصلة
+      # التحقق من الأجهزة المتصلة
       - name: List connected devices
-        run: flutter devices
+        run: adb devices
 
-      #! 6. تشغيل اختبارات التكامل
-      - name: Run integration tests on Android Emulator
+      # تشغيل اختبارات Flutter
+      - name: Run Flutter integration tests
         run: flutter test integration_test/app_test.dart
-        env:
-          FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-x64
-          PUB_CACHE: ${{ runner.temp }}/.pub-cache
