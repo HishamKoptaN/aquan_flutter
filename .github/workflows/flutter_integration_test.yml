@@ -1,8 +1,9 @@
-name: Update Screenshots
+name: Integration Tests
+
 on:
   push:
     branches:
-      - dev
+      - dev  # تشغيل الخطوات عند تحديث الفرع الرئيسي
   pull_request:
 
 jobs:
@@ -12,24 +13,40 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      #! 1. تثبيت الأدوات الأساسية
       - name: Install basic tools
-        run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils xvfb
+        run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils
 
+      #! 2. إعداد Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.0.0'
           channel: stable
 
-      - name: Upgrade Flutter
-        run: flutter upgrade
+      #! 3. إعداد محاكي Android
+      - name: Set up Android Emulator
+        uses: reactivecircus/android-emulator-runner@v3
+        with:
+          api-level: 30              # إصدار API
+          target: google_apis        # الهدف: Google APIs
+          arch: x86_64               # معمارية المحاكي
+          profile: Pixel_4           # اسم المحاكي
+          emulator-options: "-no-boot-anim -no-window"
 
-      - name: Enable Linux Desktop
-        run: flutter config --enable-linux-desktop
+      #! 4. تشغيل المحاكي
+      - name: Start Android Emulator
+        run: adb devices
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
 
-      - name: Install dependencies
-        run: flutter pub get
+      #! 5. التحقق من الأجهزة المتصلة
+      - name: List connected devices
+        run: flutter devices
 
-      - name: Run integration tests
-        run: |
-          xvfb-run -s "-screen 0 1920x1080x24" flutter test -d linux integration_test/app_test.dart
+      #! 6. تشغيل اختبارات التكامل
+      - name: Run integration tests on Android Emulator
+        run: flutter test integration_test/app_test.dart
+        env:
+          FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-x64
+          PUB_CACHE: ${{ runner.temp }}/.pub-cache
