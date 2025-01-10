@@ -4,59 +4,32 @@ on:
     branches:
       - dev
   pull_request:
+
 jobs:
   integration_test:
-    runs-on: ubuntu-22.04  # استخدام إصدار متوافق من Ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      #! 1. تثبيت الأدوات الأساسية
       - name: Install basic tools
-        run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils
+        run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils xvfb
 
-      #! 2. إعداد Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.0.0'
           channel: stable
-          architecture: x64
-          cache: false
-          pub-cache-path: default
-          dry-run: false
 
       - name: Upgrade Flutter
         run: flutter upgrade
 
-      #! 3. تثبيت مكتبات OpenGL
-      - name: Install OpenGL libraries
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgl1 libglx-mesa0
+      - name: Enable Linux Desktop
+        run: flutter config --enable-linux-desktop
 
-      #! 4. تثبيت الحزم
       - name: Install dependencies
         run: flutter pub get
 
-      #! 5. تشغيل الاختبارات باستخدام xvfb
       - name: Run integration tests
         run: |
-          xvfb-run -s "-screen 0 1920x1080x24" flutter test integration_test/app_test.dart/
-
-      #! 6. نسخ الصور إلى المجلد المناسب
-      - name: Copy screenshots
-        run: |
-          mkdir -p assets/screenshots
-          cp -r test_screenshots/* assets/screenshots/
-
-      #! 7. الالتزام (Commit) بالتغييرات ودفعها (Push) إلى المستودع
-      - name: Commit and push screenshots
-        run: |
-          git config --local user.name "GitHub Actions"
-          git config --local user.email "actions@github.com"
-          git add assets/screenshots/
-          git commit -m "Update screenshots"
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          xvfb-run -s "-screen 0 1920x1080x24" flutter test -d linux integration_test/app_test.dart
