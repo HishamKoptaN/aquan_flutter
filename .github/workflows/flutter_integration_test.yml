@@ -8,10 +8,12 @@ jobs:
   integration_test:
     runs-on: ubuntu-latest
     steps:
-         # 1. تثبيت الأدوات الأساسية
+      - name: Checkout code
+        uses: actions/checkout@v2
+      #! 1. تثبيت الأدوات الأساسية
       - name: Install basic tools
         run: sudo apt-get update && sudo apt-get install -y curl git unzip xz-utils
-      # 1. إعداد Flutter
+      #! 1. إعداد Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -23,22 +25,21 @@ jobs:
           dry-run: false
       - name: Upgrade Flutter
         run: flutter upgrade
-      # 2. تثبيت الحزم
+      #!2. تثبيت الحزم
       - name: Install dependencies
         run: flutter pub get
-
-      # 3. تشغيل الاختبارات باستخدام xvfb
+      #! 3. تشغيل الاختبارات باستخدام xvfb
       - name: Run integration tests
         run: |
           sudo apt-get update
           sudo apt-get install -y libgl1-mesa-glx
           xvfb-run -s "-screen 0 1920x1080x24" flutter test integration_test/app_test.dart/
-      # 4. نسخ الصور إلى المجلد المناسب
+      #! 4. نسخ الصور إلى المجلد المناسب
       - name: Copy screenshots
         run: |
           mkdir -p assets/screenshots
           cp -r test_screenshots/* assets/screenshots/
-      # 5. الالتزام (Commit) بالتغييرات ودفعها (Push) إلى المستودع
+      #! 5. الالتزام (Commit) بالتغييرات ودفعها (Push) إلى المستودع
       - name: Commit and push screenshots
         run: |
           git config --local user.name "GitHub Actions"
