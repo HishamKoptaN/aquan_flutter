@@ -1,15 +1,10 @@
 import 'package:aquan/all_imports.dart';
-import 'package:aquan/core/Helpers/settings.dart';
 import 'package:aquan/core/di/dependency_injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/Helpers/app_observer.dart';
-import 'core/Helpers/constants.dart';
-import 'core/Helpers/shared_pref_helper.dart';
 import 'core/utils/app_colors.dart';
-import 'features/Layouts/app_layout.dart';
 import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
 
 void main() async {
@@ -100,15 +95,6 @@ class MyApp extends StatelessWidget {
                       //   ),
                       //   (route) => false,
                       // );
-                    },
-                    verified: (veified) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NavigateBarView(),
-                        ),
-                        (route) => false,
-                      );
                     },
                     logedOut: (_) {
                       Navigator.of(context).pushAndRemoveUntil(
