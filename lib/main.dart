@@ -1,14 +1,22 @@
 import 'package:aquan/all_imports.dart';
+import 'package:aquan/core/Helpers/settings.dart';
+import 'package:aquan/core/di/dependency_injection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'core/Helpers/app_observer.dart';
+import 'core/Helpers/constants.dart';
+import 'core/Helpers/shared_pref_helper.dart';
+import 'core/utils/app_colors.dart';
+import 'features/Layouts/app_layout.dart';
+import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   await Injection.inject();
   await ScreenUtil.ensureScreenSize();
   SharedPrefHelper;
-  await SharedPrefHelper.clearAllSecuredData();
   String locale = await SharedPrefHelper.getString(
         key: SharedPrefKeys.languageCode,
       ) ??
@@ -26,6 +34,10 @@ Future<void> main() async {
     MyApp(
       locale: locale,
     ),
+    // DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) => MyApp(), // Wrap your app
+    // ),
   );
 }
 
@@ -36,7 +48,6 @@ class MyApp extends StatelessWidget {
   });
   final String locale;
   Color color = AppColors.primary;
-
   @override
   Widget build(
     context,
@@ -44,7 +55,6 @@ class MyApp extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
-      key: const Key('my_app'),
       child: ScreenUtilInit(
         designSize: Size(
           width,
@@ -53,47 +63,54 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         child: BlocProvider(
-          create: (context) => MainBloc(
-            checkUseCase: getIt(),
-            editPassUseCase: getIt(),
-          )..add(
-              const MainEvent.check(),
-            ),
+          create: (context) =>
+              MainBloc(checkUseCase: getIt(), editPassUseCase: getIt())
+                ..add(
+                  const MainEvent.check(),
+                ),
           child: MaterialApp(
             color: Colors.white,
             title: 'AQUAN',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            locale: Locale(
-              locale,
-            ),
+            locale: Locale(locale),
             home: AppLayout(
               route: "",
               showAppBar: false,
               body: BlocConsumer<MainBloc, MainState>(
                 listener: (context, state) async {
-                  state.whenOrNull(
-                    logedIn: (checkBiom) async {
-                      if (checkBiom) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BiometricView(),
-                          ),
-                          (route) => false,
-                        );
-                      } else if (!checkBiom) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavigateBarView(),
-                          ),
-                          (route) => false,
-                        );
-                      }
+                  state.mapOrNull(
+                    logedIn: (notVerify) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NavigateBarView(),
+                        ),
+                        (route) => false,
+                      );
                     },
-                    logedOut: () {
+                    notVerify: (data) {
+                      // Navigator.pushAndRemoveUntil(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => VerifyCode(
+                      //       userEmail: data.user.name,
+                      //     ),
+                      //   ),
+                      //   (route) => false,
+                      // );
+                    },
+                    verified: (veified) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NavigateBarView(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    logedOut: (_) {
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const LoginView(),
@@ -101,18 +118,10 @@ class MyApp extends StatelessWidget {
                         (route) => false,
                       );
                     },
-                    notVerify: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SendEmailOtpView(),
-                        ),
-                        (route) => false,
-                      );
-                    },
                   );
                 },
                 builder: (context, state) {
+                  state.whenOrNull();
                   return Image.asset(
                     "assets/icon/aquan-logo-gif.gif",
                   );
@@ -127,10 +136,7 @@ class MyApp extends StatelessWidget {
 }
 
 class RestartWidget extends StatefulWidget {
-  const RestartWidget({
-    super.key,
-    required this.child,
-  });
+  const RestartWidget({super.key, required this.child});
   final Widget child;
   static void restartApp(BuildContext context) {
     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
