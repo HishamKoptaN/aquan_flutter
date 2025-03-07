@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import '../../test_one.dart';
 import '../views/settings_view.dart';
-import '../accounts/presentation/pages/accounts_view.dart';
+import '../accounts/present/pages/accounts_view.dart';
 import '../buy_sell/present/view/buy_sell_view.dart';
 import '../dash/present/view/dash_view.dart';
 import '../profile/present/profile_view.dart';

@@ -1,5 +1,7 @@
 import 'package:aquan/all_imports.dart';
 
+import '../../../widgets/convert_currency_price.dart';
+
 class BuySellview extends StatefulWidget {
   const BuySellview({super.key});
   @override

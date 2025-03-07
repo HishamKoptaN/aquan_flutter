@@ -1,6 +1,9 @@
 import 'package:aquan/all_imports.dart';
 import '../../../../../core/widgets/snacke_bar.dart';
+import '../../../../layouts/app_layout.dart';
+import '../../../verify_email/present/view/send_email_otp_view.dart';
 import '../../data/models/firabase_login_req_body_model.dart';
+import '../bloc/login_bloc.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({

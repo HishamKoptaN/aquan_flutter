@@ -19,7 +19,6 @@ export 'package:aquan/core/singletons/user_singleton.dart';
 export 'package:aquan/core/utils/app_colors.dart';
 export 'package:aquan/core/utils/styles.dart';
 export 'package:aquan/core/widgets/custom_text_form_password_field.dart';
-export 'package:aquan/features/auth/login/data/models/login_req_body.dart';
 export 'package:aquan/features/auth/login/present/bloc/login_bloc.dart';
 export 'package:aquan/features/auth/login/present/bloc/login_event.dart';
 export 'package:aquan/features/auth/login/present/bloc/login_state.dart';

@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/di/dependency_injection.dart';
 import '../../../core/singletons/user_singleton.dart';
 import '../../../core/widgets/custom_text_widget.dart';
-import '../../accounts/presentation/pages/accounts_view.dart';
+import '../../accounts/present/pages/accounts_view.dart';
 import '../../plans/present/view/plans_view/plans_view.dart';
 import 'bloc/profile_bloc.dart';
 import 'bloc/profile_state.dart';

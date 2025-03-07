@@ -1,7 +1,7 @@
 import '../../../features/auth/login/present/bloc/login_bloc.dart';
 import '../../../features/auth/reset_password/present/bloc/reset_pass_bloc.dart';
 import '../../../features/auth/sign_up/present/bloc/sign_up_bloc.dart';
-import '../../../features/accounts/presentation/bloc/accounts_bloc.dart';
+import '../../../features/accounts/present/bloc/accounts_bloc.dart';
 import '../../../features/auth/verify_email/present/bloc/email_verify_bloc.dart';
 import '../../../features/buy_sell/present/bloc/buy_sell_bloc.dart';
 import '../../../features/dash/present/bloc/dash_bloc.dart';
