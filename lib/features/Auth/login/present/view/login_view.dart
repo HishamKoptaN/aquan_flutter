@@ -1,4 +1,6 @@
 import 'package:aquan/all_imports.dart';
+import '../../../../../core/widgets/snacke_bar.dart';
+import '../../data/models/firabase_login_req_body_model.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -10,8 +12,8 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  LoginReqBody loginReqBody = const LoginReqBody();
-  bool showPassword = true;
+  FirabaseLoginReqBodyModel firabaseLoginReqBodyModel =
+      const FirabaseLoginReqBodyModel();
   @override
   Widget build(
     context,
@@ -24,8 +26,7 @@ class _LoginViewState extends State<LoginView> {
       showAppBar: false,
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(
-          loginUseCase: getIt(),
-          loginWithGoogleUseCase: getIt(),
+          loginUseCases: getIt(),
         ),
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
@@ -56,249 +57,261 @@ class _LoginViewState extends State<LoginView> {
             );
           },
           builder: (context, state) {
-            return AppLayout(
-              showAppBar: false,
-              body: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Gap(
-                        40.h,
-                      ),
-                      Image.asset(
-                        'assets/icon/aquan-yellow-logo.png',
-                        height: 100.h,
-                        width: 100.w,
-                      ),
-                      CustomText(
-                        text: 'أكوان',
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.yellow[700],
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Gap(
-                              40.h,
+            return Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Gap(
+                      40.h,
+                    ),
+                    Image.asset(
+                      'assets/icon/aquan-yellow-logo.png',
+                      height: 100.h,
+                      width: 100.w,
+                    ),
+                    CustomText(
+                      text: 'أكوان',
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow[700],
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Gap(
+                            40.h,
+                          ),
+                          SizedBox(
+                            width: width / 1.3,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: CustomText(
+                                text: t.sign_in,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                             ),
-                            SizedBox(
-                              width: width / 1.3,
-                              child: Align(
-                                alignment: Alignment.centerRight,
+                          ),
+                          CustomTextFormField(
+                            key: const Key('email_field'),
+                            onChanged: (v) {
+                              firabaseLoginReqBodyModel =
+                                  firabaseLoginReqBodyModel.copyWith(
+                                email: v,
+                              );
+                              _formKey.currentState!.validate();
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return t.required;
+                              } else if (!RegExp(
+                                r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                              ).hasMatch(value)) {
+                                return t.invalid_email;
+                              }
+                              return null;
+                            },
+                            labelText: t.e_mail,
+                            suffixIcon: const Icon(
+                              Icons.email,
+                            ),
+                          ),
+                          Gap(
+                            20.h,
+                          ),
+                          CustomTextFormPasswordField(
+                            key: const Key('password_field'),
+                            labelText: t.password,
+                            showTogglePassword: true,
+                            onChanged: (v) {
+                              firabaseLoginReqBodyModel =
+                                  firabaseLoginReqBodyModel.copyWith(
+                                password: v,
+                              );
+                              _formKey.currentState!.validate();
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return t.required;
+                              } else if (value.length < 8) {
+                                return t.password_too_short;
+                              }
+                              return null;
+                            },
+                          ),
+                          Gap(
+                            10.h,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                if (firabaseLoginReqBodyModel.email != null) {
+                                  // context.read<LoginBloc>().add(
+                                  //       LoginEvent.resetPass(
+                                  //         resetPassReqBodyModel:
+                                  //             const ResetPassReqBodyModel().copyWith(
+                                  //           email:
+                                  //               firabaseLoginReqBodyModel.email,
+                                  //         ),
+                                  //       ),
+                                  //     );
+                                } else {
+                                  CustomToast.showToast(
+                                    key: const Key('toast_button'),
+                                    context: context,
+                                    title: "أدخل البريد الالكتروني",
+                                    toastType: ToastType.failure,
+                                  );
+                                }
+                              },
+                              child: CustomText(
+                                text: t.forgetPassword,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Gap(
+                            20.h,
+                          ),
+                          GestureDetector(
+                            key: const Key('login_button'),
+                            onTap: () async {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<LoginBloc>().add(
+                                      LoginEvent.fireLogin(
+                                        firabaseLoginReqBodyModel:
+                                            firabaseLoginReqBodyModel,
+                                      ),
+                                    );
+                              }
+                            },
+                            child: Container(
+                              width: width / 2,
+                              height: height / 14,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Center(
+                                child: state.maybeWhen(
+                                  loading: () {
+                                    return const CustomCircularProgress();
+                                  },
+                                  orElse: () {
+                                    return Text(
+                                      t.login,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "Arial",
+                                          fontSize: 25.sp),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Gap(
+                            40.h,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              const Expanded(
+                                child: Divider(
+                                  thickness: 2,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
                                 child: CustomText(
-                                  text: t.sign_in,
+                                  text: t.or,
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),
-                            ),
-                            CustomTextFormField(
-                              key: const Key('email_field'),
-                              onChanged: (v) {
-                                loginReqBody = loginReqBody.copyWith(
-                                  email: v,
-                                );
-                                _formKey.currentState!.validate();
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return t.required;
-                                } else if (!RegExp(
-                                  r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                                ).hasMatch(value)) {
-                                  return t.invalid_email;
-                                }
-                                return null;
-                              },
-                              labelText: t.e_mail,
-                              suffixIcon: const Icon(
-                                Icons.email,
-                              ),
-                            ),
-                            Gap(
-                              20.h,
-                            ),
-                            CustomTextFormPasswordField(
-                              key: const Key('password_field'),
-                              labelText: t.password,
-                              showTogglePassword: true,
-                              onChanged: (v) {
-                                loginReqBody = loginReqBody.copyWith(
-                                  password: v,
-                                );
-                                _formKey.currentState!.validate();
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return t.required;
-                                } else if (value.length < 8) {
-                                  return t.password_too_short;
-                                }
-                                return null;
-                              },
-                            ),
-                            Gap(
-                              10.h,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EnterEmailView(),
-                                    ),
-                                  );
-                                },
-                                child: CustomText(
-                                  text: t.forgetPassword,
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.bold,
+                              const Expanded(
+                                child: Divider(
+                                  thickness: 2,
                                   color: Colors.black,
                                 ),
                               ),
-                            ),
-                            Gap(
-                              20.h,
-                            ),
-                            GestureDetector(
-                              key: const Key('login_button'),
-                              onTap: () {
-                                if (_formKey.currentState!.validate()) {
+                            ],
+                          ),
+                          Gap(
+                            20.h,
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              state.maybeWhen(
+                                loading: () {},
+                                orElse: () {
                                   context.read<LoginBloc>().add(
-                                        LoginEvent.login(
-                                          loginReqBody: loginReqBody,
-                                        ),
+                                        const LoginEvent.google(),
                                       );
-                                }
-                              },
-                              child: Container(
-                                width: width / 2,
-                                height: height / 14,
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Center(
-                                  child: state.maybeWhen(
-                                    loading: () {
-                                      return const CustomCircularProgress();
-                                    },
-                                    orElse: () {
-                                      return Text(
-                                        t.login,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: "Arial",
-                                            fontSize: 25.sp),
-                                      );
-                                    },
-                                  ),
+                                },
+                              );
+                            },
+                            child: Container(
+                              height: 40.h,
+                              width: 40.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Image.asset(
+                                  'assets/images/google_logo.png',
                                 ),
                               ),
                             ),
-                            Gap(
-                              40.h,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                const Expanded(
-                                  child: Divider(
-                                    thickness: 2,
-                                    color: Colors.black,
-                                  ),
+                          ),
+                          CustomText(
+                            text: t.google,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          Gap(
+                            20.h,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpView(),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                  ),
-                                  child: CustomText(
-                                    text: t.or,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const Expanded(
-                                  child: Divider(
-                                    thickness: 2,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Gap(
-                              20.h,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                state.maybeWhen(
-                                  loading: () {},
-                                  orElse: () {
-                                    context.read<LoginBloc>().add(
-                                          const LoginEvent.google(),
-                                        );
-                                  },
-                                );
-                              },
-                              child: Container(
-                                height: 40.h,
-                                width: 40.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Image.asset(
-                                    'assets/images/google_logo.png',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            CustomText(
-                              text: t.google,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            Gap(
-                              20.h,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignUpView(),
-                                  ),
-                                );
-                              },
-                              child: Text.rich(
-                                TextSpan(
-                                  text: t.dont_have_account,
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: t.open_account,
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        color: Colors.blue,
-                                        decorationThickness: 2.0,
-                                      ),
+                              );
+                            },
+                            child: Text.rich(
+                              TextSpan(
+                                text: t.dont_have_account,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: t.open_account,
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      color: Colors.blue,
+                                      decorationThickness: 2.0,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

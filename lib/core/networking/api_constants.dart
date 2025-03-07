@@ -1,10 +1,11 @@
 class ApiConstants {
-  static const String apiBaseUrl = "https://api.aquan.website/app/";
+  static const String apiBaseUrl = "https://api.aquan.website/api/";
   static const String apiAuthBaseUrl = "https://api.aquan.website/auth/";
   static const String check = "check";
   static const String sendOtp = "send-password-otp";
   static const String verifyOtp = "verify-password-otp";
   static const String resetPassword = "reset-password";
+  static const String authToken = "auth-token";
   static const String sendEmailOtp = "send-email-otp";
   static const String verifyEmailOtp = "verify-email-otp";
   static const String login = "login";

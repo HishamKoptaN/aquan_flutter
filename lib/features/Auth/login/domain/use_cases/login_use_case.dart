@@ -1,18 +1,30 @@
 import 'package:aquan/core/networking/api_result.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../../../../core/errors/firebase_failures.dart';
 import '../../../../../core/models/auth.dart';
-import '../../data/models/login_req_body.dart';
+import '../../data/models/auth_id_token_req_body_model.dart';
+import '../../data/models/firabase_login_req_body_model.dart';
 import '../../data/repo_imp/login_repo_impl.dart';
+import 'package:dartz/dartz.dart';
 
-class LoginUseCase {
+class LoginUseCases {
   final LoginRepoImpl loginRepo;
-  LoginUseCase(
+  LoginUseCases(
     this.loginRepo,
   );
-  Future<ApiResult<Auth>> login({
-    required LoginReqBody loginReqBody,
+  Future<Either<FirebaseFailure, UserCredential>> firebaseLogin({
+    required FirabaseLoginReqBodyModel firabaseLoginReqBodyModel,
   }) async {
-    return await loginRepo.login(
-      loginReqBody: loginReqBody,
+    return await loginRepo.firebaseLogin(
+      firabaseLoginReqBodyModel: firabaseLoginReqBodyModel,
+    );
+  }
+
+  Future<ApiResult<Auth?>> authToken({
+    required AuthIdTokenReqBodyModel authIdTokenReqBodyModel,
+  }) async {
+    return await loginRepo.authToken(
+      authIdTokenReqBodyModel: authIdTokenReqBodyModel,
     );
   }
 }

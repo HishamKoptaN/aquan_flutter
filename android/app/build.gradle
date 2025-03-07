@@ -1,22 +1,40 @@
 plugins {
     id "com.android.application"
-    id 'com.google.gms.google-services' // إضافات خدمات Google
-    id "kotlin-android" // إضافة Plugin لـ Kotlin
+    id 'com.google.gms.google-services'
+    id "kotlin-android" 
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader("UTF-8") { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+if (flutterVersionCode == null) {
+    flutterVersionCode = "1"
+}
+
+def flutterVersionName = localProperties.getProperty("flutter.versionName")
+if (flutterVersionName == null) {
+    flutterVersionName = "1.0"
+}
 android {
     namespace = "com.aquan.app.dev"
-    compileSdk = 34 // تحديد إصدار SDK الذي يجب استخدامه
+    compileSdk = 34 
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8 // التأكد من توافق Kotlin مع Java 1.8
+        jvmTarget = "1.8"
     }
 
     defaultConfig {
@@ -36,7 +54,9 @@ android {
         }
     }
 }
-
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+}
 flutter {
     source = "../.."
 }

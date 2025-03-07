@@ -40,8 +40,7 @@ class BlocModule extends DIModule {
       )
       ..registerLazySingleton<LoginBloc>(
         () => LoginBloc(
-          loginUseCase: getIt(),
-          loginWithGoogleUseCase: getIt(),
+          loginUseCases: getIt(),
         ),
       )
       ..registerLazySingleton<SignUpBloc>(

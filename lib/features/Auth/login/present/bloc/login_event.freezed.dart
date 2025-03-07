@@ -18,39 +18,50 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LoginReqBody loginReqBody) login,
+    required TResult Function(
+            FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)
+        fireLogin,
     required TResult Function() google,
+    required TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)
+        resetPass,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LoginReqBody loginReqBody)? login,
+    TResult? Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
     TResult? Function()? google,
+    TResult? Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LoginReqBody loginReqBody)? login,
+    TResult Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
     TResult Function()? google,
+    TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
+    required TResult Function(_FireLogin value) fireLogin,
     required TResult Function(_LoginWithGoogle value) google,
+    required TResult Function(_ResetPass value) resetPass,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
+    TResult? Function(_FireLogin value)? fireLogin,
     TResult? Function(_LoginWithGoogle value)? google,
+    TResult? Function(_ResetPass value)? resetPass,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
+    TResult Function(_FireLogin value)? fireLogin,
     TResult Function(_LoginWithGoogle value)? google,
+    TResult Function(_ResetPass value)? resetPass,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,22 +89,22 @@ class _$LoginEventCopyWithImpl<$Res, $Val extends LoginEvent>
 }
 
 /// @nodoc
-abstract class _$$LoginImplCopyWith<$Res> {
-  factory _$$LoginImplCopyWith(
-          _$LoginImpl value, $Res Function(_$LoginImpl) then) =
-      __$$LoginImplCopyWithImpl<$Res>;
+abstract class _$$FireLoginImplCopyWith<$Res> {
+  factory _$$FireLoginImplCopyWith(
+          _$FireLoginImpl value, $Res Function(_$FireLoginImpl) then) =
+      __$$FireLoginImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({LoginReqBody loginReqBody});
+  $Res call({FirabaseLoginReqBodyModel firabaseLoginReqBodyModel});
 
-  $LoginReqBodyCopyWith<$Res> get loginReqBody;
+  $FirabaseLoginReqBodyModelCopyWith<$Res> get firabaseLoginReqBodyModel;
 }
 
 /// @nodoc
-class __$$LoginImplCopyWithImpl<$Res>
-    extends _$LoginEventCopyWithImpl<$Res, _$LoginImpl>
-    implements _$$LoginImplCopyWith<$Res> {
-  __$$LoginImplCopyWithImpl(
-      _$LoginImpl _value, $Res Function(_$LoginImpl) _then)
+class __$$FireLoginImplCopyWithImpl<$Res>
+    extends _$LoginEventCopyWithImpl<$Res, _$FireLoginImpl>
+    implements _$$FireLoginImplCopyWith<$Res> {
+  __$$FireLoginImplCopyWithImpl(
+      _$FireLoginImpl _value, $Res Function(_$FireLoginImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of LoginEvent
@@ -101,13 +112,13 @@ class __$$LoginImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loginReqBody = null,
+    Object? firabaseLoginReqBodyModel = null,
   }) {
-    return _then(_$LoginImpl(
-      loginReqBody: null == loginReqBody
-          ? _value.loginReqBody
-          : loginReqBody // ignore: cast_nullable_to_non_nullable
-              as LoginReqBody,
+    return _then(_$FireLoginImpl(
+      firabaseLoginReqBodyModel: null == firabaseLoginReqBodyModel
+          ? _value.firabaseLoginReqBodyModel
+          : firabaseLoginReqBodyModel // ignore: cast_nullable_to_non_nullable
+              as FirabaseLoginReqBodyModel,
     ));
   }
 
@@ -115,73 +126,83 @@ class __$$LoginImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $LoginReqBodyCopyWith<$Res> get loginReqBody {
-    return $LoginReqBodyCopyWith<$Res>(_value.loginReqBody, (value) {
-      return _then(_value.copyWith(loginReqBody: value));
+  $FirabaseLoginReqBodyModelCopyWith<$Res> get firabaseLoginReqBodyModel {
+    return $FirabaseLoginReqBodyModelCopyWith<$Res>(
+        _value.firabaseLoginReqBodyModel, (value) {
+      return _then(_value.copyWith(firabaseLoginReqBodyModel: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$LoginImpl implements _Login {
-  const _$LoginImpl({required this.loginReqBody});
+class _$FireLoginImpl implements _FireLogin {
+  const _$FireLoginImpl({required this.firabaseLoginReqBodyModel});
 
   @override
-  final LoginReqBody loginReqBody;
+  final FirabaseLoginReqBodyModel firabaseLoginReqBodyModel;
 
   @override
   String toString() {
-    return 'LoginEvent.login(loginReqBody: $loginReqBody)';
+    return 'LoginEvent.fireLogin(firabaseLoginReqBodyModel: $firabaseLoginReqBodyModel)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoginImpl &&
-            (identical(other.loginReqBody, loginReqBody) ||
-                other.loginReqBody == loginReqBody));
+            other is _$FireLoginImpl &&
+            (identical(other.firabaseLoginReqBodyModel,
+                    firabaseLoginReqBodyModel) ||
+                other.firabaseLoginReqBodyModel == firabaseLoginReqBodyModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loginReqBody);
+  int get hashCode => Object.hash(runtimeType, firabaseLoginReqBodyModel);
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoginImplCopyWith<_$LoginImpl> get copyWith =>
-      __$$LoginImplCopyWithImpl<_$LoginImpl>(this, _$identity);
+  _$$FireLoginImplCopyWith<_$FireLoginImpl> get copyWith =>
+      __$$FireLoginImplCopyWithImpl<_$FireLoginImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LoginReqBody loginReqBody) login,
+    required TResult Function(
+            FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)
+        fireLogin,
     required TResult Function() google,
+    required TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)
+        resetPass,
   }) {
-    return login(loginReqBody);
+    return fireLogin(firabaseLoginReqBodyModel);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LoginReqBody loginReqBody)? login,
+    TResult? Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
     TResult? Function()? google,
+    TResult? Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
   }) {
-    return login?.call(loginReqBody);
+    return fireLogin?.call(firabaseLoginReqBodyModel);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LoginReqBody loginReqBody)? login,
+    TResult Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
     TResult Function()? google,
+    TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
     required TResult orElse(),
   }) {
-    if (login != null) {
-      return login(loginReqBody);
+    if (fireLogin != null) {
+      return fireLogin(firabaseLoginReqBodyModel);
     }
     return orElse();
   }
@@ -189,45 +210,49 @@ class _$LoginImpl implements _Login {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
+    required TResult Function(_FireLogin value) fireLogin,
     required TResult Function(_LoginWithGoogle value) google,
+    required TResult Function(_ResetPass value) resetPass,
   }) {
-    return login(this);
+    return fireLogin(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
+    TResult? Function(_FireLogin value)? fireLogin,
     TResult? Function(_LoginWithGoogle value)? google,
+    TResult? Function(_ResetPass value)? resetPass,
   }) {
-    return login?.call(this);
+    return fireLogin?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
+    TResult Function(_FireLogin value)? fireLogin,
     TResult Function(_LoginWithGoogle value)? google,
+    TResult Function(_ResetPass value)? resetPass,
     required TResult orElse(),
   }) {
-    if (login != null) {
-      return login(this);
+    if (fireLogin != null) {
+      return fireLogin(this);
     }
     return orElse();
   }
 }
 
-abstract class _Login implements LoginEvent {
-  const factory _Login({required final LoginReqBody loginReqBody}) =
-      _$LoginImpl;
+abstract class _FireLogin implements LoginEvent {
+  const factory _FireLogin(
+      {required final FirabaseLoginReqBodyModel
+          firabaseLoginReqBodyModel}) = _$FireLoginImpl;
 
-  LoginReqBody get loginReqBody;
+  FirabaseLoginReqBodyModel get firabaseLoginReqBodyModel;
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LoginImplCopyWith<_$LoginImpl> get copyWith =>
+  _$$FireLoginImplCopyWith<_$FireLoginImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -272,8 +297,12 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(LoginReqBody loginReqBody) login,
+    required TResult Function(
+            FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)
+        fireLogin,
     required TResult Function() google,
+    required TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)
+        resetPass,
   }) {
     return google();
   }
@@ -281,8 +310,10 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(LoginReqBody loginReqBody)? login,
+    TResult? Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
     TResult? Function()? google,
+    TResult? Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
   }) {
     return google?.call();
   }
@@ -290,8 +321,10 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(LoginReqBody loginReqBody)? login,
+    TResult Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
     TResult Function()? google,
+    TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
     required TResult orElse(),
   }) {
     if (google != null) {
@@ -303,8 +336,9 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
+    required TResult Function(_FireLogin value) fireLogin,
     required TResult Function(_LoginWithGoogle value) google,
+    required TResult Function(_ResetPass value) resetPass,
   }) {
     return google(this);
   }
@@ -312,8 +346,9 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
+    TResult? Function(_FireLogin value)? fireLogin,
     TResult? Function(_LoginWithGoogle value)? google,
+    TResult? Function(_ResetPass value)? resetPass,
   }) {
     return google?.call(this);
   }
@@ -321,8 +356,9 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
+    TResult Function(_FireLogin value)? fireLogin,
     TResult Function(_LoginWithGoogle value)? google,
+    TResult Function(_ResetPass value)? resetPass,
     required TResult orElse(),
   }) {
     if (google != null) {
@@ -334,4 +370,171 @@ class _$LoginWithGoogleImpl implements _LoginWithGoogle {
 
 abstract class _LoginWithGoogle implements LoginEvent {
   const factory _LoginWithGoogle() = _$LoginWithGoogleImpl;
+}
+
+/// @nodoc
+abstract class _$$ResetPassImplCopyWith<$Res> {
+  factory _$$ResetPassImplCopyWith(
+          _$ResetPassImpl value, $Res Function(_$ResetPassImpl) then) =
+      __$$ResetPassImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ResetPassReqBodyModel resetPassReqBodyModel});
+
+  $ResetPassReqBodyModelCopyWith<$Res> get resetPassReqBodyModel;
+}
+
+/// @nodoc
+class __$$ResetPassImplCopyWithImpl<$Res>
+    extends _$LoginEventCopyWithImpl<$Res, _$ResetPassImpl>
+    implements _$$ResetPassImplCopyWith<$Res> {
+  __$$ResetPassImplCopyWithImpl(
+      _$ResetPassImpl _value, $Res Function(_$ResetPassImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? resetPassReqBodyModel = null,
+  }) {
+    return _then(_$ResetPassImpl(
+      resetPassReqBodyModel: null == resetPassReqBodyModel
+          ? _value.resetPassReqBodyModel
+          : resetPassReqBodyModel // ignore: cast_nullable_to_non_nullable
+              as ResetPassReqBodyModel,
+    ));
+  }
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ResetPassReqBodyModelCopyWith<$Res> get resetPassReqBodyModel {
+    return $ResetPassReqBodyModelCopyWith<$Res>(_value.resetPassReqBodyModel,
+        (value) {
+      return _then(_value.copyWith(resetPassReqBodyModel: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$ResetPassImpl implements _ResetPass {
+  const _$ResetPassImpl({required this.resetPassReqBodyModel});
+
+  @override
+  final ResetPassReqBodyModel resetPassReqBodyModel;
+
+  @override
+  String toString() {
+    return 'LoginEvent.resetPass(resetPassReqBodyModel: $resetPassReqBodyModel)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ResetPassImpl &&
+            (identical(other.resetPassReqBodyModel, resetPassReqBodyModel) ||
+                other.resetPassReqBodyModel == resetPassReqBodyModel));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, resetPassReqBodyModel);
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ResetPassImplCopyWith<_$ResetPassImpl> get copyWith =>
+      __$$ResetPassImplCopyWithImpl<_$ResetPassImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)
+        fireLogin,
+    required TResult Function() google,
+    required TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)
+        resetPass,
+  }) {
+    return resetPass(resetPassReqBodyModel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
+    TResult? Function()? google,
+    TResult? Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
+  }) {
+    return resetPass?.call(resetPassReqBodyModel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(FirabaseLoginReqBodyModel firabaseLoginReqBodyModel)?
+        fireLogin,
+    TResult Function()? google,
+    TResult Function(ResetPassReqBodyModel resetPassReqBodyModel)? resetPass,
+    required TResult orElse(),
+  }) {
+    if (resetPass != null) {
+      return resetPass(resetPassReqBodyModel);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FireLogin value) fireLogin,
+    required TResult Function(_LoginWithGoogle value) google,
+    required TResult Function(_ResetPass value) resetPass,
+  }) {
+    return resetPass(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FireLogin value)? fireLogin,
+    TResult? Function(_LoginWithGoogle value)? google,
+    TResult? Function(_ResetPass value)? resetPass,
+  }) {
+    return resetPass?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FireLogin value)? fireLogin,
+    TResult Function(_LoginWithGoogle value)? google,
+    TResult Function(_ResetPass value)? resetPass,
+    required TResult orElse(),
+  }) {
+    if (resetPass != null) {
+      return resetPass(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ResetPass implements LoginEvent {
+  const factory _ResetPass(
+          {required final ResetPassReqBodyModel resetPassReqBodyModel}) =
+      _$ResetPassImpl;
+
+  ResetPassReqBodyModel get resetPassReqBodyModel;
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ResetPassImplCopyWith<_$ResetPassImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -1,5 +1,3 @@
-import '../../../features/auth/login/domain/use_cases/login_use_case.dart';
-import '../../../features/auth/login/domain/use_cases/login_with_google_use_case.dart';
 import '../../../features/auth/reset_password/domain/use_cases/reset_password_use_case.dart';
 import '../../../features/auth/reset_password/domain/use_cases/send_otp_use_case.dart';
 import '../../../features/auth/reset_password/domain/use_cases/verify_otp_use_case.dart';
@@ -69,16 +67,6 @@ class UseCaseModule extends DIModule {
       )
       ..registerLazySingleton(
         () => EditPassUseCase(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton(
-        () => LoginUseCase(
-          getIt(),
-        ),
-      )
-      ..registerLazySingleton(
-        () => LoginWithGoogleUseCase(
           getIt(),
         ),
       )

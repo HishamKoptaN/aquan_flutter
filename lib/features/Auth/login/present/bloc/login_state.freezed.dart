@@ -23,6 +23,7 @@ mixin _$LoginState {
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
     required TResult Function() notVerify,
+    required TResult Function() linkSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$LoginState {
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
     TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +43,7 @@ mixin _$LoginState {
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     TResult Function()? notVerify,
+    TResult Function()? linkSent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +54,7 @@ mixin _$LoginState {
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
     required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +64,7 @@ mixin _$LoginState {
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +74,7 @@ mixin _$LoginState {
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,6 +147,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
     required TResult Function() notVerify,
+    required TResult Function() linkSent,
   }) {
     return initial();
   }
@@ -153,6 +160,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
     TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
   }) {
     return initial?.call();
   }
@@ -165,6 +173,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     TResult Function()? notVerify,
+    TResult Function()? linkSent,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -181,6 +190,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
     required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
   }) {
     return initial(this);
   }
@@ -193,6 +203,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
   }) {
     return initial?.call(this);
   }
@@ -205,6 +216,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -264,6 +276,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
     required TResult Function() notVerify,
+    required TResult Function() linkSent,
   }) {
     return loading();
   }
@@ -276,6 +289,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
     TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
   }) {
     return loading?.call();
   }
@@ -288,6 +302,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     TResult Function()? notVerify,
+    TResult Function()? linkSent,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -304,6 +319,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
     required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
   }) {
     return loading(this);
   }
@@ -316,6 +332,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
   }) {
     return loading?.call(this);
   }
@@ -328,6 +345,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -387,6 +405,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
     required TResult Function() notVerify,
+    required TResult Function() linkSent,
   }) {
     return success();
   }
@@ -399,6 +418,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
     TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
   }) {
     return success?.call();
   }
@@ -411,6 +431,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     TResult Function()? notVerify,
+    TResult Function()? linkSent,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -427,6 +448,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
     required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
   }) {
     return success(this);
   }
@@ -439,6 +461,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
   }) {
     return success?.call(this);
   }
@@ -451,6 +474,7 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -538,6 +562,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
     required TResult Function() notVerify,
+    required TResult Function() linkSent,
   }) {
     return failure(apiErrorModel);
   }
@@ -550,6 +575,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
     TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
   }) {
     return failure?.call(apiErrorModel);
   }
@@ -562,6 +588,7 @@ class _$FailureImpl implements _Failure {
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     TResult Function()? notVerify,
+    TResult Function()? linkSent,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -578,6 +605,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
     required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
   }) {
     return failure(this);
   }
@@ -590,6 +618,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
   }) {
     return failure?.call(this);
   }
@@ -602,6 +631,7 @@ class _$FailureImpl implements _Failure {
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
     if (failure != null) {
@@ -670,6 +700,7 @@ class _$NotVerifyImpl implements _NotVerify {
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
     required TResult Function() notVerify,
+    required TResult Function() linkSent,
   }) {
     return notVerify();
   }
@@ -682,6 +713,7 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
     TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
   }) {
     return notVerify?.call();
   }
@@ -694,6 +726,7 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
     TResult Function()? notVerify,
+    TResult Function()? linkSent,
     required TResult orElse(),
   }) {
     if (notVerify != null) {
@@ -710,6 +743,7 @@ class _$NotVerifyImpl implements _NotVerify {
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
     required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
   }) {
     return notVerify(this);
   }
@@ -722,6 +756,7 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
     TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
   }) {
     return notVerify?.call(this);
   }
@@ -734,6 +769,7 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
     TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
     if (notVerify != null) {
@@ -745,4 +781,133 @@ class _$NotVerifyImpl implements _NotVerify {
 
 abstract class _NotVerify implements LoginState {
   const factory _NotVerify() = _$NotVerifyImpl;
+}
+
+/// @nodoc
+abstract class _$$LinkSentImplCopyWith<$Res> {
+  factory _$$LinkSentImplCopyWith(
+          _$LinkSentImpl value, $Res Function(_$LinkSentImpl) then) =
+      __$$LinkSentImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LinkSentImplCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$LinkSentImpl>
+    implements _$$LinkSentImplCopyWith<$Res> {
+  __$$LinkSentImplCopyWithImpl(
+      _$LinkSentImpl _value, $Res Function(_$LinkSentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LinkSentImpl implements _LinkSent {
+  const _$LinkSentImpl();
+
+  @override
+  String toString() {
+    return 'LoginState.linkSent()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LinkSentImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function() notVerify,
+    required TResult Function() linkSent,
+  }) {
+    return linkSent();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function()? notVerify,
+    TResult? Function()? linkSent,
+  }) {
+    return linkSent?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function()? notVerify,
+    TResult Function()? linkSent,
+    required TResult orElse(),
+  }) {
+    if (linkSent != null) {
+      return linkSent();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
+    required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_LinkSent value) linkSent,
+  }) {
+    return linkSent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Failure value)? failure,
+    TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_LinkSent value)? linkSent,
+  }) {
+    return linkSent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
+    TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_LinkSent value)? linkSent,
+    required TResult orElse(),
+  }) {
+    if (linkSent != null) {
+      return linkSent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LinkSent implements LoginState {
+  const factory _LinkSent() = _$LinkSentImpl;
 }

@@ -14,7 +14,7 @@ class _TasksApi implements TasksApi {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.aquan.website/app/';
+    baseUrl ??= 'https://api.aquan.website/api/';
   }
 
   final Dio _dio;

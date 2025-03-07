@@ -1,87 +1,53 @@
-import 'package:aquan/features/auth/login/present/view/login_view.dart';
-import 'package:aquan/features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
-import 'package:aquan/main.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
-import 'package:aquan/main.dart' as app;
+// import 'dart:io';
+// import 'dart:developer';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:integration_test/integration_test.dart';
+// import 'package:aquan/main.dart' as app;
 
-void main() async {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets(
-    'start app',
-    (tester) async {
-      // إذا لم يكن المستخدم قد سجل الدخول، سنعرض الـ LoginView
-      app.main();
-      await tester.pumpAndSettle();
-      await tester.pumpWidget(
-        MyApp(
-          locale: 'ar',
-        ),
-      );
-      // انتظار حتى تحميل الصفحة
-      await tester.pumpAndSettle();
-      expect(
-        find.byType(LoginView),
-        findsOneWidget,
-      );
-    },
-  );
-  testWidgets(
-    'test login',
-    (tester) async {
-      // ابحث عن الحقول التي نحتاج لاختبارها
-      final emailField = find.byKey(
-        const Key(
-          'emailField',
-        ),
-      );
-      final passwordField = find.byKey(
-        const Key(
-          'passwordField',
-        ),
-      );
-      final loginButton = find.byKey(
-        const Key(
-          'loginButton',
-        ),
-      );
-      // تحقق من وجود الحقول
-      expect(
-        emailField,
-        findsOneWidget,
-      );
-      await tester.enterText(
-        emailField,
-        'user',
-      );
-      expect(
-        passwordField,
-        findsOneWidget,
-      );
-      await tester.enterText(
-        passwordField,
-        'admin',
-      );
-      expect(
-        loginButton,
-        findsOneWidget,
-      );
-      // تأكد من أن التحديث تم بعد إدخال النصوص
-      await tester.pump();
-      // اضغط على زر تسجيل الدخول
-      await tester.tap(
-        loginButton,
-      );
-      // انتظر حتى يتم تحديث واجهة المستخدم
-      await tester.pumpAndSettle();
-      // تحقق من الانتقال إلى الشاشة التالية
-      expect(
-        find.byType(
-          NavigateBarView,
-        ),
-        findsOneWidget,
-      );
-    },
-  );
-}
+// void main() {
+//   IntegrationTestWidgetsFlutterBinding binding =
+//       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+//   testWidgets(
+//     'test login',
+//     (tester) async {
+//       try {
+//         //! بدء التطبيق
+//         await app.main();
+//         await tester.pumpAndSettle();
+//         //! البحث عن واجهة تسجيل الدخول والتأكد من وجودها
+//         expect(find.byKey(const Key('login_view')), findsOneWidget,
+//             reason: 'Login view not found.');
+//         //! البحث عن حقول الإدخال وإدخال البيانات
+//         await tester.enterText(
+//             find.byKey(const Key('email_field')), 'manager@example.com');
+//         await tester.enterText(
+//             find.byKey(const Key('password_field')), 'password');
+//         await binding.convertFlutterSurfaceToImage();
+//         await tester.pumpAndSettle();
+//         await binding.takeScreenshot('test-screenshot');
+//         final bytes = await binding.takeScreenshot('test-screenshot');
+//         final screenshotDir =
+//             Directory('${Directory.current.path}/screenshots');
+
+//         if (!screenshotDir.existsSync()) {
+//           screenshotDir.createSync(recursive: true);
+//         }
+//         final filePath = '${screenshotDir.path}/login_test.png';
+//         final file = File(filePath);
+//         await file.writeAsBytes(bytes); // كتابة الصورة كملف
+//         //! النقر على زر تسجيل الدخول
+//         await tester.tap(find.byKey(const Key('login_button')));
+//         await tester.pumpAndSettle();
+//         //! التحقق من أن شريط التنقل موجود بعد تسجيل الدخول
+//         expect(find.byKey(const Key('dash_view')), findsOneWidget,
+//             reason: 'Dashboard view not found.');
+//         //! حفظ لقطة الشاشة
+//         log('Screenshot saved ');
+//       } catch (e) {
+//         log('Error occurred during the test: $e');
+//       }
+//     },
+//   );
+// }

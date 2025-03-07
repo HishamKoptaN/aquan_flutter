@@ -51,6 +51,7 @@ class RepositoryModule extends DIModule {
       ..registerLazySingleton<LoginRepoImpl>(
         () => LoginRepoImpl(
           getIt(),
+          getIt(),
         ),
       )
       ..registerLazySingleton<SignUpRepo>(

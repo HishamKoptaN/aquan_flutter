@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
   });
   final String locale;
   Color color = AppColors.primary;
+
   @override
   Widget build(
     context,
