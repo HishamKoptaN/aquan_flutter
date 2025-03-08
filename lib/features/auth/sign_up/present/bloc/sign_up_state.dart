@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import '../../../../../core/errors/api_error_model.dart';
 import '../../data/models/sign_up_res_model.dart';
 part 'sign_up_state.freezed.dart';
@@ -12,7 +11,7 @@ class SignUpState with _$SignUpState {
   const factory SignUpState.success({
     required SignUpResModel signUpResModel,
   }) = _Success;
-  const factory SignUpState.error({
+  const factory SignUpState.failure({
     required ApiErrorModel apiErrorModel,
-  }) = _Error;
+  }) = _Failure;
 }

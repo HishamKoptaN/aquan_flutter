@@ -5,6 +5,7 @@ part 'sign_up_req_body.g.dart';
 @freezed
 class SignUpReqBody with _$SignUpReqBody {
   const factory SignUpReqBody({
+    @JsonKey(name: "id_token") String? idToken,
     @JsonKey(name: "first_name") String? firstName,
     @JsonKey(name: "last_name") String? lastName,
     @JsonKey(name: "email") String? email,

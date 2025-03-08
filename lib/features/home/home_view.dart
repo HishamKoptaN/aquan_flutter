@@ -88,7 +88,7 @@ class _NavigateBarViewState extends State<NavigateBarView> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           // borderRadius: BorderRadius.all(Radius.circular(50)),
         ),

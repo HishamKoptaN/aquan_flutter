@@ -79,6 +79,13 @@ class MyApp extends StatelessWidget {
                       );
                     },
                     notVerify: (data) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NavigateBarView(),
+                        ),
+                        (route) => false,
+                      ); 
                       // Navigator.pushAndRemoveUntil(
                       //   context,
                       //   MaterialPageRoute(

@@ -20,6 +20,8 @@ SignUpReqBody _$SignUpReqBodyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SignUpReqBody {
+  @JsonKey(name: "id_token")
+  String? get idToken => throw _privateConstructorUsedError;
   @JsonKey(name: "first_name")
   String? get firstName => throw _privateConstructorUsedError;
   @JsonKey(name: "last_name")
@@ -54,7 +56,8 @@ abstract class $SignUpReqBodyCopyWith<$Res> {
       _$SignUpReqBodyCopyWithImpl<$Res, SignUpReqBody>;
   @useResult
   $Res call(
-      {@JsonKey(name: "first_name") String? firstName,
+      {@JsonKey(name: "id_token") String? idToken,
+      @JsonKey(name: "first_name") String? firstName,
       @JsonKey(name: "last_name") String? lastName,
       @JsonKey(name: "email") String? email,
       @JsonKey(name: "password") String? password,
@@ -79,6 +82,7 @@ class _$SignUpReqBodyCopyWithImpl<$Res, $Val extends SignUpReqBody>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? idToken = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
@@ -89,6 +93,10 @@ class _$SignUpReqBodyCopyWithImpl<$Res, $Val extends SignUpReqBody>
     Object? countryCode = freezed,
   }) {
     return _then(_value.copyWith(
+      idToken: freezed == idToken
+          ? _value.idToken
+          : idToken // ignore: cast_nullable_to_non_nullable
+              as String?,
       firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -134,7 +142,8 @@ abstract class _$$SignUpReqBodyImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "first_name") String? firstName,
+      {@JsonKey(name: "id_token") String? idToken,
+      @JsonKey(name: "first_name") String? firstName,
       @JsonKey(name: "last_name") String? lastName,
       @JsonKey(name: "email") String? email,
       @JsonKey(name: "password") String? password,
@@ -157,6 +166,7 @@ class __$$SignUpReqBodyImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? idToken = freezed,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
@@ -167,6 +177,10 @@ class __$$SignUpReqBodyImplCopyWithImpl<$Res>
     Object? countryCode = freezed,
   }) {
     return _then(_$SignUpReqBodyImpl(
+      idToken: freezed == idToken
+          ? _value.idToken
+          : idToken // ignore: cast_nullable_to_non_nullable
+              as String?,
       firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -207,7 +221,8 @@ class __$$SignUpReqBodyImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SignUpReqBodyImpl implements _SignUpReqBody {
   const _$SignUpReqBodyImpl(
-      {@JsonKey(name: "first_name") this.firstName,
+      {@JsonKey(name: "id_token") this.idToken,
+      @JsonKey(name: "first_name") this.firstName,
       @JsonKey(name: "last_name") this.lastName,
       @JsonKey(name: "email") this.email,
       @JsonKey(name: "password") this.password,
@@ -219,6 +234,9 @@ class _$SignUpReqBodyImpl implements _SignUpReqBody {
   factory _$SignUpReqBodyImpl.fromJson(Map<String, dynamic> json) =>
       _$$SignUpReqBodyImplFromJson(json);
 
+  @override
+  @JsonKey(name: "id_token")
+  final String? idToken;
   @override
   @JsonKey(name: "first_name")
   final String? firstName;
@@ -246,7 +264,7 @@ class _$SignUpReqBodyImpl implements _SignUpReqBody {
 
   @override
   String toString() {
-    return 'SignUpReqBody(firstName: $firstName, lastName: $lastName, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, address: $address, phone: $phone, countryCode: $countryCode)';
+    return 'SignUpReqBody(idToken: $idToken, firstName: $firstName, lastName: $lastName, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, address: $address, phone: $phone, countryCode: $countryCode)';
   }
 
   @override
@@ -254,6 +272,7 @@ class _$SignUpReqBodyImpl implements _SignUpReqBody {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SignUpReqBodyImpl &&
+            (identical(other.idToken, idToken) || other.idToken == idToken) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -271,8 +290,8 @@ class _$SignUpReqBodyImpl implements _SignUpReqBody {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, firstName, lastName, email,
-      password, passwordConfirmation, address, phone, countryCode);
+  int get hashCode => Object.hash(runtimeType, idToken, firstName, lastName,
+      email, password, passwordConfirmation, address, phone, countryCode);
 
   /// Create a copy of SignUpReqBody
   /// with the given fields replaced by the non-null parameter values.
@@ -292,7 +311,8 @@ class _$SignUpReqBodyImpl implements _SignUpReqBody {
 
 abstract class _SignUpReqBody implements SignUpReqBody {
   const factory _SignUpReqBody(
-          {@JsonKey(name: "first_name") final String? firstName,
+          {@JsonKey(name: "id_token") final String? idToken,
+          @JsonKey(name: "first_name") final String? firstName,
           @JsonKey(name: "last_name") final String? lastName,
           @JsonKey(name: "email") final String? email,
           @JsonKey(name: "password") final String? password,
@@ -306,6 +326,9 @@ abstract class _SignUpReqBody implements SignUpReqBody {
   factory _SignUpReqBody.fromJson(Map<String, dynamic> json) =
       _$SignUpReqBodyImpl.fromJson;
 
+  @override
+  @JsonKey(name: "id_token")
+  String? get idToken;
   @override
   @JsonKey(name: "first_name")
   String? get firstName;

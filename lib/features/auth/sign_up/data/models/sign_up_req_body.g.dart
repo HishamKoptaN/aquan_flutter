@@ -8,6 +8,7 @@ part of 'sign_up_req_body.dart';
 
 _$SignUpReqBodyImpl _$$SignUpReqBodyImplFromJson(Map<String, dynamic> json) =>
     _$SignUpReqBodyImpl(
+      idToken: json['id_token'] as String?,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       email: json['email'] as String?,
@@ -20,6 +21,7 @@ _$SignUpReqBodyImpl _$$SignUpReqBodyImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$SignUpReqBodyImplToJson(_$SignUpReqBodyImpl instance) =>
     <String, dynamic>{
+      'id_token': instance.idToken,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'email': instance.email,

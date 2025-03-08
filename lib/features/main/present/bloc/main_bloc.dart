@@ -22,19 +22,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       (event, emit) async {
         await event.when(
           check: () async {
-            User? user = FirebaseAuth.instance.currentUser;
-            if (user == null) {
-              log("User is not logged in.");
-              emit(const MainState.logedOut());
-              //  emit(const MainState.logedIn());
-              return;
-            }
-            String? token = await SharedPrefHelper.getSecuredString(
-              key: SharedPrefKeys.userToken,
-            );
-            if (token == null || token.isEmpty) {
-              emit(const MainState.logedOut());
-            } else {
+            if (isUserLoggedIn()) {
+              User? user = FirebaseAuth.instance.currentUser;
+              String? idToken = await user!.getIdToken();
+              log("id token $idToken");
               final result = await mainUseCases.check();
               await result.when(
                 success: (res) async {
@@ -60,6 +51,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
                   );
                 },
               );
+            } else {
+              emit(
+                const MainState.logedOut(),
+              );
             }
           },
           editPass: (editPassReqBodyModel) async {
@@ -84,9 +79,12 @@ class MainBloc extends Bloc<MainEvent, MainState> {
               },
             );
           },
-          checkEmailVerification: () async {},
         );
       },
     );
+  }
+  bool isUserLoggedIn() {
+    final user = FirebaseAuth.instance.currentUser;
+    return user != null;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -5,10 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:aquan/features/profile/present/profile_view.dart';
 import 'package:aquan/features/widgets/settings_tab.dart';
-
 import '../../core/helpers/constants.dart';
 import '../../core/helpers/shared_pref_helper.dart';
 import '../auth/login/present/view/login_view.dart';
@@ -268,15 +267,7 @@ class SettingsView extends StatelessWidget {
                             Expanded(
                               child: TextButton(
                                 onPressed: () async {
-// class GoogleSignInProvider {
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
-//   final GoogleSignIn _googleSignIn = GoogleSignIn();
-//   Future<void> signOut() async {
-//     await _googleSignIn.signOut();
-//     await _auth.signOut();
-//   }
-// }
-
+                                  await FirebaseAuth.instance.signOut();
                                   await SharedPrefHelper.clearAllSecuredData();
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(

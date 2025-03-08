@@ -5,10 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
 import 'package:aquan/core/utils/app_colors.dart';
 import 'package:aquan/core/widgets/custom_circular_progress.dart';
-
 import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/widgets/custom_text_button_widget.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
@@ -63,7 +61,7 @@ class _SignUpViewState extends State<SignUpView> {
                 (route) => false,
               );
             },
-            error: (apiErrorModel) async {
+            failure: (apiErrorModel) async {
               ToastNotifier().showError(
                 context: context,
                 message: apiErrorModel.error ?? t!.error,

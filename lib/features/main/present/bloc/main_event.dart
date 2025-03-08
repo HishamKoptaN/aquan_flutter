@@ -9,5 +9,4 @@ class MainEvent with _$MainEvent {
   const factory MainEvent.editPass({
     required EditPassReqBodyModel editPassReqBodyModel,
   }) = _EditPass;
-  const factory MainEvent.checkEmailVerification() = _CheckEmailVerification;
 }
