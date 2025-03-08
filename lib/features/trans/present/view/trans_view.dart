@@ -23,7 +23,7 @@ class TransactionsView extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (context) => const NavigateBarView(),
+              builder: (context) => const HomeView(),
             ),
             (route) => false);
       },

@@ -27,7 +27,7 @@ class _WithdrawsAndDepositsViewState extends State<WithdrawsAndDepositsView> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const NavigateBarView(),
+            builder: (context) => const HomeView(),
           ),
           (route) => false,
         );

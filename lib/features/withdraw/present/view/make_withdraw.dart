@@ -65,7 +65,7 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const NavigateBarView(),
+                      builder: (context) => const HomeView(),
                     ),
                     (route) => false,
                   );

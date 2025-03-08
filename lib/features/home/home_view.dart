@@ -15,15 +15,15 @@ import '../trans/present/bloc/trans_bloc.dart';
 import '../views/settings_view.dart';
 import 'bottom_navigation_bar_controller.dart';
 
-class NavigateBarView extends StatefulWidget {
-  const NavigateBarView({
+class HomeView extends StatefulWidget {
+  const HomeView({
     super.key,
   });
   @override
-  State<NavigateBarView> createState() => _NavigateBarViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _NavigateBarViewState extends State<NavigateBarView> {
+class _HomeViewState extends State<HomeView> {
   late NavigatorBottomBarCnr cnr;
   final List<Widget> _pages = [
     const DashView(),

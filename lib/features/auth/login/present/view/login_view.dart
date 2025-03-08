@@ -28,6 +28,7 @@ class _LoginViewState extends State<LoginView> {
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(
           loginUseCases: getIt(),
+          auth: getIt(),
         ),
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
@@ -35,7 +36,7 @@ class _LoginViewState extends State<LoginView> {
               success: (data) {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => const NavigateBarView(),
+                    builder: (context) => const HomeView(),
                   ),
                   (route) => false,
                 );
@@ -47,6 +48,17 @@ class _LoginViewState extends State<LoginView> {
                     builder: (context) => const SendEmailOtpView(),
                   ),
                   (route) => false,
+                );
+              },
+              linkSent: (data) {
+                CustomToast.showToast(
+                  key: Key(
+                    'reset_toast',
+                  ),
+                  context: context,
+                  title:
+                      "تم ارسال رابط أعادة تعين كلمة المرور الي البريد الالكتروني",
+                  toastType: ToastType.success,
                 );
               },
               failure: (apiErrorModel) {
@@ -151,18 +163,21 @@ class _LoginViewState extends State<LoginView> {
                             child: TextButton(
                               onPressed: () {
                                 if (firabaseLoginReqBodyModel.email != null) {
+                                  ResetPassReqBodyModel resetPassReqBodyModel =
+                                      const ResetPassReqBodyModel();
+                                  resetPassReqBodyModel =
+                                      resetPassReqBodyModel.copyWith(
+                                    email: firabaseLoginReqBodyModel.email,
+                                  );
                                   context.read<LoginBloc>().add(
                                         LoginEvent.resetPass(
                                           resetPassReqBodyModel:
-                                              const ResetPassReqBodyModel().copyWith(
-                                            email:
-                                                firabaseLoginReqBodyModel.email,
-                                          ),
+                                              resetPassReqBodyModel,
                                         ),
                                       );
                                 } else {
                                   CustomToast.showToast(
-                                    key: const Key('toast_button'),
+                                    key: Key('toast_button'),
                                     context: context,
                                     title: "أدخل البريد الالكتروني",
                                     toastType: ToastType.failure,

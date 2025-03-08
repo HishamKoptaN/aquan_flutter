@@ -65,7 +65,7 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NavigateBarView(),
+                    builder: (context) => const HomeView(),
                   ),
                   (route) => false,
                 );

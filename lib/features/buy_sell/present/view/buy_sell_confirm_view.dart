@@ -278,7 +278,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
                                                 .pushAndRemoveUntil(
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const NavigateBarView(),
+                                                          const HomeView(),
                                                     ),
                                                     (route) => false);
                                           },

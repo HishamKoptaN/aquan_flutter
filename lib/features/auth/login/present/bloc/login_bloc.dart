@@ -14,8 +14,10 @@ import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCases loginUseCases;
+  final FirebaseAuth auth;
   LoginBloc({
     required this.loginUseCases,
+    required this.auth,
   }) : super(
           const LoginState.initial(),
         ) {
@@ -79,48 +81,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               },
             );
           },
-          // login: (
-          //   loginReqBody,
-          // ) async {
-          //   emit(
-          //     const LoginState.loading(),
-          //   );
-
-          //   final res = await loginUseCase.authToken(
-          //     authIdTokenReqBodyModel: authIdTokenReqBodyModel,
-          //   );
-          //   await res.when(
-          //     success: (
-          //       res,
-          //     ) async {
-          //       AuthIdTokenReqBodyModel authIdTokenReqBodyModel =
-          //           const AuthIdTokenReqBodyModel();
-          //       await SharedPrefHelper.setSecuredString(
-          //         key: SharedPrefKeys.userToken,
-          //         value: res!.token!,
-          //       );
-          //       UserSingleton.instance.user = res.user;
-          //       if (res.verified == false) {
-          //         emit(
-          //           const LoginState.notVerify(),
-          //         );
-          //       } else if (res.verified == true) {
-          //         emit(
-          //           const LoginState.success(),
-          //         );
-          //       }
-          //     },
-          //     failure: (
-          //       apiErrorModel,
-          //     ) async {
-          //       emit(
-          //         LoginState.failure(
-          //           apiErrorModel: apiErrorModel,
-          //         ),
-          //       );
-          //     },
-          //   );
-          // },
           google: () async {
             try {
               emit(
@@ -193,9 +153,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               const LoginState.loading(),
             );
             try {
-              // await loginUseCases.sendPasswordResetEmail(
-              //   email: resetPassReqBodyModel.email ?? '',
-              // );
+              await auth.sendPasswordResetEmail(
+                  email: resetPassReqBodyModel.email!.trim());
               emit(
                 const LoginState.linkSent(),
               );

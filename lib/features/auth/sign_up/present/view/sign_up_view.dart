@@ -1,19 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gap/gap.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:aquan/core/utils/app_colors.dart';
-import 'package:aquan/core/widgets/custom_circular_progress.dart';
-import '../../../../../core/di/dependency_injection.dart';
-import '../../../../../core/widgets/custom_text_button_widget.dart';
-import '../../../../../core/widgets/custom_text_form_field.dart';
-import '../../../../../core/widgets/custom_text_form_password_field.dart';
-import '../../../../../core/widgets/custom_text_widget.dart';
-import '../../../../../core/widgets/toast_notifier.dart';
-import '../../../verify_email/present/view/verify_email_otp_view.dart';
+import '../../../../../all_imports.dart';
 import '../../data/models/sign_up_req_body.dart';
 import '../bloc/sign_up_bloc.dart';
 import '../bloc/sign_up_event.dart';
@@ -56,10 +42,18 @@ class _SignUpViewState extends State<SignUpView> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const VerifyEmailOtp(),
+                  builder: (context) => const HomeView(),
                 ),
                 (route) => false,
               );
+
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const VerifyEmailOtp(),
+              //   ),
+              //   (route) => false,
+              // );
             },
             failure: (apiErrorModel) async {
               ToastNotifier().showError(

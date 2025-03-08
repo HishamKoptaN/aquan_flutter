@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NavigateBarView(),
+                          builder: (context) => const HomeView(),
                         ),
                         (route) => false,
                       );
@@ -82,10 +82,10 @@ class MyApp extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NavigateBarView(),
+                          builder: (context) => const HomeView(),
                         ),
                         (route) => false,
-                      ); 
+                      );
                       // Navigator.pushAndRemoveUntil(
                       //   context,
                       //   MaterialPageRoute(

@@ -268,6 +268,7 @@ class SettingsView extends StatelessWidget {
                               child: TextButton(
                                 onPressed: () async {
                                   await FirebaseAuth.instance.signOut();
+                                  // await logoutFromBackend();
                                   await SharedPrefHelper.clearAllSecuredData();
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(

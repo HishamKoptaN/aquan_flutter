@@ -61,7 +61,7 @@ class _ChangePlanViewState extends State<ChangePlanView> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const NavigateBarView(),
+                        builder: (context) => const HomeView(),
                       ),
                       (route) => false,
                     );

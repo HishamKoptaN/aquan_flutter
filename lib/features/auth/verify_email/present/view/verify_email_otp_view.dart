@@ -101,7 +101,7 @@ class _VerifyEmailOtpState extends State<VerifyEmailOtp> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NavigateBarView(),
+                    builder: (context) => const HomeView(),
                   ),
                   (route) => false,
                 );

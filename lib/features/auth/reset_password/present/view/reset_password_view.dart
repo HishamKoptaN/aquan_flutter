@@ -53,7 +53,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NavigateBarView(),
+                    builder: (context) => const HomeView(),
                   ),
                   (route) => false,
                 );
