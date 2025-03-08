@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import '../../core/widgets/toast_notifier.dart';
-import '../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../home/home_view.dart';
 import 'bloc/biometric_bloc.dart';
 import 'bloc/biometric_event.dart';
 import 'bloc/biometric_state.dart';

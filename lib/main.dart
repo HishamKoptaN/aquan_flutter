@@ -1,14 +1,11 @@
 import 'package:aquan/all_imports.dart';
-import 'package:aquan/core/di/dependency_injection.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/utils/app_colors.dart';
-import 'features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  configureDependencies();
   await Injection.inject();
   await ScreenUtil.ensureScreenSize();
   SharedPrefHelper;
@@ -58,11 +55,12 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         child: BlocProvider(
-          create: (context) =>
-              MainBloc(checkUseCase: getIt(), editPassUseCase: getIt())
-                ..add(
-                  const MainEvent.check(),
-                ),
+          create: (context) => MainBloc(
+            checkUseCase: getIt(),
+            editPassUseCase: getIt(),
+          )..add(
+              const MainEvent.check(),
+            ),
           child: MaterialApp(
             color: Colors.white,
             title: 'AQUAN',

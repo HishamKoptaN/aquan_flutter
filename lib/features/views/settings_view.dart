@@ -22,8 +22,8 @@ import '../tasks/present/bloc/view/tasks_view.dart';
 import '../trans/present/view/trans_view.dart';
 import '../withdraw/present/view/withdraws_view.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class SettingsView extends StatelessWidget {
+  const SettingsView({super.key});
 
   void setFingerprints(value) async {
     await SharedPrefHelper.setData(

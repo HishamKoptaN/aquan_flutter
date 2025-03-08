@@ -1,5 +1,6 @@
 import 'package:aquan/core/networking/api_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../core/errors/firebase_failures.dart';
 import '../../../../../core/models/auth.dart';
 import '../../data/models/auth_id_token_req_body_model.dart';
@@ -7,6 +8,7 @@ import '../../data/models/firabase_login_req_body_model.dart';
 import '../../data/repo_imp/login_repo_impl.dart';
 import 'package:dartz/dartz.dart';
 
+@injectable
 class LoginUseCases {
   final LoginRepoImpl loginRepo;
   LoginUseCases(

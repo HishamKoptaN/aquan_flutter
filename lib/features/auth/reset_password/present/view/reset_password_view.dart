@@ -10,7 +10,7 @@ import '../../../../../core/widgets/custom_text_button_widget.dart';
 import '../../../../../core/widgets/custom_text_form_password_field.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
-import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../../home/home_view.dart';
 import '../../data/models/reset_pass_req_body.dart';
 import '../bloc/reset_pass_bloc.dart';
 import '../bloc/reset_pass_event.dart';

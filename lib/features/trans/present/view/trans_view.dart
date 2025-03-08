@@ -7,7 +7,7 @@ import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/singletons/trans_singleton.dart';
 import '../../../../core/widgets/widget_column_header.dart';
 import '../../../layouts/app_layout.dart';
-import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../home/home_view.dart';
 import '../bloc/trans_event.dart';
 import '../bloc/trans_state.dart';
 

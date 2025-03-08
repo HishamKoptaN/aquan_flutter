@@ -1,9 +1,7 @@
 import 'package:aquan/all_imports.dart';
 import '../../../../../core/widgets/snacke_bar.dart';
-import '../../../../layouts/app_layout.dart';
-import '../../../verify_email/present/view/send_email_otp_view.dart';
 import '../../data/models/firabase_login_req_body_model.dart';
-import '../bloc/login_bloc.dart';
+import '../../data/models/reset_pass_req_body_model.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -153,15 +151,15 @@ class _LoginViewState extends State<LoginView> {
                             child: TextButton(
                               onPressed: () {
                                 if (firabaseLoginReqBodyModel.email != null) {
-                                  // context.read<LoginBloc>().add(
-                                  //       LoginEvent.resetPass(
-                                  //         resetPassReqBodyModel:
-                                  //             const ResetPassReqBodyModel().copyWith(
-                                  //           email:
-                                  //               firabaseLoginReqBodyModel.email,
-                                  //         ),
-                                  //       ),
-                                  //     );
+                                  context.read<LoginBloc>().add(
+                                        LoginEvent.resetPass(
+                                          resetPassReqBodyModel:
+                                              const ResetPassReqBodyModel().copyWith(
+                                            email:
+                                                firabaseLoginReqBodyModel.email,
+                                          ),
+                                        ),
+                                      );
                                 } else {
                                   CustomToast.showToast(
                                     key: const Key('toast_button'),

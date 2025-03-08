@@ -16,7 +16,7 @@ import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/pick_Image_widget.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../layouts/app_layout.dart';
-import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../../home/home_view.dart';
 import '../../../data/model/employee_account_res_model.dart';
 import '../../bloc/deposits_event.dart';
 import '../../bloc/deposits_state.dart';

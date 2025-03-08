@@ -16,7 +16,7 @@ class NavigatorBottomBarCnr {
     const SendToAccountView(),
     const BuySellview(),
     const QrCodeView(),
-    const SettingsScreen(),
+    const SettingsView(),
   ];
   int currentIndex = 0;
   void setCurrentIndex(int index) async {

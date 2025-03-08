@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import '../../../core/utils/side_menu_items.dart';
-import '../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../home/home_view.dart';
 import '../bloc/withdraws_deposits_bloc.dart';
 
 class WithdrawsAndDepositsView extends StatefulWidget {

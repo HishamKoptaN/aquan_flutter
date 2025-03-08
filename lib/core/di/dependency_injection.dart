@@ -1,10 +1,20 @@
 import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
 import 'modules/api_module.dart';
 import 'modules/bloc_module.dart';
 import 'modules/repo_module.dart';
 import 'modules/uses_case_module.dart';
+import 'dependency_injection.config.dart';
 
-GetIt getIt = GetIt.instance;
+final getIt = GetIt.instance;
+@InjectableInit(
+  initializerName: 'init',
+  preferRelativeImports: true,
+  asExtension: false,
+)
+void configureDependencies() => init(
+      getIt,
+    );
 
 abstract class DIModule {
   void provides();

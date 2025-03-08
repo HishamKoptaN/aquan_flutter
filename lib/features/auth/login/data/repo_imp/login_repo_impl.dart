@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../../core/errors/api_error_handler.dart';
 import '../../../../../core/errors/exceptions.dart';
@@ -10,7 +11,9 @@ import '../../domain/repo/login_repo.dart';
 import '../data_sources/login_api.dart';
 import '../models/auth_id_token_req_body_model.dart';
 import '../models/firabase_login_req_body_model.dart';
-
+@Injectable(
+  as: LoginRepo,
+)
 class LoginRepoImpl implements LoginRepo {
   LoginRemDataSrc loginRemDataSrc;
   final LoginApi loginApi;

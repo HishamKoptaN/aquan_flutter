@@ -15,7 +15,7 @@ import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
 import '../../../../core/widgets/toast_notifier.dart';
 import '../../../layouts/app_layout.dart';
-import '../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../home/home_view.dart';
 import '../../data/model/withdraw_req_body_model.dart';
 import '../bloc/withdraws_bloc.dart';
 import '../../data/model/withdraw_rates_res_model.dart';

@@ -5,31 +5,37 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aquan/features/layouts/app_layout.dart';
 import '../../core/di/dependency_injection.dart';
+import '../buy_sell/present/view/buy_sell_view.dart';
 import '../dash/present/bloc/dash_bloc.dart';
+import '../dash/present/view/dash_view.dart';
 import '../plans/present/bloc/plans_bloc.dart';
+import '../qr_code/view/qr_code_view.dart';
+import '../send_to_account/present/view/send_to_account_view.dart';
 import '../trans/present/bloc/trans_bloc.dart';
-import 'bloc/bottom_navigation_bar_bloc.dart';
-import 'bloc/bottom_navigation_bar_event.dart';
-import 'bloc/bottom_navigation_bar_state.dart';
+import '../views/settings_view.dart';
 import 'bottom_navigation_bar_controller.dart';
 
 class NavigateBarView extends StatefulWidget {
   const NavigateBarView({
     super.key,
   });
-
   @override
   State<NavigateBarView> createState() => _NavigateBarViewState();
 }
 
 class _NavigateBarViewState extends State<NavigateBarView> {
   late NavigatorBottomBarCnr cnr;
+  final List<Widget> pages = [
+    const DashView(),
+    const SendToAccountView(),
+    const BuySellview(),
+    const QrCodeView(),
+    const SettingsView(),
+  ];
   int _currentIndex = 0;
-
   @override
   void initState() {
     super.initState();
-    cnr = NavigatorBottomBarCnr();
   }
 
   @override
@@ -38,13 +44,11 @@ class _NavigateBarViewState extends State<NavigateBarView> {
     return MultiBlocProvider(
       key: const Key('navigate_bar_view'),
       providers: [
-        BlocProvider(
-          create: (context) => NavigationBloc(),
-        ),
         BlocProvider<DashBloc>(
-            create: (context) => DashBloc(
-                  getDashUseCase: getIt(),
-                )),
+          create: (context) => DashBloc(
+            getDashUseCase: getIt(),
+          ),
+        ),
         BlocProvider<TransBloc>(
           create: (context) => TransBloc(
             getIt(),
@@ -67,22 +71,14 @@ class _NavigateBarViewState extends State<NavigateBarView> {
   }
 
   Widget _buildContent(context, t) {
-    return BlocConsumer<NavigationBloc, NavigationState>(
-      listener: (context, state) async {},
-      builder: (context, state) {
-        if (state is NavigationPageChanged) {
-          _currentIndex = state.pageIndex;
-        }
-        return Scaffold(
-          body: SizedBox(
-            child: cnr.pages[_currentIndex],
-          ),
-          bottomNavigationBar: _buildBottomNavigationBar(
-            context,
-            t,
-          ),
-        );
-      },
+    return Scaffold(
+      body: SizedBox(
+        child: cnr.pages[_currentIndex],
+      ),
+      bottomNavigationBar: _buildBottomNavigationBar(
+        context,
+        t,
+      ),
     );
   }
 
@@ -106,10 +102,11 @@ class _NavigateBarViewState extends State<NavigateBarView> {
           selectedItemColor: Colors.amber,
           unselectedItemColor: Colors.grey,
           onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-            context.read<NavigationBloc>().add(ChangePageEvent(index));
+            setState(
+              () {
+                _currentIndex = index;
+              },
+            );
           },
           items: [
             BottomNavigationBarItem(

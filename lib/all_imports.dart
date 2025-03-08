@@ -37,7 +37,7 @@ export 'package:aquan/features/main/data/models/edit_pass_req_body_model.dart';
 export 'package:aquan/features/main/present/bloc/main_bloc.dart';
 export 'package:aquan/features/main/present/bloc/main_event.dart';
 export 'package:aquan/features/main/present/bloc/main_state.dart';
-export 'package:aquan/features/navigator_bottom_bar/bottom_navigation_bar_view.dart';
+export 'package:aquan/features/home/home_view.dart';
 export 'package:aquan/features/plans/data/model/plan.dart';
 export 'package:aquan/features/plans/present/view/change_plan/change_plan_view.dart';
 export 'package:aquan/features/plans/present/view/plans_view/widgets/subscription_option.dart';

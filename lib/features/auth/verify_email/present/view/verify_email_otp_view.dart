@@ -12,7 +12,7 @@ import '../../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../../core/widgets/custom_text_button_widget.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
-import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../../home/home_view.dart';
 import '../../data/models/send_otp_verify_email_req_body_model.dart';
 import '../../data/models/verify_email_otp_req_body_model.dart';
 import '../bloc/email_verify_bloc.dart';

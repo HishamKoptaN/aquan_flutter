@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/models/auth.dart';
 import '../../../../../core/networking/api_constants.dart';
@@ -9,6 +10,7 @@ import '../../../../../core/errors/exceptions.dart';
 import '../models/firabase_login_req_body_model.dart';
 part 'login_api.g.dart';
 
+@injectable
 class LoginRemDataSrc {
   final FirebaseAuth firebaseAuth;
 

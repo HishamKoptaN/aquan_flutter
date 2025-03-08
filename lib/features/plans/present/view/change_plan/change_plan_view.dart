@@ -12,7 +12,7 @@ import '../../../../../core/widgets/custom_text_button_widget.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../layouts/app_layout.dart';
-import '../../../../navigator_bottom_bar/bottom_navigation_bar_view.dart';
+import '../../../../home/home_view.dart';
 import '../../../data/model/plan.dart';
 import '../../bloc/plans_bloc.dart';
 import '../../bloc/plans_event.dart';
