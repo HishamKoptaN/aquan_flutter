@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../../core/models/user.dart';
-
 part 'sign_up_res_model.freezed.dart';
 part 'sign_up_res_model.g.dart';
 
@@ -8,7 +7,7 @@ part 'sign_up_res_model.g.dart';
 class SignUpResModel with _$SignUpResModel {
   const factory SignUpResModel({
     @JsonKey(name: "token") String? token,
-    @JsonKey(name: "user") User? user,
+    @JsonKey(name: "user") UserModel? user,
   }) = _SignUpResModel;
 
   factory SignUpResModel.fromJson(Map<String, dynamic> json) =>

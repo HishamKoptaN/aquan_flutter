@@ -23,7 +23,7 @@ mixin _$Auth {
   @JsonKey(name: "token")
   String? get token => throw _privateConstructorUsedError;
   @JsonKey(name: "user")
-  User? get user => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
   @JsonKey(name: "verified")
   bool? get verified => throw _privateConstructorUsedError;
 
@@ -43,10 +43,10 @@ abstract class $AuthCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "token") String? token,
-      @JsonKey(name: "user") User? user,
+      @JsonKey(name: "user") UserModel? user,
       @JsonKey(name: "verified") bool? verified});
 
-  $UserCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -76,7 +76,7 @@ class _$AuthCopyWithImpl<$Res, $Val extends Auth>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserModel?,
       verified: freezed == verified
           ? _value.verified
           : verified // ignore: cast_nullable_to_non_nullable
@@ -88,12 +88,12 @@ class _$AuthCopyWithImpl<$Res, $Val extends Auth>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get user {
+  $UserModelCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
-    return $UserCopyWith<$Res>(_value.user!, (value) {
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -108,11 +108,11 @@ abstract class _$$AuthImplCopyWith<$Res> implements $AuthCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "token") String? token,
-      @JsonKey(name: "user") User? user,
+      @JsonKey(name: "user") UserModel? user,
       @JsonKey(name: "verified") bool? verified});
 
   @override
-  $UserCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -139,7 +139,7 @@ class __$$AuthImplCopyWithImpl<$Res>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserModel?,
       verified: freezed == verified
           ? _value.verified
           : verified // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ class _$AuthImpl implements _Auth {
   final String? token;
   @override
   @JsonKey(name: "user")
-  final User? user;
+  final UserModel? user;
   @override
   @JsonKey(name: "verified")
   final bool? verified;
@@ -208,7 +208,7 @@ class _$AuthImpl implements _Auth {
 abstract class _Auth implements Auth {
   const factory _Auth(
       {@JsonKey(name: "token") final String? token,
-      @JsonKey(name: "user") final User? user,
+      @JsonKey(name: "user") final UserModel? user,
       @JsonKey(name: "verified") final bool? verified}) = _$AuthImpl;
 
   factory _Auth.fromJson(Map<String, dynamic> json) = _$AuthImpl.fromJson;
@@ -218,7 +218,7 @@ abstract class _Auth implements Auth {
   String? get token;
   @override
   @JsonKey(name: "user")
-  User? get user;
+  UserModel? get user;
   @override
   @JsonKey(name: "verified")
   bool? get verified;

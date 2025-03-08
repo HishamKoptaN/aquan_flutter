@@ -4,7 +4,7 @@ import '../../../../core/models/user.dart';
 import '../../../../core/networking/api_result.dart';
 
 abstract class ProfileRepo {
-  Future<ApiResult<User>> editProfile({
+  Future<ApiResult<UserModel>> editProfile({
     required FormData formData,
   });
 }

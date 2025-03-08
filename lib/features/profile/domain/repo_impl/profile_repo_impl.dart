@@ -12,7 +12,7 @@ class ProfileRepoImpl implements ProfileRepo {
     this.profileApi,
   );
   @override
-  Future<ApiResult<User>> editProfile({
+  Future<ApiResult<UserModel>> editProfile({
     required FormData formData,
   }) async {
     try {

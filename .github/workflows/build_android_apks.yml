@@ -1,60 +1,56 @@
-name: test
+name: Build and Distribute APKs
+
 on:
   push:
     branches:
-      - test
-jobs:
-  build:
-    runs-on: ubuntu-latest
+      - dev
 
+jobs:
+  build_and_distribute:
+    if: contains(github.event.head_commit.message, 'build')
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      - name: التحقق من الكود
+        uses: actions/checkout@v4
+
+      - name: إعداد JDK
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Cache Flutter SDK
-        uses: actions/cache@v2
-        with:
-          path: ~/.flutter
-          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.yaml') }}
-      - name: Install Flutter
-        run: |
-          if [ ! -d "$HOME/.flutter/bin" ]; then
-            git clone https://github.com/flutter/flutter.git -b stable $HOME/.flutter
-          fi
-          echo "$HOME/.flutter/bin" >> $GITHUB_PATH
-      - name: Setup Flutter
+
+      - name: إعداد فلاتر
         uses: subosito/flutter-action@v2
-        with: 
-          flutter-version: '3.24.4'
-
-      - name: Cache Pub Packages
-        uses: actions/cache@v2
         with:
-          path: ~/.pub-cache
-          key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.yaml') }}
+          flutter-version: '3.0.0'
+          channel: stable
 
-      - name: Flutter pub get
+      - name: Upgrade Flutter
+        run: flutter upgrade
+
+      - name: تحميل التبعيات
         run: flutter pub get
 
-      - name: Install Shorebird
-        run: dart pub global activate shorebird
+      - name: تنظيف المشروع
+        run: flutter clean
 
-      - name: Add Dart pub-cache to PATH
-        run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+      - name: بناء نسخ الاندرويد
+        run: flutter build apk --split-per-abi
 
-      - name: Build APKs
-        run: |
-          shorebird build apk --split-per-abi
-
-      - name: Upload app-armeabi-v7a-release.apk to Firebase App Distribution
+      - name: 🚀 توزيع armeabi-v7a
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-          groups: app-armeabi-v7a-release.apk                           
+          groups: armeabi-v7a
           file: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
-          releaseNotes: "app-armeabi-v7a-release.apk"
+          releaseNotes: "armeabi-v7a build & distributed"
+
+      - name: 🚀 توزيع arm64-v8a
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: arm64-v8a
+          file: build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+          releaseNotes: "arm64-v8a build & distributed"

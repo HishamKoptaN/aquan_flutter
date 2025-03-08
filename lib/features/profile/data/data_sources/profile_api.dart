@@ -16,7 +16,7 @@ abstract class ProfileApi {
   @POST(
     ApiConstants.profile,
   )
-  Future<User> editProfile({
+  Future<UserModel> editProfile({
     @Body() required FormData formData,
   });
 }

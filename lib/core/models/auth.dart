@@ -8,7 +8,7 @@ part 'auth.g.dart';
 class Auth with _$Auth {
   const factory Auth({
     @JsonKey(name: "token") String? token,
-    @JsonKey(name: "user") User? user,
+    @JsonKey(name: "user") UserModel? user,
     @JsonKey(name: "verified") bool? verified,
   }) = _Auth;
 

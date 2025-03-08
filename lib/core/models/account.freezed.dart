@@ -37,7 +37,7 @@ mixin _$Account {
   @JsonKey(name: "currency")
   Currency? get currency => throw _privateConstructorUsedError;
   @JsonKey(name: "user")
-  User? get user => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
 
   /// Serializes this Account to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,10 +62,10 @@ abstract class $AccountCopyWith<$Res> {
       @JsonKey(name: "created_at") String? createdAt,
       @JsonKey(name: "updated_at") String? updatedAt,
       @JsonKey(name: "currency") Currency? currency,
-      @JsonKey(name: "user") User? user});
+      @JsonKey(name: "user") UserModel? user});
 
   $CurrencyCopyWith<$Res>? get currency;
-  $UserCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -129,7 +129,7 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserModel?,
     ) as $Val);
   }
 
@@ -151,12 +151,12 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get user {
+  $UserModelCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
-    return $UserCopyWith<$Res>(_value.user!, (value) {
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -178,12 +178,12 @@ abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
       @JsonKey(name: "created_at") String? createdAt,
       @JsonKey(name: "updated_at") String? updatedAt,
       @JsonKey(name: "currency") Currency? currency,
-      @JsonKey(name: "user") User? user});
+      @JsonKey(name: "user") UserModel? user});
 
   @override
   $CurrencyCopyWith<$Res>? get currency;
   @override
-  $UserCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -245,7 +245,7 @@ class __$$AccountImplCopyWithImpl<$Res>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserModel?,
     ));
   }
 }
@@ -293,7 +293,7 @@ class _$AccountImpl implements _Account {
   final Currency? currency;
   @override
   @JsonKey(name: "user")
-  final User? user;
+  final UserModel? user;
 
   @override
   String toString() {
@@ -352,7 +352,7 @@ abstract class _Account implements Account {
       @JsonKey(name: "created_at") final String? createdAt,
       @JsonKey(name: "updated_at") final String? updatedAt,
       @JsonKey(name: "currency") final Currency? currency,
-      @JsonKey(name: "user") final User? user}) = _$AccountImpl;
+      @JsonKey(name: "user") final UserModel? user}) = _$AccountImpl;
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$AccountImpl.fromJson;
 
@@ -382,7 +382,7 @@ abstract class _Account implements Account {
   Currency? get currency;
   @override
   @JsonKey(name: "user")
-  User? get user;
+  UserModel? get user;
 
   /// Create a copy of Account
   /// with the given fields replaced by the non-null parameter values.

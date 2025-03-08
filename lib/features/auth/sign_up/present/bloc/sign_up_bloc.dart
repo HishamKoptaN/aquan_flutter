@@ -34,7 +34,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
                   value: signUpResModel?.token ?? '',
                 );
                 UserSingleton.instance.user =
-                    signUpResModel?.user ?? const User();
+                    signUpResModel?.user ?? const UserModel();
                 emit(
                   SignUpState.success(
                     signUpResModel: signUpResModel!,

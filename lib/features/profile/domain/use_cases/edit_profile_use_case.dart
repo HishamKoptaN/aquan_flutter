@@ -9,7 +9,7 @@ class EditProfileUseCase {
   EditProfileUseCase({
     required this.profileRepo,
   });
-  Future<ApiResult<User>> editProfile({
+  Future<ApiResult<UserModel>> editProfile({
     required FormData formData,
   }) async {
     return await profileRepo.editProfile(

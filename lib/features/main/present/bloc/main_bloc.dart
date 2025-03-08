@@ -1,23 +1,20 @@
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
-
 import 'package:aquan/core/helpers/shared_pref_helper.dart';
-
 import '../../../../core/helpers/constants.dart';
 import '../../../../core/singletons/user_singleton.dart';
-import '../../domain/usecases/check_use_case.dart';
-import '../../domain/usecases/edit_pass_use_case.dart';
+import '../../domain/usecases/main_use_cases.dart';
 import 'main_event.dart';
 import 'main_state.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
   final LocalAuthentication auth = LocalAuthentication();
-  final CheckUseCase checkUseCase;
-  final EditPassUseCase editPassUseCase;
+  final MainUseCases mainUseCases;
 
   MainBloc({
-    required this.checkUseCase,
-    required this.editPassUseCase,
+    required this.mainUseCases,
   }) : super(
           const MainState.loading(),
         ) {
@@ -25,13 +22,20 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       (event, emit) async {
         await event.when(
           check: () async {
+            User? user = FirebaseAuth.instance.currentUser;
+            if (user == null) {
+              log("User is not logged in.");
+              emit(const MainState.logedOut());
+              //  emit(const MainState.logedIn());
+              return;
+            }
             String? token = await SharedPrefHelper.getSecuredString(
               key: SharedPrefKeys.userToken,
             );
             if (token == null || token.isEmpty) {
               emit(const MainState.logedOut());
             } else {
-              final result = await checkUseCase.check();
+              final result = await mainUseCases.check();
               await result.when(
                 success: (res) async {
                   UserSingleton.instance.user = res?.user;
@@ -62,7 +66,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             emit(
               const MainState.loading(),
             );
-            final result = await editPassUseCase.editPass(
+            final result = await mainUseCases.editPass(
               editPassReqBodyModel: editPassReqBodyModel,
             );
             await result.when(

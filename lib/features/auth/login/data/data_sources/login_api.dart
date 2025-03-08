@@ -43,7 +43,7 @@ class LoginRemDataSrc {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
-        throw UserCancelledException(); // المستخدم ألغى العملية
+        throw UserCancelledException();
       }
 
       final GoogleSignInAuthentication googleAuth =

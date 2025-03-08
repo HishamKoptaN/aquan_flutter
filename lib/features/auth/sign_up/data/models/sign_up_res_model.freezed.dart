@@ -23,7 +23,7 @@ mixin _$SignUpResModel {
   @JsonKey(name: "token")
   String? get token => throw _privateConstructorUsedError;
   @JsonKey(name: "user")
-  User? get user => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
 
   /// Serializes this SignUpResModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,9 +43,9 @@ abstract class $SignUpResModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "token") String? token,
-      @JsonKey(name: "user") User? user});
+      @JsonKey(name: "user") UserModel? user});
 
-  $UserCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -74,7 +74,7 @@ class _$SignUpResModelCopyWithImpl<$Res, $Val extends SignUpResModel>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserModel?,
     ) as $Val);
   }
 
@@ -82,12 +82,12 @@ class _$SignUpResModelCopyWithImpl<$Res, $Val extends SignUpResModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get user {
+  $UserModelCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
-    return $UserCopyWith<$Res>(_value.user!, (value) {
+    return $UserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -103,10 +103,10 @@ abstract class _$$SignUpResModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: "token") String? token,
-      @JsonKey(name: "user") User? user});
+      @JsonKey(name: "user") UserModel? user});
 
   @override
-  $UserCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -133,7 +133,7 @@ class __$$SignUpResModelImplCopyWithImpl<$Res>
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as UserModel?,
     ));
   }
 }
@@ -152,7 +152,7 @@ class _$SignUpResModelImpl implements _SignUpResModel {
   final String? token;
   @override
   @JsonKey(name: "user")
-  final User? user;
+  final UserModel? user;
 
   @override
   String toString() {
@@ -192,7 +192,7 @@ class _$SignUpResModelImpl implements _SignUpResModel {
 abstract class _SignUpResModel implements SignUpResModel {
   const factory _SignUpResModel(
       {@JsonKey(name: "token") final String? token,
-      @JsonKey(name: "user") final User? user}) = _$SignUpResModelImpl;
+      @JsonKey(name: "user") final UserModel? user}) = _$SignUpResModelImpl;
 
   factory _SignUpResModel.fromJson(Map<String, dynamic> json) =
       _$SignUpResModelImpl.fromJson;
@@ -202,7 +202,7 @@ abstract class _SignUpResModel implements SignUpResModel {
   String? get token;
   @override
   @JsonKey(name: "user")
-  User? get user;
+  UserModel? get user;
 
   /// Create a copy of SignUpResModel
   /// with the given fields replaced by the non-null parameter values.

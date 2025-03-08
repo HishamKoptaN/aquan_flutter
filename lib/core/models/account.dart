@@ -15,7 +15,7 @@ class Account with _$Account {
     @JsonKey(name: "created_at") String? createdAt,
     @JsonKey(name: "updated_at") String? updatedAt,
     @JsonKey(name: "currency") Currency? currency,
-    @JsonKey(name: "user") User? user,
+    @JsonKey(name: "user") UserModel? user,
   }) = _Account;
 
   factory Account.fromJson(Map<String, dynamic> json) =>

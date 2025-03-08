@@ -8,7 +8,7 @@ import '../../../../../core/helpers/shared_pref_helper.dart';
 import '../../../../../core/errors/firebase_failures.dart';
 import '../../../../../core/singletons/user_singleton.dart';
 import '../../data/models/auth_id_token_req_body_model.dart';
-import '../../domain/use_cases/login_use_case.dart';
+import '../../domain/use_cases/login_use_cases.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 

@@ -20,7 +20,7 @@ _$AccountImpl _$$AccountImplFromJson(Map<String, dynamic> json) =>
           : Currency.fromJson(json['currency'] as Map<String, dynamic>),
       user: json['user'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$AccountImplToJson(_$AccountImpl instance) =>

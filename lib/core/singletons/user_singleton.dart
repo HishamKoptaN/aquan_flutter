@@ -4,9 +4,9 @@ class UserSingleton {
   static final UserSingleton _instance = UserSingleton._internal();
   UserSingleton._internal();
   static UserSingleton get instance => _instance;
-  User? _user;
-  User? get user => _user;
-  set user(User? user) {
+  UserModel? _user;
+  UserModel? get user => _user;
+  set user(UserModel? user) {
     _user = user;
   }
 

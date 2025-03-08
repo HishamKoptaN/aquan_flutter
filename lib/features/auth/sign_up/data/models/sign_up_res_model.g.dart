@@ -11,7 +11,7 @@ _$SignUpResModelImpl _$$SignUpResModelImplFromJson(Map<String, dynamic> json) =>
       token: json['token'] as String?,
       user: json['user'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$SignUpResModelImplToJson(

@@ -26,10 +26,6 @@ Future<void> main() async {
     MyApp(
       locale: locale,
     ),
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) => MyApp(), // Wrap your app
-    // ),
   );
 }
 
@@ -56,8 +52,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         child: BlocProvider(
           create: (context) => MainBloc(
-            checkUseCase: getIt(),
-            editPassUseCase: getIt(),
+            mainUseCases: getIt(),
           )..add(
               const MainEvent.check(),
             ),

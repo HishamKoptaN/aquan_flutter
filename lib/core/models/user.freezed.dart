@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+UserModel _$UserModelFromJson(Map<String, dynamic> json) {
+  return _UserModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$User {
+mixin _$UserModel {
   @JsonKey(name: "id")
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "status")
@@ -49,19 +49,20 @@ mixin _$User {
   @JsonKey(name: "balance")
   Balance? get balance => throw _privateConstructorUsedError;
 
-  /// Serializes this User to a JSON map.
+  /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $UserModelCopyWith<UserModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res, User>;
+abstract class $UserModelCopyWith<$Res> {
+  factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
+      _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
       {@JsonKey(name: "id") int? id,
@@ -84,16 +85,16 @@ abstract class $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends User>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
+    implements $UserModelCopyWith<$Res> {
+  _$UserModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -173,7 +174,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     ) as $Val);
   }
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -187,7 +188,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     });
   }
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -203,10 +204,11 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 }
 
 /// @nodoc
-abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$UserImplCopyWith(
-          _$UserImpl value, $Res Function(_$UserImpl) then) =
-      __$$UserImplCopyWithImpl<$Res>;
+abstract class _$$UserModelImplCopyWith<$Res>
+    implements $UserModelCopyWith<$Res> {
+  factory _$$UserModelImplCopyWith(
+          _$UserModelImpl value, $Res Function(_$UserModelImpl) then) =
+      __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -232,13 +234,14 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserImplCopyWithImpl<$Res>
-    extends _$UserCopyWithImpl<$Res, _$UserImpl>
-    implements _$$UserImplCopyWith<$Res> {
-  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
+class __$$UserModelImplCopyWithImpl<$Res>
+    extends _$UserModelCopyWithImpl<$Res, _$UserModelImpl>
+    implements _$$UserModelImplCopyWith<$Res> {
+  __$$UserModelImplCopyWithImpl(
+      _$UserModelImpl _value, $Res Function(_$UserModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -258,7 +261,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? userPlan = freezed,
     Object? balance = freezed,
   }) {
-    return _then(_$UserImpl(
+    return _then(_$UserModelImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -321,8 +324,8 @@ class __$$UserImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserImpl implements _User {
-  const _$UserImpl(
+class _$UserModelImpl implements _UserModel {
+  const _$UserModelImpl(
       {@JsonKey(name: "id") this.id,
       @JsonKey(name: "status") this.status,
       @JsonKey(name: "account_number") this.accountNumber,
@@ -338,8 +341,8 @@ class _$UserImpl implements _User {
       @JsonKey(name: "user_plan") this.userPlan,
       @JsonKey(name: "balance") this.balance});
 
-  factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserImplFromJson(json);
+  factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserModelImplFromJson(json);
 
   @override
   @JsonKey(name: "id")
@@ -386,14 +389,14 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, status: $status, accountNumber: $accountNumber, onlineOffline: $onlineOffline, firstName: $firstName, lastName: $lastName, password: $password, email: $email, image: $image, address: $address, phone: $phone, comment: $comment, userPlan: $userPlan, balance: $balance)';
+    return 'UserModel(id: $id, status: $status, accountNumber: $accountNumber, onlineOffline: $onlineOffline, firstName: $firstName, lastName: $lastName, password: $password, email: $email, image: $image, address: $address, phone: $phone, comment: $comment, userPlan: $userPlan, balance: $balance)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserImpl &&
+            other is _$UserModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.accountNumber, accountNumber) ||
@@ -435,24 +438,24 @@ class _$UserImpl implements _User {
       userPlan,
       balance);
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
-      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
+  _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
+      __$$UserModelImplCopyWithImpl<_$UserModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UserImplToJson(
+    return _$$UserModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _User implements User {
-  const factory _User(
+abstract class _UserModel implements UserModel {
+  const factory _UserModel(
       {@JsonKey(name: "id") final int? id,
       @JsonKey(name: "status") final bool? status,
       @JsonKey(name: "account_number") final String? accountNumber,
@@ -466,9 +469,10 @@ abstract class _User implements User {
       @JsonKey(name: "phone") final String? phone,
       @JsonKey(name: "comment") final String? comment,
       @JsonKey(name: "user_plan") final UserPlan? userPlan,
-      @JsonKey(name: "balance") final Balance? balance}) = _$UserImpl;
+      @JsonKey(name: "balance") final Balance? balance}) = _$UserModelImpl;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
+  factory _UserModel.fromJson(Map<String, dynamic> json) =
+      _$UserModelImpl.fromJson;
 
   @override
   @JsonKey(name: "id")
@@ -513,10 +517,10 @@ abstract class _User implements User {
   @JsonKey(name: "balance")
   Balance? get balance;
 
-  /// Create a copy of User
+  /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+  _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

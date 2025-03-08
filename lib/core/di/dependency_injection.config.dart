@@ -15,7 +15,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../../features/auth/login/data/data_sources/login_api.dart' as _i685;
 import '../../features/auth/login/data/repo_imp/login_repo_impl.dart' as _i328;
 import '../../features/auth/login/domain/repo/login_repo.dart' as _i632;
-import '../../features/auth/login/domain/use_cases/login_use_case.dart' as _i50;
+import '../../features/auth/login/domain/use_cases/login_use_cases.dart'
+    as _i685;
 import 'injection_module.dart' as _i212;
 
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -33,8 +34,8 @@ _i174.GetIt init(
   gh.lazySingleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
   gh.factory<_i685.LoginRemDataSrc>(
       () => _i685.LoginRemDataSrc(firebaseAuth: gh<_i59.FirebaseAuth>()));
-  gh.factory<_i50.LoginUseCases>(
-      () => _i50.LoginUseCases(gh<_i328.LoginRepoImpl>()));
+  gh.factory<_i685.LoginUseCases>(
+      () => _i685.LoginUseCases(gh<_i328.LoginRepoImpl>()));
   gh.factory<_i632.LoginRepo>(() => _i328.LoginRepoImpl(
         gh<_i685.LoginRemDataSrc>(),
         gh<_i685.LoginApi>(),

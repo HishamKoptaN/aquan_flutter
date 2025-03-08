@@ -25,7 +25,7 @@ class NavigateBarView extends StatefulWidget {
 
 class _NavigateBarViewState extends State<NavigateBarView> {
   late NavigatorBottomBarCnr cnr;
-  final List<Widget> pages = [
+  final List<Widget> _pages = [
     const DashView(),
     const SendToAccountView(),
     const BuySellview(),
@@ -72,8 +72,9 @@ class _NavigateBarViewState extends State<NavigateBarView> {
 
   Widget _buildContent(context, t) {
     return Scaffold(
-      body: SizedBox(
-        child: cnr.pages[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
       ),
       bottomNavigationBar: _buildBottomNavigationBar(
         context,
@@ -86,9 +87,10 @@ class _NavigateBarViewState extends State<NavigateBarView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 55.h,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(50)),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          // borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         child: BottomNavigationBar(
           elevation: 0,

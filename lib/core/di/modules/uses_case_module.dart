@@ -9,7 +9,7 @@ import '../../../features/auth/verify_email/domain/use_cases/verify_email_otp_us
 import '../../../features/deposit/domain/use_cases/deposit_use_case.dart';
 import '../../../features/deposit/domain/use_cases/get_deposits_use_case.dart';
 import '../../../features/deposit/domain/use_cases/get_employee_account_use_case.dart';
-import '../../../features/main/domain/usecases/check_use_case.dart';
+import '../../../features/main/domain/usecases/main_use_cases.dart';
 import '../../../features/notifications/domain/use_cases/get_notifications_use_case.dart';
 import '../../../features/plans/domain/use_cases/change_plan_use_case.dart';
 import '../../../features/plans/domain/use_cases/get_plans_rates_use_case.dart';
@@ -18,7 +18,6 @@ import '../../../features/buy_sell/domain/use_cases/get_buy_sell_rates_use_case.
 import '../../../features/buy_sell/domain/use_cases/get_receive_account_number_use_case.dart';
 import '../../../features/buy_sell/domain/use_cases/transfer_money_use_case.dart';
 import '../../../features/dash/domain/use_cases/get_dash_use_case.dart';
-import '../../../features/main/domain/usecases/edit_pass_use_case.dart';
 import '../../../features/profile/domain/use_cases/edit_profile_use_case.dart';
 import '../../../features/send_to_account/domain/use_cases/get_username_by_account_use_case.dart';
 import '../../../features/send_to_account/domain/use_cases/send_to_account_use_case.dart';
@@ -36,7 +35,7 @@ class UseCaseModule extends DIModule {
   Future<void> provides() async {
     getIt
       ..registerLazySingleton(
-        () => CheckUseCase(
+        () => MainUseCases(
           getIt(),
         ),
       )
@@ -63,11 +62,6 @@ class UseCaseModule extends DIModule {
       ..registerLazySingleton(
         () => ResetPassUseCase(
           loginRepo: getIt(),
-        ),
-      )
-      ..registerLazySingleton(
-        () => EditPassUseCase(
-          getIt(),
         ),
       )
       ..registerLazySingleton(

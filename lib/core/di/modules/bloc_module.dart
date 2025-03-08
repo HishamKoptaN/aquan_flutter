@@ -21,8 +21,7 @@ class BlocModule extends DIModule {
     getIt
       ..registerLazySingleton<MainBloc>(
         () => MainBloc(
-          checkUseCase: getIt(),
-          editPassUseCase: getIt(),
+          mainUseCases: getIt(),
         ),
       )
       ..registerLazySingleton<VerifyEmailBloc>(
