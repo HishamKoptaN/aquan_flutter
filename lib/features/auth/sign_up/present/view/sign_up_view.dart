@@ -1,5 +1,7 @@
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../../../all_imports.dart';
+import '../../../../../core/helpers/validate_password.dart';
+import '../../../../../core/validator.dart';
 import '../../data/models/sign_up_req_body.dart';
 import '../bloc/sign_up_bloc.dart';
 import '../bloc/sign_up_event.dart';
@@ -25,6 +27,8 @@ class _SignUpViewState extends State<SignUpView> {
     super.dispose();
   }
 
+  final Validator validator = Validator();
+  bool validated = false;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -109,7 +113,9 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           firstName: v,
                         );
-                        _formKey.currentState!.validate();
+                        if (validated) {
+                          _formKey.currentState!.validate();
+                        }
                       },
                       labelText: t.first_name,
                       suffixIcon: const Icon(
@@ -124,7 +130,9 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           lastName: v,
                         );
-                        _formKey.currentState!.validate();
+                        if (validated) {
+                          _formKey.currentState!.validate();
+                        }
                       },
                       labelText: t.last_name,
                       suffixIcon: const Icon(
@@ -145,7 +153,9 @@ class _SignUpViewState extends State<SignUpView> {
                           signUpReqBody = signUpReqBody.copyWith(
                             countryCode: v.isoCode!,
                           );
-                          _formKey.currentState!.validate();
+                          if (validated) {
+                            _formKey.currentState!.validate();
+                          }
                         },
                         selectorConfig: const SelectorConfig(
                           selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -167,20 +177,10 @@ class _SignUpViewState extends State<SignUpView> {
                           signed: true,
                           decimal: true,
                         ),
-                        validator: (String? value) {
-                          final sanitizedValue =
-                              value?.replaceAll(' ', '') ?? '';
-                          if (sanitizedValue.isEmpty) {
-                            return 'الرجاء إدخال رقم الهاتف';
-                          }
-                          if (!RegExp(r'^\d+$').hasMatch(sanitizedValue)) {
-                            return 'الرقم يجب أن يحتوي على أرقام فقط';
-                          }
-                          if (sanitizedValue.length <= 6) {
-                            return 'الرقم يجب أن يكون أكثر من 6 أرقام';
-                          }
-                          return null;
-                        },
+                        validator: (value) => Validator.validatePhoneNum(
+                          value: value,
+                          t: t,
+                        ),
                         inputDecoration: InputDecoration(
                           border: InputBorder.none,
                           filled: true,
@@ -228,20 +228,14 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           email: v,
                         );
-                        _formKey.currentState!.validate();
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return t.required;
-                        } else if (!RegExp(
-                          r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                        ).hasMatch(
-                          value,
-                        )) {
-                          return t.invalid_email;
+                        if (validated) {
+                          _formKey.currentState!.validate();
                         }
-                        return null;
                       },
+                      validator: (v) => Validator.emailValidator(
+                        value: v ?? '',
+                        t: t,
+                      ),
                       suffixIcon: const Icon(
                         Icons.email,
                       ),
@@ -256,7 +250,9 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           password: v,
                         );
-                        _formKey.currentState!.validate();
+                        if (validated) {
+                          _formKey.currentState!.validate();
+                        }
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -277,30 +273,30 @@ class _SignUpViewState extends State<SignUpView> {
                         signUpReqBody = signUpReqBody.copyWith(
                           passwordConfirmation: v,
                         );
-                        _formKey.currentState!.validate();
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return t.required;
-                        } else if (value != signUpReqBody.password) {
-                          return t.password_mis_match;
+                        if (validated) {
+                          _formKey.currentState!.validate();
                         }
-                        return null;
                       },
+                      validator: (value) =>
+                          PasswordValidator.confirmationPasswordValidator(
+                        value: value ?? '',
+                        t: t,
+                        password: signUpReqBody.password ?? '',
+                      ),
                     ),
                     Gap(
                       15.h,
                     ),
                     CustomTextButtonWidget(
                       onPressed: () async {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        } else {
+                        if (_formKey.currentState!.validate()) {
                           context.read<SignUpBloc>().add(
                                 SignUpEvent.signUp(
                                   signUpReqBody: signUpReqBody,
                                 ),
                               );
+                        } else {
+                          validated = true;
                         }
                       },
                       widget: state.maybeWhen(

@@ -201,8 +201,9 @@ class _DashViewState extends State<DashView> {
                   fontWeight: FontWeight.bold,
                 ),
                 CustomText(
-                  text: UserSingleton.instance.user!.balance!.totalBalance!
-                      .toString(),
+                  text: UserSingleton.instance.user?.balance?.totalBalance
+                          .toString() ??
+                      '',
                   textAlign: TextAlign.center,
                   color: Colors.black,
                   fontSize: 40.sp,

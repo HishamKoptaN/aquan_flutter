@@ -2,6 +2,8 @@
 	"@@locale": "ar",
 	"welcome": "مرحبا بك, ",
 	"aquan": "أكوان",
+	"the_number_must_contain_only_numbers": "الرقم يجب أن يحتوي على أرقام فقط",
+	"number_must_be_more_than_6_digits":"الرقم يجب أن يكون أكثر من 6 أرقام",
 	"pleaseLogin": "تسجيل الدخول",
 	"forgetPassword": "نسيت كلمة المرور؟",
 	"e_mail": "البريد الإلكتروني",

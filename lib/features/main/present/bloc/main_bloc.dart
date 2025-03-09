@@ -12,7 +12,6 @@ import 'main_state.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   final LocalAuthentication auth = LocalAuthentication();
   final MainUseCases mainUseCases;
-
   MainBloc({
     required this.mainUseCases,
   }) : super(

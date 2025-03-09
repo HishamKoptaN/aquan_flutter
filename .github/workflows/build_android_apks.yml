@@ -1,10 +1,8 @@
 name: Build and Distribute APKs
-
 on:
   push:
     branches:
       - dev
-
 jobs:
   build_and_distribute:
     if: contains(github.event.head_commit.message, 'build')

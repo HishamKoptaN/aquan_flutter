@@ -3,6 +3,8 @@
 	"aquan": "AQUAN",
 	"welcome": "Welcome ,",
 	"level":"level",
+	"the_number_must_contain_only_numbers": "The number must contain only numbers",
+	"number_must_be_more_than_6_digits": "Number must be more than 6 digits",
 	"pleaseLogin": "Please Login To Your Account",
 	"forgetPassword": "Forget Password?",
 	"e_mail": "Email",

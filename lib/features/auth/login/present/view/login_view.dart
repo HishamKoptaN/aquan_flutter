@@ -1,4 +1,5 @@
 import 'package:aquan/all_imports.dart';
+import '../../../../../core/validator.dart';
 import '../../../../../core/widgets/snacke_bar.dart';
 import '../../data/models/firabase_login_req_body_model.dart';
 import '../../data/models/reset_pass_req_body_model.dart';
@@ -15,6 +16,8 @@ class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FirabaseLoginReqBodyModel firabaseLoginReqBodyModel =
       const FirabaseLoginReqBodyModel();
+  bool? validated;
+  final Validator validator = Validator();
   @override
   Widget build(
     context,
@@ -115,18 +118,14 @@ class _LoginViewState extends State<LoginView> {
                                   firabaseLoginReqBodyModel.copyWith(
                                 email: v,
                               );
-                              _formKey.currentState!.validate();
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return t.required;
-                              } else if (!RegExp(
-                                r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                              ).hasMatch(value)) {
-                                return t.invalid_email;
+                              if (validated ?? false) {
+                                _formKey.currentState!.validate();
                               }
-                              return null;
                             },
+                            validator: (v) => Validator.emailValidator(
+                              value: v ?? '',
+                              t: t,
+                            ),
                             labelText: t.e_mail,
                             suffixIcon: const Icon(
                               Icons.email,
@@ -144,16 +143,22 @@ class _LoginViewState extends State<LoginView> {
                                   firabaseLoginReqBodyModel.copyWith(
                                 password: v,
                               );
-                              _formKey.currentState!.validate();
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return t.required;
-                              } else if (value.length < 8) {
-                                return t.password_too_short;
+                              if (validated ?? false) {
+                                _formKey.currentState!.validate();
                               }
-                              return null;
                             },
+                            validator: (v) => Validator.customValidator(
+                              value: v ?? '',
+                              t: t,
+                            ),
+                            // validator: (value) {
+                            //   if (value == null || value.isEmpty) {
+                            //     return t.required;
+                            //   } else if (value.length < 8) {
+                            //     return t.password_too_short;
+                            //   }
+                            //   return null;
+                            // },
                           ),
                           Gap(
                             10.h,
@@ -205,6 +210,8 @@ class _LoginViewState extends State<LoginView> {
                                             firabaseLoginReqBodyModel,
                                       ),
                                     );
+                              } else {
+                                validated = true;
                               }
                             },
                             child: Container(
