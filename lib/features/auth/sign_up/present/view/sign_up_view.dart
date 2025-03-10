@@ -303,7 +303,6 @@ class _SignUpViewState extends State<SignUpView> {
                         orElse: () {
                           return CustomText(
                             text: t.signUp,
-                            color: Colors.white,
                             fontFamily: "Arial",
                             fontSize: 20.sp,
                           );

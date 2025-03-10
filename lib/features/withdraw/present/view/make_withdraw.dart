@@ -221,7 +221,6 @@ class _MakeWithdrawViewState extends State<MakeWithdrawView> {
                                 orElse: () {
                                   return CustomText(
                                     text: t.submit,
-                                    color: Colors.white,
                                     fontFamily: "Arial",
                                   );
                                 },

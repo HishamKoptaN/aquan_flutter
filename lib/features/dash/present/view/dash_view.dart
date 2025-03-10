@@ -93,7 +93,9 @@ class _DashViewState extends State<DashView> {
                                             builder: (context) =>
                                                 const ProfileView(),
                                           ),
-                                        ).then((value) => setState(() => {}));
+                                        ).then((value) => setState(
+                                              () => {},
+                                            ));
                                       },
                                       icon: FaIcon(
                                         FontAwesomeIcons.user,

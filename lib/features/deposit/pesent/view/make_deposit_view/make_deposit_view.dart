@@ -223,7 +223,6 @@ class _MakeDepositViewState extends State<MakeDepositView> {
                             orElse: () {
                               return CustomText(
                                 text: t.submit,
-                                color: Colors.white,
                                 fontFamily: "Arial",
                               );
                             },

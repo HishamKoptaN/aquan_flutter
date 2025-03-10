@@ -123,7 +123,7 @@ class RatesWidget extends StatelessWidget {
                                   color: Colors.green,
                                 ),
                                 CustomText(
-                                  text: sellingRateValue.toString(),
+                                  text: buyingRateValue.toString(),
                                   fontSize: 16.sp,
                                   color: Colors.black,
                                   isPrice: true,

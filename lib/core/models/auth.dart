@@ -11,6 +11,5 @@ class Auth with _$Auth {
     @JsonKey(name: "user") UserModel? user,
     @JsonKey(name: "verified") bool? verified,
   }) = _Auth;
-
   factory Auth.fromJson(Map<String, dynamic> json) => _$AuthFromJson(json);
 }
