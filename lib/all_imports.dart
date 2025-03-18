@@ -23,7 +23,6 @@ export 'package:aquan/features/auth/login/present/bloc/login_bloc.dart';
 export 'package:aquan/features/auth/login/present/bloc/login_event.dart';
 export 'package:aquan/features/auth/login/present/bloc/login_state.dart';
 export 'package:aquan/features/auth/login/present/view/login_view.dart';
-export 'package:aquan/features/auth/reset_password/present/view/enter_email_view.dart';
 export 'package:aquan/features/auth/sign_up/present/view/sign_up_view.dart';
 export 'package:aquan/features/auth/verify_email/present/view/send_email_otp_view.dart';
 export 'package:aquan/features/buy_sell/data/model/transfer_money_req_model.dart';

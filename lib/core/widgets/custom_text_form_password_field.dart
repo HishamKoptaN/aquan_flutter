@@ -60,20 +60,18 @@ class _CustomTextFormPasswordFieldState
           fillColor: Colors.grey[200],
           labelText: widget.labelText,
           prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.showTogglePassword
-              ? InkWell(
-                  onTap: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                  child: Icon(
-                    _obscureText
-                        ? FontAwesomeIcons.eye
-                        : FontAwesomeIcons.eyeSlash,
-                  ),
-                )
-              : null,
+          suffixIcon: InkWell(
+            onTap: () {
+              setState(
+                () {
+                  _obscureText = !_obscureText;
+                },
+              );
+            },
+            child: Icon(
+              _obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
+            ),
+          ),
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(

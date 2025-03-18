@@ -15,7 +15,7 @@ Future<void> main() async {
       'ar';
   FlutterError.onError = (
     details,
-  ) {
+  ) { 
     FlutterError.presentError(
       details,
     );
@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
         child: BlocProvider(
           create: (context) => MainBloc(
             mainUseCases: getIt(),
+            firebaseAuth: getIt(),
           )..add(
               const MainEvent.check(),
             ),

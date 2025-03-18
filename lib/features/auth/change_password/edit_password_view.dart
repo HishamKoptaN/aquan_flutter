@@ -1,18 +1,20 @@
 import 'package:aquan/all_imports.dart';
 
 class EditPassView extends StatefulWidget {
-  const EditPassView({super.key});
-
+  const EditPassView({
+    super.key,
+  });
   @override
   State<EditPassView> createState() => _EditPassViewState();
 }
 
 class _EditPassViewState extends State<EditPassView> {
   bool loading = false;
-
   bool currentPasswordShow = true;
   bool passwordShow = true;
   bool passwordConfirmationShow = true;
+  TextEditingController passwordController = TextEditingController();
+  EditPassReqBodyModel editPassReqBodyModel = EditPassReqBodyModel();
   @override
   Widget build(context) {
     final t = AppLocalizations.of(context)!;
@@ -44,79 +46,35 @@ class _EditPassViewState extends State<EditPassView> {
                 Gap(
                   100.h,
                 ),
-                CustomTextFormField(
+                CustomTextFormPasswordField(
                   obscureText: currentPasswordShow,
                   labelText: t.currentPassword,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      currentPasswordShow
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash,
-                      color: Colors.black,
-                      size: 16,
-                    ),
-                    onPressed: () {
-                      setState(
-                        () {
-                          currentPasswordShow = !currentPasswordShow;
-                        },
-                      );
-                    },
-                  ),
-                  onChanged: (value) {
-                    EditPassReqBodyModel().currentPassword = value;
+                  onChanged: (v) {
+                    editPassReqBodyModel = editPassReqBodyModel.copyWith(
+                      currentPassword: v,
+                    );
                   },
                 ),
-                Gap(
-                  25.h,
-                ),
-                CustomTextFormField(
+                CustomTextFormPasswordField(
+                  controller: passwordController,
                   obscureText: passwordShow,
                   labelText: t.newPassword,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      passwordShow
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash,
-                      color: Colors.black,
-                      size: 16,
-                    ),
-                    onPressed: () {
-                      setState(
-                        () {
-                          passwordShow = !passwordShow;
-                        },
-                      );
-                    },
-                  ),
-                  onChanged: (value) {
-                    EditPassReqBodyModel().newPassword = value;
+                  onChanged: (v) {
+                    editPassReqBodyModel = editPassReqBodyModel.copyWith(
+                      newPassword: v,
+                    );
                   },
                 ),
                 Gap(
                   25.h,
                 ),
-                CustomTextFormField(
+                CustomTextFormPasswordField(
                   obscureText: passwordConfirmationShow,
                   labelText: t.newPasswordConfirmation,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      passwordConfirmationShow
-                          ? FontAwesomeIcons.eye
-                          : FontAwesomeIcons.eyeSlash,
-                      color: Colors.black,
-                      size: 16,
-                    ),
-                    onPressed: () {
-                      setState(
-                        () {
-                          passwordConfirmationShow = !passwordConfirmationShow;
-                        },
-                      );
-                    },
-                  ),
-                  onChanged: (value) {
-                    EditPassReqBodyModel().newPasswordConfirmation = value;
+                  onChanged: (v) {
+                    editPassReqBodyModel = editPassReqBodyModel.copyWith(
+                      newPasswordConfirmation: v,
+                    );
                   },
                 ),
                 Gap(
@@ -126,7 +84,7 @@ class _EditPassViewState extends State<EditPassView> {
                   onPressed: () async {
                     context.read<MainBloc>().add(
                           MainEvent.editPass(
-                            editPassReqBodyModel: EditPassReqBodyModel(),
+                            editPassReqBodyModel: editPassReqBodyModel,
                           ),
                         );
                   },

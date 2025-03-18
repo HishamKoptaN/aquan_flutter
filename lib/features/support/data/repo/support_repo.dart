@@ -1,10 +1,7 @@
-// import '../model/msg.dart';
+import 'package:aquan/core/networking/api_result.dart';
 
-// abstract class SupportRepo {
-//   Future<List<Msg>> getMsgs({
-//     required int chatId,
-//   });
-//   Future<void> sendMsg({
-//     required Msg msg,
-//   });
-// }
+import '../../../../core/models/section_res_model.dart';
+
+abstract class SupportRepo {
+  Future<ApiResult<SectionResModel>?> get();
+}

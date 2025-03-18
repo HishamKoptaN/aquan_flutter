@@ -190,6 +190,8 @@ abstract class _$$EditPassImplCopyWith<$Res> {
       __$$EditPassImplCopyWithImpl<$Res>;
   @useResult
   $Res call({EditPassReqBodyModel editPassReqBodyModel});
+
+  $EditPassReqBodyModelCopyWith<$Res> get editPassReqBodyModel;
 }
 
 /// @nodoc
@@ -213,6 +215,17 @@ class __$$EditPassImplCopyWithImpl<$Res>
           : editPassReqBodyModel // ignore: cast_nullable_to_non_nullable
               as EditPassReqBodyModel,
     ));
+  }
+
+  /// Create a copy of MainEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EditPassReqBodyModelCopyWith<$Res> get editPassReqBodyModel {
+    return $EditPassReqBodyModelCopyWith<$Res>(_value.editPassReqBodyModel,
+        (value) {
+      return _then(_value.copyWith(editPassReqBodyModel: value));
+    });
   }
 }
 

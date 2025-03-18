@@ -18,11 +18,4 @@ abstract class MainApi {
     ApiConstants.check,
   )
   Future<Auth> check();
-  // ! changePassword
-  @POST(
-    ApiConstants.editPass,
-  )
-  Future<void> editPass({
-    @Body() required EditPassReqBodyModel editPassReqBodyModel,
-  });
 }

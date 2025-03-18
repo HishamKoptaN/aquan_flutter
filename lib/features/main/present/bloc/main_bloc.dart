@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:aquan/core/helpers/shared_pref_helper.dart';
+import '../../../../core/errors/api_error_model.dart';
 import '../../../../core/helpers/constants.dart';
 import '../../../../core/singletons/user_singleton.dart';
 import '../../domain/usecases/main_use_cases.dart';
@@ -12,8 +13,10 @@ import 'main_state.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   final LocalAuthentication auth = LocalAuthentication();
   final MainUseCases mainUseCases;
+  final FirebaseAuth firebaseAuth;
   MainBloc({
     required this.mainUseCases,
+    required this.firebaseAuth,
   }) : super(
           const MainState.loading(),
         ) {
@@ -60,28 +63,34 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             emit(
               const MainState.loading(),
             );
-            final result = await mainUseCases.editPass(
-              editPassReqBodyModel: editPassReqBodyModel,
-            );
-            await result.when(
-              success: (_) async {
-                emit(
-                  const MainState.success(),
-                );
-              },
-              failure: (apiErrorModel) async {
-                emit(
-                  MainState.failure(
-                    apiErrorModel: apiErrorModel,
+            try {
+              User? user = FirebaseAuth.instance.currentUser;
+              AuthCredential credential = EmailAuthProvider.credential(
+                email: user!.email!,
+                password: editPassReqBodyModel.currentPassword ?? '',
+              );
+              await user.reauthenticateWithCredential(credential);
+              await user.updatePassword(
+                editPassReqBodyModel.newPassword ?? '',
+              );
+              emit(
+                const MainState.success(),
+              );
+            } catch (e) {
+              emit(
+                MainState.failure(
+                  apiErrorModel: ApiErrorModel(
+                    error: "حدث خطأ غير معروف",
                   ),
-                );
-              },
-            );
+                ),
+              );
+            }
           },
         );
       },
     );
   }
+
   bool isUserLoggedIn() {
     final user = FirebaseAuth.instance.currentUser;
     return user != null;

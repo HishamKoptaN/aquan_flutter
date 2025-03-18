@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:aquan/features/support/present/bloc/support_bloc.dart';
 import '../../../core/singletons/user_singleton.dart';
 import '../../../core/widgets/custom_circular_progress.dart';
+import '../../../core/widgets/custom_text_widget.dart';
 import '../../layouts/app_layout.dart';
 import '../data/model/msg.dart';
 import '../data/model/msg_send.dart';
@@ -94,171 +95,227 @@ class _SupportViewState extends State<SupportView> {
   Widget build(context) {
     final t = AppLocalizations.of(context)!;
     final Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return AppLayout(
       route: t.support,
       showAppBar: true,
       body: BlocProvider(
-        create: (context) => SupportBloc(),
+        create: (context) => SupportBloc()
+          ..add(
+            SupportEvent.get(),
+          ),
         child: BlocConsumer<SupportBloc, SupportState>(
           listener: (context, state) {},
           builder: (context, state) {
             MsgSend msgSend = const MsgSend();
-            return SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('support')
-                          .doc(
-                            UserSingleton.instance.user!.id.toString(),
-                          )
-                          .collection('msgs')
-                          .orderBy(
-                            'sent_at',
-                            descending: false,
-                          )
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CustomCircularProgress(),
-                          );
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                              "Error: ${snapshot.error}",
-                            ),
-                          );
-                        }
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text(
-                              "Start chatting!",
-                            ),
-                          );
-                        }
-                        final msgs = snapshot.data!.docs.map(
-                          (doc) {
-                            final data = doc.data() as Map<String, dynamic>;
-                            return Msg.fromJson(data);
-                          },
-                        ).toList();
-
-                        return ListView.builder(
-                          itemCount: msgs.length,
-                          itemBuilder: (context, index) {
-                            final msg = msgs[index];
-                            bool isCurrentUser =
-                                UserSingleton.instance.user!.id == msg.senderId;
-                            if (msg.isFile!) {
-                              return Bubble(
-                                style: isCurrentUser ? styleMe : styleSomebody,
-                                child: SizedBox(
-                                  width: 150.0,
-                                  height: 150.0,
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl: msg.content!,
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return Bubble(
-                                style: isCurrentUser ? styleMe : styleSomebody,
-                                child: Text(
-                                  msg.content.toString(),
-                                  style: TextStyle(
-                                    color: isCurrentUser
-                                        ? Colors.black
-                                        : Colors.white,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
+            return state.maybeWhen(
+              loaded: (
+                sectionResModel,
+              ) {
+                if (sectionResModel.status == true) {
+                  return SafeArea(
+                    child: Column(
                       children: [
-                        IconButton(
-                          padding: const EdgeInsets.all(8.0),
-                          splashColor: Colors.amber,
-                          splashRadius: 30,
-                          icon: const Icon(
-                            FontAwesomeIcons.paperPlane,
-                            color: Colors.black,
-                            size: 25,
-                          ),
-                          onPressed: () {
-                            msgSend = msgSend.copyWith(
-                              isFile: false,
-                            );
-                            msgSend = msgSend.copyWith(
-                              senderId: UserSingleton.instance.user!.id,
-                            );
-                            msgSend = msgSend.copyWith(
-                              sentAt: DateTime.now(),
-                            );
-                            context.read<SupportBloc>().add(
-                                  SupportEvent.sendMsg(
-                                    msgSend: msgSend,
+                        Expanded(
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('support')
+                                .doc(
+                                  UserSingleton.instance.user!.id.toString(),
+                                )
+                                .collection('msgs')
+                                .orderBy(
+                                  'sent_at',
+                                  descending: false,
+                                )
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CustomCircularProgress(),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text(
+                                    "Error: ${snapshot.error}",
                                   ),
                                 );
-                            msgController.clear();
-                          },
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            controller: msgController,
-                            onChanged: (value) {
-                              msgSend = msgSend.copyWith(
-                                content: value,
+                              }
+                              if (!snapshot.hasData ||
+                                  snapshot.data!.docs.isEmpty) {
+                                return const Center(
+                                  child: Text(
+                                    "Start chatting!",
+                                  ),
+                                );
+                              }
+                              final msgs = snapshot.data!.docs.map(
+                                (doc) {
+                                  final data =
+                                      doc.data() as Map<String, dynamic>;
+                                  return Msg.fromJson(data);
+                                },
+                              ).toList();
+
+                              return ListView.builder(
+                                itemCount: msgs.length,
+                                itemBuilder: (context, index) {
+                                  final msg = msgs[index];
+                                  bool isCurrentUser =
+                                      UserSingleton.instance.user!.id ==
+                                          msg.senderId;
+                                  if (msg.isFile!) {
+                                    return Bubble(
+                                      style: isCurrentUser
+                                          ? styleMe
+                                          : styleSomebody,
+                                      child: SizedBox(
+                                        width: 150.0,
+                                        height: 150.0,
+                                        child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          imageUrl: msg.content!,
+                                          placeholder: (context, url) =>
+                                              const CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Bubble(
+                                      style: isCurrentUser
+                                          ? styleMe
+                                          : styleSomebody,
+                                      child: Text(
+                                        msg.content.toString(),
+                                        style: TextStyle(
+                                          color: isCurrentUser
+                                              ? Colors.black
+                                              : Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                               );
                             },
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(),
-                              hintText: t.message,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                padding: const EdgeInsets.all(8.0),
+                                splashColor: Colors.amber,
+                                splashRadius: 30,
+                                icon: const Icon(
+                                  FontAwesomeIcons.paperPlane,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                                onPressed: () {
+                                  msgSend = msgSend.copyWith(
+                                    isFile: false,
+                                  );
+                                  msgSend = msgSend.copyWith(
+                                    senderId: UserSingleton.instance.user!.id,
+                                  );
+                                  msgSend = msgSend.copyWith(
+                                    sentAt: DateTime.now(),
+                                  );
+                                  context.read<SupportBloc>().add(
+                                        SupportEvent.sendMsg(
+                                          msgSend: msgSend,
+                                        ),
+                                      );
+                                  msgController.clear();
+                                },
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: msgController,
+                                  onChanged: (value) {
+                                    msgSend = msgSend.copyWith(
+                                      content: value,
+                                    );
+                                  },
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    hintText: t.message,
+                                  ),
+                                ),
+                              ),
+                              // IconButton(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   splashColor: Colors.amber,
+                              //   splashRadius: 30,
+                              //   icon: const Icon(
+                              //     FontAwesomeIcons.paperclip,
+                              //     color: Colors.black,
+                              //     size: 25,
+                              //   ),
+                              //   onPressed: () async {
+                              //     final result =
+                              //         await FilePicker.platform.pickFiles();
+                              //     if (result != null) {
+                              //       File file = File(
+                              //         result.files.single.path!,
+                              //       );
+                              //     }
+                              //   },
+                              // ),
+                            ],
+                          ),
+                        ),
+                        Gap(
+                          10.h,
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Container(
+                    width: width,
+                    height: height,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(81, 0, 0, 0),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: width / 1.25,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Center(
+                              child: CustomText(
+                                text: sectionResModel.message!,
+                                fontSize: 20.sp,
+                                color: Colors.black,
+                                maxLines: 5,
+                                fontWeight: null,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
-                        // IconButton(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   splashColor: Colors.amber,
-                        //   splashRadius: 30,
-                        //   icon: const Icon(
-                        //     FontAwesomeIcons.paperclip,
-                        //     color: Colors.black,
-                        //     size: 25,
-                        //   ),
-                        //   onPressed: () async {
-                        //     final result =
-                        //         await FilePicker.platform.pickFiles();
-                        //     if (result != null) {
-                        //       File file = File(
-                        //         result.files.single.path!,
-                        //       );
-                        //     }
-                        //   },
-                        // ),
                       ],
                     ),
-                  ),
-                  Gap(
-                    10.h,
-                  ),
-                ],
-              ),
+                  );
+                }
+              },
+              orElse: () {
+                return CustomCircularProgress();
+              },
             );
           },
         ),

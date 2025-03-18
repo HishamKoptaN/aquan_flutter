@@ -5,10 +5,11 @@ import 'support_event.dart';
 import 'support_state.dart';
 
 class SupportBloc extends Bloc<SupportEvent, SupportState> {
-  SupportBloc() : super(const SupportState.initial()) {
+  SupportBloc() : super(const SupportState.initial(),) {
     on<SupportEvent>(
       (event, emit) async {
         await event.when(
+          get: () async {},
           getMsgs: () async {},
           sendMsg: (msgSend) async {
             await _sendMessage(

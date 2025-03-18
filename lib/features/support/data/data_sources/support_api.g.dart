@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'main_api.dart';
+part of 'support_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,13 +8,13 @@ part of 'main_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _MainApi implements MainApi {
-  _MainApi(
+class _SupportApi implements SupportApi {
+  _SupportApi(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://api.aquan.website/auth/';
+    baseUrl ??= 'https://api.aquan.website/api/';
   }
 
   final Dio _dio;
@@ -24,19 +24,19 @@ class _MainApi implements MainApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<Auth> check() async {
+  Future<SectionResModel?> get() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<Auth>(Options(
-      method: 'POST',
+    final _options = _setStreamType<SectionResModel>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'check',
+          'support',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -45,10 +45,11 @@ class _MainApi implements MainApi {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Auth _value;
+    final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
+    late SectionResModel? _value;
     try {
-      _value = Auth.fromJson(_result.data!);
+      _value =
+          _result.data == null ? null : SectionResModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

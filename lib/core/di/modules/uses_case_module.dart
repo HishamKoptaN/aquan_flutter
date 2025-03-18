@@ -1,6 +1,3 @@
-import '../../../features/auth/reset_password/domain/use_cases/reset_password_use_case.dart';
-import '../../../features/auth/reset_password/domain/use_cases/send_otp_use_case.dart';
-import '../../../features/auth/reset_password/domain/use_cases/verify_otp_use_case.dart';
 import '../../../features/auth/sign_up/domain/use_cases/sign_up_use_case.dart';
 import '../../../features/accounts/domain/usecases/edit_accounts_usecase.dart';
 import '../../../features/accounts/domain/usecases/get_accounts_usecase.dart';
@@ -49,21 +46,7 @@ class UseCaseModule extends DIModule {
           verifyEmailRepo: getIt(),
         ),
       )
-      ..registerLazySingleton(
-        () => SendPassOtpUseCase(
-          resetPassRepo: getIt(),
-        ),
-      )
-      ..registerLazySingleton(
-        () => VerifyPassOtpUseCase(
-          resetPassRepo: getIt(),
-        ),
-      )
-      ..registerLazySingleton(
-        () => ResetPassUseCase(
-          loginRepo: getIt(),
-        ),
-      )
+   
       ..registerLazySingleton(
         () => SignUpUseCase(
           getIt(),

@@ -18,18 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SupportEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() get,
     required TResult Function() getMsgs,
     required TResult Function(MsgSend msgSend) sendMsg,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? get,
     TResult? Function()? getMsgs,
     TResult? Function(MsgSend msgSend)? sendMsg,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? get,
     TResult Function()? getMsgs,
     TResult Function(MsgSend msgSend)? sendMsg,
     required TResult orElse(),
@@ -37,18 +40,21 @@ mixin _$SupportEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Get value) get,
     required TResult Function(_GetMsgs value) getMsgs,
     required TResult Function(_SendMsg value) sendMsg,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Get value)? get,
     TResult? Function(_GetMsgs value)? getMsgs,
     TResult? Function(_SendMsg value)? sendMsg,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Get value)? get,
     TResult Function(_GetMsgs value)? getMsgs,
     TResult Function(_SendMsg value)? sendMsg,
     required TResult orElse(),
@@ -75,6 +81,115 @@ class _$SupportEventCopyWithImpl<$Res, $Val extends SupportEvent>
 
   /// Create a copy of SupportEvent
   /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$GetImplCopyWith<$Res> {
+  factory _$$GetImplCopyWith(_$GetImpl value, $Res Function(_$GetImpl) then) =
+      __$$GetImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetImplCopyWithImpl<$Res>
+    extends _$SupportEventCopyWithImpl<$Res, _$GetImpl>
+    implements _$$GetImplCopyWith<$Res> {
+  __$$GetImplCopyWithImpl(_$GetImpl _value, $Res Function(_$GetImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SupportEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$GetImpl implements _Get {
+  const _$GetImpl();
+
+  @override
+  String toString() {
+    return 'SupportEvent.get()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GetImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() get,
+    required TResult Function() getMsgs,
+    required TResult Function(MsgSend msgSend) sendMsg,
+  }) {
+    return get();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? get,
+    TResult? Function()? getMsgs,
+    TResult? Function(MsgSend msgSend)? sendMsg,
+  }) {
+    return get?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? get,
+    TResult Function()? getMsgs,
+    TResult Function(MsgSend msgSend)? sendMsg,
+    required TResult orElse(),
+  }) {
+    if (get != null) {
+      return get();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Get value) get,
+    required TResult Function(_GetMsgs value) getMsgs,
+    required TResult Function(_SendMsg value) sendMsg,
+  }) {
+    return get(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Get value)? get,
+    TResult? Function(_GetMsgs value)? getMsgs,
+    TResult? Function(_SendMsg value)? sendMsg,
+  }) {
+    return get?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Get value)? get,
+    TResult Function(_GetMsgs value)? getMsgs,
+    TResult Function(_SendMsg value)? sendMsg,
+    required TResult orElse(),
+  }) {
+    if (get != null) {
+      return get(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Get implements SupportEvent {
+  const factory _Get() = _$GetImpl;
 }
 
 /// @nodoc
@@ -118,6 +233,7 @@ class _$GetMsgsImpl implements _GetMsgs {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() get,
     required TResult Function() getMsgs,
     required TResult Function(MsgSend msgSend) sendMsg,
   }) {
@@ -127,6 +243,7 @@ class _$GetMsgsImpl implements _GetMsgs {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? get,
     TResult? Function()? getMsgs,
     TResult? Function(MsgSend msgSend)? sendMsg,
   }) {
@@ -136,6 +253,7 @@ class _$GetMsgsImpl implements _GetMsgs {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? get,
     TResult Function()? getMsgs,
     TResult Function(MsgSend msgSend)? sendMsg,
     required TResult orElse(),
@@ -149,6 +267,7 @@ class _$GetMsgsImpl implements _GetMsgs {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Get value) get,
     required TResult Function(_GetMsgs value) getMsgs,
     required TResult Function(_SendMsg value) sendMsg,
   }) {
@@ -158,6 +277,7 @@ class _$GetMsgsImpl implements _GetMsgs {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Get value)? get,
     TResult? Function(_GetMsgs value)? getMsgs,
     TResult? Function(_SendMsg value)? sendMsg,
   }) {
@@ -167,6 +287,7 @@ class _$GetMsgsImpl implements _GetMsgs {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Get value)? get,
     TResult Function(_GetMsgs value)? getMsgs,
     TResult Function(_SendMsg value)? sendMsg,
     required TResult orElse(),
@@ -262,6 +383,7 @@ class _$SendMsgImpl implements _SendMsg {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() get,
     required TResult Function() getMsgs,
     required TResult Function(MsgSend msgSend) sendMsg,
   }) {
@@ -271,6 +393,7 @@ class _$SendMsgImpl implements _SendMsg {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? get,
     TResult? Function()? getMsgs,
     TResult? Function(MsgSend msgSend)? sendMsg,
   }) {
@@ -280,6 +403,7 @@ class _$SendMsgImpl implements _SendMsg {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? get,
     TResult Function()? getMsgs,
     TResult Function(MsgSend msgSend)? sendMsg,
     required TResult orElse(),
@@ -293,6 +417,7 @@ class _$SendMsgImpl implements _SendMsg {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Get value) get,
     required TResult Function(_GetMsgs value) getMsgs,
     required TResult Function(_SendMsg value) sendMsg,
   }) {
@@ -302,6 +427,7 @@ class _$SendMsgImpl implements _SendMsg {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Get value)? get,
     TResult? Function(_GetMsgs value)? getMsgs,
     TResult? Function(_SendMsg value)? sendMsg,
   }) {
@@ -311,6 +437,7 @@ class _$SendMsgImpl implements _SendMsg {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Get value)? get,
     TResult Function(_GetMsgs value)? getMsgs,
     TResult Function(_SendMsg value)? sendMsg,
     required TResult orElse(),

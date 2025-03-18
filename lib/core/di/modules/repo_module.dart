@@ -1,5 +1,4 @@
 import '../../../features/auth/login/data/repo_imp/login_repo_impl.dart';
-import '../../../features/auth/reset_password/data/repo/reset_password_repo_impl.dart';
 import '../../../features/auth/sign_up/data/repo_impl/sign_up_repo_imp.dart';
 import '../../../features/auth/sign_up/domain/repo/sign_up_repo.dart';
 import '../../../features/accounts/data/repo_impl/accounts_repo_impl.dart';
@@ -43,11 +42,7 @@ class RepositoryModule extends DIModule {
           verifyEmailApi: getIt(),
         ),
       )
-      ..registerLazySingleton<ResetPassRepoImpl>(
-        () => ResetPassRepoImpl(
-          resetPassApi: getIt(),
-        ),
-      )
+   
       ..registerLazySingleton<LoginRepoImpl>(
         () => LoginRepoImpl(
           getIt(),

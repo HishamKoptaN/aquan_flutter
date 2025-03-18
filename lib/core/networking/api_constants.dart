@@ -19,6 +19,7 @@ class ApiConstants {
   static const String trans = "trans";
   static const String transfer = "transfer";
   static const String plans = "plans";
+  static const String support = "support";
   static const String accounts = "accounts";
   static const String plansRates = "plans-rates";
   static const String buySell = "buy-sell";

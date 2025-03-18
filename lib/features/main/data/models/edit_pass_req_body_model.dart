@@ -1,16 +1,15 @@
-class EditPassReqBodyModel {
-  static final EditPassReqBodyModel _instance = EditPassReqBodyModel._();
-  factory EditPassReqBodyModel() {
-    return _instance;
-  }
-  EditPassReqBodyModel._();
-  String? currentPassword;
-  String? newPassword;
-  String? newPasswordConfirmation;
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'edit_pass_req_body_model.freezed.dart';
+part 'edit_pass_req_body_model.g.dart';
 
-  Map<String, dynamic> toJson() => {
-        'current_password': currentPassword,
-        'new_password': newPassword,
-        'new_password_confirmation': newPasswordConfirmation,
-      };
+@freezed
+class EditPassReqBodyModel with _$EditPassReqBodyModel {
+  const factory EditPassReqBodyModel({
+    String? currentPassword,
+    String? newPassword,
+    String? newPasswordConfirmation,
+  }) = _EditPassReqBodyModel;
+
+  factory EditPassReqBodyModel.fromJson(Map<String, dynamic> json) =>
+      _$EditPassReqBodyModelFromJson(json);
 }
