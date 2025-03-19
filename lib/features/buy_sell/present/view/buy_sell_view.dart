@@ -1,5 +1,5 @@
 import 'package:aquan/all_imports.dart';
-
+import '../../../controll/view/widgets/section.dart';
 import '../../../widgets/convert_currency_price.dart';
 
 class BuySellview extends StatefulWidget {
@@ -35,404 +35,437 @@ class _BuySellviewState extends State<BuySellview> {
       backArow: false,
       body: Padding(
         padding: const EdgeInsets.all(0.0),
-        child: BlocProvider<BuySellBloc>(
-          create: (context) => BuySellBloc(
-            getBuySellRatesUse: getIt(),
-            getReceiveAccountNumberUseCase: getIt(),
-            transferMoneyUseCase: getIt(),
-          ),
-          child: BlocBuilder<BuySellBloc, BuySellState>(
-            builder: (context, state) {
-              state.whenOrNull(
-                initial: () {
-                  context.read<BuySellBloc>().add(
-                        const BuySellEvent.getBuySelRates(),
-                      );
-                },
-              );
-              return state.maybeWhen(
-                buySellRatesLoaded: (buySellResModel) {
-                  return Stack(
-                    children: [
-                      ListView(
+        child: SectionAvailabilityWidget(
+          sectionId: 1,
+          onAvailable: (section) {
+            return BlocProvider<BuySellBloc>(
+              create: (context) => BuySellBloc(
+                getBuySellRatesUse: getIt(),
+                getReceiveAccountNumberUseCase: getIt(),
+                transferMoneyUseCase: getIt(),
+              ),
+              child: BlocBuilder<BuySellBloc, BuySellState>(
+                builder: (context, state) {
+                  state.whenOrNull(
+                    initial: () {
+                      context.read<BuySellBloc>().add(
+                            const BuySellEvent.getBuySelRates(),
+                          );
+                    },
+                  );
+                  return state.maybeWhen(
+                    buySellRatesLoaded: (
+                      buySellResModel,
+                    ) {
+                      return Stack(
                         children: [
-                          Form(
-                            key: formkey,
-                            child: Column(
-                              children: [
-                                Column(
+                          ListView(
+                            children: [
+                              Form(
+                                key: formkey,
+                                child: Column(
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Gap(
-                                              30.h,
-                                            ),
-                                            SelectCurrenciesWidget(
-                                              onChangedFromCurrency: (
-                                                currency,
-                                              ) {
-                                                setState(
-                                                  () {
-                                                    fromAmountController
-                                                        .clear();
-                                                    fromCurrency = currency!;
-                                                    if (toCurrency ==
-                                                        currency) {
-                                                      toCurrency = null;
-                                                    }
-                                                    fromCurrency = currency;
-                                                  },
-                                                );
-                                              },
-                                              onChangedToCurrency: (
-                                                currency,
-                                              ) {
-                                                setState(
-                                                  () {
-                                                    toAmountController.clear();
-                                                    toCurrency = currency;
-                                                    rate = buySellResModel
-                                                        .rates!
-                                                        .firstWhere(
-                                                          (rate) =>
-                                                              fromCurrency!
-                                                                      .id ==
-                                                                  rate.from &&
-                                                              toCurrency!.id ==
-                                                                  rate.to,
-                                                        )
-                                                        .price!
-                                                        .toInt();
-                                                  },
-                                                );
-                                              },
-                                              fromCurrency: fromCurrency,
-                                              toCurrency: toCurrency,
-                                              currencies:
-                                                  buySellResModel.currencies,
-                                            ),
-                                            Gap(
-                                              25.h,
-                                            ),
-                                            priceWidget(
-                                              t: t,
-                                            ),
-                                            Gap(
-                                              25.h,
-                                            ),
-                                            if (toCurrency != null)
-                                              ConvertCurrencyPrice(
-                                                controller:
-                                                    fromAmountController,
-                                                wallet: fromCurrency,
-                                                onChanged: (v) {
-                                                  setState(
-                                                    () {
-                                                      netAmount =
-                                                          calculateFirstAmount(
-                                                        amount:
-                                                            getIntValueFromFormatingString(
-                                                                  input:
-                                                                      v ?? '',
-                                                                ) ??
-                                                                0,
-                                                        currencyCode:
-                                                            fromCurrency!
-                                                                .nameCode!,
-                                                        rate: rate,
-                                                      );
-                                                      toAmountController.text =
-                                                          formatter.format(
-                                                        int.parse(
-                                                          netAmount.toString(),
-                                                        ),
-                                                      );
-                                                      fromAmountController
-                                                              .text =
-                                                          formatter.format(
-                                                        int.parse(
-                                                          v.toString(),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            if (toCurrency != null)
-                                              ConvertCurrencyPrice(
-                                                controller: toAmountController,
-                                                wallet: toCurrency,
-                                                onChanged: (v) {
-                                                  setState(
-                                                    () {
-                                                      netAmount =
-                                                          calculateFirstAmount(
-                                                        amount:
-                                                            getIntValueFromFormatingString(
-                                                                  input:
-                                                                      v ?? '',
-                                                                ) ??
-                                                                0,
-                                                        currencyCode:
-                                                            toCurrency!
-                                                                .nameCode!,
-                                                        rate: rate,
-                                                      );
-                                                      fromAmountController
-                                                              .text =
-                                                          formatter.format(
-                                                        int.parse(
-                                                          netAmount.toString(),
-                                                        ),
-                                                      );
-                                                      toAmountController.text =
-                                                          formatter.format(
-                                                        v.toString(),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                    Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.amber,
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
                                               children: [
+                                                Gap(
+                                                  30.h,
+                                                ),
+                                                SelectCurrenciesWidget(
+                                                  onChangedFromCurrency: (
+                                                    currency,
+                                                  ) {
+                                                    setState(
+                                                      () {
+                                                        fromAmountController
+                                                            .clear();
+                                                        fromCurrency =
+                                                            currency!;
+                                                        if (toCurrency ==
+                                                            currency) {
+                                                          toCurrency = null;
+                                                        }
+                                                        fromCurrency = currency;
+                                                      },
+                                                    );
+                                                  },
+                                                  onChangedToCurrency: (
+                                                    currency,
+                                                  ) {
+                                                    setState(
+                                                      () {
+                                                        toAmountController
+                                                            .clear();
+                                                        toCurrency = currency;
+                                                        rate = buySellResModel
+                                                            .rates!
+                                                            .firstWhere(
+                                                              (rate) =>
+                                                                  fromCurrency!
+                                                                          .id ==
+                                                                      rate
+                                                                          .from &&
+                                                                  toCurrency!
+                                                                          .id ==
+                                                                      rate.to,
+                                                            )
+                                                            .price!
+                                                            .toInt();
+                                                      },
+                                                    );
+                                                  },
+                                                  fromCurrency: fromCurrency,
+                                                  toCurrency: toCurrency,
+                                                  currencies: buySellResModel
+                                                      .currencies,
+                                                ),
+                                                Gap(
+                                                  25.h,
+                                                ),
+                                                priceWidget(
+                                                  t: t,
+                                                ),
+                                                Gap(
+                                                  25.h,
+                                                ),
+                                                if (toCurrency != null)
+                                                  ConvertCurrencyPrice(
+                                                    controller:
+                                                        fromAmountController,
+                                                    wallet: fromCurrency,
+                                                    onChanged: (v) {
+                                                      setState(
+                                                        () {
+                                                          netAmount =
+                                                              calculateFirstAmount(
+                                                            amount:
+                                                                getIntValueFromFormatingString(
+                                                                      input: v ??
+                                                                          '',
+                                                                    ) ??
+                                                                    0,
+                                                            currencyCode:
+                                                                fromCurrency!
+                                                                    .nameCode!,
+                                                            rate: rate,
+                                                          );
+                                                          toAmountController
+                                                                  .text =
+                                                              formatter.format(
+                                                            int.parse(
+                                                              netAmount
+                                                                  .toString(),
+                                                            ),
+                                                          );
+                                                          fromAmountController
+                                                                  .text =
+                                                              formatter.format(
+                                                            int.parse(
+                                                              v.toString(),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                if (toCurrency != null)
+                                                  ConvertCurrencyPrice(
+                                                    controller:
+                                                        toAmountController,
+                                                    wallet: toCurrency,
+                                                    onChanged: (v) {
+                                                      setState(
+                                                        () {
+                                                          netAmount =
+                                                              calculateFirstAmount(
+                                                            amount:
+                                                                getIntValueFromFormatingString(
+                                                                      input: v ??
+                                                                          '',
+                                                                    ) ??
+                                                                    0,
+                                                            currencyCode:
+                                                                toCurrency!
+                                                                    .nameCode!,
+                                                            rate: rate,
+                                                          );
+                                                          fromAmountController
+                                                                  .text =
+                                                              formatter.format(
+                                                            int.parse(
+                                                              netAmount
+                                                                  .toString(),
+                                                            ),
+                                                          );
+                                                          toAmountController
+                                                                  .text =
+                                                              formatter.format(
+                                                            v.toString(),
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Gap(
+                                                      20.h,
+                                                    ),
+                                                    CustomTextFormField(
+                                                      controller:
+                                                          receiverAccountController,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText: t
+                                                            .the_account_you_will_receive_the_money_from,
+                                                        suffixIcon:
+                                                            PopupMenuButton<
+                                                                Account>(
+                                                          icon: const Icon(
+                                                            Icons
+                                                                .arrow_drop_down,
+                                                          ),
+                                                          onSelected: (
+                                                            value,
+                                                          ) {
+                                                            receiverAccountController
+                                                                    .text =
+                                                                value
+                                                                    .accountNumber!;
+                                                          },
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                  context) {
+                                                            return buySellResModel
+                                                                .accounts!
+                                                                .map<
+                                                                    PopupMenuEntry<
+                                                                        Account>>(
+                                                              (
+                                                                Account account,
+                                                              ) {
+                                                                return PopupMenuItem<
+                                                                    Account>(
+                                                                  value:
+                                                                      account,
+                                                                  child: Text(
+                                                                    '${account.currency?.name ?? ''} - ${account.accountNumber ?? ''}',
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).toList();
+                                                          },
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: Colors.white,
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            color: Colors.black,
+                                                            width: 1.0,
+                                                          ),
+                                                        ),
+                                                        border:
+                                                            const OutlineInputBorder(),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            color: Colors.blue,
+                                                            width: 1.5,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        errorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.0,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        focusedErrorBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.5,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                        ),
+                                                        contentPadding:
+                                                            EdgeInsets
+                                                                .symmetric(
+                                                          vertical: 10.h,
+                                                          horizontal: 20.w,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                                 Gap(
                                                   20.h,
                                                 ),
-                                                CustomTextFormField(
-                                                  controller:
-                                                      receiverAccountController,
-                                                  decoration: InputDecoration(
-                                                    hintText: t
-                                                        .the_account_you_will_receive_the_money_from,
-                                                    suffixIcon: PopupMenuButton<
-                                                        Account>(
-                                                      icon: const Icon(
-                                                        Icons.arrow_drop_down,
-                                                      ),
-                                                      onSelected: (
-                                                        value,
-                                                      ) {
-                                                        receiverAccountController
-                                                                .text =
-                                                            value
-                                                                .accountNumber!;
-                                                      },
-                                                      itemBuilder: (BuildContext
-                                                          context) {
-                                                        return buySellResModel
-                                                            .accounts!
-                                                            .map<
-                                                                PopupMenuEntry<
-                                                                    Account>>(
-                                                          (
-                                                            Account account,
-                                                          ) {
-                                                            return PopupMenuItem<
-                                                                Account>(
-                                                              value: account,
-                                                              child: Text(
-                                                                '${account.currency?.name ?? ''} - ${account.accountNumber ?? ''}',
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).toList();
-                                                      },
-                                                    ),
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Colors.black,
-                                                        width: 1.0,
-                                                      ),
-                                                    ),
-                                                    border:
-                                                        const OutlineInputBorder(),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Colors.blue,
-                                                        width: 1.5,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Colors.red,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                        color: Colors.red,
-                                                        width: 1.5,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    contentPadding:
-                                                        EdgeInsets.symmetric(
-                                                      vertical: 10.h,
-                                                      horizontal: 20.w,
-                                                    ),
-                                                  ),
-                                                ),
                                               ],
                                             ),
-                                            Gap(
-                                              20.h,
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    ButtonBuySellWidget(
-                                      onTap: () async {
-                                        if (formkey.currentState!.validate()) {
-                                          String? errorMessage =
-                                              validateTransfer(
-                                            buySellResModel: buySellResModel,
-                                            t: t,
-                                          );
-                                          if (errorMessage != null) {
-                                            ToastNotifier().showError(
-                                              context: context,
-                                              message: errorMessage,
-                                            );
-                                          } else {
-                                            transferMoneyReqmodel =
-                                                transferMoneyReqmodel.copyWith(
-                                              senderCurrencyId:
-                                                  fromCurrency!.id,
-                                            );
-                                            transferMoneyReqmodel =
-                                                transferMoneyReqmodel.copyWith(
-                                              receiverCurrencyId:
-                                                  toCurrency!.id,
-                                            );
-                                            transferMoneyReqmodel =
-                                                transferMoneyReqmodel.copyWith(
-                                              amount:
-                                                  getIntValueFromFormatingString(
-                                                input:
-                                                    fromAmountController.text,
-                                              )!,
-                                            );
-                                            transferMoneyReqmodel =
-                                                transferMoneyReqmodel.copyWith(
-                                              netAmount: netAmount,
-                                            );
-                                            transferMoneyReqmodel =
-                                                transferMoneyReqmodel.copyWith(
-                                                    rate: rate);
-                                            transferMoneyReqmodel =
-                                                transferMoneyReqmodel.copyWith(
-                                              receiverAccount: int.parse(
-                                                receiverAccountController.text,
-                                              ),
-                                            );
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    BuySellConfirmView(
-                                                  transferMoneyReqmodel:
-                                                      transferMoneyReqmodel,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        }
-                                      },
-                                    ),
-                                    Gap(
-                                      30.h,
+                                        ButtonBuySellWidget(
+                                          onTap: () async {
+                                            if (formkey.currentState!
+                                                .validate()) {
+                                              String? errorMessage =
+                                                  validateTransfer(
+                                                buySellResModel:
+                                                    buySellResModel,
+                                                t: t,
+                                              );
+                                              if (errorMessage != null) {
+                                                ToastNotifier().showError(
+                                                  context: context,
+                                                  message: errorMessage,
+                                                );
+                                              } else {
+                                                transferMoneyReqmodel =
+                                                    transferMoneyReqmodel
+                                                        .copyWith(
+                                                  senderCurrencyId:
+                                                      fromCurrency!.id,
+                                                );
+                                                transferMoneyReqmodel =
+                                                    transferMoneyReqmodel
+                                                        .copyWith(
+                                                  receiverCurrencyId:
+                                                      toCurrency!.id,
+                                                );
+                                                transferMoneyReqmodel =
+                                                    transferMoneyReqmodel
+                                                        .copyWith(
+                                                  amount:
+                                                      getIntValueFromFormatingString(
+                                                    input: fromAmountController
+                                                        .text,
+                                                  )!,
+                                                );
+                                                transferMoneyReqmodel =
+                                                    transferMoneyReqmodel
+                                                        .copyWith(
+                                                  netAmount: netAmount,
+                                                );
+                                                transferMoneyReqmodel =
+                                                    transferMoneyReqmodel
+                                                        .copyWith(rate: rate);
+                                                transferMoneyReqmodel =
+                                                    transferMoneyReqmodel
+                                                        .copyWith(
+                                                  receiverAccount: int.parse(
+                                                    receiverAccountController
+                                                        .text,
+                                                  ),
+                                                );
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        BuySellConfirmView(
+                                                      transferMoneyReqmodel:
+                                                          transferMoneyReqmodel,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            }
+                                          },
+                                        ),
+                                        Gap(
+                                          30.h,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      if (buySellResModel.buySellStatus == false)
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            width: width,
-                            height: height,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(81, 0, 0, 0),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: Container(
-                                    width: width / 1.25,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Center(
-                                      child: CustomText(
-                                        text: buySellResModel.buySellMessage!,
-                                        fontSize: 20.sp,
-                                        color: Colors.black,
-                                        maxLines: 5,
-                                        fontWeight: null,
-                                        textAlign: TextAlign.center,
+                          if (buySellResModel.buySellStatus == false)
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                width: width,
+                                height: height,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(81, 0, 0, 0),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Container(
+                                        width: width / 1.25,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Center(
+                                          child: CustomText(
+                                            text:
+                                                buySellResModel.buySellMessage!,
+                                            fontSize: 20.sp,
+                                            color: Colors.black,
+                                            maxLines: 5,
+                                            fontWeight: null,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                    ],
+                        ],
+                      );
+                    },
+                    failure: (a) {
+                      return const CustomCircularProgress();
+                    },
+                    loading: () {
+                      return const CustomCircularProgress();
+                    },
+                    orElse: () {
+                      return const CustomCircularProgress();
+                    },
                   );
                 },
-                failure: (a) {
-                  return const CustomCircularProgress();
-                },
-                loading: () {
-                  return const CustomCircularProgress();
-                },
-                orElse: () {
-                  return const CustomCircularProgress();
-                },
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

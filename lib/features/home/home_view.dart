@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aquan/features/layouts/app_layout.dart';
 import '../../core/di/dependency_injection.dart';
 import '../buy_sell/present/view/buy_sell_view.dart';
+import '../controll/present/bloc/controll_bloc.dart';
+import '../controll/present/bloc/controll_event.dart';
 import '../dash/present/bloc/dash_bloc.dart';
 import '../dash/present/view/dash_view.dart';
 import '../plans/present/bloc/plans_bloc.dart';
@@ -61,6 +63,7 @@ class _HomeViewState extends State<HomeView> {
             getIt(),
           ),
         ),
+      
       ],
       child: AppLayout(
         route: '',
@@ -83,7 +86,10 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context, AppLocalizations t) {
+  Widget _buildBottomNavigationBar(
+    BuildContext context,
+    AppLocalizations t,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

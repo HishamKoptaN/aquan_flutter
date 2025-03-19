@@ -8,7 +8,6 @@ import '../../../features/deposit/pesent/bloc/deposits_bloc.dart';
 import '../../../features/main/present/bloc/main_bloc.dart';
 import '../../../features/profile/present/bloc/profile_bloc.dart';
 import '../../../features/send_to_account/present/bloc/send_to_account_bloc.dart';
-import '../../../features/support/present/bloc/support_bloc.dart';
 import '../../../features/tasks/present/bloc/task_bloc.dart';
 import '../../../features/trans/present/bloc/trans_bloc.dart';
 import '../../../features/withdraw/present/bloc/withdraws_bloc.dart';
@@ -77,12 +76,6 @@ class BlocModule extends DIModule {
           getNameOfUserByAccountUseCase: getIt(),
           sendToAccountUseCase: getIt(),
         ),
-      )
-      ..registerLazySingleton<SupportBloc>(
-        () => SupportBloc(
-            // getMsgsUseCase: getIt(),
-            // sendMsgUseCase: getIt(),
-            ),
       )
       ..registerLazySingleton<AccountsBloc>(
         () => AccountsBloc(

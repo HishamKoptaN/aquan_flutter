@@ -2,6 +2,7 @@ import '../../../features/auth/login/data/data_sources/login_api.dart';
 import '../../../features/auth/sign_up/data/data_sources/sign_up_api.dart';
 import '../../../features/accounts/data/datasources/accounts_api.dart';
 import '../../../features/auth/verify_email/data/data_sources/api/verify_email_api.dart';
+import '../../../features/controll/data/data_sources/controll_api.dart';
 import '../../../features/deposit/data/data_sources/deposits_api.dart';
 import '../../../features/notifications/data/datasources/notifications_api.dart';
 import '../../../features/plans/data/data_source/plans_api.dart';
@@ -10,6 +11,7 @@ import '../../../features/dash/data/data_sources/dash_api.dart';
 import '../../../features/main/data/datasources/main_api.dart';
 import '../../../features/profile/data/data_sources/profile_api.dart';
 import '../../../features/send_to_account/data/datasources/send_to_account_api.dart';
+import '../../../features/support/data/data_sources/support_api.dart';
 import '../../../features/tasks/data/data_sources/tasks_api.dart';
 import '../../../features/trans/data/data_source/trans_api.dart';
 import '../../../features/withdraw/data/data_source/withdraw_api.dart';
@@ -28,11 +30,15 @@ class ApiModule extends DIModule {
         ),
       )
       ..registerLazySingleton(
+        () => ControllApi(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
         () => VerifyEmailApi(
           getIt(),
         ),
       )
-    
       ..registerLazySingleton(
         () => LoginApi(
           getIt(),
@@ -95,6 +101,11 @@ class ApiModule extends DIModule {
       )
       ..registerLazySingleton(
         () => ProfileApi(
+          getIt(),
+        ),
+      )
+      ..registerLazySingleton(
+        () => SupportApi(
           getIt(),
         ),
       );

@@ -28,6 +28,7 @@ class ApiConstants {
   static const String notifications = "notifications";
   static const String tasks = "tasks";
   static const String profile = "profile";
+  static const String controll = "controll";
 }
 
 class ApiErrors {

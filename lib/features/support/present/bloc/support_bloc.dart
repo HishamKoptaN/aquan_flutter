@@ -1,15 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/singletons/user_singleton.dart';
+import '../../domain/use_cases/support_use_cases.dart';
 import 'support_event.dart';
 import 'support_state.dart';
 
+@LazySingleton()
 class SupportBloc extends Bloc<SupportEvent, SupportState> {
-  SupportBloc() : super(const SupportState.initial(),) {
+  SupportUseCases supportUseCases;
+  SupportBloc({
+    required this.supportUseCases,
+  }) : super(
+          const SupportState.initial(),
+        ) {
     on<SupportEvent>(
       (event, emit) async {
         await event.when(
-          get: () async {},
+          get: () async {
+            emit(
+              const SupportState.loading(),
+            );
+            final result = await supportUseCases.get();
+            await result!.when(
+              success: (sectionResModel) async {
+                emit(
+                  SupportState.loaded(
+                    sectionResModel: sectionResModel!,
+                  ),
+                );
+              },
+              failure: (apiErrorModel) async {
+                emit(
+                  SupportState.failure(
+                    error: apiErrorModel.error ?? '',
+                  ),
+                );
+              },
+            );
+          },
           getMsgs: () async {},
           sendMsg: (msgSend) async {
             await _sendMessage(

@@ -46,7 +46,6 @@ class UseCaseModule extends DIModule {
           verifyEmailRepo: getIt(),
         ),
       )
-   
       ..registerLazySingleton(
         () => SignUpUseCase(
           getIt(),

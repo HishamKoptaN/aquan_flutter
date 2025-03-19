@@ -1,5 +1,8 @@
 import 'package:aquan/all_imports.dart';
 
+import 'features/controll/present/bloc/controll_bloc.dart';
+import 'features/controll/present/bloc/controll_event.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -15,16 +18,32 @@ Future<void> main() async {
       'ar';
   FlutterError.onError = (
     details,
-  ) { 
+  ) {
     FlutterError.presentError(
       details,
     );
   };
   Bloc.observer = AppBlocObserver();
   await Settings.setup();
+  // if (!kReleaseMode) {
+  //   await SharedPrefHelper.setSecuredString(
+  //     key: SharedPrefKeys.userToken,
+  //     value: '67|Ic8EJwfpA5g6zjZ4P5b5KsHhhgcDP7Rx9eCcv7Gobc654b09',
+  //   );
+  // }
   runApp(
-    MyApp(
-      locale: locale,
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<ControllBloc>(
+          create: (context) => getIt<ControllBloc>()
+            ..add(
+              ControllEvent.get(),
+            ),
+        ),
+      ],
+      child: MyApp(
+        locale: locale,
+      ),
     ),
   );
 }
