@@ -37,7 +37,6 @@ export 'package:aquan/features/main/present/bloc/main_bloc.dart';
 export 'package:aquan/features/main/present/bloc/main_event.dart';
 export 'package:aquan/features/main/present/bloc/main_state.dart';
 export 'package:aquan/features/home/home_view.dart';
-export 'package:aquan/features/plans/data/model/plan.dart';
 export 'package:aquan/features/plans/present/view/change_plan/change_plan_view.dart';
 export 'package:aquan/features/plans/present/view/plans_view/widgets/subscription_option.dart';
 export 'package:aquan/features/trans/present/view/trans_view.dart';

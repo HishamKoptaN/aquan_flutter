@@ -4,7 +4,7 @@ import 'package:aquan/features/plans/data/repo/plans_repo.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
-import '../../data/model/plan.dart';
+import '../../../plans/data/model/plan.dart';
 
 class PlansRepoImpl implements PlansRepo {
   final PlansApi plansApi;

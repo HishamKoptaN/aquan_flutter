@@ -11,6 +11,7 @@ import '../../bloc/plans_bloc.dart';
 import '../../bloc/plans_event.dart';
 import '../../bloc/plans_state.dart';
 import 'widgets/plans_data_widget.dart';
+import '../../../data/model/plan.dart';
 
 class PlansView extends StatefulWidget {
   const PlansView({
