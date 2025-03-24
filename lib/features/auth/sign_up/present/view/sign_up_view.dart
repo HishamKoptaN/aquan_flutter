@@ -29,6 +29,17 @@ class _SignUpViewState extends State<SignUpView> {
 
   final Validator validator = Validator();
   bool validated = false;
+  bool isAcceptedTermsAndConditions = false;
+
+  void _register() {
+    if (!isAcceptedTermsAndConditions) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("يجب الموافقة على الشروط وسياسة الخصوصية")),
+      );
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -287,9 +298,54 @@ class _SignUpViewState extends State<SignUpView> {
                     Gap(
                       15.h,
                     ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: isAcceptedTermsAndConditions,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                isAcceptedTermsAndConditions = value!;
+                              },
+                            );
+                          },
+                        ),
+                        Expanded(
+                          child: Text.rich(
+                            TextSpan(
+                              text: "أوافق على ",
+                              children: [
+                                TextSpan(
+                                  text: "الشروط والأحكام",
+                                  style: TextStyle(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                    },
+                                ),
+                                TextSpan(text: " و "),
+                                TextSpan(
+                                  text: "سياسة الخصوصية",
+                                  style: TextStyle(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                         Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeView(),
+                        ),
+                        (route) => false,
+                      );
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     CustomTextButtonWidget(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate()&&isAcceptedTermsAndConditions==true ) {
                           context.read<SignUpBloc>().add(
                                 SignUpEvent.signUp(
                                   signUpReqBody: signUpReqBody,
