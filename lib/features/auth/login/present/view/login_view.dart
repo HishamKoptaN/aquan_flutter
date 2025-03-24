@@ -1,8 +1,8 @@
 import 'package:aquan/all_imports.dart';
 import '../../../../../core/validator.dart';
 import '../../../../../core/widgets/snacke_bar.dart';
+import '../../../../auth/login/data/models/reset_pass_req_body_model.dart';
 import '../../data/models/firabase_login_req_body_model.dart';
-import '../../data/models/reset_pass_req_body_model.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -204,12 +204,12 @@ class _LoginViewState extends State<LoginView> {
                             key: const Key('login_button'),
                             onTap: () async {
                               if (_formKey.currentState!.validate()) {
-                                context.read<LoginBloc>().add(
-                                      LoginEvent.fireLogin(
-                                        firabaseLoginReqBodyModel:
-                                            firabaseLoginReqBodyModel,
-                                      ),
-                                    );
+                                // context.read<LoginBloc>().add(
+                                //       LoginEvent.fireLogin(
+                                //         firabaseLoginReqBodyModel:
+                                //             firabaseLoginReqBodyModel,
+                                //       ),
+                                //     );
                               } else {
                                 validated = true;
                               }

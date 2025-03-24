@@ -1,4 +1,6 @@
-import 'package:aquan/all_imports.dart';
+import 'package:flutter/material.dart';
+import '../../../../../../all_imports.dart';
+import '../../../../data/model/plan.dart';
 
 class PlansDataWidget extends StatefulWidget {
   PlansDataWidget({
