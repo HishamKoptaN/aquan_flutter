@@ -319,8 +319,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   text: "الشروط والأحكام",
                                   style: TextStyle(color: Colors.blue),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                    },
+                                    ..onTap = () {},
                                 ),
                                 TextSpan(text: " و "),
                                 TextSpan(
@@ -328,13 +327,13 @@ class _SignUpViewState extends State<SignUpView> {
                                   style: TextStyle(color: Colors.blue),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeView(),
-                        ),
-                        (route) => false,
-                      );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeView(),
+                                        ),
+                                      );
                                     },
                                 ),
                               ],
@@ -345,7 +344,8 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                     CustomTextButtonWidget(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()&&isAcceptedTermsAndConditions==true ) {
+                        if (_formKey.currentState!.validate() &&
+                            isAcceptedTermsAndConditions == true) {
                           context.read<SignUpBloc>().add(
                                 SignUpEvent.signUp(
                                   signUpReqBody: signUpReqBody,
