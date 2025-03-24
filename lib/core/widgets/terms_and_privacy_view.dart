@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TermsAndPrivacyView extends StatelessWidget {
+  const TermsAndPrivacyView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("شروط الاستخدام وسياسة الخصوصية"),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.amber,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

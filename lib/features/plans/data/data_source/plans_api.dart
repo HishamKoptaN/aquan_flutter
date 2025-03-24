@@ -18,13 +18,12 @@ abstract class PlansApi {
     ApiConstants.plans,
   )
   Future<List<Plan>> get();
-
 // ! GET plans rates
   @GET(
     ApiConstants.plansRates,
   )
   Future<PlanRate> getPlansRates();
-  // ! Change plan rate
+// ! Change plan rate
   @POST(
     ApiConstants.plans,
   )

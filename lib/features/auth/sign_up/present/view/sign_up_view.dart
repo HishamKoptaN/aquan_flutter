@@ -2,6 +2,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../../../all_imports.dart';
 import '../../../../../core/helpers/validate_password.dart';
 import '../../../../../core/validator.dart';
+import '../../../../../core/widgets/terms_and_privacy_view.dart';
 import '../../data/models/sign_up_req_body.dart';
 import '../bloc/sign_up_bloc.dart';
 import '../bloc/sign_up_event.dart';
@@ -42,7 +43,6 @@ class _SignUpViewState extends State<SignUpView> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final t = AppLocalizations.of(context);
     return BlocProvider<SignUpBloc>(
       create: (context) => getIt<SignUpBloc>(),
@@ -319,9 +319,19 @@ class _SignUpViewState extends State<SignUpView> {
                                   text: "الشروط والأحكام",
                                   style: TextStyle(color: Colors.blue),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () {},
+                                    ..onTap = () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const TermsAndPrivacyView(),
+                                        ),
+                                      );
+                                    },
                                 ),
-                                TextSpan(text: " و "),
+                                TextSpan(
+                                  text: " و ",
+                                ),
                                 TextSpan(
                                   text: "سياسة الخصوصية",
                                   style: TextStyle(color: Colors.blue),
@@ -331,7 +341,7 @@ class _SignUpViewState extends State<SignUpView> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const HomeView(),
+                                              const TermsAndPrivacyView(),
                                         ),
                                       );
                                     },

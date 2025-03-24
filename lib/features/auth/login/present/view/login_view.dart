@@ -1,8 +1,8 @@
 import 'package:aquan/all_imports.dart';
+import 'package:aquan/features/auth/login/data/models/firabase_login_req_body_model.dart';
+import 'package:aquan/features/auth/login/data/models/reset_pass_req_body_model.dart';
 import '../../../../../core/validator.dart';
 import '../../../../../core/widgets/snacke_bar.dart';
-import '../../../../auth/login/data/models/reset_pass_req_body_model.dart';
-import '../../data/models/firabase_login_req_body_model.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -44,7 +44,9 @@ class _LoginViewState extends State<LoginView> {
                   (route) => false,
                 );
               },
-              notVerify: (data) {
+              notVerify: (
+                data,
+              ) {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
@@ -64,7 +66,9 @@ class _LoginViewState extends State<LoginView> {
                   toastType: ToastType.success,
                 );
               },
-              failure: (apiErrorModel) {
+              failure: (
+                apiErrorModel,
+              ) {
                 ToastNotifier().showError(
                   context: context,
                   message: apiErrorModel.apiErrorModel.error ?? t.error,
@@ -138,7 +142,9 @@ class _LoginViewState extends State<LoginView> {
                             key: const Key('password_field'),
                             labelText: t.password,
                             showTogglePassword: true,
-                            onChanged: (v) {
+                            onChanged: (
+                              v,
+                            ) {
                               firabaseLoginReqBodyModel =
                                   firabaseLoginReqBodyModel.copyWith(
                                 password: v,
@@ -147,7 +153,10 @@ class _LoginViewState extends State<LoginView> {
                                 _formKey.currentState!.validate();
                               }
                             },
-                            validator: (v) => Validator.customValidator(
+                            validator: (
+                              v,
+                            ) =>
+                                Validator.customValidator(
                               value: v ?? '',
                               t: t,
                             ),
@@ -204,12 +213,12 @@ class _LoginViewState extends State<LoginView> {
                             key: const Key('login_button'),
                             onTap: () async {
                               if (_formKey.currentState!.validate()) {
-                                // context.read<LoginBloc>().add(
-                                //       LoginEvent.fireLogin(
-                                //         firabaseLoginReqBodyModel:
-                                //             firabaseLoginReqBodyModel,
-                                //       ),
-                                //     );
+                                context.read<LoginBloc>().add(
+                                      LoginEvent.fireLogin(
+                                        firabaseLoginReqBodyModel:
+                                            firabaseLoginReqBodyModel,
+                                      ),
+                                    );
                               } else {
                                 validated = true;
                               }

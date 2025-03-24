@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../../../../all_imports.dart';
-import '../../../../data/model/plan.dart';
+import '../../../../../plans/data/model/plan.dart';
 
 class PlansDataWidget extends StatefulWidget {
   PlansDataWidget({
