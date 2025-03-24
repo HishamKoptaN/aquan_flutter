@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>19118574319-fc22tgrklp0joodkv0mvg1kiu5jn7q4i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.19118574319-fc22tgrklp0joodkv0mvg1kiu5jn7q4i</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>19118574319-um56sitpbg29vad2t4tfte0ek0m66k2i.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB53iUt4Hm3ojD0P-1AA42SytdUtGRtZxI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>19118574319</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.aquan.app.dev</string>
+	<key>PROJECT_ID</key>
+	<string>aquan-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>aquan-dev.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:19118574319:ios:085e585d27c3acd4eb291a</string>
+</dict>
+</plist>
