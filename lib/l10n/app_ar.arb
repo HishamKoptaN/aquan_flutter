@@ -13,6 +13,8 @@
 	"password_too_short": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
 	"login": "دخول",
 	"wait": "أنتظر",
+	"suspended_balance": "الرصيد المعلق",
+	"available_balance": "الرصيد المتاح",
 	"open_account": "فتح حساب",
 	"sign_in": "تسجيل الدخول",
 	"user_name":"اسم الحساب",

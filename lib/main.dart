@@ -1,5 +1,4 @@
 import 'package:aquan/all_imports.dart';
-
 import 'features/controll/present/bloc/controll_bloc.dart';
 import 'features/controll/present/bloc/controll_event.dart';
 
@@ -13,7 +12,7 @@ Future<void> main() async {
   await ScreenUtil.ensureScreenSize();
   SharedPrefHelper;
   String locale = await SharedPrefHelper.getString(
-        key: SharedPrefKeys.languageCode,
+        key: SharedPrefKeys.languageCode, 
       ) ??
       'ar';
   FlutterError.onError = (

@@ -6,8 +6,9 @@ import 'dash_state.dart';
 
 class DashBloc extends Bloc<DashEvent, DashState> {
   final GetDashUseCase getDashUseCase;
-  DashBloc({required this.getDashUseCase, s})
-      : super(
+  DashBloc({
+    required this.getDashUseCase,
+  }) : super(
           const DashState.initial(),
         ) {
     on<DashEvent>(
@@ -29,7 +30,9 @@ class DashBloc extends Bloc<DashEvent, DashState> {
                   ),
                 );
               },
-              failure: (apiErrorModel) async {
+              failure: (
+                apiErrorModel,
+              ) async {
                 emit(
                   DashState.failure(
                     apiErrorModel: apiErrorModel,

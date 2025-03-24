@@ -42,7 +42,7 @@ class _DashViewState extends State<DashView> {
       body: ListView(
         children: [
           Container(
-            height: height / 2.5,
+            height: height / 2.2,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
@@ -93,9 +93,14 @@ class _DashViewState extends State<DashView> {
                                             builder: (context) =>
                                                 const ProfileView(),
                                           ),
-                                        ).then((value) => setState(
-                                              () => {},
-                                            ));
+                                        ).then(
+                                          (
+                                            value,
+                                          ) =>
+                                              setState(
+                                            () => {},
+                                          ),
+                                        );
                                       },
                                       icon: FaIcon(
                                         FontAwesomeIcons.user,
@@ -208,9 +213,79 @@ class _DashViewState extends State<DashView> {
                       '',
                   textAlign: TextAlign.center,
                   color: Colors.black,
-                  fontSize: 40.sp,
+                  fontSize: 38.sp,
                   fontWeight: FontWeight.bold,
                   isPrice: true,
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: t.available_balance,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(text: ' '),
+                      WidgetSpan(
+                        child: Transform.translate(
+                          offset: const Offset(
+                            0.0,
+                            3.0,
+                          ),
+                          child: CustomText(
+                            text: UserSingleton
+                                    .instance.user?.balance?.availableBalance
+                                    ?.toString() ??
+                                '',
+                            fontSize: 16.sp,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.sp,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: t.suspended_balance,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' ',
+                      ),
+                      WidgetSpan(
+                        child: Transform.translate(
+                          offset: const Offset(
+                            0.0,
+                            3.0,
+                          ),
+                          child: CustomText(
+                            text: UserSingleton
+                                    .instance.user?.balance?.suspendedBalance
+                                    ?.toString() ??
+                                '',
+                            fontSize: 16.sp,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(0.0),
@@ -352,7 +427,9 @@ class _DashViewState extends State<DashView> {
             5.h,
           ),
           Container(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(
+              right: 10,
+            ),
             decoration: const BoxDecoration(
               border: Border(
                 right: BorderSide(color: Colors.black, width: 4),

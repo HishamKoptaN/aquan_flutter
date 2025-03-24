@@ -62,7 +62,7 @@ class LoginRemDataSrc {
     }
   }
 
-  /// التحقق من رقم الهاتف
+  //! التحقق من رقم الهاتف
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
     required PhoneVerificationCompleted verificationCompleted,
@@ -85,7 +85,7 @@ class LoginRemDataSrc {
     }
   }
 
-  /// تسجيل الدخول باستخدام بيانات التحقق من الهاتف
+  //! تسجيل الدخول باستخدام بيانات التحقق من الهاتف
   Future<UserCredential> signInWithPhoneCredential(
       PhoneAuthCredential credential) async {
     try {
