@@ -9,16 +9,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:aquan/features/support/present/bloc/support_bloc.dart';
-import '../../../core/di/dependency_injection.dart';
-import '../../../core/singletons/user_singleton.dart';
-import '../../../core/widgets/custom_circular_progress.dart';
-import '../../../core/widgets/custom_text_widget.dart';
-import '../../controll/view/widgets/section.dart';
-import '../../layouts/app_layout.dart';
-import '../data/model/msg.dart';
-import '../data/model/msg_send.dart';
-import '../present/bloc/support_event.dart';
-import '../present/bloc/support_state.dart';
+import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/singletons/user_singleton.dart';
+import '../../../../core/widgets/custom_circular_progress.dart';
+import '../../../../core/widgets/custom_text_widget.dart';
+import '../../../controll/view/widgets/section.dart';
+import '../../../layouts/app_layout.dart';
+import '../../data/model/msg.dart';
+import '../../data/model/msg_send.dart';
+import '../bloc/support_event.dart';
+import '../bloc/support_state.dart';
 
 class SupportView extends StatefulWidget {
   const SupportView({super.key});

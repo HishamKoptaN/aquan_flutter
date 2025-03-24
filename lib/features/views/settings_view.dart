@@ -16,7 +16,7 @@ import '../language/view/change_language_view.dart';
 import '../layouts/app_layout.dart';
 import '../notifications/present/view/notifications_view.dart';
 import '../plans/present/view/plans_view/plans_view.dart';
-import '../support/view/support_view.dart';
+import '../support/present/view/support_view.dart';
 import '../tasks/present/bloc/view/tasks_view.dart';
 import '../trans/present/view/trans_view.dart';
 import '../withdraw/present/view/withdraws_view.dart';

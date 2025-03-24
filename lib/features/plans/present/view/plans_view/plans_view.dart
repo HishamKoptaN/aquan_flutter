@@ -7,11 +7,10 @@ import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/try_againwidget.dart';
 import '../../../../layouts/app_layout.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../plans/present/view/plans_view/widgets/plans_data_widget.dart';
 import '../../bloc/plans_bloc.dart';
 import '../../bloc/plans_event.dart';
 import '../../bloc/plans_state.dart';
-import 'widgets/plans_data_widget.dart';
-import '../../../data/model/plan.dart';
 
 class PlansView extends StatefulWidget {
   const PlansView({
