@@ -1,14 +1,15 @@
 import 'package:aquan/core/networking/api_result.dart';
 import 'package:injectable/injectable.dart';
 import '../../data/model/notifications_res_model.dart';
-import '../repo_imp/notifications_repo_impl.dart';
+import '../../data/repo/notifications_repo.dart';
+
 @LazySingleton()
 class GetNotificationsUseCase {
-  final NotificationsRepoImpl notificationsRepoImp;
+  final NotificationsRepo notificationsRepo;
   GetNotificationsUseCase({
-    required this.notificationsRepoImp,
+    required this.notificationsRepo,
   });
   Future<ApiResult<List<Notification>>> get() async {
-    return await notificationsRepoImp.get();
+    return await notificationsRepo.get();
   }
 }

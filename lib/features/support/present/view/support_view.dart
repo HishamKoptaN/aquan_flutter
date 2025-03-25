@@ -100,6 +100,7 @@ class _SupportViewState extends State<SupportView> {
       route: t.support,
       showAppBar: true,
       body: SectionAvailabilityWidget(
+        canBack: true,
         sectionId: 3,
         onAvailable: (section) {
           return BlocProvider(

@@ -3,20 +3,14 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/singletons/task_details_singleton.dart';
 import '../../../../core/singletons/tasks_singleton.dart';
 import '../../domain/use_cases/get_task_details_use_case.dart';
-import '../../domain/use_cases/get_tasks_use_case.dart';
-import '../../domain/use_cases/proof_task_use_case.dart';
 import 'tasks_event.dart';
 import 'tasks_state.dart';
 
 @LazySingleton()
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  final GetTasksUseCase getTasksUseCase;
-  final GetTaskDetailsUseCase getTaskDetailsUseCase;
-  final ProofTaskUseCase proofTaskUseCase;
+  final TaskUseCases getTaskDetailsUseCase;
   TasksBloc({
-    required this.getTasksUseCase,
     required this.getTaskDetailsUseCase,
-    required this.proofTaskUseCase,
   }) : super(
           const TasksState.initial(),
         ) {
@@ -27,7 +21,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
             emit(
               const TasksState.loading(),
             );
-            final result = await getTasksUseCase.get();
+            final result = await getTaskDetailsUseCase.get();
             await result.when(
               success: (response) async {
                 TasksSingleton.instance.tasks = response;
@@ -75,7 +69,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
             emit(
               const TasksState.loading(),
             );
-            final result = await proofTaskUseCase.proofTask(
+            final result = await getTaskDetailsUseCase.proofTask(
               formData: formData,
             );
             await result.when(

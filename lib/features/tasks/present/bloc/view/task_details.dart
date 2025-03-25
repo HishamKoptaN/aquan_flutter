@@ -44,11 +44,8 @@ class _TaskScreenState extends State<TaskScreen> {
       body: Container(
         padding: const EdgeInsets.all(8.00),
         child: BlocProvider<TasksBloc>(
-          create: (context) => TasksBloc(
-            getTasksUseCase: getIt(),
-            getTaskDetailsUseCase: getIt(),
-            proofTaskUseCase: getIt(),
-          )..add(
+          create: (context) => getIt<TasksBloc>()
+            ..add(
               TasksEvent.getTaskDetails(
                 taskId: widget.task.id!,
               ),

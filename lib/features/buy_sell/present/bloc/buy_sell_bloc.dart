@@ -1,20 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../domain/use_cases/get_buy_sell_rates_use_case.dart';
-import '../../domain/use_cases/get_receive_account_number_use_case.dart';
-import '../../domain/use_cases/transfer_money_use_case.dart';
+import '../../domain/use_cases/buy_sell_rate_use_cases.dart';
 import 'buy_sell_event.dart';
 import 'buy_sell_state.dart';
 
 @LazySingleton()
 class BuySellBloc extends Bloc<BuySellEvent, BuySellState> {
-  GetBuySellRatesUse getBuySellRatesUse;
-  GetReceiveAccountNumberUseCase getReceiveAccountNumberUseCase;
-  TransferMoneyUseCase transferMoneyUseCase;
+  BuySellRatesUses buySellRatesUses;
   BuySellBloc({
-    required this.getBuySellRatesUse,
-    required this.getReceiveAccountNumberUseCase,
-    required this.transferMoneyUseCase,
+    required this.buySellRatesUses,
   }) : super(
           const BuySellState.initial(),
         ) {
@@ -25,7 +19,7 @@ class BuySellBloc extends Bloc<BuySellEvent, BuySellState> {
             emit(
               const BuySellState.loading(),
             );
-            final result = await getBuySellRatesUse.getBuySellRates();
+            final result = await buySellRatesUses.getBuySellRates();
             await result.when(
               success: (buySellResModel) async {
                 emit(
@@ -49,8 +43,7 @@ class BuySellBloc extends Bloc<BuySellEvent, BuySellState> {
             emit(
               const BuySellState.loading(),
             );
-            final result =
-                await getReceiveAccountNumberUseCase.getReceiveAccountNumber(
+            final result = await buySellRatesUses.getReceiveAccountNumber(
               id: id,
             );
             await result.when(
@@ -74,7 +67,7 @@ class BuySellBloc extends Bloc<BuySellEvent, BuySellState> {
             emit(
               const BuySellState.loading(),
             );
-            final result = await transferMoneyUseCase.transferMoney(
+            final result = await buySellRatesUses.transferMoney(
               formData: formData,
             );
             await result.when(

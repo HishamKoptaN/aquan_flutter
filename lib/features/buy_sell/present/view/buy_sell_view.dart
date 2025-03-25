@@ -36,14 +36,11 @@ class _BuySellviewState extends State<BuySellview> {
       body: Padding(
         padding: const EdgeInsets.all(0.0),
         child: SectionAvailabilityWidget(
+          canBack: true,
           sectionId: 1,
           onAvailable: (section) {
             return BlocProvider<BuySellBloc>(
-              create: (context) => BuySellBloc(
-                getBuySellRatesUse: getIt(),
-                getReceiveAccountNumberUseCase: getIt(),
-                transferMoneyUseCase: getIt(),
-              ),
+              create: (context) => getIt<BuySellBloc>(),
               child: BlocBuilder<BuySellBloc, BuySellState>(
                 builder: (context, state) {
                   state.whenOrNull(

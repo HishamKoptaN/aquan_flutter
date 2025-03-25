@@ -7,6 +7,7 @@ import '../../data/model/task_details.dart';
 import '../../data/model/task.dart';
 import '../../data/repo/tasks_repo.dart';
 import 'package:dio/dio.dart';
+
 @Injectable(
   as: TasksRepo,
 )

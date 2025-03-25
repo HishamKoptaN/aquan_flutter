@@ -1,14 +1,6 @@
-// To parse this JSON data, do
-//
-//     final withdrawsResModel = withdrawsResModelFromJson(jsonString);
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
-
 import '../../../../core/models/currency.dart';
-import '../../../plans/data/model/plan_rate.dart';
-import '../../../withdraws_deposits/model/withdraws_deposits_model.dart';
-
 part 'withdraws_res_model.freezed.dart';
 part 'withdraws_res_model.g.dart';
 

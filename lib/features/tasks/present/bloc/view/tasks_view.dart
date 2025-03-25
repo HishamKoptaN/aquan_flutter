@@ -30,14 +30,14 @@ class TasksScreen extends StatelessWidget {
       route: t.tasks,
       showAppBar: true,
       body: SectionAvailabilityWidget(
+        canBack: true,
         sectionId: 2,
-        onAvailable: (section) {
+        onAvailable: (
+          section,
+        ) {
           return BlocProvider<TasksBloc>(
-            create: (context) => TasksBloc(
-              getTasksUseCase: getIt(),
-              getTaskDetailsUseCase: getIt(),
-              proofTaskUseCase: getIt(),
-            )..add(
+            create: (context) => getIt<TasksBloc>()
+              ..add(
                 const TasksEvent.get(),
               ),
             child: Container(
@@ -50,7 +50,6 @@ class TasksScreen extends StatelessWidget {
                         itemCount: TasksSingleton.instance.tasks!.length,
                         itemBuilder: (BuildContext context, int index) {
                           Task task = TasksSingleton.instance.tasks![index];
-
                           if (TasksSingleton.instance.tasks!.isEmpty) {
                             return Center(
                               child: Text(
@@ -123,7 +122,7 @@ class TasksScreen extends StatelessWidget {
               ),
             ),
           );
-        },
+        }, 
       ),
     );
   }

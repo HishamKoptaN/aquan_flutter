@@ -53,12 +53,8 @@ import '../../features/buy_sell/data/data_source/buy_sell_api.dart' as _i397;
 import '../../features/buy_sell/data/repo/buy_sell_repo.dart' as _i174;
 import '../../features/buy_sell/domain/repo_impl/buy_sell_repo_impl.dart'
     as _i301;
-import '../../features/buy_sell/domain/use_cases/get_buy_sell_rates_use_case.dart'
-    as _i486;
-import '../../features/buy_sell/domain/use_cases/get_receive_account_number_use_case.dart'
-    as _i12;
-import '../../features/buy_sell/domain/use_cases/transfer_money_use_case.dart'
-    as _i290;
+import '../../features/buy_sell/domain/use_cases/buy_sell_rate_use_cases.dart'
+    as _i386;
 import '../../features/buy_sell/present/bloc/buy_sell_bloc.dart' as _i959;
 import '../../features/controll/data/data_sources/controll_api.dart' as _i268;
 import '../../features/controll/data/repo/controll_repo.dart' as _i866;
@@ -99,10 +95,6 @@ import '../../features/notifications/present/bloc/notifications_bloc.dart'
 import '../../features/plans/data/data_source/plans_api.dart' as _i1000;
 import '../../features/plans/data/repo/plans_repo.dart' as _i768;
 import '../../features/plans/domain/repo_imp/plans_repo_impl.dart' as _i988;
-import '../../features/plans/domain/use_cases/change_plan_use_case.dart'
-    as _i635;
-import '../../features/plans/domain/use_cases/get_plans_rates_use_case.dart'
-    as _i933;
 import '../../features/plans/domain/use_cases/get_plans_use_case.dart' as _i333;
 import '../../features/plans/present/bloc/plans_bloc.dart' as _i336;
 import '../../features/profile/data/data_sources/profile_api.dart' as _i480;
@@ -121,8 +113,6 @@ import '../../features/send_to_account/domain/repo_imp/send_to_account_repo_impl
     as _i121;
 import '../../features/send_to_account/domain/use_cases/get_username_by_account_use_case.dart'
     as _i336;
-import '../../features/send_to_account/domain/use_cases/send_to_account_use_case.dart'
-    as _i547;
 import '../../features/send_to_account/present/bloc/send_to_account_bloc.dart'
     as _i768;
 import '../../features/support/data/data_sources/support_api.dart' as _i414;
@@ -137,9 +127,6 @@ import '../../features/tasks/data/repo/tasks_repo.dart' as _i915;
 import '../../features/tasks/domain/repo_impl/tasks_repo_impl.dart' as _i872;
 import '../../features/tasks/domain/use_cases/get_task_details_use_case.dart'
     as _i739;
-import '../../features/tasks/domain/use_cases/get_tasks_use_case.dart' as _i985;
-import '../../features/tasks/domain/use_cases/proof_task_use_case.dart'
-    as _i407;
 import '../../features/tasks/present/bloc/task_bloc.dart' as _i307;
 import '../../features/trans/data/data_source/trans_api.dart' as _i975;
 import '../../features/trans/data/repo/transactions_repo.dart' as _i251;
@@ -182,33 +169,8 @@ _i174.GetIt init(
   gh.lazySingleton<_i724.LanguageBloc>(() => _i724.LanguageBloc());
   gh.lazySingleton<_i907.QrCodeBloc>(() => _i907.QrCodeBloc());
   gh.lazySingleton<_i804.TokenStorage>(() => _i804.TokenStorage());
-  gh.lazySingleton<_i547.SendToAccountUseCase>(() => _i547.SendToAccountUseCase(
-      sendToAccountRepoImpl: gh<_i121.SendToAccountRepoImpl>()));
-  gh.lazySingleton<_i336.GetNameOfUserByAccountUseCase>(() =>
-      _i336.GetNameOfUserByAccountUseCase(
-          sendToAccountRepoImpl: gh<_i121.SendToAccountRepoImpl>()));
-  gh.lazySingleton<_i139.GetNotificationsUseCase>(() =>
-      _i139.GetNotificationsUseCase(
-          notificationsRepoImp: gh<_i291.NotificationsRepoImpl>()));
-  gh.lazySingleton<_i768.SendToAccountBloc>(() => _i768.SendToAccountBloc(
-        getNameOfUserByAccountUseCase:
-            gh<_i336.GetNameOfUserByAccountUseCase>(),
-        sendToAccountUseCase: gh<_i547.SendToAccountUseCase>(),
-      ));
-  gh.lazySingleton<_i781.NotificationsBloc>(() => _i781.NotificationsBloc(
-      getNotificationsUseCase: gh<_i139.GetNotificationsUseCase>()));
-  gh.lazySingleton<_i885.DepositUseCases>(() =>
-      _i885.DepositUseCases(depositRepoImpl: gh<_i334.DepositsRepoImpl>()));
-  gh.lazySingleton<_i290.TransferMoneyUseCase>(() =>
-      _i290.TransferMoneyUseCase(buySellRepoImp: gh<_i301.BuySellRepoImpl>()));
   gh.lazySingleton<_i305.BiometricBloc>(
       () => _i305.BiometricBloc(gh<_i152.LocalAuthentication>()));
-  gh.lazySingleton<_i933.GetPlansRatesUseCase>(
-      () => _i933.GetPlansRatesUseCase(gh<_i988.PlansRepoImpl>()));
-  gh.lazySingleton<_i635.ChangePlanUseCase>(
-      () => _i635.ChangePlanUseCase(gh<_i988.PlansRepoImpl>()));
-  gh.lazySingleton<_i333.PlanUseCases>(
-      () => _i333.PlanUseCases(gh<_i988.PlansRepoImpl>()));
   gh.factory<_i534.VerifyEmailRepo>(() =>
       _i630.VerifyEmailRepoImpl(verifyEmailApi: gh<_i1039.VerifyEmailApi>()));
   gh.singleton<_i804.AuthInterceptor>(
@@ -220,10 +182,6 @@ _i174.GetIt init(
           verifyEmailRepo: gh<_i630.VerifyEmailRepoImpl>()));
   gh.lazySingleton<_i518.SendEmailOtpUseCase>(() => _i518.SendEmailOtpUseCase(
       verifyEmailRepo: gh<_i630.VerifyEmailRepoImpl>()));
-  gh.lazySingleton<_i336.PlansBloc>(
-      () => _i336.PlansBloc(gh<_i333.PlanUseCases>()));
-  gh.lazySingleton<_i865.DepositsBloc>(() =>
-      _i865.DepositsBloc(getDepositstUseCase: gh<_i885.DepositUseCases>()));
   gh.singleton<_i361.Dio>(() => apiModule.dio(
         gh<_i804.AuthInterceptor>(),
         gh<_i804.LoggingInterceptor>(),
@@ -268,6 +226,9 @@ _i174.GetIt init(
       () => _i408.GetDashUseCase(gh<_i267.DashRepo>()));
   gh.factory<_i871.SignUpRepo>(
       () => _i941.SignUpRepoImpl(signUpApi: gh<_i552.SignUpApi>()));
+  gh.lazySingleton<_i139.GetNotificationsUseCase>(() =>
+      _i139.GetNotificationsUseCase(
+          notificationsRepo: gh<_i1007.NotificationsRepo>()));
   gh.factory<_i611.SupportRepo>(
       () => _i938.SupportRepoImpl(gh<_i414.SupportApi>()));
   gh.factory<_i866.ControllRepo>(
@@ -278,6 +239,8 @@ _i174.GetIt init(
   gh.factory<_i42.AccountsRepo>(
       () => _i356.AccountsRepoImpl(gh<_i363.AccountsApi>()));
   gh.factory<_i587.MainRepo>(() => _i880.MainRepoImpl(gh<_i942.MainApi>()));
+  gh.lazySingleton<_i885.DepositUseCases>(
+      () => _i885.DepositUseCases(depositRepo: gh<_i296.DepositsRepo>()));
   gh.lazySingleton<_i542.DashBloc>(
       () => _i542.DashBloc(getDashUseCase: gh<_i408.GetDashUseCase>()));
   gh.lazySingleton<_i297.GetAccountsUseCase>(
@@ -305,19 +268,22 @@ _i174.GetIt init(
         gh<_i685.LoginRemDataSrc>(),
         gh<_i685.LoginApi>(),
       ));
+  gh.lazySingleton<_i333.PlanUseCases>(
+      () => _i333.PlanUseCases(gh<_i768.PlansRepo>()));
+  gh.lazySingleton<_i865.DepositsBloc>(() =>
+      _i865.DepositsBloc(getDepositstUseCase: gh<_i885.DepositUseCases>()));
   gh.lazySingleton<_i199.EditProfileUseCase>(
       () => _i199.EditProfileUseCase(profileRepo: gh<_i433.ProfileRepo>()));
-  gh.lazySingleton<_i407.ProofTaskUseCase>(
-      () => _i407.ProofTaskUseCase(tasksRepo: gh<_i915.TasksRepo>()));
-  gh.lazySingleton<_i739.GetTaskDetailsUseCase>(
-      () => _i739.GetTaskDetailsUseCase(tasksRepo: gh<_i915.TasksRepo>()));
-  gh.lazySingleton<_i985.GetTasksUseCase>(
-      () => _i985.GetTasksUseCase(tasksRepo: gh<_i915.TasksRepo>()));
+  gh.lazySingleton<_i781.NotificationsBloc>(() => _i781.NotificationsBloc(
+      getNotificationsUseCase: gh<_i139.GetNotificationsUseCase>()));
+  gh.lazySingleton<_i739.TaskUseCases>(
+      () => _i739.TaskUseCases(tasksRepo: gh<_i915.TasksRepo>()));
+  gh.lazySingleton<_i307.TasksBloc>(
+      () => _i307.TasksBloc(getTaskDetailsUseCase: gh<_i739.TaskUseCases>()));
   gh.lazySingleton<_i45.SignUpUseCase>(
       () => _i45.SignUpUseCase(gh<_i871.SignUpRepo>()));
-  gh.lazySingleton<_i12.GetReceiveAccountNumberUseCase>(() =>
-      _i12.GetReceiveAccountNumberUseCase(
-          buySellRepo: gh<_i174.BuySellRepo>()));
+  gh.lazySingleton<_i386.BuySellRatesUses>(
+      () => _i386.BuySellRatesUses(buySellRepo: gh<_i174.BuySellRepo>()));
   gh.lazySingleton<_i1064.ControllUseCases>(
       () => _i1064.ControllUseCases(controllRepo: gh<_i866.ControllRepo>()));
   gh.lazySingleton<_i422.MainUseCases>(
@@ -339,13 +305,13 @@ _i174.GetIt init(
         getAccountsUseCase: gh<_i297.GetAccountsUseCase>(),
         editAccountUseCase: gh<_i199.EditAccountUseCase>(),
       ));
-  gh.lazySingleton<_i307.TasksBloc>(() => _i307.TasksBloc(
-        getTasksUseCase: gh<_i985.GetTasksUseCase>(),
-        getTaskDetailsUseCase: gh<_i739.GetTaskDetailsUseCase>(),
-        proofTaskUseCase: gh<_i407.ProofTaskUseCase>(),
-      ));
   gh.lazySingleton<_i562.SupportBloc>(
       () => _i562.SupportBloc(supportUseCases: gh<_i278.SupportUseCases>()));
+  gh.lazySingleton<_i336.PlansBloc>(
+      () => _i336.PlansBloc(gh<_i333.PlanUseCases>()));
+  gh.lazySingleton<_i336.SendToAccountUseCases>(() =>
+      _i336.SendToAccountUseCases(
+          sendToAccountRepo: gh<_i774.SendToAccountRepo>()));
   gh.lazySingleton<_i924.MainBloc>(() => _i924.MainBloc(
         mainUseCases: gh<_i422.MainUseCases>(),
         firebaseAuth: gh<_i59.FirebaseAuth>(),
@@ -358,14 +324,12 @@ _i174.GetIt init(
         auth: gh<_i59.FirebaseAuth>(),
         authService: gh<_i106.AuthService>(),
       ));
-  gh.lazySingleton<_i959.BuySellBloc>(() => _i959.BuySellBloc(
-        getBuySellRatesUse: gh<_i486.GetBuySellRatesUse>(),
-        getReceiveAccountNumberUseCase:
-            gh<_i12.GetReceiveAccountNumberUseCase>(),
-        transferMoneyUseCase: gh<_i290.TransferMoneyUseCase>(),
-      ));
+  gh.lazySingleton<_i959.BuySellBloc>(
+      () => _i959.BuySellBloc(buySellRatesUses: gh<_i386.BuySellRatesUses>()));
   gh.lazySingleton<_i857.TransBloc>(
       () => _i857.TransBloc(gh<_i736.GetTransUseCase>()));
+  gh.lazySingleton<_i768.SendToAccountBloc>(() => _i768.SendToAccountBloc(
+      sendToAccountUseCases: gh<_i336.SendToAccountUseCases>()));
   return getIt;
 }
 

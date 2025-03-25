@@ -1,13 +1,12 @@
 import 'package:aquan/features/deposit/data/model/employee_account_res_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
-import '../../../withdraw/data/repo/withdraws_repo.dart';
 import '../../data/data_sources/deposits_api.dart';
 import '../../data/model/deposits_res_model.dart';
 import '../../data/repo/deposits_repo.dart';
+
 @Injectable(
   as: DepositsRepo,
 )

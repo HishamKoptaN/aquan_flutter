@@ -3,26 +3,26 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import '../../../plans/data/model/plan.dart';
 import '../../data/model/plan_rate.dart';
-import '../repo_imp/plans_repo_impl.dart';
+import '../../data/repo/plans_repo.dart';
 
 @LazySingleton()
 class PlanUseCases {
-  final PlansRepoImpl plansRepoImp;
+  final PlansRepo plansRepo;
   PlanUseCases(
-    this.plansRepoImp,
+    this.plansRepo,
   );
   Future<ApiResult<List<Plan>>> get() async {
-    return await plansRepoImp.get();
+    return await plansRepo.get();
   }
 
   Future<ApiResult<PlanRate>> getPlansRates() async {
-    return await plansRepoImp.getPlansRates();
+    return await plansRepo.getPlansRates();
   }
 
   Future<ApiResult<void>> change({
     required FormData formData,
   }) async {
-    return await plansRepoImp.change(
+    return await plansRepo.change(
       formData: formData,
     );
   }

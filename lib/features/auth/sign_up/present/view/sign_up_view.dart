@@ -3,6 +3,7 @@ import '../../../../../all_imports.dart';
 import '../../../../../core/helpers/validate_password.dart';
 import '../../../../../core/validator.dart';
 import '../../../../../core/widgets/terms_and_privacy_view.dart';
+import '../../../../main/present/view/main_view.dart';
 import '../../data/models/sign_up_req_body.dart';
 import '../bloc/sign_up_bloc.dart';
 import '../bloc/sign_up_event.dart';
@@ -50,27 +51,18 @@ class _SignUpViewState extends State<SignUpView> {
         listener: (context, state) {
           state.whenOrNull(
             success: (apiErrorModel) {
-              ToastNotifier().showSuccess(
-                context: context,
-                message: t!.success,
-              );
-              Navigator.pushAndRemoveUntil(
-                context,
+              Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const HomeView(),
+                  builder: (context) => const MainView(
+                    ckeckEmailVeification: true,
+                  ),
                 ),
                 (route) => false,
               );
-
-              // Navigator.pushAndRemoveUntil(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const VerifyEmailOtp(),
-              //   ),
-              //   (route) => false,
-              // );
             },
-            failure: (apiErrorModel) async {
+            failure: (
+              apiErrorModel,
+            ) async {
               ToastNotifier().showError(
                 context: context,
                 message: apiErrorModel.error ?? t!.error,

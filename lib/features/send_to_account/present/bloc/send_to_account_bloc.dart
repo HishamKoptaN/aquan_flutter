@@ -1,18 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../domain/use_cases/get_username_by_account_use_case.dart';
-import '../../domain/use_cases/send_to_account_use_case.dart';
 import 'send_to_account_event.dart';
 import 'send_to_account_state.dart';
-@LazySingleton()
 
+@LazySingleton()
 class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
-  GetNameOfUserByAccountUseCase getNameOfUserByAccountUseCase;
-  SendToAccountUseCase sendToAccountUseCase;
+  SendToAccountUseCases sendToAccountUseCases;
 
   SendToAccountBloc({
-    required this.getNameOfUserByAccountUseCase,
-    required this.sendToAccountUseCase,
+    required this.sendToAccountUseCases,
   }) : super(
           const SendToAccountState.initial(),
         ) {
@@ -23,7 +20,7 @@ class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
             emit(
               const SendToAccountState.loading(),
             );
-            final result = await getNameOfUserByAccountUseCase.get(
+            final result = await sendToAccountUseCases.get(
               accountNumber: accountNumber,
             );
             await result.when(
@@ -49,7 +46,7 @@ class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
             emit(
               const SendToAccountState.loading(),
             );
-            final result = await sendToAccountUseCase.send(
+            final result = await sendToAccountUseCases.send(
               transferReqBody: transferReqBody,
             );
             await result.when(

@@ -41,10 +41,7 @@ class _SendToAccountViewState extends State<SendToAccountView> {
       showAppBar: true,
       backArow: false,
       body: BlocProvider<SendToAccountBloc>(
-        create: (context) => SendToAccountBloc(
-          getNameOfUserByAccountUseCase: getIt(),
-          sendToAccountUseCase: getIt(),
-        ),
+        create: (context) => getIt<SendToAccountBloc>(),
         child: BlocConsumer<SendToAccountBloc, SendToAccountState>(
           listener: (context, state) {
             state.whenOrNull(

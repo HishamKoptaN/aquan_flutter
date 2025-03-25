@@ -23,10 +23,7 @@ class _BuySellConfirmViewState extends State<BuySellConfirmView> {
       route: t.buyandsell,
       showAppBar: true,
       body: BlocProvider<BuySellBloc>(
-        create: (context) => BuySellBloc(
-          getBuySellRatesUse: getIt(),
-          getReceiveAccountNumberUseCase: getIt(),
-          transferMoneyUseCase: getIt(),
+        create: (context) => getIt<BuySellBloc>(
         )..add(
             BuySellEvent.getReceivedAccountNumber(
               id: widget.transferMoneyReqmodel.receiverCurrencyId,
