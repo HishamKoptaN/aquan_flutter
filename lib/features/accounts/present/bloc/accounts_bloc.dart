@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/singletons/accounts_singleton.dart';
 import '../../domain/usecases/edit_accounts_usecase.dart';
 import '../../domain/usecases/get_accounts_usecase.dart';
 import 'accounts_event.dart';
 import 'accounts_state.dart';
+@LazySingleton()
 
 class AccountsBloc extends Bloc<AccountsEvent, AccountsState> {
   final GetAccountsUseCase getAccountsUseCase;

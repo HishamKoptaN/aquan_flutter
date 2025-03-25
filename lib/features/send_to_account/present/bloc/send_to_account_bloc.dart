@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../domain/use_cases/get_username_by_account_use_case.dart';
 import '../../domain/use_cases/send_to_account_use_case.dart';
 import 'send_to_account_event.dart';
 import 'send_to_account_state.dart';
+@LazySingleton()
 
 class SendToAccountBloc extends Bloc<SendToAccountEvent, SendToAccountState> {
   GetNameOfUserByAccountUseCase getNameOfUserByAccountUseCase;

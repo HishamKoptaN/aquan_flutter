@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../domain/use_cases/get_notifications_use_case.dart';
 import 'notifications_event.dart';
 import 'notifications_state.dart';
-
+@LazySingleton()
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   GetNotificationsUseCase getNotificationsUseCase;
   NotificationsBloc({

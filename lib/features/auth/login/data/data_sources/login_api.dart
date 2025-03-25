@@ -10,7 +10,7 @@ import '../../../../../core/errors/exceptions.dart';
 import '../models/firabase_login_req_body_model.dart';
 part 'login_api.g.dart';
 
-@injectable
+@LazySingleton()
 class LoginRemDataSrc {
   final FirebaseAuth firebaseAuth;
 
@@ -22,7 +22,10 @@ class LoginRemDataSrc {
   }) async {
     try {
       await firebaseAuth.currentUser?.reload();
-      return await firebaseAuth.signInWithEmailAndPassword(
+
+
+      return await 
+      firebaseAuth.signInWithEmailAndPassword(
         email: firabaseLoginReqBodyModel.email ?? '',
         password: firabaseLoginReqBodyModel.password ?? '',
       );

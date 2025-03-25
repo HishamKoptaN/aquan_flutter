@@ -57,13 +57,8 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         BlocProvider<PlansBloc>(
-          create: (context) => PlansBloc(
-            getIt(),
-            getIt(),
-            getIt(),
-          ),
+          create: (context) => getIt<PlansBloc>(),
         ),
-      
       ],
       child: AppLayout(
         route: '',

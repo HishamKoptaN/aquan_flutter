@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../domain/use_cases/get_buy_sell_rates_use_case.dart';
 import '../../domain/use_cases/get_receive_account_number_use_case.dart';
 import '../../domain/use_cases/transfer_money_use_case.dart';
 import 'buy_sell_event.dart';
 import 'buy_sell_state.dart';
 
+@LazySingleton()
 class BuySellBloc extends Bloc<BuySellEvent, BuySellState> {
   GetBuySellRatesUse getBuySellRatesUse;
   GetReceiveAccountNumberUseCase getReceiveAccountNumberUseCase;

@@ -1,9 +1,13 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_sources/dash_api.dart';
 import '../../data/model/dash_res_model.dart';
 import '../../data/repo/dash_repo.dart';
-
+@Injectable(
+  as: DashRepo,
+)
 class DashRepoImpl implements DashRepo {
   final DashApi dashApi;
   DashRepoImpl(

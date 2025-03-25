@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/networking/api_result.dart';
 import '../../data/repo/tasks_repo.dart';
 import '../../data/model/task.dart';
-
+@LazySingleton()
 class GetTasksUseCase {
   final TasksRepo tasksRepo;
   GetTasksUseCase({

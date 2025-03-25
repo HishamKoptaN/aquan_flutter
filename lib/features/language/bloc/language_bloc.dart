@@ -1,7 +1,9 @@
 import 'package:aquan/core/helpers/shared_pref_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 part 'language_event.dart';
 part 'language_state.dart';
+@LazySingleton()
 
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   LanguageBloc() : super(LanguageInitial()) {

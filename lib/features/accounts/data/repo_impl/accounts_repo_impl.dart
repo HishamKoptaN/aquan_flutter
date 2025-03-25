@@ -1,9 +1,14 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/models/account.dart';
 import '../../domain/repo/accounts_rep.dart';
 import '../datasources/accounts_api.dart';
 
+@Injectable(
+  as: AccountsRepo,
+)
 class AccountsRepoImpl implements AccountsRepo {
   final AccountsApi accountsApi;
   AccountsRepoImpl(

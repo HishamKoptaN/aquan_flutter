@@ -1,7 +1,8 @@
 import 'package:aquan/core/networking/api_result.dart';
+import 'package:injectable/injectable.dart';
 import '../../data/model/username_by_account_res_model.dart';
 import '../repo_imp/send_to_account_repo_impl.dart';
-
+@LazySingleton()
 class GetNameOfUserByAccountUseCase {
   final SendToAccountRepoImpl sendToAccountRepoImpl;
   GetNameOfUserByAccountUseCase({

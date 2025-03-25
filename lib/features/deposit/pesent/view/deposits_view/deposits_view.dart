@@ -21,10 +21,7 @@ class DepositsView extends StatelessWidget {
       route: t.deposits,
       showAppBar: true,
       body: BlocProvider<DepositsBloc>(
-        create: (context) => DepositsBloc(
-          getDepositstUseCase: getIt(),
-          getEmployeeAccountUseCase: getIt(),
-          depositUseCase: getIt(),
+        create: (context) => getIt<DepositsBloc>(
         )..add(
             const DepositEvent.get(),
           ),

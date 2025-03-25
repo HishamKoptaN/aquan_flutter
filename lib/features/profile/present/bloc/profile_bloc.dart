@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/singletons/user_singleton.dart';
 import '../../domain/use_cases/edit_profile_use_case.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
+@LazySingleton()
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final EditProfileUseCase editProfileUseCase;

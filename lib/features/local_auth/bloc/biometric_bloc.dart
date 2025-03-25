@@ -1,8 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:local_auth/local_auth.dart';
 import 'biometric_event.dart';
 import 'biometric_state.dart';
+@LazySingleton()
 
 class BiometricBloc extends Bloc<BiometricEvent, BiometricState> {
   final LocalAuthentication auth;

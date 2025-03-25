@@ -1,8 +1,11 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../../core/networking/api_result.dart';
 import '../../data/models/sign_up_req_body.dart';
 import '../../data/models/sign_up_res_model.dart';
 import '../repo/sign_up_repo.dart';
 
+@LazySingleton()
 class SignUpUseCase {
   final SignUpRepo signUpRepo;
   SignUpUseCase(

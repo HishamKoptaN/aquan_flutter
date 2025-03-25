@@ -2,10 +2,13 @@ import 'package:aquan/features/plans/data/data_source/plans_api.dart';
 import 'package:aquan/features/plans/data/model/plan_rate.dart';
 import 'package:aquan/features/plans/data/repo/plans_repo.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../plans/data/model/plan.dart';
-
+@Injectable(
+  as: PlansRepo,
+)
 class PlansRepoImpl implements PlansRepo {
   final PlansApi plansApi;
   PlansRepoImpl(

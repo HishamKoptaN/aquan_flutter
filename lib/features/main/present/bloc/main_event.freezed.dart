@@ -18,40 +18,59 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MainEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() check,
+    required TResult Function() checkLogedIn,
+    required TResult Function() checkEmailVerification,
     required TResult Function(EditPassReqBodyModel editPassReqBodyModel)
         editPass,
+    required TResult Function() sendVerificationLink,
+    required TResult Function() submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? check,
+    TResult? Function()? checkLogedIn,
+    TResult? Function()? checkEmailVerification,
     TResult? Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult? Function()? sendVerificationLink,
+    TResult? Function()? submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? check,
+    TResult Function()? checkLogedIn,
+    TResult Function()? checkEmailVerification,
     TResult Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult Function()? sendVerificationLink,
+    TResult Function()? submit,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Check value) check,
+    required TResult Function(_CheckLogedIn value) checkLogedIn,
+    required TResult Function(_CheckEmailVerification value)
+        checkEmailVerification,
     required TResult Function(_EditPass value) editPass,
+    required TResult Function(_SendVerificationLink value) sendVerificationLink,
+    required TResult Function(_Submit value) submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Check value)? check,
+    TResult? Function(_CheckLogedIn value)? checkLogedIn,
+    TResult? Function(_CheckEmailVerification value)? checkEmailVerification,
     TResult? Function(_EditPass value)? editPass,
+    TResult? Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult? Function(_Submit value)? submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Check value)? check,
+    TResult Function(_CheckLogedIn value)? checkLogedIn,
+    TResult Function(_CheckEmailVerification value)? checkEmailVerification,
     TResult Function(_EditPass value)? editPass,
+    TResult Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult Function(_Submit value)? submit,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,18 +97,18 @@ class _$MainEventCopyWithImpl<$Res, $Val extends MainEvent>
 }
 
 /// @nodoc
-abstract class _$$CheckImplCopyWith<$Res> {
-  factory _$$CheckImplCopyWith(
-          _$CheckImpl value, $Res Function(_$CheckImpl) then) =
-      __$$CheckImplCopyWithImpl<$Res>;
+abstract class _$$CheckLogedInImplCopyWith<$Res> {
+  factory _$$CheckLogedInImplCopyWith(
+          _$CheckLogedInImpl value, $Res Function(_$CheckLogedInImpl) then) =
+      __$$CheckLogedInImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$CheckImplCopyWithImpl<$Res>
-    extends _$MainEventCopyWithImpl<$Res, _$CheckImpl>
-    implements _$$CheckImplCopyWith<$Res> {
-  __$$CheckImplCopyWithImpl(
-      _$CheckImpl _value, $Res Function(_$CheckImpl) _then)
+class __$$CheckLogedInImplCopyWithImpl<$Res>
+    extends _$MainEventCopyWithImpl<$Res, _$CheckLogedInImpl>
+    implements _$$CheckLogedInImplCopyWith<$Res> {
+  __$$CheckLogedInImplCopyWithImpl(
+      _$CheckLogedInImpl _value, $Res Function(_$CheckLogedInImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of MainEvent
@@ -98,18 +117,18 @@ class __$$CheckImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CheckImpl implements _Check {
-  const _$CheckImpl();
+class _$CheckLogedInImpl implements _CheckLogedIn {
+  const _$CheckLogedInImpl();
 
   @override
   String toString() {
-    return 'MainEvent.check()';
+    return 'MainEvent.checkLogedIn()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CheckImpl);
+        (other.runtimeType == runtimeType && other is _$CheckLogedInImpl);
   }
 
   @override
@@ -118,31 +137,40 @@ class _$CheckImpl implements _Check {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() check,
+    required TResult Function() checkLogedIn,
+    required TResult Function() checkEmailVerification,
     required TResult Function(EditPassReqBodyModel editPassReqBodyModel)
         editPass,
+    required TResult Function() sendVerificationLink,
+    required TResult Function() submit,
   }) {
-    return check();
+    return checkLogedIn();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? check,
+    TResult? Function()? checkLogedIn,
+    TResult? Function()? checkEmailVerification,
     TResult? Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult? Function()? sendVerificationLink,
+    TResult? Function()? submit,
   }) {
-    return check?.call();
+    return checkLogedIn?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? check,
+    TResult Function()? checkLogedIn,
+    TResult Function()? checkEmailVerification,
     TResult Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult Function()? sendVerificationLink,
+    TResult Function()? submit,
     required TResult orElse(),
   }) {
-    if (check != null) {
-      return check();
+    if (checkLogedIn != null) {
+      return checkLogedIn();
     }
     return orElse();
   }
@@ -150,37 +178,175 @@ class _$CheckImpl implements _Check {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Check value) check,
+    required TResult Function(_CheckLogedIn value) checkLogedIn,
+    required TResult Function(_CheckEmailVerification value)
+        checkEmailVerification,
     required TResult Function(_EditPass value) editPass,
+    required TResult Function(_SendVerificationLink value) sendVerificationLink,
+    required TResult Function(_Submit value) submit,
   }) {
-    return check(this);
+    return checkLogedIn(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Check value)? check,
+    TResult? Function(_CheckLogedIn value)? checkLogedIn,
+    TResult? Function(_CheckEmailVerification value)? checkEmailVerification,
     TResult? Function(_EditPass value)? editPass,
+    TResult? Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult? Function(_Submit value)? submit,
   }) {
-    return check?.call(this);
+    return checkLogedIn?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Check value)? check,
+    TResult Function(_CheckLogedIn value)? checkLogedIn,
+    TResult Function(_CheckEmailVerification value)? checkEmailVerification,
     TResult Function(_EditPass value)? editPass,
+    TResult Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult Function(_Submit value)? submit,
     required TResult orElse(),
   }) {
-    if (check != null) {
-      return check(this);
+    if (checkLogedIn != null) {
+      return checkLogedIn(this);
     }
     return orElse();
   }
 }
 
-abstract class _Check implements MainEvent {
-  const factory _Check() = _$CheckImpl;
+abstract class _CheckLogedIn implements MainEvent {
+  const factory _CheckLogedIn() = _$CheckLogedInImpl;
+}
+
+/// @nodoc
+abstract class _$$CheckEmailVerificationImplCopyWith<$Res> {
+  factory _$$CheckEmailVerificationImplCopyWith(
+          _$CheckEmailVerificationImpl value,
+          $Res Function(_$CheckEmailVerificationImpl) then) =
+      __$$CheckEmailVerificationImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CheckEmailVerificationImplCopyWithImpl<$Res>
+    extends _$MainEventCopyWithImpl<$Res, _$CheckEmailVerificationImpl>
+    implements _$$CheckEmailVerificationImplCopyWith<$Res> {
+  __$$CheckEmailVerificationImplCopyWithImpl(
+      _$CheckEmailVerificationImpl _value,
+      $Res Function(_$CheckEmailVerificationImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MainEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$CheckEmailVerificationImpl implements _CheckEmailVerification {
+  const _$CheckEmailVerificationImpl();
+
+  @override
+  String toString() {
+    return 'MainEvent.checkEmailVerification()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CheckEmailVerificationImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkLogedIn,
+    required TResult Function() checkEmailVerification,
+    required TResult Function(EditPassReqBodyModel editPassReqBodyModel)
+        editPass,
+    required TResult Function() sendVerificationLink,
+    required TResult Function() submit,
+  }) {
+    return checkEmailVerification();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkLogedIn,
+    TResult? Function()? checkEmailVerification,
+    TResult? Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult? Function()? sendVerificationLink,
+    TResult? Function()? submit,
+  }) {
+    return checkEmailVerification?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkLogedIn,
+    TResult Function()? checkEmailVerification,
+    TResult Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult Function()? sendVerificationLink,
+    TResult Function()? submit,
+    required TResult orElse(),
+  }) {
+    if (checkEmailVerification != null) {
+      return checkEmailVerification();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckLogedIn value) checkLogedIn,
+    required TResult Function(_CheckEmailVerification value)
+        checkEmailVerification,
+    required TResult Function(_EditPass value) editPass,
+    required TResult Function(_SendVerificationLink value) sendVerificationLink,
+    required TResult Function(_Submit value) submit,
+  }) {
+    return checkEmailVerification(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckLogedIn value)? checkLogedIn,
+    TResult? Function(_CheckEmailVerification value)? checkEmailVerification,
+    TResult? Function(_EditPass value)? editPass,
+    TResult? Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult? Function(_Submit value)? submit,
+  }) {
+    return checkEmailVerification?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckLogedIn value)? checkLogedIn,
+    TResult Function(_CheckEmailVerification value)? checkEmailVerification,
+    TResult Function(_EditPass value)? editPass,
+    TResult Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult Function(_Submit value)? submit,
+    required TResult orElse(),
+  }) {
+    if (checkEmailVerification != null) {
+      return checkEmailVerification(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CheckEmailVerification implements MainEvent {
+  const factory _CheckEmailVerification() = _$CheckEmailVerificationImpl;
 }
 
 /// @nodoc
@@ -265,9 +431,12 @@ class _$EditPassImpl implements _EditPass {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() check,
+    required TResult Function() checkLogedIn,
+    required TResult Function() checkEmailVerification,
     required TResult Function(EditPassReqBodyModel editPassReqBodyModel)
         editPass,
+    required TResult Function() sendVerificationLink,
+    required TResult Function() submit,
   }) {
     return editPass(editPassReqBodyModel);
   }
@@ -275,8 +444,11 @@ class _$EditPassImpl implements _EditPass {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? check,
+    TResult? Function()? checkLogedIn,
+    TResult? Function()? checkEmailVerification,
     TResult? Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult? Function()? sendVerificationLink,
+    TResult? Function()? submit,
   }) {
     return editPass?.call(editPassReqBodyModel);
   }
@@ -284,8 +456,11 @@ class _$EditPassImpl implements _EditPass {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? check,
+    TResult Function()? checkLogedIn,
+    TResult Function()? checkEmailVerification,
     TResult Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult Function()? sendVerificationLink,
+    TResult Function()? submit,
     required TResult orElse(),
   }) {
     if (editPass != null) {
@@ -297,8 +472,12 @@ class _$EditPassImpl implements _EditPass {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Check value) check,
+    required TResult Function(_CheckLogedIn value) checkLogedIn,
+    required TResult Function(_CheckEmailVerification value)
+        checkEmailVerification,
     required TResult Function(_EditPass value) editPass,
+    required TResult Function(_SendVerificationLink value) sendVerificationLink,
+    required TResult Function(_Submit value) submit,
   }) {
     return editPass(this);
   }
@@ -306,8 +485,11 @@ class _$EditPassImpl implements _EditPass {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Check value)? check,
+    TResult? Function(_CheckLogedIn value)? checkLogedIn,
+    TResult? Function(_CheckEmailVerification value)? checkEmailVerification,
     TResult? Function(_EditPass value)? editPass,
+    TResult? Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult? Function(_Submit value)? submit,
   }) {
     return editPass?.call(this);
   }
@@ -315,8 +497,11 @@ class _$EditPassImpl implements _EditPass {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Check value)? check,
+    TResult Function(_CheckLogedIn value)? checkLogedIn,
+    TResult Function(_CheckEmailVerification value)? checkEmailVerification,
     TResult Function(_EditPass value)? editPass,
+    TResult Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult Function(_Submit value)? submit,
     required TResult orElse(),
   }) {
     if (editPass != null) {
@@ -338,4 +523,255 @@ abstract class _EditPass implements MainEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EditPassImplCopyWith<_$EditPassImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SendVerificationLinkImplCopyWith<$Res> {
+  factory _$$SendVerificationLinkImplCopyWith(_$SendVerificationLinkImpl value,
+          $Res Function(_$SendVerificationLinkImpl) then) =
+      __$$SendVerificationLinkImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SendVerificationLinkImplCopyWithImpl<$Res>
+    extends _$MainEventCopyWithImpl<$Res, _$SendVerificationLinkImpl>
+    implements _$$SendVerificationLinkImplCopyWith<$Res> {
+  __$$SendVerificationLinkImplCopyWithImpl(_$SendVerificationLinkImpl _value,
+      $Res Function(_$SendVerificationLinkImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MainEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$SendVerificationLinkImpl implements _SendVerificationLink {
+  const _$SendVerificationLinkImpl();
+
+  @override
+  String toString() {
+    return 'MainEvent.sendVerificationLink()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SendVerificationLinkImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkLogedIn,
+    required TResult Function() checkEmailVerification,
+    required TResult Function(EditPassReqBodyModel editPassReqBodyModel)
+        editPass,
+    required TResult Function() sendVerificationLink,
+    required TResult Function() submit,
+  }) {
+    return sendVerificationLink();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkLogedIn,
+    TResult? Function()? checkEmailVerification,
+    TResult? Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult? Function()? sendVerificationLink,
+    TResult? Function()? submit,
+  }) {
+    return sendVerificationLink?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkLogedIn,
+    TResult Function()? checkEmailVerification,
+    TResult Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult Function()? sendVerificationLink,
+    TResult Function()? submit,
+    required TResult orElse(),
+  }) {
+    if (sendVerificationLink != null) {
+      return sendVerificationLink();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckLogedIn value) checkLogedIn,
+    required TResult Function(_CheckEmailVerification value)
+        checkEmailVerification,
+    required TResult Function(_EditPass value) editPass,
+    required TResult Function(_SendVerificationLink value) sendVerificationLink,
+    required TResult Function(_Submit value) submit,
+  }) {
+    return sendVerificationLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckLogedIn value)? checkLogedIn,
+    TResult? Function(_CheckEmailVerification value)? checkEmailVerification,
+    TResult? Function(_EditPass value)? editPass,
+    TResult? Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult? Function(_Submit value)? submit,
+  }) {
+    return sendVerificationLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckLogedIn value)? checkLogedIn,
+    TResult Function(_CheckEmailVerification value)? checkEmailVerification,
+    TResult Function(_EditPass value)? editPass,
+    TResult Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult Function(_Submit value)? submit,
+    required TResult orElse(),
+  }) {
+    if (sendVerificationLink != null) {
+      return sendVerificationLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SendVerificationLink implements MainEvent {
+  const factory _SendVerificationLink() = _$SendVerificationLinkImpl;
+}
+
+/// @nodoc
+abstract class _$$SubmitImplCopyWith<$Res> {
+  factory _$$SubmitImplCopyWith(
+          _$SubmitImpl value, $Res Function(_$SubmitImpl) then) =
+      __$$SubmitImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SubmitImplCopyWithImpl<$Res>
+    extends _$MainEventCopyWithImpl<$Res, _$SubmitImpl>
+    implements _$$SubmitImplCopyWith<$Res> {
+  __$$SubmitImplCopyWithImpl(
+      _$SubmitImpl _value, $Res Function(_$SubmitImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MainEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$SubmitImpl implements _Submit {
+  const _$SubmitImpl();
+
+  @override
+  String toString() {
+    return 'MainEvent.submit()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SubmitImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkLogedIn,
+    required TResult Function() checkEmailVerification,
+    required TResult Function(EditPassReqBodyModel editPassReqBodyModel)
+        editPass,
+    required TResult Function() sendVerificationLink,
+    required TResult Function() submit,
+  }) {
+    return submit();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkLogedIn,
+    TResult? Function()? checkEmailVerification,
+    TResult? Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult? Function()? sendVerificationLink,
+    TResult? Function()? submit,
+  }) {
+    return submit?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkLogedIn,
+    TResult Function()? checkEmailVerification,
+    TResult Function(EditPassReqBodyModel editPassReqBodyModel)? editPass,
+    TResult Function()? sendVerificationLink,
+    TResult Function()? submit,
+    required TResult orElse(),
+  }) {
+    if (submit != null) {
+      return submit();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckLogedIn value) checkLogedIn,
+    required TResult Function(_CheckEmailVerification value)
+        checkEmailVerification,
+    required TResult Function(_EditPass value) editPass,
+    required TResult Function(_SendVerificationLink value) sendVerificationLink,
+    required TResult Function(_Submit value) submit,
+  }) {
+    return submit(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckLogedIn value)? checkLogedIn,
+    TResult? Function(_CheckEmailVerification value)? checkEmailVerification,
+    TResult? Function(_EditPass value)? editPass,
+    TResult? Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult? Function(_Submit value)? submit,
+  }) {
+    return submit?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckLogedIn value)? checkLogedIn,
+    TResult Function(_CheckEmailVerification value)? checkEmailVerification,
+    TResult Function(_EditPass value)? editPass,
+    TResult Function(_SendVerificationLink value)? sendVerificationLink,
+    TResult Function(_Submit value)? submit,
+    required TResult orElse(),
+  }) {
+    if (submit != null) {
+      return submit(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Submit implements MainEvent {
+  const factory _Submit() = _$SubmitImpl;
 }

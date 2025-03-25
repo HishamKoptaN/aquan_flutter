@@ -1,10 +1,13 @@
 import 'package:aquan/all_imports.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_source/buy_sell_api.dart';
 import '../../data/repo/buy_sell_repo.dart';
-
+@Injectable(
+  as: BuySellRepo,
+)
 class BuySellRepoImpl implements BuySellRepo {
   final BuySellApi plansApi;
   BuySellRepoImpl(

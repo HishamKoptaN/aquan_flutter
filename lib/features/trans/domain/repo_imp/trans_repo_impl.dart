@@ -1,9 +1,13 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_source/trans_api.dart';
 import '../../data/model/trans_model.dart';
 import '../../data/repo/transactions_repo.dart';
-
+@Injectable(
+  as: TransRepo,
+)
 class TransRepoImpl implements TransRepo {
   final TransApi transApi;
   TransRepoImpl(

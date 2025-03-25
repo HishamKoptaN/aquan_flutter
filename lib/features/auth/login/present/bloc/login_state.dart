@@ -10,6 +10,5 @@ class LoginState with _$LoginState {
   const factory LoginState.failure({
     required ApiErrorModel apiErrorModel,
   }) = _Failure;
-  const factory LoginState.notVerify() = _NotVerify;
   const factory LoginState.linkSent() = _LinkSent;
 }

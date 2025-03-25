@@ -1,3 +1,5 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_sources/tasks_api.dart';
@@ -5,7 +7,9 @@ import '../../data/model/task_details.dart';
 import '../../data/model/task.dart';
 import '../../data/repo/tasks_repo.dart';
 import 'package:dio/dio.dart';
-
+@Injectable(
+  as: TasksRepo,
+)
 class TasksRepoImpl implements TasksRepo {
   final TasksApi tasksApi;
   TasksRepoImpl(

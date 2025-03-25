@@ -1,4 +1,5 @@
 import 'package:aquan/features/withdraw/data/model/withdraw_req_body_model.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_source/withdraw_api.dart';
@@ -6,6 +7,9 @@ import '../../data/model/withdraw_rates_res_model.dart';
 import '../../data/model/withdraws_res_model.dart';
 import '../../data/repo/withdraws_repo.dart';
 
+@Injectable(
+  as: WithdrawsRepo,
+)
 class WithdrawsRepoImpl implements WithdrawsRepo {
   final WithdrawsApi withdrawsApi;
   WithdrawsRepoImpl({

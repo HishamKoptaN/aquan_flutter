@@ -1,14 +1,15 @@
 import 'package:aquan/core/networking/api_result.dart';
-
+import 'package:injectable/injectable.dart';
 import '../../data/model/withdraw_rates_res_model.dart';
-import '../repo_imp/withdraws_repo_impl.dart';
+import '../../data/repo/withdraws_repo.dart';
 
+@LazySingleton()
 class GetWithdrawRatessUseCase {
-  final WithdrawsRepoImpl withdrawsRepoImpl;
+  final WithdrawsRepo withdrawsRepo;
   GetWithdrawRatessUseCase({
-    required this.withdrawsRepoImpl,
+    required this.withdrawsRepo,
   });
   Future<ApiResult<WithdrawRatesResModel>> getWithdrawRates() async {
-    return await withdrawsRepoImpl.getWithdrawRates();
+    return await withdrawsRepo.getWithdrawRates();
   }
 }

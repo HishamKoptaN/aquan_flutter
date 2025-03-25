@@ -1,4 +1,5 @@
 import 'package:aquan/all_imports.dart';
+import 'package:aquan/features/main/present/view/main_view.dart';
 import 'features/controll/present/bloc/controll_bloc.dart';
 import 'features/controll/present/bloc/controll_event.dart';
 
@@ -8,7 +9,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   configureDependencies();
-  await Injection.inject();
   await ScreenUtil.ensureScreenSize();
   SharedPrefHelper;
   String locale = await SharedPrefHelper.getString(
@@ -24,6 +24,7 @@ Future<void> main() async {
   };
   Bloc.observer = AppBlocObserver();
   await Settings.setup();
+  // await SharedPrefHelper.clearAllData();
   // if (!kReleaseMode) {
   //   await SharedPrefHelper.setSecuredString(
   //     key: SharedPrefKeys.userToken,
@@ -38,6 +39,9 @@ Future<void> main() async {
             ..add(
               ControllEvent.get(),
             ),
+        ),
+        BlocProvider<MainBloc>(
+          create: (context) => getIt<MainBloc>(),
         ),
       ],
       child: MyApp(
@@ -68,71 +72,15 @@ class MyApp extends StatelessWidget {
         ),
         minTextAdapt: true,
         splitScreenMode: true,
-        child: BlocProvider(
-          create: (context) => MainBloc(
-            mainUseCases: getIt(),
-            firebaseAuth: getIt(),
-          )..add(
-              const MainEvent.check(),
-            ),
-          child: MaterialApp(
-            color: Colors.white,
-            title: 'AQUAN',
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: Locale(locale),
-            home: AppLayout(
-              route: "",
-              showAppBar: false,
-              body: BlocConsumer<MainBloc, MainState>(
-                listener: (context, state) async {
-                  state.mapOrNull(
-                    logedIn: (notVerify) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeView(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                    notVerify: (data) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeView(),
-                        ),
-                        (route) => false,
-                      );
-                      // Navigator.pushAndRemoveUntil(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => VerifyCode(
-                      //       userEmail: data.user.name,
-                      //     ),
-                      //   ),
-                      //   (route) => false,
-                      // );
-                    },
-                    logedOut: (_) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginView(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                  );
-                },
-                builder: (context, state) {
-                  state.whenOrNull();
-                  return Image.asset(
-                    "assets/icon/aquan-logo-gif.gif",
-                  );
-                },
-              ),
-            ),
+        child: MaterialApp(
+          color: Colors.white,
+          title: 'AQUAN',
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: Locale(locale),
+          home: MainView(
+            ckeckEmailVeification: false,
           ),
         ),
       ),

@@ -47,11 +47,8 @@ class _MakeDepositViewState extends State<MakeDepositView> {
       route: t.depositMoney,
       showAppBar: true,
       body: BlocProvider<DepositsBloc>(
-        create: (context) => DepositsBloc(
-          getDepositstUseCase: getIt(),
-          getEmployeeAccountUseCase: getIt(),
-          depositUseCase: getIt(),
-        )..add(
+        create: (context) => getIt<DepositsBloc>()
+          ..add(
             const DepositEvent.getEmployeeAccount(),
           ),
         child: BlocConsumer<DepositsBloc, DepositsState>(

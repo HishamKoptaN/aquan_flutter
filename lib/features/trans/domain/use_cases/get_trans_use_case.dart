@@ -1,9 +1,11 @@
 import 'package:aquan/core/networking/api_result.dart';
+import 'package:injectable/injectable.dart';
 import '../../data/model/trans_model.dart';
-import '../repo_imp/trans_repo_impl.dart';
+import '../../data/repo/transactions_repo.dart';
 
+@LazySingleton()
 class GetTransUseCase {
-  final TransRepoImpl transRepo;
+  final TransRepo transRepo;
   GetTransUseCase(
     this.transRepo,
   );

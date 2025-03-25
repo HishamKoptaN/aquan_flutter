@@ -3,21 +3,29 @@ import 'package:aquan/core/errors/api_error_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../core/helpers/constants.dart';
 import '../../../../../core/helpers/shared_pref_helper.dart';
 import '../../../../../core/errors/firebase_failures.dart';
+import '../../../../../core/methods/authentication_helper.dart';
 import '../../../../../core/singletons/user_singleton.dart';
 import '../../data/models/auth_id_token_req_body_model.dart';
 import '../../domain/use_cases/login_use_cases.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
+// heshamkoptan@gmail.com
+// password
+@LazySingleton()
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCases loginUseCases;
   final FirebaseAuth auth;
+  final AuthService authService;
+
   LoginBloc({
     required this.loginUseCases,
     required this.auth,
+    required this.authService,
   }) : super(
           const LoginState.initial(),
         ) {
@@ -30,11 +38,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             emit(
               const LoginState.loading(),
             );
+
             final result = await loginUseCases.firebaseLogin(
               firabaseLoginReqBodyModel: firabaseLoginReqBodyModel,
             );
             await result.fold(
-              (firebaseFailure) {
+              (
+                firebaseFailure,
+              ) {
                 emit(
                   LoginState.failure(
                     apiErrorModel: mapFailureToError(
@@ -45,8 +56,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               },
               (userCredential) async {
                 await userCredential.user?.getIdToken().then(
-                  (idToken) async {
-                    log(idToken!);
+                  (
+                    idToken,
+                  ) async {
                     final res = await loginUseCases.authToken(
                       authIdTokenReqBodyModel:
                           const AuthIdTokenReqBodyModel().copyWith(
@@ -63,7 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                         );
                         UserSingleton.instance.user = res?.user;
                         emit(
-                          const LoginState.success(),
+                          LoginState.success(),
                         );
                       },
                       failure: (

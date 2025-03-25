@@ -41,11 +41,8 @@ class _ChangePlanViewState extends State<ChangePlanView> {
       route: t.changePlan,
       showAppBar: true,
       body: BlocProvider<PlansBloc>(
-        create: (context) => PlansBloc(
-          getIt(),
-          getIt(),
-          getIt(),
-        )..add(
+        create: (context) => getIt<PlansBloc>()
+          ..add(
             const PlansEvent.getPlansRates(),
           ),
         child: BlocConsumer<PlansBloc, PlansState>(

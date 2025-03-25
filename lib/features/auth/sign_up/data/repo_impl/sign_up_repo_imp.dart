@@ -1,10 +1,14 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../../core/errors/api_error_handler.dart';
 import '../../../../../core/networking/api_result.dart';
 import '../../domain/repo/sign_up_repo.dart';
 import '../data_sources/sign_up_api.dart';
 import '../models/sign_up_req_body.dart';
 import '../models/sign_up_res_model.dart';
-
+@Injectable(
+  as: SignUpRepo,
+)
 class SignUpRepoImpl implements SignUpRepo {
   final SignUpApi signUpApi;
 

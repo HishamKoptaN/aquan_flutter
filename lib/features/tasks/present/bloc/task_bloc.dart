@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/singletons/task_details_singleton.dart';
 import '../../../../core/singletons/tasks_singleton.dart';
 import '../../domain/use_cases/get_task_details_use_case.dart';
@@ -7,6 +8,7 @@ import '../../domain/use_cases/proof_task_use_case.dart';
 import 'tasks_event.dart';
 import 'tasks_state.dart';
 
+@LazySingleton()
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   final GetTasksUseCase getTasksUseCase;
   final GetTaskDetailsUseCase getTaskDetailsUseCase;

@@ -21,6 +21,7 @@ mixin _$MainState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -32,6 +33,7 @@ mixin _$MainState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -43,6 +45,7 @@ mixin _$MainState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -55,6 +58,8 @@ mixin _$MainState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -66,6 +71,8 @@ mixin _$MainState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -77,6 +84,8 @@ mixin _$MainState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -150,6 +159,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -164,6 +174,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -178,6 +189,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -196,6 +208,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -210,6 +224,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -224,6 +240,8 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -285,6 +303,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -299,6 +318,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -313,6 +333,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -331,6 +352,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -345,6 +368,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -359,6 +384,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -420,6 +447,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -434,6 +462,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -448,6 +477,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -466,6 +496,8 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -480,6 +512,8 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -494,6 +528,8 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -509,6 +545,153 @@ class _$SuccessImpl implements _Success {
 
 abstract class _Success implements MainState {
   const factory _Success() = _$SuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$EmailVerificationLinkSentImplCopyWith<$Res> {
+  factory _$$EmailVerificationLinkSentImplCopyWith(
+          _$EmailVerificationLinkSentImpl value,
+          $Res Function(_$EmailVerificationLinkSentImpl) then) =
+      __$$EmailVerificationLinkSentImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EmailVerificationLinkSentImplCopyWithImpl<$Res>
+    extends _$MainStateCopyWithImpl<$Res, _$EmailVerificationLinkSentImpl>
+    implements _$$EmailVerificationLinkSentImplCopyWith<$Res> {
+  __$$EmailVerificationLinkSentImplCopyWithImpl(
+      _$EmailVerificationLinkSentImpl _value,
+      $Res Function(_$EmailVerificationLinkSentImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MainState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$EmailVerificationLinkSentImpl implements _EmailVerificationLinkSent {
+  const _$EmailVerificationLinkSentImpl();
+
+  @override
+  String toString() {
+    return 'MainState.emailVerificationLinkSent()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmailVerificationLinkSentImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
+    required TResult Function(bool checkBiom) logedIn,
+    required TResult Function() logedOut,
+    required TResult Function() notVerify,
+    required TResult Function(ApiErrorModel apiErrorModel) failure,
+  }) {
+    return emailVerificationLinkSent();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
+    TResult? Function(bool checkBiom)? logedIn,
+    TResult? Function()? logedOut,
+    TResult? Function()? notVerify,
+    TResult? Function(ApiErrorModel apiErrorModel)? failure,
+  }) {
+    return emailVerificationLinkSent?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
+    TResult Function(bool checkBiom)? logedIn,
+    TResult Function()? logedOut,
+    TResult Function()? notVerify,
+    TResult Function(ApiErrorModel apiErrorModel)? failure,
+    required TResult orElse(),
+  }) {
+    if (emailVerificationLinkSent != null) {
+      return emailVerificationLinkSent();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
+    required TResult Function(_LogedIn value) logedIn,
+    required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_NotVerify value) notVerify,
+    required TResult Function(_Failure value) failure,
+  }) {
+    return emailVerificationLinkSent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
+    TResult? Function(_LogedIn value)? logedIn,
+    TResult? Function(_LogedOut value)? logedOut,
+    TResult? Function(_NotVerify value)? notVerify,
+    TResult? Function(_Failure value)? failure,
+  }) {
+    return emailVerificationLinkSent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
+    TResult Function(_LogedIn value)? logedIn,
+    TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_NotVerify value)? notVerify,
+    TResult Function(_Failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (emailVerificationLinkSent != null) {
+      return emailVerificationLinkSent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EmailVerificationLinkSent implements MainState {
+  const factory _EmailVerificationLinkSent() = _$EmailVerificationLinkSentImpl;
 }
 
 /// @nodoc
@@ -583,6 +766,7 @@ class _$LogedInImpl implements _LogedIn {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -597,6 +781,7 @@ class _$LogedInImpl implements _LogedIn {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -611,6 +796,7 @@ class _$LogedInImpl implements _LogedIn {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -629,6 +815,8 @@ class _$LogedInImpl implements _LogedIn {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -643,6 +831,8 @@ class _$LogedInImpl implements _LogedIn {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -657,6 +847,8 @@ class _$LogedInImpl implements _LogedIn {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -726,6 +918,7 @@ class _$LogedOutImpl implements _LogedOut {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -740,6 +933,7 @@ class _$LogedOutImpl implements _LogedOut {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -754,6 +948,7 @@ class _$LogedOutImpl implements _LogedOut {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -772,6 +967,8 @@ class _$LogedOutImpl implements _LogedOut {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -786,6 +983,8 @@ class _$LogedOutImpl implements _LogedOut {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -800,6 +999,8 @@ class _$LogedOutImpl implements _LogedOut {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -861,6 +1062,7 @@ class _$NotVerifyImpl implements _NotVerify {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -875,6 +1077,7 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -889,6 +1092,7 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -907,6 +1111,8 @@ class _$NotVerifyImpl implements _NotVerify {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -921,6 +1127,8 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -935,6 +1143,8 @@ class _$NotVerifyImpl implements _NotVerify {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,
@@ -1024,6 +1234,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() emailVerificationLinkSent,
     required TResult Function(bool checkBiom) logedIn,
     required TResult Function() logedOut,
     required TResult Function() notVerify,
@@ -1038,6 +1249,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? emailVerificationLinkSent,
     TResult? Function(bool checkBiom)? logedIn,
     TResult? Function()? logedOut,
     TResult? Function()? notVerify,
@@ -1052,6 +1264,7 @@ class _$FailureImpl implements _Failure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? emailVerificationLinkSent,
     TResult Function(bool checkBiom)? logedIn,
     TResult Function()? logedOut,
     TResult Function()? notVerify,
@@ -1070,6 +1283,8 @@ class _$FailureImpl implements _Failure {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_EmailVerificationLinkSent value)
+        emailVerificationLinkSent,
     required TResult Function(_LogedIn value) logedIn,
     required TResult Function(_LogedOut value) logedOut,
     required TResult Function(_NotVerify value) notVerify,
@@ -1084,6 +1299,8 @@ class _$FailureImpl implements _Failure {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult? Function(_LogedIn value)? logedIn,
     TResult? Function(_LogedOut value)? logedOut,
     TResult? Function(_NotVerify value)? notVerify,
@@ -1098,6 +1315,8 @@ class _$FailureImpl implements _Failure {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_EmailVerificationLinkSent value)?
+        emailVerificationLinkSent,
     TResult Function(_LogedIn value)? logedIn,
     TResult Function(_LogedOut value)? logedOut,
     TResult Function(_NotVerify value)? notVerify,

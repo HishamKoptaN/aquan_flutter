@@ -3,6 +3,7 @@ import 'package:aquan/features/auth/login/data/models/firabase_login_req_body_mo
 import 'package:aquan/features/auth/login/data/models/reset_pass_req_body_model.dart';
 import '../../../../../core/validator.dart';
 import '../../../../../core/widgets/snacke_bar.dart';
+import '../../../../main/present/view/main_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -29,41 +30,18 @@ class _LoginViewState extends State<LoginView> {
       key: const Key('login_view'),
       showAppBar: false,
       body: BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(
-          loginUseCases: getIt(),
-          auth: getIt(),
-        ),
+        create: (context) => getIt<LoginBloc>(),
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
-            state.mapOrNull(
-              success: (data) {
+            state.whenOrNull(
+              success: () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => const HomeView(),
+                    builder: (context) => const MainView(
+                      ckeckEmailVeification: true,
+                    ),
                   ),
                   (route) => false,
-                );
-              },
-              notVerify: (
-                data,
-              ) {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SendEmailOtpView(),
-                  ),
-                  (route) => false,
-                );
-              },
-              linkSent: (data) {
-                CustomToast.showToast(
-                  key: Key(
-                    'reset_toast',
-                  ),
-                  context: context,
-                  title:
-                      "تم ارسال رابط أعادة تعين كلمة المرور الي البريد الالكتروني",
-                  toastType: ToastType.success,
                 );
               },
               failure: (
@@ -71,12 +49,15 @@ class _LoginViewState extends State<LoginView> {
               ) {
                 ToastNotifier().showError(
                   context: context,
-                  message: apiErrorModel.apiErrorModel.error ?? t.error,
+                  message: apiErrorModel.error ?? t.error,
                 );
               },
             );
           },
-          builder: (context, state) {
+          builder: (
+            context,
+            state,
+          ) {
             return Center(
               child: SingleChildScrollView(
                 child: Column(
@@ -160,14 +141,6 @@ class _LoginViewState extends State<LoginView> {
                               value: v ?? '',
                               t: t,
                             ),
-                            // validator: (value) {
-                            //   if (value == null || value.isEmpty) {
-                            //     return t.required;
-                            //   } else if (value.length < 8) {
-                            //     return t.password_too_short;
-                            //   }
-                            //   return null;
-                            // },
                           ),
                           Gap(
                             10.h,

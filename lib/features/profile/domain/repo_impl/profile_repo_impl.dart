@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/models/user.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/data_sources/profile_api.dart';
 import '../../data/repo/profile_repo.dart';
-
+@Injectable(
+  as: ProfileRepo,
+)
 class ProfileRepoImpl implements ProfileRepo {
   final ProfileApi profileApi;
   ProfileRepoImpl(

@@ -1,18 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/use_cases/deposit_use_case.dart';
-import '../../domain/use_cases/get_deposits_use_case.dart';
-import '../../domain/use_cases/get_employee_account_use_case.dart';
+import 'package:injectable/injectable.dart';
+import '../../domain/use_cases/deposit_use_cases.dart';
 import 'deposits_event.dart';
 import 'deposits_state.dart';
 
+@LazySingleton()
 class DepositsBloc extends Bloc<DepositEvent, DepositsState> {
-  GetDepositstUseCase getDepositstUseCase;
-  GetEmployeeAccountUseCase getEmployeeAccountUseCase;
-  DepositUseCase depositUseCase;
+  DepositUseCases getDepositstUseCase;
   DepositsBloc({
     required this.getDepositstUseCase,
-    required this.getEmployeeAccountUseCase,
-    required this.depositUseCase,
   }) : super(
           const DepositsState.initial(),
         ) {
@@ -41,7 +37,7 @@ class DepositsBloc extends Bloc<DepositEvent, DepositsState> {
           },
           getEmployeeAccount: () async {
             emit(const DepositsState.loading());
-            final result = await getEmployeeAccountUseCase.getEmployeeAccount();
+            final result = await getDepositstUseCase.getEmployeeAccount();
             await result.when(
               success: (employeeAccountResModel) async {
                 emit(
@@ -63,7 +59,7 @@ class DepositsBloc extends Bloc<DepositEvent, DepositsState> {
             emit(
               const DepositsState.loading(),
             );
-            final result = await depositUseCase.deposit(
+            final result = await getDepositstUseCase.deposit(
               formData: formData,
             );
             await result.when(

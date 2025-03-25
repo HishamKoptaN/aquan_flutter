@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../../../core/models/account.dart';
 import '../repo/accounts_rep.dart';
 
+@LazySingleton()
 class EditAccountUseCase {
   final AccountsRepo acountsRepo;
   EditAccountUseCase({

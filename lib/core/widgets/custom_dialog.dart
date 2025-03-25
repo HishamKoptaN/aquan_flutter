@@ -40,7 +40,9 @@ class CustomDialog extends StatelessWidget {
               Expanded(
                 child: TextButton(
                   onPressed: () async {
-                    await handleLogout(context);
+                    await handleLogout(
+                      context: context,
+                    );
                   },
                   child: CustomText(
                     text: t.logout,

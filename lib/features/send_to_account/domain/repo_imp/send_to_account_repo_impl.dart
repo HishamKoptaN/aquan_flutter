@@ -1,11 +1,14 @@
 import 'package:aquan/features/plans/data/model/plan_rate.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/errors/api_error_handler.dart';
 import '../../../../core/networking/api_result.dart';
 import '../../data/datasources/send_to_account_api.dart';
 import '../../data/model/username_by_account_res_model.dart';
 import '../../data/model/transfer_req_body.dart';
 import '../../data/repo/send_to_account_repo.dart';
-
+@Injectable(
+  as: SendToAccountRepo,
+)
 class SendToAccountRepoImpl implements SendToAccountRepo {
   final SendToAccountApi sendToAccountApi;
   SendToAccountRepoImpl({

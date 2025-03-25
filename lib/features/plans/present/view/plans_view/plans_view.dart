@@ -28,11 +28,8 @@ class _PlansViewState extends State<PlansView> {
       route: t.subscriptions,
       showAppBar: true,
       body: BlocProvider<PlansBloc>(
-        create: (context) => PlansBloc(
-          getIt(),
-          getIt(),
-          getIt(),
-        )..add(
+        create: (context) => getIt<PlansBloc>()
+          ..add(
             const PlansEvent.get(),
           ),
         child: BlocConsumer<PlansBloc, PlansState>(

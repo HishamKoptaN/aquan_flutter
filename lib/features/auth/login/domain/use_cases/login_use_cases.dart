@@ -5,12 +5,12 @@ import '../../../../../core/errors/firebase_failures.dart';
 import '../../../../../core/models/auth.dart';
 import '../../data/models/auth_id_token_req_body_model.dart';
 import '../../data/models/firabase_login_req_body_model.dart';
-import '../../data/repo_imp/login_repo_impl.dart';
 import 'package:dartz/dartz.dart';
+import '../repo/login_repo.dart';
 
-@injectable
+@LazySingleton()
 class LoginUseCases {
-  final LoginRepoImpl loginRepo;
+  final LoginRepo loginRepo;
   LoginUseCases(
     this.loginRepo,
   );

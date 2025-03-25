@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../core/singletons/withdraw_rates_singleton.dart';
 import '../../data/model/withdraw_rates_res_model.dart';
 import '../../domain/use_cases/add_withdraw_use_case.dart';
@@ -6,6 +7,7 @@ import '../../domain/use_cases/get_withdraw_rates_use_case.dart';
 import '../../domain/use_cases/get_withdraws_use_case.dart';
 import 'withdraws_event.dart';
 import 'withdraws_state.dart';
+@LazySingleton()
 
 class WithdrawsBloc extends Bloc<WithdrawsEvent, WithdrawsState> {
   GetWithdrawsUseCase getWithdrawsUseCase;

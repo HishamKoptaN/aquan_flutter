@@ -7,6 +7,8 @@ class MainState with _$MainState {
   const factory MainState.initial() = _Initial;
   const factory MainState.loading() = _Loading;
   const factory MainState.success() = _Success;
+  const factory MainState.emailVerificationLinkSent() =
+      _EmailVerificationLinkSent;
   const factory MainState.logedIn({
     required bool checkBiom,
   }) = _LogedIn;

@@ -1,10 +1,14 @@
+import 'package:injectable/injectable.dart';
+
 import '../../../../../core/errors/api_error_handler.dart';
 import '../../../../../core/networking/api_result.dart';
 import '../../domain/repo/email_verify_repo.dart';
 import '../data_sources/api/verify_email_api.dart';
 import '../models/send_otp_verify_email_res_model.dart';
 import '../models/verify_email_otp_req_body_model.dart';
-
+@Injectable(
+  as: VerifyEmailRepo,
+)
 class VerifyEmailRepoImpl implements VerifyEmailRepo {
   final VerifyEmailApi verifyEmailApi;
   VerifyEmailRepoImpl({

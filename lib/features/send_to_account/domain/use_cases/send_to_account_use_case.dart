@@ -1,7 +1,8 @@
 import 'package:aquan/core/networking/api_result.dart';
+import 'package:injectable/injectable.dart';
 import '../../data/model/transfer_req_body.dart';
 import '../repo_imp/send_to_account_repo_impl.dart';
-
+@LazySingleton()
 class SendToAccountUseCase {
   final SendToAccountRepoImpl sendToAccountRepoImpl;
   SendToAccountUseCase({

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:local_auth/local_auth.dart';
 import '../../../../../core/errors/api_error_model.dart';
 import '../../../../../core/helpers/constants.dart';
@@ -12,6 +13,7 @@ import '../../domain/use_cases/sign_up_use_case.dart';
 import 'sign_up_event.dart';
 import 'sign_up_state.dart';
 
+@LazySingleton()
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUpUseCase signUpUseCase;
   final LocalAuthentication auth = LocalAuthentication();

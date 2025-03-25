@@ -1,18 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/use_cases/change_plan_use_case.dart';
-import '../../domain/use_cases/get_plans_rates_use_case.dart';
+import 'package:injectable/injectable.dart';
 import '../../domain/use_cases/get_plans_use_case.dart';
 import 'plans_event.dart';
 import 'plans_state.dart';
 
+@LazySingleton()
 class PlansBloc extends Bloc<PlansEvent, PlansState> {
-  final GetPlansUseCase getPlansUseCase;
-  final ChangePlanUseCase changePlanUseCase;
-  final GetPlansRatesUseCase getPlansRatesUseCase;
+  final PlanUseCases planUseCases;
   PlansBloc(
-    this.getPlansUseCase,
-    this.changePlanUseCase,
-    this.getPlansRatesUseCase,
+    this.planUseCases,
   ) : super(
           const PlansState.initial(),
         ) {
@@ -23,7 +19,7 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
             emit(
               const PlansState.loading(),
             );
-            final result = await getPlansUseCase.get();
+            final result = await planUseCases.get();
             await result.when(
               success: (plans) async {
                 emit(
@@ -45,7 +41,7 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
             emit(
               const PlansState.loading(),
             );
-            final result = await getPlansRatesUseCase.getPlansRates();
+            final result = await planUseCases.getPlansRates();
             await result.when(
               success: (planRate) async {
                 emit(
@@ -67,7 +63,7 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
             emit(
               const PlansState.loading(),
             );
-            final result = await changePlanUseCase.change(
+            final result = await planUseCases.change(
               formData: formData,
             );
             await result.when(
