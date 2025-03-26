@@ -1,0 +1,40 @@
+name: Firebase Connection Test and Cleanup
+
+on:
+  workflow_dispatch:  # يجعل التشغيل يدويًا فقط
+
+jobs:
+  test_firebase_connection:
+    name: Test Firebase Connection & Cleanup Old Releases
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Authenticate Firebase
+        run: echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > firebase.json
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+
+      - name: List Firebase Apps
+        run: firebase projects:list --token "$(firebase login:ci --no-localhost)"
+
+      - name: List Available Releases
+        run: firebase appdistribution:releases:list --app <APP_ID>
+      
+      - name: Delete Old Releases
+        run: |
+          RELEASES=$(firebase appdistribution:releases:list --app <APP_ID> --json | jq -r '.[].releaseId')
+          for RELEASE_ID in $RELEASES; do
+            echo "Deleting release: $RELEASE_ID"
+            firebase appdistribution:releases:delete --app <APP_ID> --release-id $RELEASE_ID
+          done
