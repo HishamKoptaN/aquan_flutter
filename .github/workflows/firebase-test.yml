@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - dev  # يعمل عند أي دفع على فرع dev
-
 jobs:
   cleanup_old_releases:
     name: Cleanup Old Firebase Releases
@@ -11,37 +10,34 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
-
-      - name: Setup Firebase Authentication
-        run: |
-          echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$HOME/firebase-key.json"
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-key.json" >> $GITHUB_ENV
+      - name: Authenticate Firebase
+        run: echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > firebase-key.json
         env:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
-
-      - name: Install jq (JSON Processor)
-        run: sudo apt-get install jq -y
-
+      - name: Get Access Token
+        run: |
+          ACCESS_TOKEN=$(gcloud auth application-default print-access-token)
+          echo "ACCESS_TOKEN=$ACCESS_TOKEN" >> $GITHUB_ENV
       - name: List Available Releases
-        run: firebase appdistribution:versions:list --app 1:19118574319:android:1bdb6ba41686756deb291a --project="aquan-dev"
-
-
+        run: |
+          curl -X GET "https://firebaseappdistribution.googleapis.com/v1/projects/aquan-dev/apps/1:19118574319:android:1bdb6ba41686756deb291a/releases" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -H "Content-Type: application/json"
       - name: Delete Old Releases
         run: |
-          RELEASES=$(firebase appdistribution:releases:list --project="aquan-dev" --json | jq -r '.releases[].releaseId')
-          if [[ -z "$RELEASES" ]]; then
-            echo "No releases found."
-          else
-            for RELEASE_ID in $RELEASES; do
-              echo "Deleting release: $RELEASE_ID"
-              firebase appdistribution:releases:delete --project="aquan-dev" --release-id="$RELEASE_ID"
-            done
-          fi
+          RELEASES=$(curl -X GET "https://firebaseappdistribution.googleapis.com/v1/projects/aquan-dev/apps/1:19118574319:android:1bdb6ba41686756deb291a/releases" \
+          -H "Authorization: Bearer $ACCESS_TOKEN" \
+          -H "Content-Type: application/json" | jq -r '.releases[].name')
+          
+          for RELEASE_ID in $RELEASES; do
+            echo "Deleting release: $RELEASE_ID"
+            curl -X DELETE "https://firebaseappdistribution.googleapis.com/v1/$RELEASE_ID" \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Type: application/json"
+          done
