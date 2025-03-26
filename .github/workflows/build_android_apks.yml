@@ -41,13 +41,16 @@ jobs:
           firebase --version
 
       - name: 🔑 تسجيل الدخول إلى Firebase
-        run: echo '${{ secrets.CREDENTIAL_FILE_CONTENT }}' > firebase-credentials.json
+        run: |
+          echo '${{ secrets.CREDENTIAL_FILE_CONTENT }}' > firebase-credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=firebase-credentials.json
 
       - name: 🗑️ حذف الإصدارات القديمة من Firebase
         run: |
-          firebase appdistribution:releases:list --app ${{ secrets.FIREBASE_APP_ID }} --token "$(firebase login:ci --json < firebase-credentials.json)" | \
+          export GOOGLE_APPLICATION_CREDENTIALS=firebase-credentials.json
+          firebase appdistribution:releases:list --app ${{ secrets.FIREBASE_APP_ID }} --limit 5 --json | \
           jq -r '.releases[].releaseId' | \
-          xargs -I {} firebase appdistribution:releases:delete --app ${{ secrets.FIREBASE_APP_ID }} --release {} --token "$(firebase login:ci --json < firebase-credentials.json)"
+          xargs -I {} firebase appdistribution:releases:delete --app ${{ secrets.FIREBASE_APP_ID }} --release {}
 
       - name: 🚀 توزيع armeabi-v7a
         uses: wzieba/Firebase-Distribution-Github-Action@v1
