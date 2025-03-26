@@ -45,5 +45,25 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- تهيئة تسجيل الدخول عبر Google -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.YOUR_REVERSED_CLIENT_ID</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- الصلاحيات المطلوبة لـ Google Sign-In -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>googlechrome</string>
+		<string>googlechrome-x-callback</string>
+		<string>com.googleusercontent.apps.19118574319-fc22tgrklp0joodkv0mvg1kiu5jn7q4i</string>
+	</array>
+
 </dict>
 </plist>

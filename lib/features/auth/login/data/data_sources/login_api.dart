@@ -1,13 +1,16 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/models/auth.dart';
 import '../../../../../core/networking/api_constants.dart';
+import '../../../sign_up/data/errors/firebase_sign_up_failures.dart';
+import '../errors/firebase_login_failures.dart';
 import '../models/auth_id_token_req_body_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../../core/errors/exceptions.dart';
-import '../models/firabase_login_req_body_model.dart';
 part 'login_api.g.dart';
 
 @LazySingleton()
@@ -17,28 +20,22 @@ class LoginRemDataSrc {
   LoginRemDataSrc({
     required this.firebaseAuth,
   });
-  Future<UserCredential> firebaseLogin({
-    required FirabaseLoginReqBodyModel firabaseLoginReqBodyModel,
+  Future<String> firebaseLogin({
+    required String email,
+    required String password,
   }) async {
     try {
-      await firebaseAuth.currentUser?.reload();
-
-
-      return await 
-      firebaseAuth.signInWithEmailAndPassword(
-        email: firabaseLoginReqBodyModel.email ?? '',
-        password: firabaseLoginReqBodyModel.password ?? '',
+      UserCredential userCredential =
+          await firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+      return await userCredential.user?.getIdToken() ?? '';
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        throw ExistedAccountException();
-      } else if (e.code == 'wrong-password') {
-        throw WrongPasswordException();
-      } else {
-        throw ServerException();
-      }
-    } catch (_) {
-      throw ServerException();
+      log("🔥 FirebaseAuthException Code: ${e.code}");
+      throw _mapLoginException(
+        e: e,
+      );
     }
   }
 
@@ -57,11 +54,14 @@ class LoginRemDataSrc {
         idToken: googleAuth.idToken,
       );
 
-      return await firebaseAuth.signInWithCredential(credential);
-    } on FirebaseAuthException {
-      throw ServerException();
-    } catch (_) {
-      throw ServerException();
+      return await firebaseAuth.signInWithCredential(
+        credential,
+      );
+    } on FirebaseAuthException catch (e) {
+      log("🔥 FirebaseAuthException Code: ${e.code}"); // ✅ شاهد الكود القادم من Firebase
+      throw _mapLoginException(
+        e: e,
+      );
     }
   }
 
@@ -97,6 +97,26 @@ class LoginRemDataSrc {
       throw ServerException();
     } catch (_) {
       throw ServerException();
+    }
+  }
+
+  //! تحويل أخطاء Firebase في تسجيل الدخول
+  FirebaseSignInFailure _mapLoginException({
+    required FirebaseAuthException e,
+  }) {
+    log("🔥 Mapping FirebaseAuthException: ${e.code}"); // ✅ طباعة الكود القادم من Firebase
+
+    switch (e.code) {
+      case 'user-not-found':
+        return UserNotFoundFailure();
+      case 'wrong-password':
+        return WrongPasswordFailure();
+      case 'user-disabled':
+        return UserDisabledFailure();
+      case 'invalid-credential': // ✅ إضافة حالة جديدة
+        return InvalidCredentialFailure();
+      default:
+        return LoginServerFailure();
     }
   }
 }

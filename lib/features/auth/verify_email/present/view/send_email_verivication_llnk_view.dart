@@ -7,10 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../../core/widgets/custom_circular_progress.dart';
 import '../../../../../core/widgets/custom_dialog.dart';
 import '../../../../../core/widgets/custom_icon_button_widget.dart';
-import '../../../../../core/widgets/custom_text_button_widget.dart';
 import '../../../../../core/widgets/custom_text_widget.dart';
 import '../../../../../core/widgets/toast_notifier.dart';
 import '../../../../home/home_view.dart';
@@ -63,6 +61,14 @@ class _SendEmailVerivicationLinkViewState
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<MainBloc>().add(
+          MainEvent.sendVerificationLink(),
+        );
+  }
+
+  @override
   Widget build(context) {
     final t = AppLocalizations.of(context)!;
     return AppLayout(
@@ -85,12 +91,6 @@ class _SendEmailVerivicationLinkViewState
                 (route) => false,
               );
             },
-            notVerify: () {
-              ToastNotifier().showError(
-                context: context,
-                message: t.email_has_not_been_confirmed_yet,
-              );
-            },
             logedOut: () {
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
@@ -107,7 +107,10 @@ class _SendEmailVerivicationLinkViewState
             },
           );
         },
-        builder: (context, state) {
+        builder: (
+          context,
+          state,
+        ) {
           return SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -195,7 +198,7 @@ class _SendEmailVerivicationLinkViewState
                             8.sp,
                           ),
                           child: CustomText(
-                            text: isSend ? t.link_sent : t.email_not_verified,
+                            text: t.email_not_verified,
                             fontSize: 15.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -205,59 +208,9 @@ class _SendEmailVerivicationLinkViewState
                         Gap(
                           15.h,
                         ),
-                        if (!isSend)
-                          CustomTextButtonWidget(
-                            width: 200.w,
-                            buttonColor: Colors.black,
-                            onPressed: () async {
-                              context.read<MainBloc>().add(
-                                    MainEvent.sendVerificationLink(),
-                                  );
-                            },
-                            widget: state.maybeWhen(
-                              orElse: () {
-                                return CustomText(
-                                  text: isSend ? t.confirmed : t.send_link,
-                                  color: Colors.amberAccent,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Arial",
-                                );
-                              },
-                              loading: () {
-                                return const CustomCircularProgress();
-                              },
-                            ),
-                          ),
                         Gap(
                           10.h,
                         ),
-                        if (isSend)
-                          CustomTextButtonWidget(
-                            width: 200.w,
-                            buttonColor: Colors.black,
-                            onPressed: () async {
-                              if (isSend) {
-                                context.read<MainBloc>().add(
-                                      MainEvent.checkEmailVerification(),
-                                    );
-                              }
-                            },
-                            widget: state.maybeWhen(
-                              orElse: () {
-                                return CustomText(
-                                  text: isSend ? t.confirmed : t.send_link,
-                                  color: Colors.amberAccent,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Arial",
-                                );
-                              },
-                              loading: () {
-                                return const CustomCircularProgress();
-                              },
-                            ),
-                          ),
                         if (isSend)
                           //! Timer
                           TextButton(
@@ -287,5 +240,11 @@ class _SendEmailVerivicationLinkViewState
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 }

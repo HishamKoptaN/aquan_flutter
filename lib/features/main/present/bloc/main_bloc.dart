@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -17,6 +19,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   final MainUseCases mainUseCases;
   final FirebaseAuth firebaseAuth;
   final AuthService authService;
+  Timer? _emailVerificationTimer;
 
   MainBloc({
     required this.mainUseCases,
@@ -28,35 +31,37 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         await event.when(
           //!  ckeck logedIn
           checkLogedIn: () async {
-            print("🔍 Checking if user is logged in...");
-
             if (await authService.isUserLoggedIn()) {
-              print("✅ User is logged in!");
-
               final result = await mainUseCases.check();
               await result.when(
-                success: (res) async {
-                  print("🎉 Success in check()");
+                success: (
+                  res,
+                ) async {
                   UserSingleton.instance.user = res?.user;
                   if (await authService.isEmailVerified()) {
-                    print("📩 Email is verified!");
-                    emit(MainState.logedIn(
-                      checkBiom: await SharedPrefHelper.getBool(
-                        key: SharedPrefKeys.fingerprints,
+                    emit(
+                      MainState.logedIn(
+                        checkBiom: await SharedPrefHelper.getBool(
+                          key: SharedPrefKeys.fingerprints,
+                        ),
                       ),
-                    ));
+                    );
                   } else {
-                    print("⚠️ Email is NOT verified!");
-                    emit(const MainState.notVerify());
+                    emit(
+                      const MainState.notVerify(),
+                    );
                   }
                 },
                 failure: (error) async {
-                  print("❌ Failed to check user state.");
-                  emit(const MainState.logedOut());
+                  emit(
+                    const MainState.logedOut(),
+                  );
                 },
               );
             } else {
-              emit(const MainState.logedOut());
+              emit(
+                const MainState.logedOut(),
+              );
             }
           },
           //!  ckeckEmailVeification
@@ -88,7 +93,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
                   email: user.email!,
                   password: editPassReqBodyModel.currentPassword ?? '',
                 );
-                await user.reauthenticateWithCredential(credential);
+                await user.reauthenticateWithCredential(
+                  credential,
+                );
                 await user
                     .updatePassword(editPassReqBodyModel.newPassword ?? '');
                 emit(
@@ -118,10 +125,38 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             emit(
               const MainState.emailVerificationLinkSent(),
             );
+            _startEmailVerificationMonitor();
           },
+
           submit: () {},
         );
       },
     );
+  }
+  void _startEmailVerificationMonitor() {
+    _stopEmailVerificationMonitor();
+    _emailVerificationTimer = Timer.periodic(
+      const Duration(seconds: 5),
+      (timer) async {
+        if (await authService.isEmailVerified()) {
+          timer.cancel();
+          add(
+            MainEvent.checkEmailVerification(),
+          );
+        }
+      },
+    );
+  }
+
+  //! 🔴 وظيفة لإيقاف المراقبة عند التأكيد أو الخروج
+  void _stopEmailVerificationMonitor() {
+    _emailVerificationTimer?.cancel();
+    _emailVerificationTimer = null;
+  }
+
+  @override
+  Future<void> close() {
+    _stopEmailVerificationMonitor();
+    return super.close();
   }
 }

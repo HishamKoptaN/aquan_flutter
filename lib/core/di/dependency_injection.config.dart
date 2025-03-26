@@ -36,8 +36,8 @@ import '../../features/auth/sign_up/data/data_sources/sign_up_api.dart'
 import '../../features/auth/sign_up/data/repo_impl/sign_up_repo_imp.dart'
     as _i941;
 import '../../features/auth/sign_up/domain/repo/sign_up_repo.dart' as _i871;
-import '../../features/auth/sign_up/domain/use_cases/sign_up_use_case.dart'
-    as _i45;
+import '../../features/auth/sign_up/domain/use_cases/sign_up_use_cases.dart'
+    as _i251;
 import '../../features/auth/sign_up/present/bloc/sign_up_bloc.dart' as _i226;
 import '../../features/auth/verify_email/data/data_sources/api/verify_email_api.dart'
     as _i1039;
@@ -165,16 +165,18 @@ _i174.GetIt init(
   gh.lazySingleton<_i161.InternetConnection>(
       () => injectionModule.connectionChecker);
   gh.lazySingleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
+  gh.lazySingleton<_i804.TokenStorage>(() => _i804.TokenStorage());
   gh.lazySingleton<_i106.AuthService>(() => _i106.AuthService());
   gh.lazySingleton<_i724.LanguageBloc>(() => _i724.LanguageBloc());
   gh.lazySingleton<_i907.QrCodeBloc>(() => _i907.QrCodeBloc());
-  gh.lazySingleton<_i804.TokenStorage>(() => _i804.TokenStorage());
   gh.lazySingleton<_i305.BiometricBloc>(
       () => _i305.BiometricBloc(gh<_i152.LocalAuthentication>()));
   gh.factory<_i534.VerifyEmailRepo>(() =>
       _i630.VerifyEmailRepoImpl(verifyEmailApi: gh<_i1039.VerifyEmailApi>()));
   gh.singleton<_i804.AuthInterceptor>(
       () => _i804.AuthInterceptor(gh<_i804.TokenStorage>()));
+  gh.lazySingleton<_i552.SignUpRemDataSrc>(
+      () => _i552.SignUpRemDataSrc(firebaseAuth: gh<_i59.FirebaseAuth>()));
   gh.lazySingleton<_i685.LoginRemDataSrc>(
       () => _i685.LoginRemDataSrc(firebaseAuth: gh<_i59.FirebaseAuth>()));
   gh.lazySingleton<_i102.VerifyEmailOtpUseCase>(() =>
@@ -224,8 +226,6 @@ _i174.GetIt init(
   gh.factory<_i915.TasksRepo>(() => _i872.TasksRepoImpl(gh<_i64.TasksApi>()));
   gh.lazySingleton<_i408.GetDashUseCase>(
       () => _i408.GetDashUseCase(gh<_i267.DashRepo>()));
-  gh.factory<_i871.SignUpRepo>(
-      () => _i941.SignUpRepoImpl(signUpApi: gh<_i552.SignUpApi>()));
   gh.lazySingleton<_i139.GetNotificationsUseCase>(() =>
       _i139.GetNotificationsUseCase(
           notificationsRepo: gh<_i1007.NotificationsRepo>()));
@@ -239,6 +239,11 @@ _i174.GetIt init(
   gh.factory<_i42.AccountsRepo>(
       () => _i356.AccountsRepoImpl(gh<_i363.AccountsApi>()));
   gh.factory<_i587.MainRepo>(() => _i880.MainRepoImpl(gh<_i942.MainApi>()));
+  gh.factory<_i632.LoginRepo>(() => _i328.LoginRepoImpl(
+        gh<_i685.LoginRemDataSrc>(),
+        gh<_i685.LoginApi>(),
+        gh<_i59.FirebaseAuth>(),
+      ));
   gh.lazySingleton<_i885.DepositUseCases>(
       () => _i885.DepositUseCases(depositRepo: gh<_i296.DepositsRepo>()));
   gh.lazySingleton<_i542.DashBloc>(
@@ -247,6 +252,10 @@ _i174.GetIt init(
       () => _i297.GetAccountsUseCase(acountsRepo: gh<_i42.AccountsRepo>()));
   gh.lazySingleton<_i199.EditAccountUseCase>(
       () => _i199.EditAccountUseCase(acountsRepo: gh<_i42.AccountsRepo>()));
+  gh.factory<_i871.SignUpRepo>(() => _i941.SignUpRepoImpl(
+        signUpRemDataSrc: gh<_i552.SignUpRemDataSrc>(),
+        signUpApi: gh<_i552.SignUpApi>(),
+      ));
   gh.factory<_i251.TransRepo>(() => _i899.TransRepoImpl(gh<_i975.TransApi>()));
   gh.factory<_i129.WithdrawsRepo>(
       () => _i405.WithdrawsRepoImpl(withdrawsApi: gh<_i436.WithdrawsApi>()));
@@ -264,10 +273,6 @@ _i174.GetIt init(
       () => _i301.BuySellRepoImpl(gh<_i397.BuySellApi>()));
   gh.factory<_i433.ProfileRepo>(
       () => _i740.ProfileRepoImpl(gh<_i480.ProfileApi>()));
-  gh.factory<_i632.LoginRepo>(() => _i328.LoginRepoImpl(
-        gh<_i685.LoginRemDataSrc>(),
-        gh<_i685.LoginApi>(),
-      ));
   gh.lazySingleton<_i333.PlanUseCases>(
       () => _i333.PlanUseCases(gh<_i768.PlansRepo>()));
   gh.lazySingleton<_i865.DepositsBloc>(() =>
@@ -280,16 +285,16 @@ _i174.GetIt init(
       () => _i739.TaskUseCases(tasksRepo: gh<_i915.TasksRepo>()));
   gh.lazySingleton<_i307.TasksBloc>(
       () => _i307.TasksBloc(getTaskDetailsUseCase: gh<_i739.TaskUseCases>()));
-  gh.lazySingleton<_i45.SignUpUseCase>(
-      () => _i45.SignUpUseCase(gh<_i871.SignUpRepo>()));
+  gh.lazySingleton<_i251.SignUpUseCases>(
+      () => _i251.SignUpUseCases(gh<_i871.SignUpRepo>()));
+  gh.lazySingleton<_i226.SignUpBloc>(
+      () => _i226.SignUpBloc(signUpUseCases: gh<_i251.SignUpUseCases>()));
   gh.lazySingleton<_i386.BuySellRatesUses>(
       () => _i386.BuySellRatesUses(buySellRepo: gh<_i174.BuySellRepo>()));
   gh.lazySingleton<_i1064.ControllUseCases>(
       () => _i1064.ControllUseCases(controllRepo: gh<_i866.ControllRepo>()));
   gh.lazySingleton<_i422.MainUseCases>(
       () => _i422.MainUseCases(gh<_i587.MainRepo>()));
-  gh.lazySingleton<_i226.SignUpBloc>(
-      () => _i226.SignUpBloc(signUpUseCase: gh<_i45.SignUpUseCase>()));
   gh.lazySingleton<_i864.ControllBloc>(() =>
       _i864.ControllBloc(controllUseCases: gh<_i1064.ControllUseCases>()));
   gh.lazySingleton<_i683.WithdrawsBloc>(() => _i683.WithdrawsBloc(

@@ -6,7 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/helpers/constants.dart';
 import '../../../../../core/helpers/shared_pref_helper.dart';
-import '../../../../../core/errors/firebase_failures.dart';
 import '../../../../../core/methods/authentication_helper.dart';
 import '../../../../../core/singletons/user_singleton.dart';
 import '../../data/models/auth_id_token_req_body_model.dart';
@@ -38,55 +37,54 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             emit(
               const LoginState.loading(),
             );
-
             final result = await loginUseCases.firebaseLogin(
-              firabaseLoginReqBodyModel: firabaseLoginReqBodyModel,
+              email: firabaseLoginReqBodyModel.email ?? '',
+              password: firabaseLoginReqBodyModel.password ?? '',
             );
             await result.fold(
               (
-                firebaseFailure,
+                failure,
               ) {
+                log(
+                  "🔥 Bloc Failure: ${failure.message}",
+                );
                 emit(
                   LoginState.failure(
-                    apiErrorModel: mapFailureToError(
-                      firebaseFailure: firebaseFailure,
+                    apiErrorModel: ApiErrorModel(
+                      error: failure.message,
                     ),
                   ),
                 );
               },
-              (userCredential) async {
-                await userCredential.user?.getIdToken().then(
-                  (
-                    idToken,
+              (
+                idToken,
+              ) async {
+                final res = await loginUseCases.authToken(
+                  authIdTokenReqBodyModel:
+                      const AuthIdTokenReqBodyModel().copyWith(
+                    idToken: idToken,
+                  ),
+                );
+                await res.when(
+                  success: (
+                    res,
                   ) async {
-                    final res = await loginUseCases.authToken(
-                      authIdTokenReqBodyModel:
-                          const AuthIdTokenReqBodyModel().copyWith(
-                        idToken: idToken,
-                      ),
+                    await SharedPrefHelper.setSecuredString(
+                      key: SharedPrefKeys.userToken,
+                      value: res?.token ?? '',
                     );
-                    await res.when(
-                      success: (
-                        res,
-                      ) async {
-                        await SharedPrefHelper.setSecuredString(
-                          key: SharedPrefKeys.userToken,
-                          value: res?.token ?? '',
-                        );
-                        UserSingleton.instance.user = res?.user;
-                        emit(
-                          LoginState.success(),
-                        );
-                      },
-                      failure: (
-                        apiErrorModel,
-                      ) async {
-                        emit(
-                          LoginState.failure(
-                            apiErrorModel: apiErrorModel,
-                          ),
-                        );
-                      },
+                    UserSingleton.instance.user = res?.user;
+                    emit(
+                      LoginState.success(),
+                    );
+                  },
+                  failure: (
+                    apiErrorModel,
+                  ) async {
+                    emit(
+                      LoginState.failure(
+                        apiErrorModel: apiErrorModel,
+                      ),
                     );
                   },
                 );
@@ -140,7 +138,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                         const LoginState.success(),
                       );
                     },
-                    failure: (apiErrorModel) async {
+                    failure: (
+                      apiErrorModel,
+                    ) async {
                       emit(
                         LoginState.failure(
                           apiErrorModel: apiErrorModel,
@@ -183,18 +183,5 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
       },
     );
-  }
-  ApiErrorModel mapFailureToError({
-    required FirebaseFailure firebaseFailure,
-  }) {
-    if (firebaseFailure is ExistedAccountFailure) {
-      return ApiErrorModel(error: 'Account already exists');
-    } else if (firebaseFailure is WrongPasswordFailure) {
-      return ApiErrorModel(error: 'Incorrect password');
-    } else if (firebaseFailure is OfflineFailure) {
-      return ApiErrorModel(error: 'No internet connection');
-    } else {
-      return ApiErrorModel(error: 'Unknown error occurred');
-    }
   }
 }

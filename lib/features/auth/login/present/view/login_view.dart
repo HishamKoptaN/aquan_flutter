@@ -32,7 +32,10 @@ class _LoginViewState extends State<LoginView> {
       body: BlocProvider<LoginBloc>(
         create: (context) => getIt<LoginBloc>(),
         child: BlocConsumer<LoginBloc, LoginState>(
-          listener: (context, state) {
+          listener: (
+            context,
+            state,
+          ) {
             state.whenOrNull(
               success: () {
                 Navigator.of(context).pushAndRemoveUntil(

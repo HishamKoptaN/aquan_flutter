@@ -17,54 +17,6 @@ class AuthService {
     }
   }
 
-  //! ✅ إنشاء حساب جديد وإرسال رسالة تأكيد البريد
-  Future<User?> signUp({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      User? user = userCredential.user;
-
-      if (user != null && !user.emailVerified) {
-        await user.sendEmailVerification();
-      }
-      logIdToken();
-      return user;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  //! ✅ تسجيل الدخول مع التحقق من تأكيد البريد
-  Future<UserCredential?> signIn({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-
-      User? user = userCredential.user;
-
-      if (user != null) {
-        logIdToken();
-        if (user.emailVerified) {
-          return userCredential;
-        }
-        return null;
-      }
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  //! ✅ إعادة إرسال رسالة التأكيد
   Future<void> resendVerificationEmail() async {
     User? user = _auth.currentUser;
     if (user != null && !user.emailVerified) {

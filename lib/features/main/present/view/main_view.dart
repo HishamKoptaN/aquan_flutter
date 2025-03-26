@@ -35,7 +35,9 @@ class _MainViewState extends State<MainView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
       body: BlocConsumer<MainBloc, MainState>(
         listener: (
@@ -60,7 +62,7 @@ class _MainViewState extends State<MainView> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SendEmailVerivicationLinkView(),
+                  builder: (context) => SendEmailVerivicationLinkView(),
                 ),
                 (route) => false,
               );

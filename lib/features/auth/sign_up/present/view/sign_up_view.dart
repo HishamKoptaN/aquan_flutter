@@ -3,7 +3,6 @@ import '../../../../../all_imports.dart';
 import '../../../../../core/helpers/validate_password.dart';
 import '../../../../../core/validator.dart';
 import '../../../../../core/widgets/terms_and_privacy_view.dart';
-import '../../../../main/present/view/main_view.dart';
 import '../../data/models/sign_up_req_body.dart';
 import '../bloc/sign_up_bloc.dart';
 import '../bloc/sign_up_event.dart';
@@ -53,9 +52,7 @@ class _SignUpViewState extends State<SignUpView> {
             success: (apiErrorModel) {
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const MainView(
-                    ckeckEmailVeification: true,
-                  ),
+                  builder: (context) => const SendEmailVerivicationLinkView(),
                 ),
                 (route) => false,
               );

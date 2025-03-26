@@ -41,7 +41,11 @@ Future<void> main() async {
             ),
         ),
         BlocProvider<MainBloc>(
-          create: (context) => getIt<MainBloc>(),
+          create: (context) => MainBloc(
+            mainUseCases: getIt(),
+            firebaseAuth: getIt(),
+            authService: getIt(),
+          ),
         ),
       ],
       child: MyApp(
