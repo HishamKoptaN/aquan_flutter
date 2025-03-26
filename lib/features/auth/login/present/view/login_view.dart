@@ -44,7 +44,10 @@ class _LoginViewState extends State<LoginView> {
                       ckeckEmailVeification: true,
                     ),
                   ),
-                  (route) => false,
+                  (
+                    route,
+                  ) =>
+                      false,
                 );
               },
               googleSignInFailure: (failure) {
@@ -63,7 +66,11 @@ class _LoginViewState extends State<LoginView> {
                   serverError: (msg) => "Server error: $msg",
                 );
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(message)),
+                  SnackBar(
+                    content: Text(
+                      message,
+                    ),
+                  ),
                 );
               },
               failure: (
