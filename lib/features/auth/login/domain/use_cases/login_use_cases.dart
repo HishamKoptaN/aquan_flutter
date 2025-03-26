@@ -1,10 +1,8 @@
 import 'package:aquan/core/networking/api_result.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/models/auth.dart';
 import '../../data/errors/firebase_login_failures.dart';
 import '../../data/models/auth_id_token_req_body_model.dart';
-import '../../data/models/firabase_login_req_body_model.dart';
 import 'package:dartz/dartz.dart';
 import '../repo/login_repo.dart';
 
@@ -23,7 +21,15 @@ class LoginUseCases {
       password: password,
     );
   }
-
+Future<Either<FirebaseSignInFailure, String>> signInWithGoogle({
+    required String email,
+    required String password,
+  }) async {
+    return await loginRepo.signInWithGoogle(
+      email: email,
+      password: password,
+    );
+  }
   Future<ApiResult<Auth?>> authToken({
     required AuthIdTokenReqBodyModel authIdTokenReqBodyModel,
   }) async {

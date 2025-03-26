@@ -8,6 +8,9 @@ abstract class LoginRepo {
   Future<Either<FirebaseSignInFailure, String>> firebaseLogin({
     required String email,
     required String password,
+  });  Future<Either<String, ApiErrorModel>> signInWithGoogle({
+    required String email,
+    required String password,
   });
   Future<ApiResult<Auth?>> authToken({
     required AuthIdTokenReqBodyModel authIdTokenReqBodyModel,

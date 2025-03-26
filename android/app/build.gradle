@@ -4,18 +4,21 @@ plugins {
     id "kotlin-android" 
     id "dev.flutter.flutter-gradle-plugin"
 }
+
 // تحميل keystore.properties إذا كان موجودًا
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 if (keystorePropertiesFile.exists()) {  
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))  
 }
+
 // تحميل local.properties
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {  
     localProperties.load(new FileInputStream(localPropertiesFile))  
 }
+
 // ضبط القيم الافتراضية لـ versionCode و versionName
 def flutterVersionCode = localProperties.getProperty("flutter.versionCode", "2").toInteger()
 def flutterVersionName = localProperties.getProperty("flutter.versionName", "1.1")
@@ -55,12 +58,6 @@ android {
                 println "⚠️ Warning: keystore.properties file not found! Release build may fail."
             }
         }
-        debug {
-            storeFile file("$rootDir/app/debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
     }
 
     buildTypes {
@@ -68,10 +65,6 @@ android {
             signingConfig = signingConfigs.release
             minifyEnabled false
             shrinkResources false
-        } 
-        debug {
-            signingConfig signingConfigs.debug
-            debuggable true  // تمكين تصحيح الأخطاء
         }
     }
 }

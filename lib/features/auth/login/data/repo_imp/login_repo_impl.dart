@@ -48,6 +48,30 @@ class LoginRepoImpl implements LoginRepo {
         return Left(LoginServerFailure());
       }
     }
+  }@override
+  Future<Either<FirebaseSignInFailure, String>> signInWithGoogle({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final idToken = await loginRemDataSrc.firebaseLogin(
+        email: email,
+        password: password,
+      );
+      return Right(
+        idToken,
+      );
+    } catch (failure) {
+      log(
+        "🔥 LoginRepoImpl Catch: ${failure.runtimeType} - ${failure.toString()}",
+      );
+
+      if (failure is FirebaseSignInFailure) {
+        return Left(failure);
+      } else {
+        return Left(LoginServerFailure());
+      }
+    }
   }
 
   @override

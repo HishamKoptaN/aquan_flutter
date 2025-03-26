@@ -125,7 +125,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                   );
                   log(idToken);
                   final res = await loginUseCases.authToken(
-                      authIdTokenReqBodyModel: authIdTokenReqBodyModel);
+                    authIdTokenReqBodyModel: authIdTokenReqBodyModel,
+                  );
                   await res.when(
                     success: (res) async {
                       UserSingleton.instance.user = res!.user;
