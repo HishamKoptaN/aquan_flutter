@@ -1,8 +1,10 @@
 name: Firebase Connection Test
+
 on:
   push:
     branches:
       - dev
+
 jobs:
   test_firebase_connection:
     runs-on: ubuntu-latest
