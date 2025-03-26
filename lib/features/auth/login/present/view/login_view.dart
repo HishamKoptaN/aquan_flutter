@@ -47,6 +47,25 @@ class _LoginViewState extends State<LoginView> {
                   (route) => false,
                 );
               },
+              googleSignInFailure: (failure) {
+                String message = failure.when(
+                  userCancelled: () => "Login cancelled by user",
+                  networkError: () => "Check your internet connection",
+                  invalidCredential: () =>
+                      "Invalid credentials, please try again",
+                  userDisabled: () => "Your account has been disabled",
+                  userNotFound: () => "No user found with this account",
+                  accountExistsWithDifferentCredential: () =>
+                      "Account exists with a different sign-in method",
+                  operationNotAllowed: () => "Google sign-in is not enabled",
+                  tooManyRequests: () =>
+                      "Too many login attempts. Please try again later",
+                  serverError: (msg) => "Server error: $msg",
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(message)),
+                );
+              },
               failure: (
                 apiErrorModel,
               ) {

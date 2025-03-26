@@ -9,6 +9,7 @@ import '../../../../../core/networking/api_result.dart';
 import '../../domain/repo/login_repo.dart';
 import '../data_sources/login_api.dart';
 import '../errors/firebase_login_failures.dart';
+import '../errors/google_sign_in_failures.dart';
 import '../models/auth_id_token_req_body_model.dart';
 
 @Injectable(
@@ -48,29 +49,21 @@ class LoginRepoImpl implements LoginRepo {
         return Left(LoginServerFailure());
       }
     }
-  }@override
-  Future<Either<FirebaseSignInFailure, String>> signInWithGoogle({
-    required String email,
-    required String password,
-  }) async {
+  }
+
+  @override
+  Future<Either<GoogleSignInFailures, String>> signInWithGoogle() async {
     try {
-      final idToken = await loginRemDataSrc.firebaseLogin(
-        email: email,
-        password: password,
-      );
+      final idToken = await loginRemDataSrc.loginWithGoogle();
       return Right(
         idToken,
       );
-    } catch (failure) {
-      log(
-        "🔥 LoginRepoImpl Catch: ${failure.runtimeType} - ${failure.toString()}",
+    } catch (error) {
+      return Left(
+        _mapExceptionToFailure(
+          error,
+        ),
       );
-
-      if (failure is FirebaseSignInFailure) {
-        return Left(failure);
-      } else {
-        return Left(LoginServerFailure());
-      }
     }
   }
 
@@ -91,6 +84,34 @@ class LoginRepoImpl implements LoginRepo {
           error: error,
         ),
       );
+    }
+  }
+
+  GoogleSignInFailures _mapExceptionToFailure(dynamic error) {
+    if (error is FirebaseAuthException) {
+      switch (error.code) {
+        case 'network-request-failed':
+          return const GoogleSignInFailures.networkError();
+        case 'user-disabled':
+          return const GoogleSignInFailures.userDisabled();
+        case 'user-not-found':
+          return const GoogleSignInFailures.userNotFound();
+        case 'wrong-password':
+        case 'invalid-credential':
+          return const GoogleSignInFailures.invalidCredential();
+        case 'operation-not-allowed':
+          return const GoogleSignInFailures.operationNotAllowed();
+        case 'too-many-requests':
+          return const GoogleSignInFailures.tooManyRequests();
+        case 'account-exists-with-different-credential':
+          return const GoogleSignInFailures
+              .accountExistsWithDifferentCredential();
+        default:
+          return GoogleSignInFailures.serverError(
+              message: error.message ?? 'Unknown error');
+      }
+    } else {
+      return GoogleSignInFailures.serverError(message: error.toString());
     }
   }
 }

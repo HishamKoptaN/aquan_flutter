@@ -22,6 +22,7 @@ mixin _$LoginState {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
     required TResult Function() linkSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -31,6 +32,7 @@ mixin _$LoginState {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult? Function()? linkSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -40,6 +42,7 @@ mixin _$LoginState {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult Function()? linkSent,
     required TResult orElse(),
   }) =>
@@ -50,6 +53,7 @@ mixin _$LoginState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
     required TResult Function(_LinkSent value) linkSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -59,6 +63,7 @@ mixin _$LoginState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult? Function(_LinkSent value)? linkSent,
   }) =>
       throw _privateConstructorUsedError;
@@ -68,6 +73,7 @@ mixin _$LoginState {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) =>
@@ -140,6 +146,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
     required TResult Function() linkSent,
   }) {
     return initial();
@@ -152,6 +159,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult? Function()? linkSent,
   }) {
     return initial?.call();
@@ -164,6 +172,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult Function()? linkSent,
     required TResult orElse(),
   }) {
@@ -180,6 +189,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
     required TResult Function(_LinkSent value) linkSent,
   }) {
     return initial(this);
@@ -192,6 +202,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult? Function(_LinkSent value)? linkSent,
   }) {
     return initial?.call(this);
@@ -204,6 +215,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
@@ -263,6 +275,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
     required TResult Function() linkSent,
   }) {
     return loading();
@@ -275,6 +288,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult? Function()? linkSent,
   }) {
     return loading?.call();
@@ -287,6 +301,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult Function()? linkSent,
     required TResult orElse(),
   }) {
@@ -303,6 +318,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
     required TResult Function(_LinkSent value) linkSent,
   }) {
     return loading(this);
@@ -315,6 +331,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult? Function(_LinkSent value)? linkSent,
   }) {
     return loading?.call(this);
@@ -327,6 +344,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
@@ -386,6 +404,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
     required TResult Function() linkSent,
   }) {
     return success();
@@ -398,6 +417,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult? Function()? linkSent,
   }) {
     return success?.call();
@@ -410,6 +430,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult Function()? linkSent,
     required TResult orElse(),
   }) {
@@ -426,6 +447,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
     required TResult Function(_LinkSent value) linkSent,
   }) {
     return success(this);
@@ -438,6 +460,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult? Function(_LinkSent value)? linkSent,
   }) {
     return success?.call(this);
@@ -450,6 +473,7 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
@@ -537,6 +561,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
     required TResult Function() linkSent,
   }) {
     return failure(apiErrorModel);
@@ -549,6 +574,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult? Function()? linkSent,
   }) {
     return failure?.call(apiErrorModel);
@@ -561,6 +587,7 @@ class _$FailureImpl implements _Failure {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult Function()? linkSent,
     required TResult orElse(),
   }) {
@@ -577,6 +604,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
     required TResult Function(_LinkSent value) linkSent,
   }) {
     return failure(this);
@@ -589,6 +617,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult? Function(_LinkSent value)? linkSent,
   }) {
     return failure?.call(this);
@@ -601,6 +630,7 @@ class _$FailureImpl implements _Failure {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {
@@ -621,6 +651,185 @@ abstract class _Failure implements LoginState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GoogleSignInFailureImplCopyWith<$Res> {
+  factory _$$GoogleSignInFailureImplCopyWith(_$GoogleSignInFailureImpl value,
+          $Res Function(_$GoogleSignInFailureImpl) then) =
+      __$$GoogleSignInFailureImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({GoogleSignInFailures failure});
+
+  $GoogleSignInFailuresCopyWith<$Res> get failure;
+}
+
+/// @nodoc
+class __$$GoogleSignInFailureImplCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$GoogleSignInFailureImpl>
+    implements _$$GoogleSignInFailureImplCopyWith<$Res> {
+  __$$GoogleSignInFailureImplCopyWithImpl(_$GoogleSignInFailureImpl _value,
+      $Res Function(_$GoogleSignInFailureImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failure = null,
+  }) {
+    return _then(_$GoogleSignInFailureImpl(
+      failure: null == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as GoogleSignInFailures,
+    ));
+  }
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GoogleSignInFailuresCopyWith<$Res> get failure {
+    return $GoogleSignInFailuresCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$GoogleSignInFailureImpl implements _GoogleSignInFailure {
+  const _$GoogleSignInFailureImpl({required this.failure});
+
+  @override
+  final GoogleSignInFailures failure;
+
+  @override
+  String toString() {
+    return 'LoginState.googleSignInFailure(failure: $failure)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GoogleSignInFailureImpl &&
+            (identical(other.failure, failure) || other.failure == failure));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, failure);
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GoogleSignInFailureImplCopyWith<_$GoogleSignInFailureImpl> get copyWith =>
+      __$$GoogleSignInFailureImplCopyWithImpl<_$GoogleSignInFailureImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
+    required TResult Function() linkSent,
+  }) {
+    return googleSignInFailure(this.failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
+    TResult? Function()? linkSent,
+  }) {
+    return googleSignInFailure?.call(this.failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
+    TResult Function()? linkSent,
+    required TResult orElse(),
+  }) {
+    if (googleSignInFailure != null) {
+      return googleSignInFailure(this.failure);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
+    required TResult Function(_LinkSent value) linkSent,
+  }) {
+    return googleSignInFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
+    TResult? Function(_LinkSent value)? linkSent,
+  }) {
+    return googleSignInFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
+    TResult Function(_LinkSent value)? linkSent,
+    required TResult orElse(),
+  }) {
+    if (googleSignInFailure != null) {
+      return googleSignInFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GoogleSignInFailure implements LoginState {
+  const factory _GoogleSignInFailure(
+          {required final GoogleSignInFailures failure}) =
+      _$GoogleSignInFailureImpl;
+
+  GoogleSignInFailures get failure;
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GoogleSignInFailureImplCopyWith<_$GoogleSignInFailureImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -669,6 +878,7 @@ class _$LinkSentImpl implements _LinkSent {
     required TResult Function() loading,
     required TResult Function() success,
     required TResult Function(ApiErrorModel apiErrorModel) failure,
+    required TResult Function(GoogleSignInFailures failure) googleSignInFailure,
     required TResult Function() linkSent,
   }) {
     return linkSent();
@@ -681,6 +891,7 @@ class _$LinkSentImpl implements _LinkSent {
     TResult? Function()? loading,
     TResult? Function()? success,
     TResult? Function(ApiErrorModel apiErrorModel)? failure,
+    TResult? Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult? Function()? linkSent,
   }) {
     return linkSent?.call();
@@ -693,6 +904,7 @@ class _$LinkSentImpl implements _LinkSent {
     TResult Function()? loading,
     TResult Function()? success,
     TResult Function(ApiErrorModel apiErrorModel)? failure,
+    TResult Function(GoogleSignInFailures failure)? googleSignInFailure,
     TResult Function()? linkSent,
     required TResult orElse(),
   }) {
@@ -709,6 +921,7 @@ class _$LinkSentImpl implements _LinkSent {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
     required TResult Function(_Failure value) failure,
+    required TResult Function(_GoogleSignInFailure value) googleSignInFailure,
     required TResult Function(_LinkSent value) linkSent,
   }) {
     return linkSent(this);
@@ -721,6 +934,7 @@ class _$LinkSentImpl implements _LinkSent {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
     TResult? Function(_Failure value)? failure,
+    TResult? Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult? Function(_LinkSent value)? linkSent,
   }) {
     return linkSent?.call(this);
@@ -733,6 +947,7 @@ class _$LinkSentImpl implements _LinkSent {
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
     TResult Function(_Failure value)? failure,
+    TResult Function(_GoogleSignInFailure value)? googleSignInFailure,
     TResult Function(_LinkSent value)? linkSent,
     required TResult orElse(),
   }) {

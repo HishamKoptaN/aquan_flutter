@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/models/auth.dart';
 import '../../../../../core/networking/api_constants.dart';
-import '../../../sign_up/data/errors/firebase_sign_up_failures.dart';
 import '../errors/firebase_login_failures.dart';
 import '../models/auth_id_token_req_body_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -32,14 +31,13 @@ class LoginRemDataSrc {
       );
       return await userCredential.user?.getIdToken() ?? '';
     } on FirebaseAuthException catch (e) {
-      log("🔥 FirebaseAuthException Code: ${e.code}");
       throw _mapLoginException(
         e: e,
       );
     }
   }
 
-  Future<UserCredential> loginWithGoogle() async {
+  Future<String> loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
@@ -53,12 +51,13 @@ class LoginRemDataSrc {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      return await firebaseAuth.signInWithCredential(
+      final UserCredential userCredential =
+          await firebaseAuth.signInWithCredential(
         credential,
       );
+      return await userCredential.user?.getIdToken() ?? '';
     } on FirebaseAuthException catch (e) {
-      log("🔥 FirebaseAuthException Code: ${e.code}"); // ✅ شاهد الكود القادم من Firebase
+      log("🔥 FirebaseAuthException Code: ${e.code}");
       throw _mapLoginException(
         e: e,
       );

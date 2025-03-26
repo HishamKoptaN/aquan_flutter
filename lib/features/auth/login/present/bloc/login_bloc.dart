@@ -92,72 +92,81 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             );
           },
           google: () async {
-            try {
-              emit(
-                const LoginState.loading(),
-              );
-              final GoogleSignInAccount? googleUser = await GoogleSignIn(
-                scopes: [
-                  'email',
-                  'profile',
-                ],
-              ).signIn();
-              final GoogleSignInAuthentication? googleAuth =
-                  await googleUser?.authentication;
-              final credential = GoogleAuthProvider.credential(
-                accessToken: googleAuth?.accessToken,
-                idToken: googleAuth?.idToken,
-              );
-              await FirebaseAuth.instance.signInWithCredential(
-                credential,
-              );
-              await FirebaseAuth.instance.currentUser
-                  ?.getIdToken(
-                true,
-              )
-                  .then(
-                (idToken) async {
-                  AuthIdTokenReqBodyModel authIdTokenReqBodyModel =
-                      AuthIdTokenReqBodyModel();
-                  await SharedPrefHelper.setSecuredString(
-                    key: SharedPrefKeys.userToken,
-                    value: idToken!,
-                  );
-                  log(idToken);
-                  final res = await loginUseCases.authToken(
-                    authIdTokenReqBodyModel: authIdTokenReqBodyModel,
-                  );
-                  await res.when(
-                    success: (res) async {
-                      UserSingleton.instance.user = res!.user;
-                      await SharedPrefHelper.setSecuredString(
-                        key: SharedPrefKeys.userToken,
-                        value: res.token!,
-                      );
-                      UserSingleton.instance.user = res.user;
-                      emit(
-                        const LoginState.success(),
-                      );
-                    },
-                    failure: (
-                      apiErrorModel,
-                    ) async {
-                      emit(
-                        LoginState.failure(
-                          apiErrorModel: apiErrorModel,
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            } on Exception catch (e) {
-              LoginState.failure(
-                apiErrorModel: ApiErrorModel(
-                  error: e.toString(),
-                ),
-              );
-            }
+            // try {
+            emit(
+              const LoginState.loading(),
+            );
+            final result = await loginUseCases.signInWithGoogle();
+            result.fold(
+              (failure) => emit(LoginState.googleSignInFailure(
+                failure: failure,
+              )),
+              (user) => emit(
+                LoginState.success(),
+              ),
+            );
+            //   final GoogleSignInAccount? googleUser = await GoogleSignIn(
+            //     scopes: [
+            //       'email',
+            //       'profile',
+            //     ],
+            //   ).signIn();
+            //   final GoogleSignInAuthentication? googleAuth =
+            //       await googleUser?.authentication;
+            //   final credential = GoogleAuthProvider.credential(
+            //     accessToken: googleAuth?.accessToken,
+            //     idToken: googleAuth?.idToken,
+            //   );
+            //   await FirebaseAuth.instance.signInWithCredential(
+            //     credential,
+            //   );
+            //   await FirebaseAuth.instance.currentUser
+            //       ?.getIdToken(
+            //     true,
+            //   )
+            //       .then(
+            //     (idToken) async {
+            //       AuthIdTokenReqBodyModel authIdTokenReqBodyModel =
+            //           AuthIdTokenReqBodyModel();
+            //       await SharedPrefHelper.setSecuredString(
+            //         key: SharedPrefKeys.userToken,
+            //         value: idToken!,
+            //       );
+            //       log(idToken);
+            //       final res = await loginUseCases.authToken(
+            //         authIdTokenReqBodyModel: authIdTokenReqBodyModel,
+            //       );
+            //       await res.when(
+            //         success: (res) async {
+            //           UserSingleton.instance.user = res!.user;
+            //           await SharedPrefHelper.setSecuredString(
+            //             key: SharedPrefKeys.userToken,
+            //             value: res.token!,
+            //           );
+            //           UserSingleton.instance.user = res.user;
+            //           emit(
+            //             const LoginState.success(),
+            //           );
+            //         },
+            //         failure: (
+            //           apiErrorModel,
+            //         ) async {
+            //           emit(
+            //             LoginState.failure(
+            //               apiErrorModel: apiErrorModel,
+            //             ),
+            //           );
+            //         },
+            //       );
+            //     },
+            //   );
+            // } on Exception catch (e) {
+            //   LoginState.failure(
+            //     apiErrorModel: ApiErrorModel(
+            //       error: e.toString(),
+            //     ),
+            //   );
+            // }
           },
           resetPass: (
             resetPassReqBodyModel,
