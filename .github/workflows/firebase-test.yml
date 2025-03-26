@@ -31,7 +31,8 @@ jobs:
         run: sudo apt-get install jq -y
 
       - name: List Available Releases
-        run: firebase appdistribution:releases:list --project="aquan-dev"
+        run: firebase appdistribution:versions:list --app 1:19118574319:android:1bdb6ba41686756deb291a --project="aquan-dev"
+
 
       - name: Delete Old Releases
         run: |
