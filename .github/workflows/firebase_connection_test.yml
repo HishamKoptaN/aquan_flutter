@@ -1,0 +1,30 @@
+name: Firebase Connection Test
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  test_firebase_connection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔥 التحقق من الكود
+        uses: actions/checkout@v4
+
+      - name: 🔥 تثبيت Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+          firebase --version
+
+      - name: 🔑 تسجيل الدخول إلى Firebase
+        run: |
+          echo '${{ secrets.CREDENTIAL_FILE_CONTENT }}' > firebase-credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=firebase-credentials.json
+          firebase projects:list
+
+      - name: 📱 اختبار الاتصال بتطبيق Android في Firebase
+        run: |
+          firebase apps:list --project=${{ secrets.FIREBASE_PROJECT_ID }}
+
+      - name: 🚀 اختبار الوصول إلى Firebase App Distribution
+        run: |
+          firebase appdistribution:testers:list --app=${{ secrets.FIREBASE_APP_ID }}

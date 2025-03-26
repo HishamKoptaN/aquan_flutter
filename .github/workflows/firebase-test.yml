@@ -3,7 +3,7 @@ name: Firebase Cleanup
 on:
   push:
     branches:
-      - dev  # يعمل عند أي دفع على فرع dev
+      - main  # يعمل عند أي دفع على فرع dev
 
 jobs:
   cleanup_old_releases:
