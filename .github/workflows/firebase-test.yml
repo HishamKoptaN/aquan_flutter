@@ -1,11 +1,13 @@
-name: Firebase Connection Test and Cleanup
+name: Cleanup Old Releases
 
 on:
-  workflow_dispatch:  # يسمح بتشغيله يدويًا
+  push:
+    branches:
+      - dev  # يتم تشغيله عند أي push على فرع dev
 
 jobs:
-  test_firebase_connection:
-    name: Test Firebase Connection & Cleanup Old Releases
+  cleanup_firebase_releases:
+    name: Delete Old Firebase Releases
     runs-on: ubuntu-latest
 
     steps:
@@ -25,16 +27,13 @@ jobs:
         env:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
 
-      - name: List Firebase Apps
-        run: firebase projects:list --token "$(firebase login:ci --no-localhost)"
-
       - name: List Available Releases
-        run: firebase appdistribution:releases:list --app <APP_ID>
-      
+        run: firebase appdistribution:releases:list --app ${{ secrets.FIREBASE_APP_ID }}
+
       - name: Delete Old Releases
         run: |
-          RELEASES=$(firebase appdistribution:releases:list --app <APP_ID> --json | jq -r '.[].releaseId')
+          RELEASES=$(firebase appdistribution:releases:list --app ${{ secrets.FIREBASE_APP_ID }} --json | jq -r '.[].releaseId')
           for RELEASE_ID in $RELEASES; do
             echo "Deleting release: $RELEASE_ID"
-            firebase appdistribution:releases:delete --app <APP_ID> --release-id $RELEASE_ID
+            firebase appdistribution:releases:delete --app ${{ secrets.FIREBASE_APP_ID }} --release-id $RELEASE_ID
           done 
