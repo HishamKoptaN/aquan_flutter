@@ -225,40 +225,6 @@ class _DashViewState extends State<DashView> {
                     ),
                     children: [
                       TextSpan(
-                        text: t.available_balance,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(text: ' '),
-                      WidgetSpan(
-                        child: Transform.translate(
-                          offset: const Offset(
-                            0.0,
-                            3.0,
-                          ),
-                          child: CustomText(
-                            text: UserSingleton
-                                    .instance.user?.balance?.availableBalance
-                                    ?.toString() ??
-                                '',
-                            fontSize: 16.sp,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.sp,
-                    ),
-                    children: [
-                      TextSpan(
                         text: t.suspended_balance,
                         style: TextStyle(
                           fontSize: 14.sp,
@@ -278,7 +244,7 @@ class _DashViewState extends State<DashView> {
                             text: UserSingleton
                                     .instance.user?.balance?.suspendedBalance
                                     ?.toString() ??
-                                '',
+                                '0.0',
                             fontSize: 16.sp,
                             color: Colors.black,
                           ),

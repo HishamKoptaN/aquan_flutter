@@ -2,6 +2,7 @@ import 'package:aquan/all_imports.dart';
 import 'package:aquan/features/main/present/view/main_view.dart';
 import 'features/controll/present/bloc/controll_bloc.dart';
 import 'features/controll/present/bloc/controll_event.dart';
+import 'features/tasks/present/bloc/task_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +26,12 @@ Future<void> main() async {
   Bloc.observer = AppBlocObserver();
   await Settings.setup();
   // await SharedPrefHelper.clearAllData();
-  // if (!kReleaseMode) {
-  //   await SharedPrefHelper.setSecuredString(
-  //     key: SharedPrefKeys.userToken,
-  //     value: '67|Ic8EJwfpA5g6zjZ4P5b5KsHhhgcDP7Rx9eCcv7Gobc654b09',
-  //   );
-  // }
+  if (!kReleaseMode) {
+    await SharedPrefHelper.setSecuredString(
+      key: SharedPrefKeys.userToken,
+      value: '67|Ic8EJwfpA5g6zjZ4P5b5KsHhhgcDP7Rx9eCcv7Gobc654b09',
+    );
+  }
   runApp(
     MultiBlocProvider(
       providers: [
@@ -42,6 +43,9 @@ Future<void> main() async {
         ),
         BlocProvider<MainBloc>(
           create: (context) => getIt<MainBloc>(),
+        ),
+        BlocProvider<TasksBloc>(
+          create: (context) => getIt<TasksBloc>(),
         ),
       ],
       child: MyApp(
