@@ -6,6 +6,7 @@ import '../../data/datasources/send_to_account_api.dart';
 import '../../data/model/username_by_account_res_model.dart';
 import '../../data/model/transfer_req_body.dart';
 import '../../data/repo/send_to_account_repo.dart';
+
 @Injectable(
   as: SendToAccountRepo,
 )
@@ -16,12 +17,12 @@ class SendToAccountRepoImpl implements SendToAccountRepo {
   });
 
   @override
-  Future<ApiResult<UsernameByAccountResModel>> get({
-    required String accountNumber,
+  Future<ApiResult<UsernameByAccountResModel?>> get({
+    required String? accountNumber,
   }) async {
     try {
       final response = await sendToAccountApi.get(
-        accountNumber: accountNumber,
+        accountNumber: accountNumber ?? '',
       );
       return ApiResult.success(
         data: response,
@@ -36,8 +37,8 @@ class SendToAccountRepoImpl implements SendToAccountRepo {
   }
 
   @override
-  Future<ApiResult<PlanRate>> send({
-    required TransferReqBody transferReqBody,
+  Future<ApiResult<PlanRate?>> send({
+    required TransferReqBody? transferReqBody,
   }) async {
     try {
       await sendToAccountApi.send(

@@ -2,7 +2,7 @@ name: Firebase Connection Test
 on:
   push:
     branches:
-      - dev
+      - main
 jobs:
   test_firebase_connection:
     runs-on: ubuntu-latest

@@ -42,11 +42,14 @@ class LoginRepoImpl implements LoginRepo {
       log(
         "🔥 LoginRepoImpl Catch: ${failure.runtimeType} - ${failure.toString()}",
       );
-
       if (failure is FirebaseSignInFailure) {
-        return Left(failure);
+        return Left(
+          failure,
+        );
       } else {
-        return Left(LoginServerFailure());
+        return Left(
+          LoginServerFailure(),
+        );
       }
     }
   }
@@ -111,7 +114,9 @@ class LoginRepoImpl implements LoginRepo {
               message: error.message ?? 'Unknown error');
       }
     } else {
-      return GoogleSignInFailures.serverError(message: error.toString());
+      return GoogleSignInFailures.serverError(
+        message: error.toString(),
+      );
     }
   }
 }

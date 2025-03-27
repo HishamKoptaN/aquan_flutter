@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:aquan/core/errors/api_error_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/helpers/constants.dart';
 import '../../../../../core/helpers/shared_pref_helper.dart';
@@ -45,9 +44,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               (
                 failure,
               ) {
-                log(
-                  "🔥 Bloc Failure: ${failure.message}",
-                );
                 emit(
                   LoginState.failure(
                     apiErrorModel: ApiErrorModel(
@@ -92,34 +88,27 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             );
           },
           google: () async {
-            // try {
             emit(
               const LoginState.loading(),
             );
             final result = await loginUseCases.signInWithGoogle();
             result.fold(
-              (failure) => emit(LoginState.googleSignInFailure(
-                failure: failure,
-              )),
-              (user) => emit(
+              (
+                failure,
+              ) =>
+                  emit(
+                LoginState.googleSignInFailure(
+                  failure: failure,
+                ),
+              ),
+              (
+                user,
+              ) =>
+                  emit(
                 LoginState.success(),
               ),
             );
-            //   final GoogleSignInAccount? googleUser = await GoogleSignIn(
-            //     scopes: [
-            //       'email',
-            //       'profile',
-            //     ],
-            //   ).signIn();
-            //   final GoogleSignInAuthentication? googleAuth =
-            //       await googleUser?.authentication;
-            //   final credential = GoogleAuthProvider.credential(
-            //     accessToken: googleAuth?.accessToken,
-            //     idToken: googleAuth?.idToken,
-            //   );
-            //   await FirebaseAuth.instance.signInWithCredential(
-            //     credential,
-            //   );
+           
             //   await FirebaseAuth.instance.currentUser
             //       ?.getIdToken(
             //     true,

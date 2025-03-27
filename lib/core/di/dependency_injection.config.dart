@@ -162,10 +162,10 @@ _i174.GetIt init(
   final injectionModule = _$InjectionModule();
   final apiModule = _$ApiModule();
   gh.singleton<_i804.LoggingInterceptor>(() => _i804.LoggingInterceptor());
+  gh.lazySingleton<_i804.TokenStorage>(() => _i804.TokenStorage());
   gh.lazySingleton<_i161.InternetConnection>(
       () => injectionModule.connectionChecker);
   gh.lazySingleton<_i59.FirebaseAuth>(() => injectionModule.firebaseAuth);
-  gh.lazySingleton<_i804.TokenStorage>(() => _i804.TokenStorage());
   gh.lazySingleton<_i106.AuthService>(() => _i106.AuthService());
   gh.lazySingleton<_i724.LanguageBloc>(() => _i724.LanguageBloc());
   gh.lazySingleton<_i907.QrCodeBloc>(() => _i907.QrCodeBloc());
@@ -175,15 +175,15 @@ _i174.GetIt init(
       _i630.VerifyEmailRepoImpl(verifyEmailApi: gh<_i1039.VerifyEmailApi>()));
   gh.singleton<_i804.AuthInterceptor>(
       () => _i804.AuthInterceptor(gh<_i804.TokenStorage>()));
-  gh.lazySingleton<_i552.SignUpRemDataSrc>(
-      () => _i552.SignUpRemDataSrc(firebaseAuth: gh<_i59.FirebaseAuth>()));
   gh.lazySingleton<_i685.LoginRemDataSrc>(
       () => _i685.LoginRemDataSrc(firebaseAuth: gh<_i59.FirebaseAuth>()));
+  gh.lazySingleton<_i552.SignUpRemDataSrc>(
+      () => _i552.SignUpRemDataSrc(firebaseAuth: gh<_i59.FirebaseAuth>()));
+  gh.lazySingleton<_i518.SendEmailOtpUseCase>(() => _i518.SendEmailOtpUseCase(
+      verifyEmailRepo: gh<_i630.VerifyEmailRepoImpl>()));
   gh.lazySingleton<_i102.VerifyEmailOtpUseCase>(() =>
       _i102.VerifyEmailOtpUseCase(
           verifyEmailRepo: gh<_i630.VerifyEmailRepoImpl>()));
-  gh.lazySingleton<_i518.SendEmailOtpUseCase>(() => _i518.SendEmailOtpUseCase(
-      verifyEmailRepo: gh<_i630.VerifyEmailRepoImpl>()));
   gh.singleton<_i361.Dio>(() => apiModule.dio(
         gh<_i804.AuthInterceptor>(),
         gh<_i804.LoggingInterceptor>(),
@@ -248,10 +248,10 @@ _i174.GetIt init(
       () => _i885.DepositUseCases(depositRepo: gh<_i296.DepositsRepo>()));
   gh.lazySingleton<_i542.DashBloc>(
       () => _i542.DashBloc(getDashUseCase: gh<_i408.GetDashUseCase>()));
-  gh.lazySingleton<_i297.GetAccountsUseCase>(
-      () => _i297.GetAccountsUseCase(acountsRepo: gh<_i42.AccountsRepo>()));
   gh.lazySingleton<_i199.EditAccountUseCase>(
       () => _i199.EditAccountUseCase(acountsRepo: gh<_i42.AccountsRepo>()));
+  gh.lazySingleton<_i297.GetAccountsUseCase>(
+      () => _i297.GetAccountsUseCase(acountsRepo: gh<_i42.AccountsRepo>()));
   gh.factory<_i871.SignUpRepo>(() => _i941.SignUpRepoImpl(
         signUpRemDataSrc: gh<_i552.SignUpRemDataSrc>(),
         signUpApi: gh<_i552.SignUpApi>(),
@@ -261,12 +261,12 @@ _i174.GetIt init(
       () => _i405.WithdrawsRepoImpl(withdrawsApi: gh<_i436.WithdrawsApi>()));
   gh.lazySingleton<_i278.SupportUseCases>(
       () => _i278.SupportUseCases(supportRepo: gh<_i611.SupportRepo>()));
-  gh.lazySingleton<_i743.GetWithdrawRatessUseCase>(() =>
-      _i743.GetWithdrawRatessUseCase(withdrawsRepo: gh<_i129.WithdrawsRepo>()));
-  gh.lazySingleton<_i920.GetWithdrawsUseCase>(() =>
-      _i920.GetWithdrawsUseCase(withdrawsRepo: gh<_i129.WithdrawsRepo>()));
   gh.lazySingleton<_i429.AddWithdrawUseCase>(
       () => _i429.AddWithdrawUseCase(withdrawsRepo: gh<_i129.WithdrawsRepo>()));
+  gh.lazySingleton<_i920.GetWithdrawsUseCase>(() =>
+      _i920.GetWithdrawsUseCase(withdrawsRepo: gh<_i129.WithdrawsRepo>()));
+  gh.lazySingleton<_i743.GetWithdrawRatessUseCase>(() =>
+      _i743.GetWithdrawRatessUseCase(withdrawsRepo: gh<_i129.WithdrawsRepo>()));
   gh.factory<_i774.SendToAccountRepo>(() => _i121.SendToAccountRepoImpl(
       sendToAccountApi: gh<_i348.SendToAccountApi>()));
   gh.factory<_i174.BuySellRepo>(

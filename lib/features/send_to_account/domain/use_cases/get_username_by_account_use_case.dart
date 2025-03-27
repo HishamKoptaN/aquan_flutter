@@ -10,7 +10,7 @@ class SendToAccountUseCases {
   SendToAccountUseCases({
     required this.sendToAccountRepo,
   });
-  Future<ApiResult<UsernameByAccountResModel>> get({
+  Future<ApiResult<UsernameByAccountResModel?>> get({
     required String accountNumber,
   }) async {
     return await sendToAccountRepo.get(
@@ -19,7 +19,7 @@ class SendToAccountUseCases {
   }
 
   Future<ApiResult<void>> send({
-    required TransferReqBody transferReqBody,
+    required TransferReqBody? transferReqBody,
   }) async {
     return await sendToAccountRepo.send(
       transferReqBody: transferReqBody,

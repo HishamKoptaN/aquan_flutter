@@ -15,14 +15,14 @@ abstract class SendToAccountApi {
   }) = _SendToAccountApi;
 // ! GET Username By Account
   @GET("${ApiConstants.transfer}/{accountNumber}")
-  Future<UsernameByAccountResModel> get({
-    @Path("accountNumber") required String accountNumber,
+  Future<UsernameByAccountResModel?> get({
+    @Path("accountNumber") required String? accountNumber,
   });
   // ! send
   @POST(
     ApiConstants.transfer,
   )
   Future<void> send({
-    @Body() required TransferReqBody transferReqBody,
+    @Body() required TransferReqBody? transferReqBody,
   });
 }

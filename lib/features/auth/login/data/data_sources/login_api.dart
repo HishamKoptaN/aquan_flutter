@@ -15,10 +15,10 @@ part 'login_api.g.dart';
 @LazySingleton()
 class LoginRemDataSrc {
   final FirebaseAuth firebaseAuth;
-
   LoginRemDataSrc({
     required this.firebaseAuth,
   });
+// ! firebaseLogin
   Future<String> firebaseLogin({
     required String email,
     required String password,
@@ -37,9 +37,15 @@ class LoginRemDataSrc {
     }
   }
 
+// ! loginWithGoogle
   Future<String> loginWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn(
+        scopes: [
+          'email',
+          'profile',
+        ],
+      ).signIn();
       if (googleUser == null) {
         throw UserCancelledException();
       }
@@ -88,10 +94,13 @@ class LoginRemDataSrc {
   }
 
   //! تسجيل الدخول باستخدام بيانات التحقق من الهاتف
-  Future<UserCredential> signInWithPhoneCredential(
-      PhoneAuthCredential credential) async {
+  Future<UserCredential> signInWithPhoneCredential({
+    required PhoneAuthCredential credential,
+  }) async {
     try {
-      return await firebaseAuth.signInWithCredential(credential);
+      return await firebaseAuth.signInWithCredential(
+        credential,
+      );
     } on FirebaseAuthException {
       throw ServerException();
     } catch (_) {
@@ -103,8 +112,7 @@ class LoginRemDataSrc {
   FirebaseSignInFailure _mapLoginException({
     required FirebaseAuthException e,
   }) {
-    log("🔥 Mapping FirebaseAuthException: ${e.code}"); // ✅ طباعة الكود القادم من Firebase
-
+    log("🔥 Mapping FirebaseAuthException: ${e.code}");
     switch (e.code) {
       case 'user-not-found':
         return UserNotFoundFailure();
@@ -112,7 +120,7 @@ class LoginRemDataSrc {
         return WrongPasswordFailure();
       case 'user-disabled':
         return UserDisabledFailure();
-      case 'invalid-credential': // ✅ إضافة حالة جديدة
+      case 'invalid-credential':
         return InvalidCredentialFailure();
       default:
         return LoginServerFailure();

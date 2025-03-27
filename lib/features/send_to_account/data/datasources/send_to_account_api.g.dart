@@ -24,9 +24,10 @@ class _SendToAccountApi implements SendToAccountApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<UsernameByAccountResModel> get({required String accountNumber}) async {
+  Future<UsernameByAccountResModel?> get({String? accountNumber}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<UsernameByAccountResModel>(Options(
@@ -45,10 +46,12 @@ class _SendToAccountApi implements SendToAccountApi {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UsernameByAccountResModel _value;
+    final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
+    late UsernameByAccountResModel? _value;
     try {
-      _value = UsernameByAccountResModel.fromJson(_result.data!);
+      _value = _result.data == null
+          ? null
+          : UsernameByAccountResModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -57,9 +60,10 @@ class _SendToAccountApi implements SendToAccountApi {
   }
 
   @override
-  Future<void> send({required TransferReqBody transferReqBody}) async {
+  Future<void> send({TransferReqBody? transferReqBody}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = transferReqBody;
     final _options = _setStreamType<void>(Options(
