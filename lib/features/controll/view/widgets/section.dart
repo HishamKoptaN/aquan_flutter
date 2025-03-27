@@ -32,14 +32,22 @@ class SectionAvailabilityWidget extends StatelessWidget {
             if (section.status!) {
               return onAvailable(section);
             } else {
-              //! إظهار محتوى الصفحة مع تراكب الرسالة
               return Stack(
                 children: [
-                  //! الواجهة الأصلية مع تقليل الوضوح
-                  Opacity(
-                    opacity: 0.4,
-                    child: onAvailable(section),
+                  //! الواجهة الأصلية مع تعتيم بنسبة معينة
+                  AbsorbPointer(
+                    absorbing: true, // منع التفاعل مع الواجهة
+                    child: Stack(
+                      children: [
+                        onAvailable(section), // الواجهة الأصلية
+                        Container(
+                          color: Colors.black
+                              .withOpacity(0.5), // التعتيم بنسبة 50%
+                        ),
+                      ],
+                    ),
                   ),
+
                   //! الرسالة فوق المحتوى
                   Positioned.fill(
                     child: Center(
@@ -59,7 +67,6 @@ class SectionAvailabilityWidget extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            //! العنوان
                             const Text(
                               "هذا القسم غير متاح حالياً!",
                               style: TextStyle(
@@ -69,7 +76,6 @@ class SectionAvailabilityWidget extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: 10.h),
-                            //! الرسالة
                             CustomText(
                               text: section.message ?? "يرجى المحاولة لاحقًا",
                               fontSize: 18.sp,
@@ -77,9 +83,7 @@ class SectionAvailabilityWidget extends StatelessWidget {
                               maxLines: 5,
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
+                            SizedBox(height: 20.h),
                           ],
                         ),
                       ),
